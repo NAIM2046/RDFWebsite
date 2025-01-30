@@ -1,10 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Navber from "../../Components/Navber/Navber";
 
 const Main = () => {
   return (
     <div>
-      <h1 className="bg-blue-500">main page </h1>
+      <Navber></Navber>
       <Outlet></Outlet>
     </div>
   );
