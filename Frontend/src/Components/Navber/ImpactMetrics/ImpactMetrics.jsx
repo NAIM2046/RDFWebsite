@@ -1,17 +1,23 @@
 import React from "react";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const metrics = [
   { title: "Lives Impacted", value: 50000, icon: "🌍" },
-  { title: "Funds Raised", value: 1000000, icon: "💰", prefix: "$" },
+  { title: "Funds Raised", value: 100000, icon: "💰", prefix: "$" },
   { title: "Volunteers Engaged", value: 5000, icon: "🙌" },
   { title: "Projects Completed", value: 100, icon: "🏗" },
 ];
 
 const ImpactMetrics = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
+
   return (
-    <section className="py-16 px-6 bg-gradient-to-r from-blue-50 to-blue-100 text-gray-900">
+    <section
+      ref={ref}
+      className="py-16 px-6 bg-gradient-to-r from-blue-50 to-blue-100 text-gray-900"
+    >
       <div className="max-w-6xl mx-auto text-center">
         <motion.h2
           className="text-4xl font-bold mb-6 text-gray-800"
@@ -46,7 +52,12 @@ const ImpactMetrics = () => {
               </h3>
               <p className="text-3xl font-bold text-blue-600 mt-2">
                 {metric.prefix && metric.prefix}
-                <CountUp end={metric.value} duration={2.5} separator="," />+
+                {inView ? (
+                  <CountUp end={metric.value} duration={2.5} separator="," />
+                ) : (
+                  0
+                )}
+                +
               </p>
             </motion.div>
           ))}

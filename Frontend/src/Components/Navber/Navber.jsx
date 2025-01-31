@@ -53,7 +53,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-orange-500 border-b shadow-md fixed w-full z-50">
+    <nav className="bg-orange-500 border-b shadow-md fixed w-full z-50 ">
       <div className="container mx-auto flex justify-between items-center px-4 lg:px-8 py-3">
         {/* Logo */}
         <Link to="/">
