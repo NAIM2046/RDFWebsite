@@ -44,7 +44,7 @@ const ImpactMetrics = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.8 }}
-              whileHover={{ scale: 1.1, rotate: 2 }}
+              whileHover={{ scale: 1.1 }}
             >
               <div className="text-5xl">{metric.icon}</div>
               <h3 className="text-lg font-semibold mt-4 text-gray-700">

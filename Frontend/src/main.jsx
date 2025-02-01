@@ -6,7 +6,7 @@ import router from "./Router/Router.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <div className="ml-1 mx-auto">
+    <div className=" mx-auto">
       <RouterProvider router={router} />
     </div>
   </StrictMode>
