@@ -20,7 +20,7 @@ const programs = [
     description:
       "Empowering women and youth to build a more sustainable and equitable society.",
     projects: ["Leadership training", "Vocational education programs"],
-    image: "https://via.placeholder.com/300x200",
+    image: "./../../../../public/assets/images-2-1.png",
   },
   {
     id: "climate",
@@ -28,7 +28,7 @@ const programs = [
     description:
       "Supporting climate resilience and humanitarian responses to protect vulnerable communities.",
     projects: ["Disaster response programs", "Climate adaptation initiatives"],
-    image: "https://via.placeholder.com/300x200",
+    image: "./../../../../public/assets/Karate-Training-min.png",
   },
   {
     id: "agriculture",
@@ -36,7 +36,7 @@ const programs = [
     description:
       "Improving agricultural sustainability and food security for communities worldwide.",
     projects: ["Sustainable farming", "Food security initiatives"],
-    image: "https://via.placeholder.com/300x200",
+    image: "./../../../../public/assets/DSC03104.webp",
   },
 ];
 
@@ -85,7 +85,7 @@ const OurProgram = () => {
         {showLeft && (
           <button
             onClick={() => scrollTabs("left")}
-            className="absolute left-0 z-10 p-2 bg-white shadow-md rounded-full flex items-center justify-center"
+            className="absolute left-0 z-10 p-2 bg-white shadow-md rounded-full flex items-center justify-center cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5 text-gray-700" />
           </button>
@@ -100,7 +100,7 @@ const OurProgram = () => {
           {programs.map((program) => (
             <button
               key={program.id}
-              className={`px-4 py-2 text-[15px] font-medium rounded-lg transition-all w-auto h-20
+              className={`px-4 py-2 text-[15px] font-medium rounded-lg transition-all w-auto h-20 cursor-pointer
               ${
                 selected === program.id
                   ? "bg-orange-500 text-white"
@@ -117,7 +117,7 @@ const OurProgram = () => {
         {showRight && (
           <button
             onClick={() => scrollTabs("right")}
-            className="absolute right-0 z-10 p-2 bg-white shadow-md rounded-full flex items-center justify-center"
+            className="absolute right-0 z-10 p-2 bg-white shadow-md rounded-full flex items-center justify-center cursor-pointer"
           >
             <ChevronRight className="w-5 h-5 text-gray-700" />
           </button>
@@ -148,11 +148,11 @@ const OurProgram = () => {
                 <h4 className="mt-6 text-lg font-semibold text-gray-800">
                   Projects under this program:
                 </h4>
-                <ul className="mt-3">
+                <ul className="mt-3 list-disc">
                   {program.projects.map((project, index) => (
                     <li
                       key={index}
-                      className="text-gray-700 border-b border-gray-300 pb-1 mb-2"
+                      className="text-gray-700 border-b border-gray-300 pb-1 mb-2 cursor-pointer hover:text-orange-400"
                     >
                       {project}
                     </li>
@@ -161,10 +161,10 @@ const OurProgram = () => {
 
                 {/* Buttons */}
                 <div className="mt-6 flex gap-4">
-                  <button className="bg-orange-500 text-white px-5 py-2 rounded-lg shadow-md transition hover:bg-orange-600">
+                  <button className="bg-orange-500 text-white px-5 py-2 rounded-lg shadow-md transition hover:bg-orange-600 cursor-pointer">
                     Read More
                   </button>
-                  <button className="bg-gray-200 text-gray-800 px-5 py-2 rounded-lg shadow-md transition hover:bg-gray-300">
+                  <button className="bg-gray-200 text-gray-800 px-5 py-2 rounded-lg shadow-md transition hover:bg-gray-300 cursor-pointer">
                     See All Projects
                   </button>
                 </div>

@@ -64,7 +64,7 @@ const WhatWeDo = () => {
                 {area.title}
               </h3>
               <p className="text-gray-600 mt-2">{area.description}</p>
-              <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
+              <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition cursor-pointer">
                 See Details
               </button>
             </motion.div>
