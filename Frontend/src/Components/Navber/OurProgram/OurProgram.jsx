@@ -20,7 +20,7 @@ const programs = [
     description:
       "Empowering women and youth to build a more sustainable and equitable society.",
     projects: ["Leadership training", "Vocational education programs"],
-    image: "./../../../../public/assets/images-2-1.png",
+    image: "/assets/images-2-1.png",
   },
   {
     id: "climate",
@@ -28,7 +28,7 @@ const programs = [
     description:
       "Supporting climate resilience and humanitarian responses to protect vulnerable communities.",
     projects: ["Disaster response programs", "Climate adaptation initiatives"],
-    image: "./../../../../public/assets/Karate-Training-min.png",
+    image: "/assets/Karate-Training-min.png",
   },
   {
     id: "agriculture",
@@ -36,7 +36,7 @@ const programs = [
     description:
       "Improving agricultural sustainability and food security for communities worldwide.",
     projects: ["Sustainable farming", "Food security initiatives"],
-    image: "./../../../../public/assets/DSC03104.webp",
+    image: "/assets/DSC03104.webp",
   },
 ];
 
