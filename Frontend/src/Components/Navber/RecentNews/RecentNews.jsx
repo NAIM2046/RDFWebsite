@@ -1,76 +1,88 @@
 import React from "react";
 
-const newsData = [
-  {
-    id: 1,
-    title: "Fintech 101: Exploring the Basics of Electronic Payments",
-    author: "Harsh C.",
-    date: "2 years ago",
-    image: "https://pagedone.io/asset/uploads/1696244553.png",
-  },
-  {
-    id: 2,
-    title:
-      "From Classroom to Cyberspace: The Growing Influence of EdTech in Fintech",
-    author: "John D.",
-    date: "2 years ago",
-    image: "https://pagedone.io/asset/uploads/1696244579.png",
-  },
-  {
-    id: 3,
-    title:
-      "Fintech Solutions for Student Loans: Easing the Burden of Education Debt",
-    author: "Alexa H.",
-    date: "2 years ago",
-    image: "https://pagedone.io/asset/uploads/1696244619.png",
-  },
-];
+const BlogSection = () => {
+  // Blog data array
+  const blogs = [
+    {
+      id: 1,
+      date: "Jan 01, 2023",
+      title: "Clever ways to invest in product to organize your portfolio",
+      description:
+        "Discover smart investment strategies to streamline and organize your portfolio..",
+      imgSrc: "https://pagedone.io/asset/uploads/1696244317.png",
+      link: "#",
+    },
+    {
+      id: 2,
+      date: "Feb 01, 2023",
+      title: "How to grow your profit through systematic investment with us",
+      description:
+        "Unlock the power of systematic investment with us and watch your profits soar. Our..",
+      imgSrc: "https://pagedone.io/asset/uploads/1696244340.png",
+      link: "#",
+    },
+    {
+      id: 3,
+      date: "Mar 01, 20233",
+      title: "How to analyze every holdings of your portfolio",
+      description:
+        "Our comprehensive guide will equip you with the tools and insights needed to..",
+      imgSrc: "https://pagedone.io/asset/uploads/1696244356.png",
+      link: "#",
+    },
+  ];
 
-const RecentNews = () => {
   return (
     <section className="py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="font-manrope text-4xl font-bold text-gray-900 text-center mb-14">
-          Our Popular Blogs
+        <h2 className="font-manrope text-4xl font-bold text-gray-900 text-center mb-16">
+          Our latest blog
         </h2>
-
-        {/* News Cards */}
-        <div className="flex justify-center mb-14 gap-y-8 lg:gap-y-0 flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between lg:gap-x-8">
-          {newsData.map((news) => (
+        <div className="flex justify-center gap-y-8 lg:gap-y-0 flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between lg:gap-x-8">
+          {blogs.map((blog) => (
             <div
-              key={news.id}
-              className="group cursor-pointer w-full max-lg:max-w-xl lg:w-1/3 border border-gray-300 rounded-2xl p-5 transition-all duration-300 hover:border-indigo-600"
+              key={blog.id}
+              className="group w-full max-lg:max-w-xl lg:w-1/3 border border-gray-300 rounded-2xl"
             >
-              <div className="flex items-center mb-6">
+              <div className="flex items-center">
                 <img
-                  src={news.image}
-                  alt={news.author}
-                  className="rounded-lg w-full object-cover"
+                  src={blog.imgSrc}
+                  alt={`Blog image ${blog.id}`}
+                  className="rounded-t-2xl w-full object-cover"
                 />
               </div>
-              <div className="block">
-                <h4 className="text-gray-900 font-medium leading-8 mb-9">
-                  {news.title}
+              <div className="p-4 lg:p-6 transition-all duration-300 rounded-b-2xl group-hover:bg-gray-50">
+                <span className="text-indigo-600 font-medium mb-3 block">
+                  {blog.date}
+                </span>
+                <h4 className="text-xl text-gray-900 font-medium leading-8 mb-5">
+                  {blog.title}
                 </h4>
-                <div className="flex items-center justify-between font-medium">
-                  <h6 className="text-sm text-gray-500">By {news.author}</h6>
-                  <span className="text-sm text-indigo-600">{news.date}</span>
-                </div>
+                <p className="text-gray-500 leading-6 mb-10">
+                  {blog.description}
+                </p>
+                <a
+                  href={blog.link}
+                  className="cursor-pointer text-lg text-indigo-600 font-semibold"
+                >
+                  Read more..
+                </a>
               </div>
             </div>
           ))}
         </div>
-
         {/* View All Button */}
-        <a
-          href="#"
-          className="cursor-pointer border border-gray-300 shadow-sm rounded-full py-3.5 px-7 w-52 flex justify-center items-center text-gray-900 font-semibold mx-auto transition-all duration-300 hover:bg-gray-100"
-        >
-          View All
-        </a>
+        <div className="text-center mt-12">
+          <a
+            href="/all-blogs" // Link to your blog listing page (update the URL if necessary)
+            className="text-lg text-indigo-600 font-semibold hover:underline"
+          >
+            View All Blogs
+          </a>
+        </div>
       </div>
     </section>
   );
 };
 
-export default RecentNews;
+export default BlogSection;
