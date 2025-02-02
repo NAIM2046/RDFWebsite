@@ -32,9 +32,9 @@ const Footer = () => {
               <FaMapMarkerAlt className=" text-2xl" />{" "}
               <span className="text-xl font-semibold">Address:</span>
             </p>
-            <p className="flex items-center gap-2">
-              Head Office: RDF BHABAN, House #21, Road #12, Pisciculture Housing
-              Society, Block-Kha, Adabor, Dhaka-1207
+            <p className="flex items-center gap-2 ml-4">
+              Head Office : RDF BHABAN, House #21, Road #12, Pisciculture
+              Housing Society, Block-Kha, Adabor, Dhaka-1207
             </p>
             <p className="flex items-center gap-2">
               <FaPhoneVolume /> +8802-22243850, +8801733065522

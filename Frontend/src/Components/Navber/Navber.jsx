@@ -3,8 +3,16 @@ import { Link } from "react-router-dom";
 import img from "../../assets/rdfnew-5.png";
 import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
-import { FaAngleDown } from "react-icons/fa6";
+import {
+  FaAngleDown,
+  FaUsers,
+  FaClipboardList,
+  FaNewspaper,
+  FaHandHoldingHeart,
+} from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
+import { FiUsers, FiBriefcase, FiBook } from "react-icons/fi";
+import { MdVolunteerActivism, MdOutlineWork } from "react-icons/md";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -14,46 +22,82 @@ const Navbar = () => {
   const navItems = [
     {
       title: "ABOUT RDF",
+      icon: <FaUsers />,
       links: [
-        "Vision & Mission",
-        "Our Team",
-        "Annual Reports",
-        "Policy Document",
+        {
+          name: "Vision & Mission",
+          link: "/vision-mission",
+          icon: <FiUsers />,
+        },
+        { name: "Our Team", link: "/our-team", icon: <FaUsers /> },
+        {
+          name: "Annual Reports",
+          link: "/annual-reports",
+          icon: <FaClipboardList />,
+        },
+        { name: "Policy Document", link: "/policy-document", icon: <FiBook /> },
       ],
     },
     {
       title: "OUR WORK",
+      icon: <FaClipboardList />,
       links: [
-        "Our Approach",
-        "We Work For",
-        "Key Focus Area",
-        "Current Projects",
-        "Archive Projects",
+        { name: "Our Approach", link: "/our-approach", icon: <FaNewspaper /> },
+        { name: "We Work For", link: "/we-work-for", icon: <FiUsers /> },
+        {
+          name: "Key Focus Area",
+          link: "/key-focus-area",
+          icon: <FaClipboardList />,
+        },
+        {
+          name: "Current Projects",
+          link: "/current-projects",
+          icon: <FaNewspaper />,
+        },
+        {
+          name: "Archive Projects",
+          link: "/archive-projects",
+          icon: <FaClipboardList />,
+        },
       ],
     },
     {
       title: "NEWS & PUBLICATION",
+      icon: <FaNewspaper />,
       links: [
-        "Recent News",
-        "Blog and Stories",
-        "Press and Media",
-        "Photos",
-        "Videos",
+        { name: "Recent News", link: "/recent-news", icon: <FaNewspaper /> },
+        { name: "Blog and Stories", link: "/blogs", icon: <FiBook /> },
+        {
+          name: "Press and Media",
+          link: "/press-media",
+          icon: <FaNewspaper />,
+        },
+        { name: "Photos", link: "/photos", icon: <FiBook /> },
+        { name: "Videos", link: "/videos", icon: <FiBook /> },
       ],
     },
     {
       title: "GET INVOLVED",
+      icon: <FaHandHoldingHeart />,
       links: [
-        "As Project Partner",
-        "Internship",
-        "Volunteer",
-        "Career with RDF",
+        {
+          name: "As Project Partner",
+          link: "/project-partner",
+          icon: <FaHandHoldingHeart />,
+        },
+        { name: "Internship", link: "/internship", icon: <FiBriefcase /> },
+        {
+          name: "Volunteer",
+          link: "/volunteer",
+          icon: <MdVolunteerActivism />,
+        },
+        { name: "Career with RDF", link: "/careers", icon: <MdOutlineWork /> },
       ],
     },
   ];
 
   return (
-    <nav className="bg-orange-500 border-b shadow-md fixed w-full z-50 ">
+    <nav className="bg-orange-500 border-b shadow-md fixed w-full z-50">
       <div className="container mx-auto flex justify-between items-center px-4 lg:px-8 py-3">
         {/* Logo */}
         <Link to="/">
@@ -65,19 +109,19 @@ const Navbar = () => {
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
               <span className="cursor-pointer flex items-center gap-1 hover:text-black">
-                {item.title}{" "}
+                {item.icon} {item.title}{" "}
                 <FaAngleDown className="group-hover:rotate-180 transition-transform duration-300" />
               </span>
               <ul className="absolute left-0 top-12 w-56 bg-white text-gray-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
                 {item.links.map((link, idx) => (
                   <li
                     key={idx}
-                    className="hover:bg-gray-100 hover:text-orange-400 transition-transform duration-300 p-2 rounded"
+                    className="hover:bg-gray-100 hover:text-orange-400 transition-transform duration-300 p-2 rounded flex items-center gap-2"
                   >
-                    <Link to="#" className="block text-sm font-medium">
-                      {link}
+                    {link.icon}
+                    <Link to={link.link} className="block text-sm font-medium">
+                      {link.name}
                     </Link>
-                    <hr className="border-dotted" />
                   </li>
                 ))}
               </ul>
@@ -138,7 +182,7 @@ const Navbar = () => {
                   setActiveDropdown(activeDropdown === index ? null : index)
                 }
               >
-                {item.title}{" "}
+                {item.icon} {item.title}
                 <FaAngleDown
                   className={`${
                     activeDropdown === index ? "rotate-180" : ""
@@ -150,12 +194,12 @@ const Navbar = () => {
                   {item.links.map((link, idx) => (
                     <li
                       key={idx}
-                      className="hover:bg-gray-100 hover:text-amber-500 p-2 rounded"
+                      className="hover:bg-gray-100 hover:text-amber-500 p-2 rounded flex items-center gap-2"
                     >
-                      <Link to="#" className="block">
-                        {link}
+                      {link.icon}
+                      <Link to={link.link} className="block">
+                        {link.name}
                       </Link>
-                      <hr className="border-dotted" />
                     </li>
                   ))}
                 </ul>
@@ -164,22 +208,6 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-
-      {/* Search Bar */}
-      {openSearch && (
-        <div className="absolute top-16 right-4 bg-white shadow-md p-3 rounded-lg w-64">
-          <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="p-2 w-full outline-none"
-            />
-            <button className="bg-orange-500 p-2 text-white">
-              <CiSearch size={20} />
-            </button>
-          </div>
-        </div>
-      )}
     </nav>
   );
 };
