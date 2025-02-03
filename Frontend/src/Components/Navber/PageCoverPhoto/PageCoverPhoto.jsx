@@ -5,7 +5,7 @@ const PageCoverPhoto = ({ title, subtitle, imageUrl }) => {
 
   return (
     <div
-      className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] bg-cover bg-center flex items-center justify-center"
+      className="relative w-full  h-[400px] md:h-[500px] lg:h-[600px] bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${imageUrl})` }}
     >
       {/* Overlay */}
