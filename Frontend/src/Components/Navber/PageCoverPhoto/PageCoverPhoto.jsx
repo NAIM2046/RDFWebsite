@@ -1,15 +1,17 @@
 import React from "react";
-import img from "/assets/vissionAndMission.webp";
-const PageCoverPhoto = ({ title, subtitle, imageUrl }) => {
-  console.log(imageUrl);
 
+const PageCoverPhoto = ({ title, subtitle, imageUrl }) => {
   return (
-    <div
-      className="relative w-full  h-[400px] md:h-[500px] lg:h-[600px] bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url(${imageUrl})` }}
-    >
+    <div className="relative w-full h-[450px] md:h-[500px] lg:h-[650px] flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <img
+        src={imageUrl}
+        alt="Cover"
+        className="absolute w-full h-full object-cover"
+      />
+
       {/* Overlay */}
-      <div className="absolute inset-0  bg-opacity-60 md:bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-opacity-50"></div>
 
       {/* Content */}
       <div className="relative text-center text-white px-6 md:px-12 lg:px-16 max-w-3xl">
