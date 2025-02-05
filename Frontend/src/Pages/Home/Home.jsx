@@ -16,7 +16,6 @@ const Home = () => {
       <WhatWeDo></WhatWeDo>
       <RecentNews></RecentNews>
       <OurPartners></OurPartners>
-      <ButtomtoTop></ButtomtoTop>
     </div>
   );
 };
