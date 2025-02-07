@@ -1,7 +1,7 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
 import slide1 from "../../../assets/1st-slide.webp"; // Adjust the local image path
-
+import { useNavigate } from "react-router-dom";
 const Slider = () => {
   const images = [
     {
@@ -38,7 +38,7 @@ const Slider = () => {
       icon: "🔄",
     },
   ];
-
+  const navigate = useNavigate();
   return (
     <div className="w-full">
       {/* Slider Section */}
@@ -102,6 +102,7 @@ const Slider = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 * index, duration: 0.5 }}
+            onClick={() => navigate("/vision-mission")}
             className="bg-white p-6 rounded-xl shadow-lg max-w-sm text-center flex-shrink-0 w-full sm:w-[300px] cursor-pointer"
           >
             <div className="text-5xl">{card.icon}</div>

@@ -7,6 +7,8 @@ import VisionMission from "../Pages/vision_Mission/VisionMission";
 import OurTeam from "../Pages/OurTeam/OurTeam";
 import MemberDetail from "../Pages/OurTeam/MemberDetail";
 import AnnualReport from "../Pages/AnnualReport/AnnualReport";
+import ProgramDetails from "../Components/Navber/OurProgram/ProgramDetails";
+import AllProjects from "../Components/Navber/AllProjects/AllProjects";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "/annual-reports",
         element: <AnnualReport></AnnualReport>,
+      },
+      {
+        path: "/program-details",
+        element: <ProgramDetails></ProgramDetails>,
+      },
+      {
+        path: "/all-projects",
+        element: <AllProjects></AllProjects>,
       },
     ],
   },

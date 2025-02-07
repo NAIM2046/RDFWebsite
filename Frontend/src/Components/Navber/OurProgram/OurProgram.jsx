@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react"; // Using Lucide icons
-
+import { useNavigate } from "react-router-dom";
 const programs = [
   {
     id: "health",
     title: "Health and Nutrition",
     description:
-      "At CARE, health is a fundamental human right, and a critical factor for reducing poverty, gender inequality, and marginalization.",
+      "At RDF, health is a fundamental human right, and a critical factor for reducing poverty, gender inequality, and marginalization.",
     projects: [
       "Comprehensive prevention programs for people who inject drugs (PWID) and their partners",
       "JANO - Joint Action for Nutrition Outcome",
@@ -45,6 +45,7 @@ const OurProgram = () => {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
   const tabRef = useRef(null);
+  const navigate = useNavigate();
 
   // Function to check if scrolling is needed
   const checkScrollButtons = () => {
@@ -161,10 +162,18 @@ const OurProgram = () => {
 
                 {/* Buttons */}
                 <div className="mt-6 flex gap-4">
-                  <button className="bg-orange-500 text-white px-5 py-2 rounded-lg shadow-md transition hover:bg-orange-600 cursor-pointer">
+                  <button
+                    onClick={() =>
+                      navigate("/program-details", { state: { program } })
+                    }
+                    className="bg-orange-500 text-white px-5 py-2 rounded-lg shadow-md transition hover:bg-orange-600 cursor-pointer"
+                  >
                     Read More
                   </button>
-                  <button className="bg-gray-200 text-gray-800 px-5 py-2 rounded-lg shadow-md transition hover:bg-gray-300 cursor-pointer">
+                  <button
+                    onClick={() => navigate("/all-projects")}
+                    className="bg-gray-200 text-gray-800 px-5 py-2 rounded-lg shadow-md transition hover:bg-gray-300 cursor-pointer"
+                  >
                     See All Projects
                   </button>
                 </div>
