@@ -11,6 +11,7 @@ import {
   FaHandHoldingHeart,
 } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
+import { Search } from "lucide-react";
 import { FiUsers, FiBriefcase, FiBook } from "react-icons/fi";
 import { MdVolunteerActivism, MdOutlineWork } from "react-icons/md";
 
@@ -142,6 +143,24 @@ const Navbar = () => {
               <CiSearch className="text-xl" />
             )}
           </button>
+          {openSearch && (
+            <div className="absolute right-0 top-20  flex items-center space-x-2 bg-white border border-gray-300 rounded-lg shadow-md p-1">
+              <input
+                type="text"
+                className="w-64 p-2 outline-none focus:ring-2 focus:ring-orange-500 rounded-lg"
+                placeholder="Search..."
+                onBlur={() => setOpenSearch(false)} // Close on blur
+              />
+              <button
+                // Close when clicked
+                className="bg-orange-500 p-2 rounded-lg cursor-pointer"
+              >
+                <Search className="text-white" size={20} />
+              </button>
+            </div>
+          )}
+
+          {/* Search Icon Button */}
 
           {/* Donate Button */}
           <a

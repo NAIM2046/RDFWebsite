@@ -6,6 +6,7 @@ import WhatWeDo from "../../Components/Navber/WhatWeDo/WhatWeDo";
 import OurProgram from "../../Components/Navber/OurProgram/OurProgram";
 import RecentNews from "../../Components/Navber/RecentNews/RecentNews";
 import OurPartners from "../../Components/Navber/OurPartners/OurPartners";
+import WhoWeAre from "../../Components/Navber/WhoWeAre/WhoWeAre";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <ImpactMetrics></ImpactMetrics>
       <OurProgram></OurProgram>
       <WhatWeDo></WhatWeDo>
+      <WhoWeAre></WhoWeAre>
       <RecentNews></RecentNews>
       <OurPartners></OurPartners>
     </div>

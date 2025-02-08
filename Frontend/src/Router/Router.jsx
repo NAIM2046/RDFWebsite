@@ -9,6 +9,7 @@ import MemberDetail from "../Pages/OurTeam/MemberDetail";
 import AnnualReport from "../Pages/AnnualReport/AnnualReport";
 import ProgramDetails from "../Components/Navber/OurProgram/ProgramDetails";
 import AllProjects from "../Components/Navber/AllProjects/AllProjects";
+import ProjectDetails from "../Components/Navber/AllProjects/ProjectDetails";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/all-projects",
         element: <AllProjects></AllProjects>,
+      },
+      {
+        path: "/project-details",
+        element: <ProjectDetails></ProjectDetails>,
       },
     ],
   },

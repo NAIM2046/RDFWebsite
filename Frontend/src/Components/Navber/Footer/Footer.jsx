@@ -1,9 +1,9 @@
 import React from "react";
-import logo from "./../../../../public/assets/rdfnew-5 (1).png";
-import youtub from "./../../../../public/assets/youTub.png";
-import facebook from "./../../../../public/assets/sm-icons-facebook-logo.webp";
-import instgram from "./../../../../public/assets/instagram.png";
-import linkeden from "./../../../../public/assets/linkeden.png";
+import logo from "/assets/rdfnew-5 (1).png";
+import youtub from "/assets/youTub.png";
+import facebook from "/assets/sm-icons-facebook-logo.webp";
+import instgram from "/assets/instagram.png";
+import linkeden from "/assets/linkeden.png";
 import { SlLocationPin } from "react-icons/sl";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
