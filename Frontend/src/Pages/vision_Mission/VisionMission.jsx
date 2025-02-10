@@ -4,7 +4,7 @@ import img from "/assets/vissionAndMission.webp";
 import aboutImage from "/assets/photo-107.1-400x284.png";
 import visionImage from "/assets/photo-110.1-400x284.png";
 import missionImage from "/assets/photo-113-400x284.jpg";
-import valuesImage from "/assets/photo-114-400x284.jpg";
+import valuesImage from "/assets/6-circle-value9999s.jpg";
 import visionIcon from "/assets/vission.jpg";
 import missionIcon from "/assets/mission.jpg";
 import valueIcon from "/assets/value-1.jpg";
@@ -16,17 +16,23 @@ const Section = ({ icon, title, text, image, reverse }) => {
         reverse ? "md:flex-row-reverse" : ""
       }`}
     >
-      <div className="md:w-1/2 p-4">
+      {/* Text Section */}
+      <div className="md:w-1/2 p-6 md:p-8">
         <div className="flex items-center mb-3">
-          <img src={icon} alt="icon" className="w-10 h-10 mr-2" />
-          <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
-          <div className="h-5 mt-4 ml-2 w-full bg-gradient-to-r from-green-400 to-blue-500 mb-4"></div>
+          <img src={icon} alt="icon" className="w-12 h-12 mr-3" />
+          <h2 className="text-3xl font-bold text-gray-800">{title}</h2>
         </div>
-
-        <p className="text-gray-600 mt-2">{text}</p>
+        <div className="h-1 w-full bg-gradient-to-r from-green-400 to-blue-500 mb-4"></div>
+        <p className="text-gray-600 leading-relaxed">{text}</p>
       </div>
-      <div className="md:w-1/2 p-4">
-        <img src={image} alt={title} className="rounded-lg shadow-md w-full" />
+
+      {/* Image Section */}
+      <div className="md:w-1/2 p-6">
+        <img
+          src={image}
+          alt={title}
+          className="rounded-lg shadow-md w-full h-auto object-cover"
+        />
       </div>
     </div>
   );
@@ -35,13 +41,17 @@ const Section = ({ icon, title, text, image, reverse }) => {
 const VisionMission = () => {
   return (
     <div>
+      {/* Page Cover */}
       <PageCoverPhoto
         title="Our Mission"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
         imageUrl={img}
       />
-      <div className="bg-gray-100 min-h-screen  ">
-        <div className=" mx-auto bg-white shadow-lg rounded-2xl p-8">
+
+      {/* Main Content */}
+      <div className="bg-gray-100 min-h-screen py-12">
+        <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+          {/* About Section */}
           <Section
             icon={visionIcon}
             title="About RDF"
@@ -50,6 +60,7 @@ const VisionMission = () => {
             reverse={false}
           />
 
+          {/* Vision Section */}
           <Section
             icon={visionIcon}
             title="Vision"
@@ -58,6 +69,7 @@ const VisionMission = () => {
             reverse={true}
           />
 
+          {/* Mission Section */}
           <Section
             icon={missionIcon}
             title="Mission"
@@ -66,6 +78,7 @@ const VisionMission = () => {
             reverse={false}
           />
 
+          {/* Values Section */}
           <Section
             icon={valueIcon}
             title="Values"
@@ -73,6 +86,39 @@ const VisionMission = () => {
             image={valuesImage}
             reverse={true}
           />
+        </div>
+
+        {/* Vision 2030 Section */}
+        <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-8 mt-12 flex flex-col md:flex-row items-center gap-8">
+          {/* Text Section */}
+          <div className="md:w-1/2 p-6">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">
+              Vision 2030
+            </h1>
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">
+              RDF’s shared vision for the future
+            </h3>
+            <p className="text-gray-700 leading-relaxed">
+              RDF's Vision 2030 aims to create a sustainable future by
+              integrating community-driven initiatives in education, healthcare,
+              and economic development. By focusing on gender equality, resource
+              allocation, and humanitarian aid, we strive to build a society
+              where everyone has equal opportunities to thrive. Through a set of
+              agreed goals based on SDGs, employing a theory of change derived
+              from our years of experience, and proper utilization of resources,
+              we will systematically move towards fulfilling this vision
+              collectively.
+            </p>
+          </div>
+
+          {/* Image Section */}
+          <div className="md:w-1/2 p-6">
+            <img
+              src="/assets/care-2030.png"
+              alt="care img"
+              className="w-full h-auto object-cover rounded-lg shadow-lg"
+            />
+          </div>
         </div>
       </div>
     </div>

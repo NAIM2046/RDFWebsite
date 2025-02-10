@@ -33,7 +33,7 @@ const ProjectInfo = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 mt-10">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-6 rounded-lg text-center shadow-lg">
+      <div className="bg-gradient-to-r  bg-white  text-black p-6 rounded-lg text-center shadow-sm">
         <h1 className="text-4xl font-bold">{projectData.title}</h1>
         <p className="text-lg mt-2">{projectData.duration}</p>
         <p className="mt-1 text-sm">
@@ -43,7 +43,7 @@ const ProjectInfo = () => {
       </div>
 
       {/* Project Overview */}
-      <div className="mt-8 bg-pink-100 p-6 rounded-lg shadow-md">
+      <div className="mt-8 bg-white p-6 rounded-lg ">
         <h2 className="text-2xl font-semibold text-gray-800">
           🌟 Project Overview
         </h2>

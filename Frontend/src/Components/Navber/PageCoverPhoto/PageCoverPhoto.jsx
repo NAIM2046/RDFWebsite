@@ -2,7 +2,7 @@ import React from "react";
 
 const PageCoverPhoto = ({ title, subtitle, imageUrl }) => {
   return (
-    <div className="relative w-full h-[450px] md:h-[500px] lg:h-[650px] flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-[450px] md:h-[500px] lg:h-[700px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <img
         src={imageUrl}

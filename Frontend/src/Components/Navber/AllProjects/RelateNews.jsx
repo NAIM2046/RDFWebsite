@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RelateNews = () => {
   const blogs = [
@@ -9,7 +10,6 @@ const RelateNews = () => {
       description:
         "Discover smart investment strategies to streamline and organize your portfolio.",
       imgSrc: "https://pagedone.io/asset/uploads/1696244317.png",
-      link: "#",
     },
     {
       id: 2,
@@ -18,7 +18,6 @@ const RelateNews = () => {
       description:
         "Unlock the power of systematic investment with us and watch your profits soar.",
       imgSrc: "https://pagedone.io/asset/uploads/1696244340.png",
-      link: "#",
     },
     {
       id: 3,
@@ -27,7 +26,6 @@ const RelateNews = () => {
       description:
         "Our comprehensive guide will equip you with the tools and insights needed.",
       imgSrc: "https://pagedone.io/asset/uploads/1696244356.png",
-      link: "#",
     },
     {
       id: 4,
@@ -36,10 +34,9 @@ const RelateNews = () => {
       description:
         "Learn why diversification is key to reducing risk and increasing long-term returns.",
       imgSrc: "https://pagedone.io/asset/uploads/1696244356.png",
-      link: "#",
     },
   ];
-
+  const nagivate = useNavigate();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -63,12 +60,14 @@ const RelateNews = () => {
                   {blog.title}
                 </h4>
                 <p className="text-gray-500 mt-2">{blog.description}</p>
-                <a
-                  href={blog.link}
-                  className="block text-indigo-600 font-semibold mt-4"
+                <button
+                  onClick={() => {
+                    nagivate("/recent-news/details");
+                  }}
+                  className="block text-indigo-600 font-semibold mt-4 cursor-pointer"
                 >
                   Read more..
-                </a>
+                </button>
               </div>
             </div>
           ))}

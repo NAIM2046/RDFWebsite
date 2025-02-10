@@ -154,7 +154,7 @@ const AllProjects = () => {
 
         <div
           ref={tabRef}
-          className="flex space-x-2 overflow-x-auto whitespace-nowrap scroll-smooth no-scrollbar w-full px-12 py-2"
+          className="flex justify-center space-x-2 overflow-x-auto whitespace-nowrap scroll-smooth no-scrollbar w-full px-12 py-2"
           onScroll={checkScrollButtons}
         >
           {programs.map((program) => (
