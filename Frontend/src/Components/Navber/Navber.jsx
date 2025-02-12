@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import img from "../../assets/rdfnew-5.png";
 import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
+import { MdWorkHistory } from "react-icons/md";
+import { MdPlace } from "react-icons/md";
+import { FaProjectDiagram } from "react-icons/fa";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { FaVideo } from "react-icons/fa";
+import { MdMore } from "react-icons/md";
+import { TbAlertSquare } from "react-icons/tb";
+import { RiContactsLine } from "react-icons/ri";
 import {
   FaAngleDown,
   FaUsers,
@@ -19,10 +27,24 @@ const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 500) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     {
-      title: "ABOUT RDF",
+      title: "WHO WE ARE",
       icon: <FaUsers />,
       links: [
         {
@@ -37,10 +59,28 @@ const Navbar = () => {
           icon: <FaClipboardList />,
         },
         { name: "Policy Document", link: "/policy-document", icon: <FiBook /> },
+        {
+          name: "Founder Messages",
+          link: "/founder-messages",
+          icon: <FaUsers />,
+        },
+        {
+          name: "Our Partners",
+          link: "/our-partners",
+          icon: <FaHandHoldingHeart />,
+        },
+        { name: "Organogram", link: "/organogram", icon: <FaClipboardList /> },
+        { name: "Certification", link: "/certification", icon: <FiBook /> },
+        {
+          name: "Our Strategy",
+          link: "/our-strategy",
+          icon: <FaClipboardList />,
+        },
+        { name: "Our History", link: "/our-history", icon: <MdWorkHistory /> },
       ],
     },
     {
-      title: "OUR WORK",
+      title: "WHAT WE DO",
       icon: <FaClipboardList />,
       links: [
         { name: "Our Approach", link: "/our-approach", icon: <FaNewspaper /> },
@@ -60,21 +100,36 @@ const Navbar = () => {
           link: "/archive-projects",
           icon: <FaClipboardList />,
         },
+        {
+          name: "Where We Work",
+          link: "/where-we-work",
+          icon: <MdPlace />,
+        },
+        {
+          name: "Our Programs",
+          link: "/our-programs",
+          icon: <FaProjectDiagram />,
+        },
       ],
     },
     {
       title: "NEWS & PUBLICATION",
       icon: <FaNewspaper />,
       links: [
-        { name: "Recent News", link: "/recent-news", icon: <FaNewspaper /> },
-        { name: "Blog and Stories", link: "/blogs", icon: <FiBook /> },
+        { name: "News", link: "/recent-news", icon: <FaNewspaper /> },
+        { name: "Blog", link: "/blogs", icon: <FiBook /> },
+        { name: "Story", link: "/story", icon: <FiBook /> },
         {
           name: "Press and Media",
           link: "/press-media",
           icon: <FaNewspaper />,
         },
-        { name: "Photos", link: "/photos", icon: <FiBook /> },
-        { name: "Videos", link: "/videos", icon: <FiBook /> },
+        {
+          name: "Photos",
+          link: "/photos",
+          icon: <MdOutlineAddPhotoAlternate />,
+        },
+        { name: "Videos", link: "/videos", icon: <FaVideo /> },
       ],
     },
     {
@@ -95,21 +150,37 @@ const Navbar = () => {
         { name: "Career with RDF", link: "/careers", icon: <MdOutlineWork /> },
       ],
     },
+    {
+      title: "MORE INFO",
+      icon: <MdMore />,
+      links: [
+        {
+          name: "Notices",
+          link: "/notice",
+          icon: <TbAlertSquare />,
+        },
+        { name: "Contact Us", link: "/contact", icon: <RiContactsLine /> },
+      ],
+    },
   ];
 
   return (
-    <nav className="bg-orange-500 border-b shadow-lg mb-10 fixed w-full z-50">
+    <nav className=" top-0 bg-gray-400  backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b shadow-lg mb-10 fixed w-full z-50">
       <div className="container mx-auto flex justify-between items-center px-4 lg:px-8 py-3">
         {/* Logo */}
         <Link to="/">
-          <img src={img} alt="RDF Logo" className="h-14 cursor-pointer" />
+          <img src={img} alt="RDF Logo" className="h-16 cursor-pointer" />
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden lg:flex space-x-6 text-white font-semibold">
+        <ul
+          className={`hidden lg:flex space-x-6 ${
+            scrolled ? "text-black" : "text-white"
+          } font-semibold`}
+        >
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
-              <span className="cursor-pointer flex items-center gap-1 hover:text-black">
+              <span className="cursor-pointer flex items-center gap-1 font-bold  hover:text-black">
                 {item.icon} {item.title}{" "}
                 <FaAngleDown className="group-hover:rotate-180 transition-transform duration-300" />
               </span>
@@ -167,7 +238,7 @@ const Navbar = () => {
             href="#"
             className="hidden lg:block bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500"
           >
-            Donate Now
+            Donate
           </a>
 
           {/* Mobile Menu Button */}
@@ -192,7 +263,7 @@ const Navbar = () => {
             <RxCross2 className="text-2xl text-gray-700" />
           </button>
         </div>
-        <ul className="p-4 space-y-4 text-gray-800 font-semibold">
+        <ul className="p-4 space-y-4 text-gray-800 font-semibold bg-white">
           {navItems.map((item, index) => (
             <li key={index}>
               <div

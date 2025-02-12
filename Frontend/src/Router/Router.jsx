@@ -16,6 +16,7 @@ import OurWork from "../Pages/OurWork/WeWorkFor";
 import WeWorkFor from "../Pages/OurWork/WeWorkFor";
 import OurApproach from "../Pages/OurWork/OurApproach";
 import KeyFocusArea from "../Pages/OurWork/KeyFocusArea";
+import Photo from "../Pages/Photo/Photo";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/key-focus-area",
         element: <KeyFocusArea></KeyFocusArea>,
+      },
+      {
+        path: "/photos",
+        element: <Photo></Photo>,
       },
     ],
   },
