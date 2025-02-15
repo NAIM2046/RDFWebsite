@@ -32,7 +32,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 500) {
+      if (window.scrollY > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -167,7 +167,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className=" top-0 bg-gray-400  backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b shadow-lg mb-10 fixed w-full z-50">
+    <nav
+      className={` shadow-lg w-full transition-all duration-300 z-50 ${
+        scrolled ? "fixed bg-white" : " bg-[#f7f773]"
+      }  `}
+    >
       <div className="container mx-auto flex justify-between items-center px-4 lg:px-8 py-3">
         {/* Logo */}
         <Link to="/">
@@ -177,16 +181,16 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul
           className={`hidden lg:flex space-x-6 ${
-            scrolled ? "text-black" : "text-white"
+            scrolled ? "text-black" : "text-black"
           } font-semibold`}
         >
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
-              <span className="cursor-pointer flex items-center gap-1 font-bold  hover:text-black">
+              <span className="cursor-pointer flex items-center gap-1 font-bold  hover:text-orange-500">
                 {item.icon} {item.title}{" "}
                 <FaAngleDown className="group-hover:rotate-180 transition-transform duration-300" />
               </span>
-              <ul className="absolute left-0 top-12 w-56 bg-white text-gray-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
+              <ul className="absolute left-0 top-12 w-56 z-50 bg-white text-gray-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
                 {item.links.map((link, idx) => (
                   <li
                     key={idx}
@@ -217,7 +221,7 @@ const Navbar = () => {
             )}
           </button>
           {openSearch && (
-            <div className="absolute right-0 top-20  flex items-center space-x-2 bg-white border border-gray-300 rounded-lg shadow-md p-1">
+            <div className="absolute right-0 top-20  flex items-center space-x-2 bg-white border border-gray-300 rounded-lg shadow-md p-1 z-50">
               <input
                 type="text"
                 className="w-64 p-2 outline-none focus:ring-2 focus:ring-orange-500 rounded-lg"
@@ -226,7 +230,7 @@ const Navbar = () => {
               />
               <button
                 // Close when clicked
-                className="bg-orange-500 p-2 rounded-lg cursor-pointer"
+                className="bg-orange-500 p-3 rounded-lg cursor-pointer"
               >
                 <Search className="text-white" size={20} />
               </button>

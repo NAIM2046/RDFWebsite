@@ -2,6 +2,9 @@ import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
 import slide1 from "../../../assets/1st-slide.webp"; // Adjust the local image path
 import { useNavigate } from "react-router-dom";
+import visionIcon from "/assets/vission.jpg";
+import missionIcon from "/assets/mission.jpg";
+import valueIcon from "/assets/value-1.jpg";
 const Slider = () => {
   const images = [
     {
@@ -10,12 +13,17 @@ const Slider = () => {
       text: "It is not so much for its beauty that the forest makes a claim.",
     },
     {
-      src: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=2940&q=80",
+      src: "/assets/RDF Photo/DJI_0161.JPG",
       header: "The Beauty of Nature",
       text: "The quality of air that emanates from old trees wonderfully changes a weary spirit.",
     },
     {
-      src: "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?auto=format&fit=crop&w=2762&q=80",
+      src: "/assets/RDF Photo/CEMB (7).JPG",
+      header: "The Beauty of Nature",
+      text: "Forests renew the human soul with their silent presence.",
+    },
+    {
+      src: "/assets/RDF Photo/20231226_120135.jpg",
       header: "The Beauty of Nature",
       text: "Forests renew the human soul with their silent presence.",
     },
@@ -25,17 +33,17 @@ const Slider = () => {
     {
       header: "OUR MISSION",
       text: "The journey towards the vision.",
-      icon: "📢",
+      icon: missionIcon,
     },
     {
       header: "OUR VISION",
       text: "The future the NGO intends to create.",
-      icon: "🧭",
+      icon: visionIcon,
     },
     {
       header: "OUR CORE VALUE",
       text: "The guiding principles for which we stand.",
-      icon: "🔄",
+      icon: valueIcon,
     },
   ];
   const navigate = useNavigate();
@@ -43,9 +51,9 @@ const Slider = () => {
     <div className="w-full">
       {/* Slider Section */}
       <Carousel
-        className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px]"
+        className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[600px]"
         autoplay={true}
-        autoplayDelay={5000}
+        autoplayDelay={9000}
         loop={true}
       >
         {images.map((image, index) => (
@@ -67,7 +75,7 @@ const Slider = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="absolute bottom-10 right-5 md:right-10 bg-black/60 p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
+              className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10  p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
             >
               <Typography
                 variant="h1"
@@ -103,9 +111,15 @@ const Slider = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 * index, duration: 0.5 }}
             onClick={() => navigate("/vision-mission")}
-            className="bg-white p-6 rounded-xl shadow-lg max-w-sm text-center flex-shrink-0 w-full sm:w-[300px] cursor-pointer"
+            className="bg-white p-6 rounded-xl shadow-lg max-w-sm flex flex-col items-center text-center w-full sm:w-[300px] cursor-pointer"
           >
-            <div className="text-5xl">{card.icon}</div>
+            <div className="flex justify-center items-center w-16 h-16">
+              <img
+                src={card.icon}
+                alt=""
+                className="w-full h-full object-contain"
+              />
+            </div>
             <Typography
               variant="h5"
               color="red"
