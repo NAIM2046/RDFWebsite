@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaTimes } from "react-icons/fa";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import coverimg from "/assets/RDF Photo/grallerycover1.avif";
-
 const images = [
   {
     id: 1,
@@ -21,6 +20,48 @@ const images = [
     title: "Food Distribution",
     src: "/assets/RDF Photo/CEMB (6).jpg",
     text: "Distributing food to the needy.",
+  },
+  {
+    id: 4,
+    title: "Women Empowerment",
+    src: "/assets/RDF Photo/CEMB (6).jpg",
+    text: "Supporting women through skill development programs.",
+  },
+  {
+    id: 5,
+    title: "Tree Plantation",
+    src: "/assets/RDF Photo/CEMB (6).jpg",
+    text: "Promoting environmental sustainability through tree planting.",
+  },
+  {
+    id: 6,
+    title: "Disaster Relief",
+    src: "/assets/RDF Photo/CEMB (3).JPG",
+    text: "Providing emergency aid to disaster-affected areas.",
+  },
+  {
+    id: 7,
+    title: "Scholarship Program",
+    src: "/assets/RDF Photo/CEMB (4).JPG",
+    text: "Offering financial support to underprivileged students.",
+  },
+  {
+    id: 8,
+    title: "Vocational Training",
+    src: "/assets/RDF Photo/CEMB (11).jpg",
+    text: "Enhancing job opportunities through vocational education.",
+  },
+  {
+    id: 9,
+    title: "Elderly Care",
+    src: "/assets/RDF Photo/CEMB.jpeg",
+    text: "Providing assistance and companionship to senior citizens.",
+  },
+  {
+    id: 10,
+    title: "Community Development",
+    src: "/assets/RDF Photo/CEMB.JPG",
+    text: "Building infrastructure and resources for local communities.",
   },
 ];
 
@@ -98,7 +139,7 @@ const Photo = () => {
       </div>
 
       {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 animate-fadeIn">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center  animate-fadeIn">
           <div className="relative bg-white p-6 rounded-xl shadow-2xl max-w-lg w-full text-center transition-all duration-300 ease-in-out transform scale-95 hover:scale-100">
             <button
               className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"

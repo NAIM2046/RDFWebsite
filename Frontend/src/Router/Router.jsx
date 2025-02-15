@@ -17,6 +17,19 @@ import WeWorkFor from "../Pages/OurWork/WeWorkFor";
 import OurApproach from "../Pages/OurWork/OurApproach";
 import KeyFocusArea from "../Pages/OurWork/KeyFocusArea";
 import Photo from "../Pages/Photo/Photo";
+import Videos from "../Pages/Video/Videos";
+import FounderMessage from "../Pages/FounderMessage/FounderMessage";
+import PolicyDoc from "../Pages/PolicyDoc/PolicyDoc";
+import OurPartners from "../Pages/Ourpartners/Ourpartners";
+import Organogram from "../Pages/Organogram/Organogram";
+import Certifications from "../Pages/Certification/Certification";
+import ContactUs from "../Pages/ContactUs/ContactUs";
+import ProjectPartner from "../Pages/ProjectPartner/ProjectPartner";
+import Intership from "../Pages/Internship/Intership";
+import Voluntear from "../Pages/Voluntear/Voluntear";
+import ActivitiesDetail from "../Components/Navber/OurActivities/ActivitiesDetail";
+import EventsPage from "../Pages/Events/EventsPage";
+import EventDetail from "../Pages/Events/EventDetail";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +91,58 @@ const router = createBrowserRouter([
       {
         path: "/photos",
         element: <Photo></Photo>,
+      },
+      {
+        path: "/videos",
+        element: <Videos></Videos>,
+      },
+      {
+        path: "/founder-messages",
+        element: <FounderMessage></FounderMessage>,
+      },
+      {
+        path: "/policy-document",
+        element: <PolicyDoc></PolicyDoc>,
+      },
+      {
+        path: "/our-partners",
+        element: <OurPartners></OurPartners>,
+      },
+      {
+        path: "/organogram",
+        element: <Organogram></Organogram>,
+      },
+      {
+        path: "/certification",
+        element: <Certifications></Certifications>,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs></ContactUs>,
+      },
+      {
+        path: "/project-partner",
+        element: <ProjectPartner></ProjectPartner>,
+      },
+      {
+        path: "/internship",
+        element: <Intership></Intership>,
+      },
+      {
+        path: "/volunteer",
+        element: <Voluntear></Voluntear>,
+      },
+      {
+        path: "/activities-details",
+        element: <ActivitiesDetail></ActivitiesDetail>,
+      },
+      {
+        path: "/events",
+        element: <EventsPage></EventsPage>,
+      },
+      {
+        path: "/event-details",
+        element: <EventDetail></EventDetail>,
       },
     ],
   },

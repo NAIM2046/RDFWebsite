@@ -11,6 +11,7 @@ import { FaVideo } from "react-icons/fa";
 import { MdMore } from "react-icons/md";
 import { TbAlertSquare } from "react-icons/tb";
 import { RiContactsLine } from "react-icons/ri";
+import { MdEvent } from "react-icons/md";
 import {
   FaAngleDown,
   FaUsers,
@@ -160,6 +161,7 @@ const Navbar = () => {
           icon: <TbAlertSquare />,
         },
         { name: "Contact Us", link: "/contact", icon: <RiContactsLine /> },
+        { name: "Events", link: "/events", icon: <MdEvent /> },
       ],
     },
   ];
