@@ -1,0 +1,110 @@
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  FaBalanceScale,
+  FaLeaf,
+  FaFirstAid,
+  FaChild,
+  FaSolarPanel,
+} from "react-icons/fa";
+import { MdWork, MdTrendingUp } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
+const focusAreas = [
+  {
+    icon: <FaBalanceScale className="text-blue-600 text-5xl" />,
+    title: "Economic Empowerment of the Poor",
+    description:
+      "Expanding opportunities for marginalized communities through sustainable livelihoods.",
+  },
+  {
+    icon: <MdTrendingUp className="text-purple-600 text-5xl" />,
+    title: "Youth Development",
+    description:
+      "Empowering young people with technical, ethical, and life skills for a brighter future.",
+  },
+  {
+    icon: <MdWork className="text-indigo-600 text-5xl" />,
+    title: "Employable Skills Development",
+    description:
+      "Providing industry-relevant skills to improve job opportunities in the 4IR era.",
+  },
+  {
+    icon: <FaLeaf className="text-green-600 text-5xl" />,
+    title: "Climate Change Adaptation & Disaster Risk Reduction",
+    description:
+      "Mitigating climate-induced risks and promoting sustainable agriculture.",
+  },
+  {
+    icon: <FaSolarPanel className="text-orange-600 text-5xl" />,
+    title: "Promotion & Expansion of Renewable Energy",
+    description:
+      "Advancing solar energy solutions to reduce carbon emissions and energy crises.",
+  },
+  {
+    icon: <FaChild className="text-yellow-600 text-5xl" />,
+    title: "Child Rights, Education, and Health",
+    description:
+      "Ensuring education, nutrition, and reproductive health for children and youth.",
+  },
+];
+
+const FocusAreas = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (title) => {
+    navigate("/key-focus-area", { state: { scrollTo: title } });
+  };
+
+  return (
+    <section className="py-16 px-6 bg-gray-50 text-gray-900">
+      <div className="max-w-6xl mx-auto text-center">
+        <motion.h2
+          className="text-4xl font-bold mb-6 text-gray-800"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Focus Areas of RDF
+        </motion.h2>
+        <motion.p
+          className="text-lg text-gray-600 mb-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 1 }}
+        >
+          Our programs focus on economic empowerment, climate resilience,
+          education, and sustainable development.
+        </motion.p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {focusAreas.map((area, index) => (
+            <motion.div
+              key={index}
+              className={`bg-white shadow-lg p-8 rounded-2xl flex flex-col items-center text-center transform transition-all duration-300 hover:scale-[1.05] ${
+                index % 2 === 0 ? "bg-gray-100" : "bg-white"
+              }`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2, duration: 0.8 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              {area.icon}
+              <h3 className="text-xl font-semibold mt-4 text-gray-700">
+                {area.title}
+              </h3>
+              <p className="text-gray-600 mt-2">{area.description}</p>
+              <button
+                onClick={() => handleNavigate(area.title)}
+                className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition cursor-pointer"
+              >
+                See Details
+              </button>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default FocusAreas;

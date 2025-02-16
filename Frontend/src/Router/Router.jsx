@@ -30,6 +30,13 @@ import Voluntear from "../Pages/Voluntear/Voluntear";
 import ActivitiesDetail from "../Components/Navber/OurActivities/ActivitiesDetail";
 import EventsPage from "../Pages/Events/EventsPage";
 import EventDetail from "../Pages/Events/EventDetail";
+import OurStrategy from "../Pages/OurStrategy/OurStrategy";
+import OurHistory from "../Pages/OurHistory/OurHistory";
+import Blog from "../Pages/Blog/Blog";
+import Stroy from "../Pages/Story/Stroy";
+import Publication from "../Pages/Publication/Publication";
+import CareerWithRDF from "../Pages/CareerWithRDF/CareerWithRDF";
+import Notices from "../Pages/Notices/Notices";
 
 const router = createBrowserRouter([
   {
@@ -143,6 +150,34 @@ const router = createBrowserRouter([
       {
         path: "/event-details",
         element: <EventDetail></EventDetail>,
+      },
+      {
+        path: "/our-strategy",
+        element: <OurStrategy></OurStrategy>,
+      },
+      {
+        path: "/our-history",
+        element: <OurHistory></OurHistory>,
+      },
+      {
+        path: "/blogs",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "/story",
+        element: <Stroy></Stroy>,
+      },
+      {
+        path: "/publication",
+        element: <Publication></Publication>,
+      },
+      {
+        path: "/careers",
+        element: <CareerWithRDF></CareerWithRDF>,
+      },
+      {
+        path: "/notice",
+        element: <Notices></Notices>,
       },
     ],
   },

@@ -98,7 +98,7 @@ const ActivitiesDetail = () => {
     },
   ];
   return (
-    <div className="mt-20">
+    <div className="">
       <PageCoverPhoto title={activity.title}></PageCoverPhoto>
       <div>
         <div className="overflow-x-auto p-4 ">

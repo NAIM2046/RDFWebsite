@@ -96,11 +96,7 @@ const Navbar = () => {
           link: "/current-projects",
           icon: <FaNewspaper />,
         },
-        {
-          name: "Archive Projects",
-          link: "/archive-projects",
-          icon: <FaClipboardList />,
-        },
+
         {
           name: "Where We Work",
           link: "/where-we-work",
@@ -121,8 +117,8 @@ const Navbar = () => {
         { name: "Blog", link: "/blogs", icon: <FiBook /> },
         { name: "Story", link: "/story", icon: <FiBook /> },
         {
-          name: "Press and Media",
-          link: "/press-media",
+          name: "Publication",
+          link: "/publication",
           icon: <FaNewspaper />,
         },
         {
