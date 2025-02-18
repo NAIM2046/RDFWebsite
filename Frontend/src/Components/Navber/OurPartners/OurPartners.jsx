@@ -1,72 +1,82 @@
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
-const ImageSlider = () => {
-  const images = [
-    "/assets/usaid-logo.webp",
-    "/assets/bwdb-logo-.webp",
-    "/assets/partner-1.webp",
-    "/assets/partner-10.webp",
-    "/assets/partner-3.webp",
-    "/assets/partner-4.webp",
-    "/assets/DAM-Logo.webp",
+const OurPartners = () => {
+  const responsive = {
+    superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 5 },
+    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 4 },
+    tablet: { breakpoint: { max: 1024, min: 464 }, items: 2 },
+    mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
+  };
+
+  const partners = [
+    {
+      src: "assets/RDF Photo/partner3.png",
+      alt: "USAID",
+      link: "#",
+    },
+    {
+      src: "assets/RDF Photo/partner4.png",
+      alt: "IDCOL",
+      link: "#",
+    },
+    {
+      src: "assets/RDF Photo/partner5.png",
+      alt: "Govt. of Bangladesh",
+      link: "#",
+    },
+    {
+      src: "assets/RDF Photo/partner6.png",
+      alt: "Govt. of Bangladesh",
+      link: "#",
+    },
+    {
+      src: "assets/RDF Photo/partner1.png",
+      alt: "Govt. of Bangladesh",
+      link: "#",
+    },
   ];
 
   return (
-    <div>
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-semibold text-gray-800">
-          Our Development Partners
-        </h2>
-      </div>
-      <div className="flex justify-center items-center bg-gray-100">
-        <Swiper
-          autoplay={{
-            delay: 3000, // Automatically change slide every 3 seconds
-            disableOnInteraction: false, // Keep autoplay after user interaction
-          }}
-          effect={"coverflow"}
-          grabCursor={true}
-          centeredSlides={true}
-          spaceBetween={30}
-          coverflowEffect={{
-            rotate: -20,
-            stretch: 1,
-            depth: 250,
-            modifier: 1,
-            slideShadows: true,
-          }}
-          pagination={{ clickable: true }}
-          modules={[EffectCoverflow, Pagination, Autoplay]} // Include Autoplay module
-          className="w-full max-w-5xl"
-          breakpoints={{
-            320: { slidesPerView: 1 }, // 1 image per view on small screens
-            640: { slidesPerView: 2 }, // 2 images per view on medium screens
-            1024: { slidesPerView: 3 }, // 3 images per view on large screens
-          }}
-        >
-          {images.map((img, index) => (
-            <SwiperSlide
-              key={index}
-              className="w-64 h-64 flex justify-center items-center"
-            >
-              <a href="#">
-                <img
-                  src={img}
-                  alt={`Slide ${index}`}
-                  className="w-full h-full object-cover rounded-xl shadow-lg"
-                />
-              </a>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+    <div className="w-full flex flex-col items-center py-10 bg-white">
+      <h1 className="text-3xl font-bold mb-6 text-gray-700 font-serif">
+        Our Partners
+      </h1>
+
+      <Carousel
+        swipeable={true}
+        draggable={true}
+        showDots={true}
+        responsive={responsive}
+        ssr={true}
+        infinite={true}
+        autoPlay={true}
+        autoPlaySpeed={3000}
+        keyBoardControl={true}
+        customTransition="all .5s ease-in-out"
+        transitionDuration={500}
+        containerClass="carousel-container"
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        dotListClass="custom-dot-list-style"
+        itemClass="carousel-item-padding-40-px"
+      >
+        {partners.map((partner, index) => (
+          <a
+            key={index}
+            href={partner.link}
+            className="flex justify-center items-center p-4"
+          >
+            <img
+              src={partner.src}
+              alt={partner.alt}
+              className="w-40 h-auto object-contain"
+            />
+          </a>
+        ))}
+      </Carousel>
     </div>
   );
 };
 
-export default ImageSlider;
+export default OurPartners;

@@ -3,3 +3,22 @@
 
 
 @plugin "daisyui";
+
+
+.carousel-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+  }
+  .carousel-item-padding-40-px {
+    padding: 10px;
+  }
+  .custom-dot-list-style {
+    position: absolute;
+    bottom: -20px;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+    transition: transform 0.5s ease-in-out;
+  }
+  

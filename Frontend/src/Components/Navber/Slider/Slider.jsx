@@ -53,7 +53,7 @@ const Slider = () => {
       <Carousel
         className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[600px]"
         autoplay={true}
-        autoplayDelay={9000}
+        autoplayDelay={10000}
         loop={true}
       >
         {images.map((image, index) => (
@@ -75,24 +75,24 @@ const Slider = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10  p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
+              className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10  p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-50"
             >
               <Typography
                 variant="h1"
                 color="white"
-                className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold"
+                className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-serif"
               >
                 {image.header}
               </Typography>
               <Typography
                 variant="lead"
                 color="white"
-                className="mb-4 opacity-90 text-xs sm:text-sm md:text-base"
+                className="mb-4 opacity-90 text-xs sm:text-sm md:text-base font-serif"
               >
                 {image.text}
               </Typography>
               <Button
-                className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white bg-red-500 hover:bg-red-600"
+                className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn btn-info hover:bg-red-600"
                 size="md"
               >
                 Read more..
@@ -123,7 +123,7 @@ const Slider = () => {
             <Typography
               variant="h5"
               color="red"
-              className="font-bold uppercase mt-2 mb-3"
+              className="font-bold uppercase mt-2 mb-3 font-serif"
             >
               {card.header}
             </Typography>

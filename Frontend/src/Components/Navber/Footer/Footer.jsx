@@ -8,6 +8,8 @@ import { SlLocationPin } from "react-icons/sl";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
+import { RxTriangleRight } from "react-icons/rx";
 
 const Footer = () => {
   return (
@@ -24,52 +26,80 @@ const Footer = () => {
 
         {/* Find Us */}
         <div>
-          <h6 className="font-semibold  mb-3 text-xl border-b-2 pb-2">
+          <h6 className="font-semibold  mb-3 text-xl border-b-2 pb-2 font-serif">
             Find Us
           </h6>
           <div className="space-y-3">
             <p className="flex gap-1">
-              <FaMapMarkerAlt className=" text-2xl" />{" "}
-              <span className="text-xl font-semibold">Address:</span>
+              <FaMapMarkerAlt className=" text-2xl text-red-600" />{" "}
+              <span className="text-xl font-semibold font-serif">Address:</span>
             </p>
-            <p className="flex items-center gap-2 ml-4">
+            <p className="flex items-center gap-2 ml-4 font-serif">
               Head Office : RDF BHABAN, House #21, Road #12, Pisciculture
               Housing Society, Block-Kha, Adabor, Dhaka-1207
             </p>
             <p className="flex items-center gap-2">
-              <FaPhoneVolume /> +8802-22243850, +8801733065522
+              <FaPhoneVolume className="text-red-500" /> +8802-22243850,
+              +8801733065522
             </p>
             <p className="flex items-center gap-2">
-              <MdEmail /> info@rdfbd.org
+              <MdEmail className="text-red-500" /> info@rdfbd.org
             </p>
           </div>
         </div>
 
         {/* About Us */}
         <div>
-          <h6 className="font-semibold  mb-3 text-xl border-b-2 pb-2">
+          <h6 className="font-semibold  mb-3 text-xl border-b-2 pb-2 font-serif">
             About Us
           </h6>
           <div className="space-y-2">
-            <a className="block hover:text-blue-400 transition">Our Story</a>
-            <a className="block hover:text-blue-400 transition">Contact</a>
-            <a className="block hover:text-blue-400 transition">Careers</a>
-            <a className="block hover:text-blue-400 transition">Press</a>
+            <a className="hover:text-orange-600 hover:underline transition flex space-x-1 cursor-pointer ">
+              {" "}
+              <RxTriangleRight
+                className="text-2xl text-red-700
+              "
+              />{" "}
+              <span className=""> About RDF</span>
+            </a>
+            <a className="hover:text-blue-400 transition flex space-x-1 cursor-pointer ">
+              {" "}
+              <RxTriangleRight className="text-2xl text-red-400" />{" "}
+              <span className=""> Vision and Mission</span>
+            </a>
+            <a className="hover:text-blue-400 transition flex space-x-1 cursor-pointer ">
+              {" "}
+              <RxTriangleRight className="text-2xl text-red-400" />{" "}
+              <span className="">Our Partners and Donors</span>
+            </a>
+            <a className="hover:text-blue-400 transition flex space-x-1 cursor-pointer ">
+              {" "}
+              <RxTriangleRight className="text-2xl text-red-400" />{" "}
+              <span className="">Job Apply</span>
+            </a>
           </div>
         </div>
 
         {/* Useful Links */}
         <div>
-          <h6 className="font-semibold  mb-3 text-xl border-b-2 pb-2">
+          <h6 className="font-semibold  mb-3 text-xl border-b-2 pb-2 font-serif">
             Useful Links
           </h6>
           <div className="space-y-2">
-            <a className="block hover:text-blue-400 transition">Terms of Use</a>
-            <a className="block hover:text-blue-400 transition">
-              Privacy Policy
+            <a className="hover:text-blue-400 transition flex space-x-1 cursor-pointer ">
+              {" "}
+              <RxTriangleRight className="text-2xl text-red-400" />{" "}
+              <span className=""> Blogs and News</span>
             </a>
-            <a className="block hover:text-blue-400 transition">
-              Cookie Policy
+            <a className="hover:text-blue-400 transition flex space-x-1 cursor-pointer ">
+              {" "}
+              <RxTriangleRight className="text-2xl text-red-400" />{" "}
+              <span className="">Publications</span>
+            </a>
+            <a className="hover:text-blue-400 transition flex space-x-1 cursor-pointer ">
+              {" "}
+              <RxTriangleRight className="text-2xl text-red-400" />{" "}
+              <span className="">Notices</span>
             </a>
           </div>
         </div>
@@ -77,7 +107,7 @@ const Footer = () => {
 
       {/* Newsletter */}
       <div className="mt-10 text-center">
-        <h6 className="font-semibold mb-3 text-xl">
+        <h6 className="font-semibold mb-3 text-xl font-serif">
           Subscribe to Our Newsletter
         </h6>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -86,7 +116,7 @@ const Footer = () => {
             placeholder="Enter your email"
             className="px-4 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition cursor-pointer">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition cursor-pointer font-serif">
             Subscribe
           </button>
         </div>
@@ -94,7 +124,7 @@ const Footer = () => {
 
       {/* Social & Copyright */}
       <div className="mt-10 border-t border-gray-700 pt-5 text-center">
-        <p className="text-gray-400 mb-4 text-xl font-semibold">
+        <p className="text-gray-400 mb-4 text-xl font-semibold font-serif">
           Follow us on social media
         </p>
         <div className="flex justify-center gap-5 mb-4">

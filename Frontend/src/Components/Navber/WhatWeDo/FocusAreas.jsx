@@ -7,6 +7,7 @@ import {
   FaChild,
   FaSolarPanel,
 } from "react-icons/fa";
+import { IoIosArrowRoundForward } from "react-icons/io";
 import { MdWork, MdTrendingUp } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
@@ -60,7 +61,7 @@ const FocusAreas = () => {
     <section className="py-16 px-6 bg-gray-50 text-gray-900">
       <div className="max-w-6xl mx-auto text-center">
         <motion.h2
-          className="text-4xl font-bold mb-6 text-gray-800"
+          className="text-4xl font-bold mb-6 text-gray-800 font-serif"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -68,7 +69,7 @@ const FocusAreas = () => {
           Focus Areas of RDF
         </motion.h2>
         <motion.p
-          className="text-lg text-gray-600 mb-10"
+          className="text-lg text-gray-600 mb-10 font-serif"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 1 }}
@@ -80,7 +81,7 @@ const FocusAreas = () => {
           {focusAreas.map((area, index) => (
             <motion.div
               key={index}
-              className={`bg-white shadow-lg p-8 rounded-2xl flex flex-col items-center text-center transform transition-all duration-300 hover:scale-[1.05] ${
+              className={`bg-white shadow-lg p-8 rounded-2xl flex flex-col justify-between items-center text-center h-full border-t-4 border-l-3 border-r-3 border-green-300 transition-all duration-300 hover:border-transparent transform hover:scale-[1.05] ${
                 index % 2 === 0 ? "bg-gray-100" : "bg-white"
               }`}
               initial={{ opacity: 0, y: 30 }}
@@ -88,16 +89,19 @@ const FocusAreas = () => {
               transition={{ delay: index * 0.2, duration: 0.8 }}
               whileHover={{ scale: 1.1 }}
             >
-              {area.icon}
-              <h3 className="text-xl font-semibold mt-4 text-gray-700">
-                {area.title}
-              </h3>
-              <p className="text-gray-600 mt-2">{area.description}</p>
+              <div className="flex flex-col items-center">
+                {area.icon}
+                <h3 className="text-xl font-semibold mt-4 text-gray-700">
+                  {area.title}
+                </h3>
+                <p className="text-gray-600 mt-2">{area.description}</p>
+              </div>
+
               <button
                 onClick={() => handleNavigate(area.title)}
-                className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition cursor-pointer"
+                className="mt-4 px-5 py-2 transition cursor-pointer flex justify-center items-center font-semibold hover:text-green-400 "
               >
-                See Details
+                Read More <IoIosArrowRoundForward className="text-2xl ml-3" />
               </button>
             </motion.div>
           ))}

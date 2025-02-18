@@ -19,6 +19,7 @@ import {
   FaNewspaper,
   FaHandHoldingHeart,
 } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { Search } from "lucide-react";
 import { FiUsers, FiBriefcase, FiBook } from "react-icons/fi";
@@ -164,9 +165,13 @@ const Navbar = () => {
 
   return (
     <nav
-      className={` shadow-lg w-full transition-all duration-300 z-50 ${
-        scrolled ? "fixed bg-white" : " bg-[#f7f773]"
-      }  `}
+      className={`shadow-lg w-full transition-all duration-300 z-50 bg-white 
+    ${
+      scrolled
+        ? "lg:fixed  backdrop-blur-lg bg-white/30 shadow-md"
+        : "lg:static lg:bg-[#9999ff]"
+    }  
+    fixed`}
     >
       <div className="container mx-auto flex justify-between items-center px-4 lg:px-8 py-3">
         {/* Logo */}
@@ -177,7 +182,7 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul
           className={`hidden lg:flex space-x-6 ${
-            scrolled ? "text-black" : "text-black"
+            scrolled ? "text-black" : "text-black "
           } font-semibold`}
         >
           {navItems.map((item, index) => (
@@ -236,16 +241,14 @@ const Navbar = () => {
           {/* Search Icon Button */}
 
           {/* Donate Button */}
-          <a
-            href="#"
-            className="hidden lg:block bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500"
-          >
-            Donate
-          </a>
+          <button className="hidden lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group">
+            DONATE
+            <FaHeart className="text-xl text-red-500 transition-transform duration-900 group-hover:rotate-y-180" />
+          </button>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-white text-2xl cursor-pointer"
+            className="lg:hidden text-black text-2xl cursor-pointer"
             onClick={() => setOpenMenu(!openMenu)}
           >
             {openMenu ? <RxCross2 /> : <SlMenu />}
@@ -265,11 +268,11 @@ const Navbar = () => {
             <RxCross2 className="text-2xl text-gray-700" />
           </button>
         </div>
-        <ul className="p-4 space-y-4 text-gray-800 font-semibold bg-white">
+        <ul className=" absolute z-50 p-4 space-y-4 text-gray-800 font-semibold bg-white ">
           {navItems.map((item, index) => (
-            <li key={index}>
+            <li className="z-50" key={index}>
               <div
-                className="flex justify-between items-center cursor-pointer"
+                className="flex justify-between items-center cursor-pointer "
                 onClick={() =>
                   setActiveDropdown(activeDropdown === index ? null : index)
                 }

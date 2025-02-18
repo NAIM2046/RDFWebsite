@@ -70,7 +70,7 @@ export default function OurActivities() {
       <h3 className="text-sm text-gray-500 tracking-widest uppercase">
         This is What We Do
       </h3>
-      <h2 className="text-3xl font-bold text-indigo-900 mt-2">
+      <h2 className="text-3xl font-bold text-indigo-900 mt-2 font-serif">
         Introduce Our Activities
       </h2>
 
@@ -83,7 +83,7 @@ export default function OurActivities() {
             onClick={() => {
               navigate("/activities-details", { state: { activity } });
             }}
-            className={`rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl`}
+            className={`rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl border-3 cursor-pointer border-white`}
           >
             <img
               src={activity.img}
