@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 
 const partnersData = [
   {
@@ -13,46 +14,46 @@ const partnersData = [
     logo: "/assets/RDF Photo/pd-19.jpg",
     fullName: "Jagonari Women's Empowerment Organization",
     category: "Current Partners",
-    link: "",
+    link: "https://www.savethechildren.net/",
   },
   {
     name: "DAM",
-    logo: "dam-logo.png",
+    logo: "assets/RDF Photo/partner1.png",
     fullName: "Dhaka Ahsania Mission",
     category: "Current Partners",
     link: "",
   },
   {
     name: "DSK",
-    logo: "dsk-logo.png",
+    logo: "assets/RDF Photo/partner2.png",
     fullName: "Dushtha Shasthya Kendra",
     category: "Current Partners",
     link: "",
   },
   {
     name: "ESDO",
-    logo: "esdo-logo.png",
+    logo: "assets/RDF Photo/partner3.png",
     fullName: "Eco-Social Development Organization",
     category: "Current Partners",
     link: "",
   },
   {
     name: "GRAUS",
-    logo: "graus-logo.png",
+    logo: "assets/RDF Photo/partner4.png",
     fullName: "Gram Unnayan Sangathon",
     category: "Current Partners",
     link: "",
   },
   {
     name: "Mukto Akash Bangladesh",
-    logo: "mukto-akash-logo.png",
+    logo: "assets/RDF Photo/partner5.png",
     fullName: "Mukto Akash Bangladesh Foundation",
     category: "Current Partners",
     link: "",
   },
   {
     name: "Plan International",
-    logo: "plan-international-logo.png",
+    logo: "assets/RDF Photo/partner6.png",
     fullName: "Plan International Bangladesh",
     category: "Current Partners",
     link: "",
@@ -140,56 +141,61 @@ const OurPartners = () => {
   const [activeTab, setActiveTab] = useState("Current Partners");
 
   return (
-    <div className="p-6 bg-orange-50 min-h-screen mt-20">
-      <h2 className="text-3xl font-bold text-center text-gray-800">
-        OUR PARTNERS & DONORS
-      </h2>
-      <p className="text-center text-gray-600 max-w-3xl mx-auto mt-2">
-        Our partnerships are one of our key approaches and an essential part of
-        how we achieve success.
-      </p>
+    <div className=" bg-gray-100 min-h-screen pb-10 font-serif">
+      <PageCoverPhoto title={"OUR PARTNERS"}></PageCoverPhoto>
+      <div className="mt-10">
+        <h2 className="text-3xl font-bold text-center text-gray-800">
+          OUR PARTNERS & DONORS
+        </h2>
+        <p className="text-center text-gray-600 max-w-3xl mx-auto mt-2">
+          Our partnerships are one of our key approaches and an essential part
+          of how we achieve success.
+        </p>
 
-      {/* Tabs */}
-      <div className="flex justify-center gap-4 mt-6">
-        {Array.from(
-          new Set(partnersData.map((partner) => partner.category))
-        ).map((category) => (
-          <button
-            key={category}
-            className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-300 ${
-              activeTab === category
-                ? "bg-orange-500 text-white scale-105"
-                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-            }`}
-            onClick={() => setActiveTab(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-
-      {/* Partner Logos */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-6">
-        {partnersData
-          .filter((partner) => partner.category === activeTab)
-          .map((partner) => (
-            <a
-              key={partner.name}
-              href={partner.link || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white p-4 border border-gray-300 rounded-lg flex justify-center items-center relative group overflow-hidden transition-all duration-300 transform hover:scale-110"
+        {/* Tabs */}
+        <div className="flex justify-center gap-4 mt-6">
+          {Array.from(
+            new Set(partnersData.map((partner) => partner.category))
+          ).map((category) => (
+            <button
+              key={category}
+              className={`px-5 py-4  rounded-xl cursor-pointer shadow-lg  text-md font-semibold transition-all duration-300 ${
+                activeTab === category
+                  ? "bg-green-500 text-white scale-105"
+                  : "bg-green-200 text-gray-800 hover:bg-gray-300"
+              }`}
+              onClick={() => setActiveTab(category)}
             >
-              <img
-                src={partner.logo}
-                alt={partner.name}
-                className="w-28 h-28 transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-orange-400 bg-opacity-75 text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-2 text-center">
-                {partner.fullName || partner.name}
-              </div>
-            </a>
+              {category}
+            </button>
           ))}
+        </div>
+
+        {/* Partner Logos */}
+        <div className="flex justify-center ">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-6 max-w-7xl w-auto">
+            {partnersData
+              .filter((partner) => partner.category === activeTab)
+              .map((partner) => (
+                <a
+                  key={partner.name}
+                  href={partner.link || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white p-4 border border-gray-300 rounded-lg shadow-lg flex justify-center items-center relative group overflow-hidden transition-all duration-300 transform hover:scale-110"
+                >
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="w-44 h-44 transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-orange-400 bg-opacity-75 text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-2 text-center">
+                    {partner.fullName || partner.name}
+                  </div>
+                </a>
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );

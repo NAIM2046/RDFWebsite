@@ -5,7 +5,7 @@ import { Dialog } from "@headlessui/react";
 const ProjectPartner = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="bg-gray-100 py-16 mt-24">
+    <div className="bg-gray-100 py-16">
       {/* Introduction */}
       <div className="max-w-5xl mx-auto text-center px-6">
         <h2 className="text-4xl font-bold text-gray-800">

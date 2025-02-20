@@ -1,5 +1,5 @@
 import React from "react";
-import demonfounder from "/assets/RDF Photo/demofounder.jpg";
+import demonfounder from "/assets/CEOphoto/CEO Pic PP.jpg";
 import tower from "/assets/RDF Photo/tower.jpg";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 const FounderMessage = () => {
@@ -12,14 +12,14 @@ const FounderMessage = () => {
         ></PageCoverPhoto>
       </div>
       <div>
-        <div className="min-h-screen flex items-center justify-center  px-6 py-12 mt-2">
-          <div className="max-w-7xl bg-white space-x-3  md:flex">
+        <div className="min-h-screen flex items-center justify-center  px-8 py-12 mt-2 bg-gray-100">
+          <div className="max-w-7xl  space-x-8 rounded-2xl  md:flex">
             {/* Left Side - Founder Image */}
-            <div className="md:w-1/3 flex flex-col justify-center items-center p-6 shadow-lg space-y-4 rounded-lg ">
+            <div className="md:w-1/3 flex flex-col justify-center items-center p-6 shadow-lg space-y-4 rounded-lg bg-white ">
               <img
                 src={demonfounder} // Replace with your actual image path
                 alt="Founder"
-                className=" shadow-lg border-4 border-white"
+                className=" shadow-2xl rounded-2xl "
               />
               <div>
                 <p className="text-3xl font-serif italic ">
@@ -28,10 +28,10 @@ const FounderMessage = () => {
                   reprehenderit ut! Omnis at nisi saepe similique facilis.
                   Repellat illo ab repudiandae delectus qui!
                 </p>
-                <div className="flex  flex-col justify-center items-center">
-                  <p>Dr. John Doe </p>
+                <div className="flex  flex-col justify-center items-center font-serif mt-2">
+                  <p> M Golam Mostofa </p>
                   <h3 className="font-semibold text-lg text-gray-700">
-                    Founder & CEO
+                    Founder & Dhif Executive officer
                   </h3>
                 </div>
               </div>
@@ -39,13 +39,13 @@ const FounderMessage = () => {
               <img
                 src={tower} // Replace with your actual image path
                 alt="Founder"
-                className=" shadow-lg w-full "
+                className=" shadow-2xl w-full "
               />
             </div>
 
             {/* Right Side - Founder Message */}
-            <div className="md:w-2/3 p-6 flex flex-col rounded-lg  shadow-lg">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <div className="md:w-2/3 p-6 flex flex-col rounded-lg  shadow-lg bg-white">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-center font-serif">
                 Message from Our Founder
               </h2>
               <p className="text-gray-600 mt-4 leading-relaxed">

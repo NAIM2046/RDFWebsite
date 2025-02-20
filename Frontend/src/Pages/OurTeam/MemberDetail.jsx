@@ -9,7 +9,7 @@ const MemberDetails = () => {
   return (
     <div className="container mx-auto p-6">
       {/* Profile Section */}
-      <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row gap-6 mt-14">
+      <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row gap-6 mt-1">
         {/* Profile Image */}
         <div className="flex-shrink-0 pt-5 pl-16 pr-16 border-2 border-neutral-300 rounded-lg h-96">
           <img
@@ -57,7 +57,7 @@ const MemberDetails = () => {
           <span
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`cursor-pointer hover:text-blue-800 ${
+            className={`cursor-pointer hover:text-blue-800 font-serif ${
               activeTab === tab.id
                 ? "text-blue-800 border-b-2 border-blue-800"
                 : ""

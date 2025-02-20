@@ -1,42 +1,97 @@
 import React, { useState } from "react";
+import { HiDownload } from "react-icons/hi";
+import { FiFileText } from "react-icons/fi";
 
 // Policy Data with PDF Files
 const policies = [
   {
     id: 1,
-    title: "Privacy Policy",
-    content: "We respect your privacy. Your data will not be shared...",
-    pdf: "/assets/policies/privacy_policy.pdf",
+    name: "Human Resource Management Policy",
+    fileUrl: "/assets/policies/hr-management-policy.pdf",
   },
   {
     id: 2,
-    title: "Terms & Conditions",
-    content:
-      "By using our services, you agree to follow our terms and conditions...",
-    pdf: "/assets/policies/terms_conditions.pdf",
+    name: "Financial Policy",
+    fileUrl: "/assets/policies/financial-policy.pdf",
   },
   {
     id: 3,
-    title: "Refund Policy",
-    content:
-      "We offer refunds under certain conditions. Refund requests must be...",
-    pdf: "/assets/policies/refund_policy.pdf",
+    name: "Procurement Policy",
+    fileUrl: "/assets/policies/procurement-policy.pdf",
   },
   {
     id: 4,
-    title: "Code of Conduct",
-    content:
-      "All users must adhere to ethical guidelines while using our services...",
-    pdf: "/assets/policies/code_of_conduct.pdf",
+    name: "Staff Grievance Policy",
+    fileUrl: "/assets/policies/staff-grievance-policy.pdf",
+  },
+  {
+    id: 5,
+    name: "Child Protection Policy",
+    fileUrl: "/assets/Policy/9. Child Safeguarding Policy.pdf",
+  },
+  {
+    id: 6,
+    name: "Gender Policy",
+    fileUrl: "/assets/policies/gender-policy.pdf",
+  },
+  {
+    id: 7,
+    name: "Monitoring & Evaluation (M&E) Plan & Policy",
+    fileUrl: "/assets/policies/me-policy.pdf",
+  },
+  {
+    id: 8,
+    name: "Whistle Blowing Policy",
+    fileUrl: "/assets/policies/whistle-blowing-policy.pdf",
+  },
+  {
+    id: 9,
+    name: "Data Privacy Policy",
+    fileUrl: "/assets/policies/data-privacy-policy.pdf",
+  },
+  {
+    id: 10,
+    name: "Anti-Modern Slavery Policy",
+    fileUrl: "/assets/policies/anti-modern-slavery-policy.pdf",
+  },
+  {
+    id: 11,
+    name: "Anti-Corruption and Anti-Fraud Policy",
+    fileUrl: "/assets/policies/anti-corruption-policy.pdf",
+  },
+  {
+    id: 12,
+    name: "Prevention of Sexual Harassment & Exploitation and Abuse (PSHEA) Policy",
+    fileUrl: "/assets/policies/pshea-policy.pdf",
+  },
+  {
+    id: 13,
+    name: "ESS Framework",
+    fileUrl: "/assets/policies/ess-framework.pdf",
+  },
+  {
+    id: 14,
+    name: "Travel Policy",
+    fileUrl: "/assets/policies/travel-policy.pdf",
+  },
+  {
+    id: 15,
+    name: "Vehicle Operation & Maintenance Policy",
+    fileUrl: "/assets/policies/vehicle-operation-policy.pdf",
   },
 ];
 
 const PolicyDoc = () => {
-  const [openSection, setOpenSection] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter policies based on user input
+  const filteredPolicies = policies.filter((policy) =>
+    policy.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4 mt-20">
-      {/* Header */}
+    <div className="min-h-screen bg-gray-100 pb-10">
+      {/* Header Section */}
       <div className="bg-gray-800 text-white py-10 text-center">
         <h1 className="text-4xl font-bold">Our Policies</h1>
         <p className="text-lg mt-2">
@@ -44,71 +99,62 @@ const PolicyDoc = () => {
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto mt-10 flex flex-col md:flex-row gap-6">
-        {/* Sidebar - Table of Contents */}
-        <div className="md:w-1/3 bg-white p-6 shadow-lg rounded-lg sticky top-20 h-fit">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">
-            Table of Contents
-          </h2>
-          <ul className="space-y-3">
-            {policies.map((policy) => (
-              <li key={policy.id}>
-                <button
-                  className="text-gray-700 hover:text-gray-900 hover:underline"
-                  onClick={() => setOpenSection(policy.id)}
-                >
-                  {policy.title}
-                </button>
-              </li>
-            ))}
-          </ul>
+      {/* Search Box */}
+      <div className="container mx-auto px-6 py-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <label className="text-gray-700 font-medium">Search Policy:</label>
+          <input
+            type="text"
+            placeholder="Enter policy name"
+            className="p-2 border rounded-lg w-72 text-center shadow-sm"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
+      </div>
 
-        {/* Policy Content */}
-        <div className="md:w-2/3 space-y-6">
-          {policies.map((policy) => (
-            <div
-              key={policy.id}
-              className="bg-white p-6 shadow-lg rounded-lg border border-gray-200"
-            >
-              <button
-                className="w-full text-left text-xl font-semibold text-gray-800 flex justify-between"
-                onClick={() =>
-                  setOpenSection(openSection === policy.id ? null : policy.id)
-                }
+      {/* Policies List */}
+      <div className="container mx-auto px-6 py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPolicies.length > 0 ? (
+            filteredPolicies.map((policy) => (
+              <div
+                key={policy.id}
+                className="bg-white shadow-lg rounded-lg p-6 border border-gray-300 hover:shadow-xl transition-transform transform hover:-translate-y-1 flex flex-col items-center text-center"
               >
-                {policy.title}
-                <span>{openSection === policy.id ? "🔼" : "🔽"}</span>
-              </button>
-              {openSection === policy.id && (
-                <div className="mt-4">
-                  <p className="text-gray-700">{policy.content}</p>
+                <FiFileText className="w-12 h-12 text-blue-600 mb-3" />
 
-                  {/* Buttons */}
-                  <div className="mt-4 flex gap-4">
-                    {/* View Button */}
-                    <a
-                      href={policy.pdf}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition"
-                    >
-                      👀 View
-                    </a>
+                <h2 className="text-lg font-semibold text-gray-800">
+                  {policy.name}
+                </h2>
 
-                    {/* Download Button */}
-                    <a
-                      href={policy.pdf}
-                      download
-                      className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-black transition"
-                    >
-                      📄 Download
-                    </a>
-                  </div>
+                <div className="flex gap-4 mt-4">
+                  {/* View Policy */}
+                  <a
+                    href={policy.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className=" btn btn-outline btn-warning px-4 py-2 rounded-lg  transition duration-300"
+                  >
+                    View
+                  </a>
+
+                  {/* Download Policy */}
+                  <a
+                    href={policy.fileUrl}
+                    download
+                    className=" btn btn-outline btn-dash btn-primary px-4 py-2 rounded-lg flex items-center gap-2  transition duration-300"
+                  >
+                    <HiDownload className="w-5 h-5" />
+                    Download
+                  </a>
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 text-lg w-full">
+              No policies found for the entered search term.
+            </p>
+          )}
         </div>
       </div>
     </div>

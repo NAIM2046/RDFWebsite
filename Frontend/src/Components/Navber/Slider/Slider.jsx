@@ -75,7 +75,7 @@ const Slider = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10  p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-50"
+              className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10  p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
             >
               <Typography
                 variant="h1"

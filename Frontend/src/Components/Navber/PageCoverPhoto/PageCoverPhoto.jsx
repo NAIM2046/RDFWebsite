@@ -16,7 +16,7 @@ const PageCoverPhoto = ({ title, subtitle, imageUrl }) => {
 
       {/* Content */}
       <div className="relative text-center text-white px-6 md:px-12 lg:px-16 max-w-3xl">
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold drop-shadow-lg">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold rounded-3xl bg-black/10 p-2">
           {title}
         </h1>
         <p className="mt-4 text-lg md:text-xl lg:text-2xl font-light drop-shadow-md">

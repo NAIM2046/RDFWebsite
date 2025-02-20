@@ -128,23 +128,32 @@ const OurTeam = () => {
       />
       <div className="container mx-auto p-6">
         {/* Filter Section */}
-        <div className="flex flex-wrap gap-4 mb-6 items-center justify-center">
-          <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center w-full">
-            <input
-              type="text"
-              placeholder="Search by Name or Research Interest"
-              className="p-2 border rounded-lg w-full sm:w-80"
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <select
-              className="p-2 border rounded-lg w-full sm:w-auto"
-              onChange={(e) => setDesignation(e.target.value)}
-            >
-              <option value="">All Members</option>
-              <option value="General Committee">General Committee</option>
-              <option value="Executive Committee">Executive Committee</option>
-              <option value="Senior Management">Senior Management</option>
-            </select>
+        <div className="flex flex-wrap gap-6 mb-8 items-center justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center w-full max-w-2xl">
+            {/* Search Input */}
+            <div className="relative w-full sm:w-80">
+              <input
+                type="text"
+                placeholder="🔍 Search by Name..."
+                className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300 ease-in-out"
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
+            {/* Designation Filter Dropdown */}
+            <div className="relative w-full sm:w-auto">
+              <select
+                className="w-full sm:w-auto p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300 ease-in-out cursor-pointer"
+                onChange={(e) => setDesignation(e.target.value)}
+              >
+                <option value="">🔹 All Members</option>
+                <option value="General Committee">📌 General Committee</option>
+                <option value="Executive Committee">
+                  ⭐ Executive Committee
+                </option>
+                <option value="Senior Management">🏆 Senior Management</option>
+              </select>
+            </div>
           </div>
         </div>
 
