@@ -85,8 +85,16 @@ const Navbar = () => {
       title: "WHAT WE DO",
       icon: <FaClipboardList />,
       links: [
-        { name: "Our Approach", link: "/our-approach", icon: <FaNewspaper /> },
-        { name: "We Work For", link: "/we-work-for", icon: <FiUsers /> },
+        {
+          name: "Our Approach",
+          link: "/our-work#ourapproach",
+          icon: <FaNewspaper />,
+        },
+        {
+          name: "We Work For",
+          link: "/our-work#weworkfor",
+          icon: <FiUsers />,
+        },
         {
           name: "Key Focus Area",
           link: "/key-focus-area",
@@ -100,7 +108,7 @@ const Navbar = () => {
 
         {
           name: "Where We Work",
-          link: "/where-we-work",
+          link: "/our-work#wherewework",
           icon: <MdPlace />,
         },
         {
@@ -114,7 +122,7 @@ const Navbar = () => {
       title: "NEWS & PUBLICATION",
       icon: <FaNewspaper />,
       links: [
-        { name: "News", link: "/recent-news", icon: <FaNewspaper /> },
+        { name: "News", link: "/news", icon: <FaNewspaper /> },
         { name: "Blog", link: "/blogs", icon: <FiBook /> },
         { name: "Story", link: "/story", icon: <FiBook /> },
         {

@@ -9,7 +9,7 @@ const NewsDetails = () => {
     title: "NGO Launches New Initiative to Support Education",
     author: "Admin",
     date: "2025-02-09T12:00:00Z",
-    imageURL: "/assets/newsphoto.jpg",
+    imageURL: "/assets/rdfphoto2/IMG_1070.jpg",
     imageCaption:
       "Children receiving educational materials under the new initiative",
     highlights: [
@@ -98,9 +98,9 @@ const NewsDetails = () => {
           <img
             src={news.imageURL}
             alt={news.title}
-            className="w-full h-full object-cover rounded-lg shadow-sm"
+            className="w-full h-full object-cover rounded-md shadow-sm"
           />
-          <p className="text-sm text-gray-500 mt-2 italic">
+          <p className="text-sm text-gray-500 mt-1 italic">
             {news.imageCaption}
           </p>
         </div>

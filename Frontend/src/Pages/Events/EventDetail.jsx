@@ -8,7 +8,7 @@ const EventDetail = () => {
   console.log(event);
 
   return (
-    <div className="mt-24">
+    <div className="">
       <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Left Content (Main Event) */}
         <div className="md:col-span-2">

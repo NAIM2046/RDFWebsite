@@ -140,9 +140,9 @@ const Photo = () => {
 
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center  animate-fadeIn">
-          <div className="relative bg-white p-6 rounded-xl shadow-2xl max-w-lg w-full text-center transition-all duration-300 ease-in-out transform scale-95 hover:scale-100">
+          <div className="relative bg-white p-2 rounded-md shadow-2xl max-w-lg md:max-w-xl w-full text-center transition-all duration-300 ease-in-out transform scale-95 ">
             <button
-              className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"
+              className="absolute top-2 right-2 text-red-500 cursor-pointer hover:text-red-700 transition-colors duration-300"
               onClick={() => setSelectedImage(null)}
             >
               <FaTimes size={24} />
@@ -158,13 +158,13 @@ const Photo = () => {
             <p className="text-sm text-gray-600">{selectedImage.text}</p>
             <div className="flex justify-between mt-4">
               <button
-                className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
+                className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-300"
                 onClick={handlePrev}
               >
                 <FaArrowLeft size={24} />
               </button>
               <button
-                className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
+                className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-300"
                 onClick={handleNext}
               >
                 <FaArrowRight size={24} />

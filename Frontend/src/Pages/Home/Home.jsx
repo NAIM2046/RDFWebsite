@@ -4,7 +4,7 @@ import ImpactMetrics from "../../Components/Navber/ImpactMetrics/ImpactMetrics";
 import ButtomtoTop from "../../Components/Navber/ButtomtoTop/ButtomtoTop";
 
 import OurProgram from "../../Components/Navber/OurProgram/OurProgram";
-import RecentNews from "../../Components/Navber/RecentNews/RecentNews";
+import RecentNews from "../../Components/Navber/BlogeSection/BlogeSection";
 import OurPartners from "../../Components/Navber/OurPartners/OurPartners";
 import WhoWeAre from "../../Components/Navber/WhoWeAre/WhoWeAre";
 import OurActivities from "../../Components/Navber/OurActivities/OurActivities";

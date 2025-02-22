@@ -30,38 +30,38 @@ const KeyFocusArea = () => {
     {
       title: "Economic Empowerment of the Poor",
       description:
-        "RDF will continue its Economic Empowerment components with new and innovative ventures, expanding geographical coverage for marginal and poor communities.",
-      image: "/assets/key1.webp",
+        "RDF will continue its Economic Empowerment initiatives with innovative ventures, expanding its geographical coverage to enhance the lives and livelihoods of marginal and poor communities, aligning with national priorities and 2030 targets.",
+      image: "/assets/RDF Photo/IMG_8448.JPG",
     },
     {
       title: "Youth Development",
       description:
-        "RDF will focus on skill development for youth, including technical, technological, ethical, and life-skills training, emphasizing girl's education and STEP education.",
-      image: "/assets/key2.webp",
+        "With youth comprising 35% of Bangladesh's population, RDF will focus on their skill development in technical, technological, ethical, and life skills. Special emphasis will be placed on girls' education, skill training, and promoting STEP education to bridge the existing gap.",
+      image: "/assets/DSC03399.JPG",
     },
     {
       title: "Employable Skills Development",
       description:
-        "RDF will provide employable skills training aligned with market needs and the fourth industrial revolution (4IR).",
+        "RDF will expand its efforts in providing employable skills training tailored to market demands in the era of the Fourth Industrial Revolution (4IR), ensuring better career opportunities for beneficiaries.",
       image: "/assets/key3.webp",
     },
     {
       title: "Climate Change Adaptation & Disaster Risk Reduction",
       description:
-        "RDF will work intensively in climate-vulnerable coastal areas, focusing on reducing migration risks, trafficking, and promoting Climate Smart Agriculture (CSA).",
-      image: "/assets/key4.webp",
+        "RDF will intensify its work in climate-vulnerable coastal regions, particularly in Barishal Division, focusing on reducing climate-induced migration, human trafficking risks, and promoting Climate Smart Agriculture (CSA) for sustainable livelihoods.",
+      image: "/assets/RDF Photo/IMG_5223.JPG",
     },
     {
       title: "Promotion and Expansion of Renewable Energy",
       description:
-        "RDF will expand renewable energy initiatives, including solar energy promotion, to support climate change adaptation and carbon reduction efforts.",
+        "To support climate change adaptation and carbon emission reduction, RDF will expand and promote renewable energy solutions, particularly solar energy initiatives, ensuring sustainable and eco-friendly energy access.",
       image: "/assets/key5.webp",
     },
     {
-      title: "Child Rights, Education, and Health",
+      title: "Social Research, Child Rights, Education, and Health",
       description:
-        "RDF will conduct social research for advocacy on education, health, and climate change impacts, leveraging its professional research team.",
-      image: "/assets/key6.webp",
+        "With a dedicated team of professional researchers, RDF will conduct social research to support advocacy at local and national levels. Key focus areas include education (especially girls' education), healthcare, and climate change vulnerability and its impact.",
+      image: "/assets/RDF Photo/IMG_20231015_163140.jpg",
     },
   ];
 
@@ -70,11 +70,10 @@ const KeyFocusArea = () => {
       <PageCoverPhoto
         title="Key Focus Areas by 2030"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
-        imageUrl={coverimg}
       />
 
       <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-3xl font-bold text-center mb-8">
+        <h1 className="text-3xl font-bold text-center mb-8 font-serif">
           Key Focus Areas by 2030
         </h1>
         <div className="space-y-8">
@@ -82,7 +81,7 @@ const KeyFocusArea = () => {
             <div
               key={index}
               ref={focusSectionRefs[area.title]} // Attach ref to each section
-              className={`flex flex-col md:flex-row items-center ${
+              className={`flex flex-col md:flex-row  ${
                 index % 2 === 0 ? "md:flex-row-reverse bg-gray-100" : "bg-white"
               } shadow-lg rounded-lg p-6 hover:shadow-xl transition-all`}
             >
@@ -92,7 +91,7 @@ const KeyFocusArea = () => {
                 className="w-full md:w-1/2 h-full object-cover rounded-md"
               />
               <div className="md:w-1/2 p-4">
-                <h3 className="text-xl font-bold">{area.title}</h3>
+                <h3 className="text-xl font-bold font-serif">{area.title}</h3>
                 <p className="text-gray-600 mt-2">{area.description}</p>
               </div>
             </div>

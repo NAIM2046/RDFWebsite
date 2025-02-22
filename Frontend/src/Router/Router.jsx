@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "../App";
+
 import Main from "../Layout/Main/Main";
 import Home from "../Pages/Home/Home";
 import VisionMission from "../Pages/vision_Mission/VisionMission";
@@ -12,9 +12,7 @@ import AllProjects from "../Components/Navber/AllProjects/AllProjects";
 import ProjectDetails from "../Components/Navber/AllProjects/ProjectDetails";
 import RecentNews from "../Pages/RecentNews/RecentNews";
 import NewsDetails from "../Pages/RecentNews/NewsDetails";
-import OurWork from "../Pages/OurWork/WeWorkFor";
-import WeWorkFor from "../Pages/OurWork/WeWorkFor";
-import OurApproach from "../Pages/OurWork/OurApproach";
+
 import KeyFocusArea from "../Pages/OurWork/KeyFocusArea";
 import Photo from "../Pages/Photo/Photo";
 import Videos from "../Pages/Video/Videos";
@@ -37,6 +35,9 @@ import Stroy from "../Pages/Story/Stroy";
 import Publication from "../Pages/Publication/Publication";
 import CareerWithRDF from "../Pages/CareerWithRDF/CareerWithRDF";
 import Notices from "../Pages/Notices/Notices";
+import OurWork from "../Pages/OurWork/OurWork";
+
+import OurPrograms from "../Pages/OurProgram/OurPrograms";
 
 const router = createBrowserRouter([
   {
@@ -76,24 +77,21 @@ const router = createBrowserRouter([
         element: <ProjectDetails></ProjectDetails>,
       },
       {
-        path: "/recent-news",
+        path: "/news",
         element: <RecentNews></RecentNews>,
       },
       {
-        path: "/recent-news/details",
+        path: "/news/details",
         element: <NewsDetails></NewsDetails>,
       },
-      {
-        path: "/we-work-for",
-        element: <WeWorkFor></WeWorkFor>,
-      },
-      {
-        path: "/our-approach",
-        element: <OurApproach></OurApproach>,
-      },
+
       {
         path: "/key-focus-area",
         element: <KeyFocusArea></KeyFocusArea>,
+      },
+      {
+        path: "/our-work",
+        element: <OurWork></OurWork>,
       },
       {
         path: "/photos",
@@ -178,6 +176,14 @@ const router = createBrowserRouter([
       {
         path: "/notice",
         element: <Notices></Notices>,
+      },
+      {
+        path: "/our-programs",
+        element: <OurPrograms></OurPrograms>,
+      },
+      {
+        path: "/current-projects",
+        element: <AllProjects></AllProjects>,
       },
     ],
   },

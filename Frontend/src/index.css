@@ -22,3 +22,6 @@
     transition: transform 0.5s ease-in-out;
   }
   
+  section {
+    scroll-margin-top: 80px; /* Adjust if navbar height is different */
+  }

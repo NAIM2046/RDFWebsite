@@ -1,150 +1,158 @@
-import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { FaArrowLeft, FaYoutube } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const ProjectInfo = () => {
-  const projectData = {
-    title: "Educational Support Program",
-    duration: "Jan 2024 - Dec 2025",
-    location: "Dhaka, Bangladesh",
-    donor: "XYZ Foundation",
-    budget: "$500,000",
-    details:
-      "This project aims to provide educational resources for underprivileged children in Dhaka, ensuring that they have the necessary tools to succeed in their education. Through book donations, scholarships, and mentorship programs, we strive to bridge the educational gap.",
-    objectives: [
-      "Increase access to quality education",
-      "Provide scholarships for students",
-      "Offer mentorship and guidance programs",
-      "Enhance digital learning resources",
+  const project = {
+    id: 7,
+    name: "Youth Digital Skills Training",
+    programName: "wash",
+    donor: "Tech Innovation Fund",
+    budget: "9,500,000 BDT",
+    startDate: "2024-03-01",
+    endDate: "2025-12-31",
+    projectState: "current",
+    implementingAreas: "Dhaka, Comilla",
+    directBeneficiaries: { male: 4000, female: 5000 },
+    indirectBeneficiaries: { male: 15000, female: 18000 },
+    projectGoal:
+      "To empower women farmers by income-generating activities through gender equality, capacity building, market access and linkages, and sustainable agriculture.",
+    majorInterventions: [
+      "Empowering Women Farmers",
+      "Income Generation",
+      "Gender Equality",
+      "Capacity Building",
+      "Market Access and Linkages",
+      "Sustainable Agriculture",
+      "Food Security and Nutrition",
+      "Community Development",
+      "Women's Leadership and Participation",
+      "Monitoring and Evaluation",
     ],
-    targetPopulation: "Underprivileged children in Dhaka",
-    achievements: [
-      "Distributed 10,000 books",
-      "Provided 500 scholarships",
-      "Established 20 digital learning centers",
+    projectResults:
+      "Empowered 9885 women farmers through income-generating activities, gender equality, capacity building, market access, linkages, and sustainable agriculture.",
+    projectCompletionReport:
+      "Attached Project Final Report / Case Story / Study / Research",
+    remarks: "Popular among students",
+    coverImage: "/assets/rdfphoto1/DSC03050.JPG",
+    images: [
+      "/assets/rdfphoto2/IMG_20201231_111258.jpg",
+      "/assets/rdfphoto2/IMG_20210308_181619.jpg",
     ],
-    image: [
-      "/assets/photo-119-400x284.jpg",
-      "/assets/photo-119-400x284.jpg",
-      "/assets/photo-119-400x284.jpg",
-    ],
-    videoId: "xAz2pJdssIU",
-    news: "Read about the latest developments in this project...",
+    video: "https://www.youtube.com/embed/fZAeUuiV6q0",
   };
-  const [selectedImage, setSelectedImage] = useState(null);
+
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10 mt-10">
+    <div className="max-w-7xl mx-auto p-6 bg-gray-50 text-gray-800">
       {/* Header Section */}
-      <div className="bg-gradient-to-r  bg-white  text-black p-6 rounded-lg text-center shadow-sm">
-        <h1 className="text-4xl font-bold">{projectData.title}</h1>
-        <p className="text-lg mt-2">{projectData.duration}</p>
-        <p className="mt-1 text-sm">
-          📍 {projectData.location} | 💰 Budget: {projectData.budget}
+      <div className="text-center mt-20 md:mt-5">
+        <h1 className="text-3xl font-bold text-gray-900">{project.name}</h1>
+        <p className="text-gray-700 mt-2">
+          <strong>Donor:</strong> {project.donor} | <strong>Budget:</strong>{" "}
+          {project.budget}
         </p>
-        <p className="text-sm mt-1">🤝 Donor: {projectData.donor}</p>
+        <p className="text-gray-700">
+          <strong>Duration:</strong> {project.startDate} - {project.endDate}
+        </p>
       </div>
 
-      {/* Project Overview */}
-      <div className="mt-8 bg-white p-6 rounded-lg ">
-        <h2 className="text-2xl font-semibold text-gray-800">
-          🌟 Project Overview
-        </h2>
-        <p className="mt-3 text-gray-700">{projectData.details}</p>
-      </div>
-
-      {/* Objectives & Target Audience */}
-      <div className="mt-8 flex flex-col md:flex-row gap-8">
-        <div className="bg-yellow-100 p-6 rounded-lg shadow-md w-full md:w-1/2">
-          <h3 className="text-xl font-semibold text-gray-800">🎯 Objectives</h3>
-          <ul className="mt-3 list-disc pl-5 text-gray-700">
-            {projectData.objectives.map((obj, index) => (
-              <li key={index}>{obj}</li>
-            ))}
-          </ul>
+      {/* Image & Media Section */}
+      <div className="flex flex-col md:flex-row gap-4 mt-6">
+        {/* Cover Image */}
+        <div className="">
+          <img
+            src={project.coverImage}
+            alt="Project Cover"
+            className="rounded-lg shadow-lg w-full object-cover"
+          />
         </div>
-        <div className="bg-green-100 p-6 rounded-lg shadow-md w-full md:w-1/2">
-          <h3 className="text-xl font-semibold text-gray-800">
-            👥 Target Population
-          </h3>
-          <p className="mt-3 text-gray-700">{projectData.targetPopulation}</p>
-        </div>
-      </div>
 
-      {/* Achievements */}
-      <div className="mt-8 bg-blue-100 p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold text-gray-800">
-          🏆 Achievements
-        </h2>
-        <ul className="mt-3 list-disc pl-5 text-gray-700">
-          {projectData.achievements.map((achievement, index) => (
-            <li key={index}>{achievement}</li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Gallery & Video Section */}
-      <div className="mt-8 flex flex-col md:flex-row gap-8">
-        {/* Image Gallery */}
-        <div className="w-full md:w-1/2">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">
-            📸 Project Gallery
-          </h3>
-          <div className="grid grid-cols-3 gap-4">
-            {projectData.image.map((img, index) => (
+        {/* Additional Images & Video */}
+        <div className="md:w-3/2">
+          <div className="grid grid-cols-1 gap-2">
+            {project.images.map((img, index) => (
               <img
                 key={index}
                 src={img}
-                alt={`Project Image ${index}`}
-                onClick={() => setSelectedImage(img)}
-                className="rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+                alt={`Project ${index}`}
+                className="rounded-lg shadow-md w-full object-cover"
               />
             ))}
           </div>
-        </div>
-        {selectedImage && (
-          <div
-            className="fixed top-0 left-0 w-full h-full  bg-opacity-80 flex justify-center items-center z-50"
-            onClick={() => setSelectedImage(null)} // Close on background click
-          >
-            <div className="relative">
-              {/* Close Button */}
-              <button
-                className="absolute top-2 right-2 bg-white text-black p-2 rounded-full shadow-md hover:bg-red-200 hover:text-white transition"
-                onClick={() => setSelectedImage(null)}
-              >
-                ❌
-              </button>
-              {/* Fullscreen Image */}
-              <img
-                src={selectedImage}
-                alt="Selected"
-                className=" rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
-        )}
-        {/* Video Section */}
-        <div className="w-full md:w-1/2">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">
-            🎥 Project Video
-          </h3>
-          <div className="relative">
+          <div className="mt-4">
             <iframe
-              className="w-full h-56 rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
-              src={`https://www.youtube.com/embed/${projectData.videoId}`}
+              className="w-full h-64 rounded-lg shadow-md"
+              src={project.video}
               title="Project Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>
         </div>
       </div>
 
-      {/* News Section */}
-      <div className="mt-8 text-center">
-        <a
-          href="#"
-          className="text-lg text-purple-600 font-semibold hover:underline"
-        >
-          📰 {projectData.news}
-        </a>
+      {/* Project Details Section */}
+      <div className="mt-6 p-2 mx-auto max-w-6xl md:p-8">
+        <p className="text-lg text-gray-700 font-medium">
+          <strong>Project Goal:</strong>
+          {project.projectGoal}
+        </p>
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left Side Details */}
+          <div>
+            <p>
+              <strong>Program:</strong> {project.programName}
+            </p>
+            <p>
+              <strong>State:</strong> {project.projectState}
+            </p>
+            <p>
+              <strong>Areas:</strong> {project.implementingAreas}
+            </p>
+            <p>
+              <strong>Completion Report:</strong>{" "}
+              {project.projectCompletionReport}
+            </p>
+            <p>
+              <strong>Remarks:</strong> {project.remarks}
+            </p>
+          </div>
+
+          {/* Beneficiaries */}
+          <div>
+            <p>
+              <strong>Direct Beneficiaries:</strong> Male:{" "}
+              {project.directBeneficiaries.male}, Female:{" "}
+              {project.directBeneficiaries.female}
+            </p>
+            <p>
+              <strong>Indirect Beneficiaries:</strong> Male:{" "}
+              {project.indirectBeneficiaries.male}, Female:{" "}
+              {project.indirectBeneficiaries.female}
+            </p>
+          </div>
+        </div>
+
+        {/* Major Interventions */}
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-gray-900">
+            Major Interventions
+          </h2>
+          <ul className="list-disc list-inside text-gray-700 mt-2">
+            {project.majorInterventions.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Project Results */}
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-gray-900">
+            Project Results
+          </h2>
+          <p className="text-gray-700">{project.projectResults}</p>
+        </div>
       </div>
     </div>
   );

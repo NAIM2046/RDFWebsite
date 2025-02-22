@@ -1,8 +1,8 @@
 import { useState } from "react";
 import NewsFilter from "./NewsFilter";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
-import newscover from "/assets/newscover.jpg";
-import { useNavigate } from "react-router-dom";
+
+import { useLocation, useNavigate } from "react-router-dom";
 const newsData = [
   {
     id: 1,
@@ -76,6 +76,10 @@ const RecentNews = () => {
   const newsPerPage = 4;
   const [filteredRegion, setFilteredRegion] = useState("All Regions");
   const [filteredTheme, setFilteredTheme] = useState("All Themes");
+  const location = useLocation();
+  const path = location.pathname.split("/").filter(Boolean).pop();
+
+  console.log(path);
 
   const filteredNews = newsData.filter(
     (news) =>
@@ -93,13 +97,14 @@ const RecentNews = () => {
     <div>
       <div>
         <PageCoverPhoto
-          title=""
+          title={path.toUpperCase()}
           subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
-          imageUrl={newscover}
         ></PageCoverPhoto>
       </div>
       <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Latest News</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          LATES {path.toUpperCase()}
+        </h1>
 
         {/* Filters */}
         <div className="flex gap-4 mb-6">
@@ -139,7 +144,7 @@ const RecentNews = () => {
                 <p className="text-gray-600 mt-2">{news.description}</p>
                 <a
                   onClick={() => {
-                    navigate("/recent-news/details");
+                    navigate("/news/details");
                   }}
                   className="text-blue-600 font-medium mt-2 inline-block cursor-pointer"
                 >

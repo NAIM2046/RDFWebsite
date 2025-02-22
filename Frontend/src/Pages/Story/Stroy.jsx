@@ -1,9 +1,10 @@
 import React from "react";
+import RecentNews from "../RecentNews/RecentNews";
 
 const Stroy = () => {
   return (
     <div>
-      <h1 className="text-3xl text-center">Story page </h1>
+      <RecentNews></RecentNews>
     </div>
   );
 };

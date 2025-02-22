@@ -41,7 +41,7 @@ const RelateNews = () => {
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="font-manrope text-4xl font-bold text-gray-900 text-center mb-10">
-          Project Relate News
+          Relate News
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {blogs.map((blog) => (
@@ -62,7 +62,7 @@ const RelateNews = () => {
                 <p className="text-gray-500 mt-2">{blog.description}</p>
                 <button
                   onClick={() => {
-                    nagivate("/recent-news/details");
+                    nagivate("/news/details");
                   }}
                   className="block text-indigo-600 font-semibold mt-4 cursor-pointer"
                 >
@@ -75,7 +75,7 @@ const RelateNews = () => {
         {/* View All Button */}
         <div className="text-center mt-12">
           <a
-            href="/all-blogs"
+            href="/news"
             className="text-lg text-indigo-600 font-semibold hover:underline"
           >
             View All News

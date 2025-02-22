@@ -3,7 +3,7 @@ import { FaLocationDot } from "react-icons/fa6";
 const ContactUs = () => {
   return (
     <div>
-      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 p-8 bg-gray-200 min-h-screen mt-24">
+      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 p-8 bg-gray-200 min-h-screen">
         <div className="max-w-7xl  flex flex-col md:flex-row w-full shadow-lg rounded-3xl overflow-hidden space-x-4">
           {/* Left Side - Image */}
           <div className="w-full md:w-1/3 h-full bg-white  shadow-2xl rounded-3xl">
@@ -28,7 +28,7 @@ const ContactUs = () => {
               >
                 <FaLocationDot className="text-orange-400" /> Head Office
               </a>
-              <p className="text-gray-600">542J+P8P, Police Line Rd, Barguna</p>
+              <p className="text-gray-600">542J+P8P, Police Line Rd, Dhaka</p>
             </div>
 
             {/* Dhaka Office */}
@@ -52,7 +52,6 @@ const ContactUs = () => {
               </h3>
               <p className="text-gray-600">
                 <strong>Head Office:</strong> rdfbangladesh@hotmail.com,
-                zamenesdo@gmail.com
               </p>
               <p className="text-gray-600">
                 <strong>Dhaka Office:</strong> rdfbangladesh@hotmail.com
