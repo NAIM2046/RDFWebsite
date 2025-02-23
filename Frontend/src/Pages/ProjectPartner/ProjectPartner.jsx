@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import OurPartners from "../Ourpartners/Ourpartners";
-import { Dialog } from "@headlessui/react";
 
 const ProjectPartner = () => {
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="bg-gray-100 py-16">
       {/* Introduction */}
@@ -34,11 +31,6 @@ const ProjectPartner = () => {
           <h3 className="text-3xl font-bold text-red-600">120+</h3>
           <p className="text-gray-700">Emergency responses in 2023</p>
         </div>
-      </div>
-
-      {/* Current Partners */}
-      <div className="mt-16 max-w-6xl mx-auto px-6">
-        <OurPartners></OurPartners>
       </div>
 
       {/* Benefits of Partnering */}
@@ -79,39 +71,14 @@ const ProjectPartner = () => {
       </div>
 
       {/* Call to Action */}
-      <div className="mt-16 text-center">
+      <div className="mt-16 text-center flex flex-col items-center">
         <h2 className="text-3xl font-bold text-gray-800">Partner With Us</h2>
         <p className="text-lg text-gray-600 mt-4">
           Let's create meaningful change together.
         </p>
-        <button
-          onClick={() => setIsOpen(true)}
-          className="mt-6 bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition"
-        >
-          Get in Touch
-        </button>
-      </div>
-      <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="fixed inset-0 flex items-center justify-center z-50"
-      >
-        {/* Overlay */}
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50"
-          aria-hidden="true"
-        ></div>
 
         {/* Modal Content */}
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
-          {/* Close Button */}
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-          >
-            ✖
-          </button>
-
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 mt-6">
           {/* Form Title */}
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
             Submit an Inquiry
@@ -176,7 +143,7 @@ const ProjectPartner = () => {
             .
           </p>
         </div>
-      </Dialog>
+      </div>
     </div>
   );
 };

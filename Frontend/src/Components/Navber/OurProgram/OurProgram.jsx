@@ -8,7 +8,7 @@ const programs = [
     id: "food-security",
     title: "Food Security, Livelihood, Skills and Economic Empowerment",
     description:
-      "Enhancing food security, livelihoods, and economic opportunities through skill development and empowerment initiatives.",
+      "Enhancing food security, livelihoods, and economic opportunities through skill development and empowerment initiatives Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui blanditiis, consequatur sunt deserunt magni reprehenderit laborum eius adipisci eveniet inventore animi nihil! Ea, fugit accusantium quod delectus eligendi veritatis repudiandae..",
     projects: [
       "Sustainable farming practices",
       "Vocational training programs",
@@ -227,7 +227,7 @@ const OurProgram = () => {
                         key={index}
                         className="text-gray-700 border-b border-gray-300 pb-1 mb-2 cursor-pointer hover:text-orange-500 transition"
                       >
-                        {project}
+                        <a href="/project-details"> {project}</a>
                       </li>
                     ))}
                   </ul>

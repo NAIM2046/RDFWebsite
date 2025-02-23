@@ -10,7 +10,7 @@ const ProgramDetails = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-10 lg:py-16">
+    <div className="container mx-auto max-w-7xl px-4 py-10 lg:py-16">
       {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-16">
         {/* Left Side - Text & Info */}
@@ -38,7 +38,7 @@ const ProgramDetails = () => {
             <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
               {program.projects.map((project, index) => (
                 <li key={index} className="border-b pb-1">
-                  {project}
+                  <a href="/project-details"> {project}</a>
                 </li>
               ))}
             </ul>
@@ -66,7 +66,7 @@ const ProgramDetails = () => {
           </div>
 
           {/* Video Embed */}
-          <div className="w-full sm:w-96 h-48">
+          <div className="w-full sm:w-[500px] h-64">
             <iframe
               className="w-full h-full rounded-lg shadow-md"
               src="https://www.youtube.com/embed/vrgfD6OjAJE"

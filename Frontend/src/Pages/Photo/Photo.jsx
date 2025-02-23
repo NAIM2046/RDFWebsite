@@ -94,53 +94,54 @@ const Photo = () => {
   };
 
   return (
-    <div className="p-4 mx-auto max-w-7xl">
+    <div className="">
       <PageCoverPhoto
         title="Our Gallery"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
-        imageUrl={coverimg}
       ></PageCoverPhoto>
 
-      <div className="flex justify-center my-6">
-        <select
-          value={selectedTitle}
-          onChange={(e) => setSelectedTitle(e.target.value)}
-          className="p-3 border rounded-full w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] bg-gradient-to-r text-black text-base md:text-lg font-semibold shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-300 ease-in-out transform hover:scale-105"
-        >
-          <option value="" className="text-gray-700 text-base md:text-lg p-2">
-            All Categories
-          </option>
-          {images.map((img) => (
-            <option
-              key={img.id}
-              value={img.title}
-              className="text-gray-800 p-2"
-            >
-              {img.title}
+      <div className="mx-auto max-w-7xl">
+        <div className="flex justify-center my-6">
+          <select
+            value={selectedTitle}
+            onChange={(e) => setSelectedTitle(e.target.value)}
+            className="p-3 border rounded-full w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] bg-gradient-to-r text-black text-base md:text-lg font-semibold shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-300 ease-in-out transform hover:scale-105"
+          >
+            <option value="" className="text-gray-700 text-base md:text-lg p-2">
+              All Categories
             </option>
-          ))}
-        </select>
-      </div>
+            {images.map((img) => (
+              <option
+                key={img.id}
+                value={img.title}
+                className="text-gray-800 p-2"
+              >
+                {img.title}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto max-w-6xl">
-        {filteredImages.map((img) => (
-          <div key={img.id} className="text-center">
-            <img
-              src={img.src}
-              alt={img.title}
-              className="w-full max-w-[350px] mx-auto object-cover cursor-pointer rounded-xl shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110"
-              onClick={() => setSelectedImage(img)}
-            />
-            <p className="mt-2 text-lg font-semibold text-gray-700">
-              {img.title}
-            </p>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto max-w-6xl">
+          {filteredImages.map((img) => (
+            <div key={img.id} className="text-center">
+              <img
+                src={img.src}
+                alt={img.title}
+                className="w-full max-w-[350px] mx-auto object-cover cursor-pointer  shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
+                onClick={() => setSelectedImage(img)}
+              />
+              <p className="mt-2 text-lg font-semibold text-gray-700">
+                {img.title}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center  animate-fadeIn">
-          <div className="relative bg-white p-2 rounded-md shadow-2xl max-w-lg md:max-w-xl w-full text-center transition-all duration-300 ease-in-out transform scale-95 ">
+          <div className="relative bg-white  rounded-md shadow-2xl max-w-lg md:max-w-xl w-full text-center transition-all duration-300 ease-in-out transform scale-95 ">
             <button
               className="absolute top-2 right-2 text-red-500 cursor-pointer hover:text-red-700 transition-colors duration-300"
               onClick={() => setSelectedImage(null)}
@@ -156,7 +157,7 @@ const Photo = () => {
               {selectedImage.title}
             </h2>
             <p className="text-sm text-gray-600">{selectedImage.text}</p>
-            <div className="flex justify-between mt-4">
+            <div className="flex justify-between ml-4 mr-4 mb-2">
               <button
                 className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-300"
                 onClick={handlePrev}

@@ -2,21 +2,21 @@ import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 const ContactUs = () => {
   return (
-    <div>
-      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 p-8 bg-gray-200 min-h-screen">
-        <div className="max-w-7xl  flex flex-col md:flex-row w-full shadow-lg rounded-3xl overflow-hidden space-x-4">
+    <div className="mx-auto max-w-7xl">
+      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 p-8 bg-gray-200 ">
+        <div className="max-w-7xl  flex flex-col md:flex-row w-full shadow-lg rounded-xl overflow-hidden space-x-4">
           {/* Left Side - Image */}
-          <div className="w-full md:w-1/3 h-full bg-white  shadow-2xl rounded-3xl">
+          <div className="w-full md:w-1/3 h-full bg-white   rounded-3xl">
             <img
               src="/assets/RDF Photo/tower.jpg" // Replace with your image path
               alt="Office Building"
-              className="w-full h-full object-cover rounded-3xl"
+              className="w-full h-full object-cover rounded-xl shadow-2xl "
             />
           </div>
 
           {/* Right Side - Contact Info */}
           <div className="w-full md:w-2/3 flex flex-col justify-between p-8 bg-white shadow-2xl rounded-3xl">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center font-serif">
               Contact Us
             </h2>
 

@@ -23,7 +23,7 @@ const JoinUs = ({ header }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r flex flex-col items-center justify-center py-12 px-6">
+    <div className="min-h-screen mx-auto  bg-gradient-to-r flex flex-col items-center justify-center py-12 px-6">
       <h1 className="text-4xl font-bold  text-center mb-8">{header}</h1>
       <form
         onSubmit={handleSubmit}
@@ -102,7 +102,7 @@ const JoinUs = ({ header }) => {
 
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 rounded-md hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 transition duration-300"
+          className="w-[70%] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 rounded-md hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 transition duration-300"
         >
           Submit Application
         </button>
