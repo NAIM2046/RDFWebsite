@@ -38,6 +38,7 @@ import Notices from "../Pages/Notices/Notices";
 import OurWork from "../Pages/OurWork/OurWork";
 
 import OurPrograms from "../Pages/OurProgram/OurPrograms";
+import Admin from "../Layout/Admin/Admin";
 
 const router = createBrowserRouter([
   {
@@ -186,6 +187,10 @@ const router = createBrowserRouter([
         element: <AllProjects></AllProjects>,
       },
     ],
+  },
+  {
+    path: "/admin-rdf",
+    element: <Admin></Admin>,
   },
 ]);
 export default router;

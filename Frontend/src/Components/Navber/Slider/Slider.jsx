@@ -8,7 +8,7 @@ import valueIcon from "/assets/value-1.jpg";
 const Slider = () => {
   const images = [
     {
-      src: slide1,
+      src: "https://i.ibb.co.com/b51cBsPp/BNFP-3.jpg",
       header: "The Beauty of Nature",
       text: "It is not so much for its beauty that the forest makes a claim.",
     },
