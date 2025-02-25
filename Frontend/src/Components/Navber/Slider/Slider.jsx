@@ -5,29 +5,49 @@ import { useNavigate } from "react-router-dom";
 import visionIcon from "/assets/vission.jpg";
 import missionIcon from "/assets/mission.jpg";
 import valueIcon from "/assets/value-1.jpg";
+import useRDFStore from "../../../storage/useRDFstorage";
+import { useEffect, useState } from "react";
+import useAxiosPublic from "../../../Hook/useAxiosPublice";
 const Slider = () => {
-  const images = [
-    {
-      src: "https://i.ibb.co.com/b51cBsPp/BNFP-3.jpg",
-      header: "The Beauty of Nature",
-      text: "It is not so much for its beauty that the forest makes a claim.",
-    },
-    {
-      src: "/assets/RDF Photo/DJI_0161.JPG",
-      header: "The Beauty of Nature",
-      text: "The quality of air that emanates from old trees wonderfully changes a weary spirit.",
-    },
-    {
-      src: "/assets/RDF Photo/CEMB (7).JPG",
-      header: "The Beauty of Nature",
-      text: "Forests renew the human soul with their silent presence.",
-    },
-    {
-      src: "/assets/RDF Photo/20231226_120135.jpg",
-      header: "The Beauty of Nature",
-      text: "Forests renew the human soul with their silent presence.",
-    },
-  ];
+  const { isLoading, sliderinfo, fetchsliderinfo } = useRDFStore();
+  // const [sliderinfo, setsliderinfo] = useState([]);
+  // const Axios = useAxiosPublic();
+  // const fetchsliderinfo = () => {
+  //   Axios.get("http://localhost:3001/slider").then((res) => {
+  //     console.log(res.data);
+  //     setsliderinfo(res.data);
+  //   });
+  // };
+  console.log(sliderinfo);
+  useEffect(() => {
+    if (sliderinfo.length === 0) {
+      fetchsliderinfo();
+    }
+    console.log(sliderinfo);
+  }, [sliderinfo.length, fetchsliderinfo]);
+
+  // const images = [
+  //   {
+  //     src: "https://i.ibb.co.com/b51cBsPp/BNFP-3.jpg",
+  //     header: "The Beauty of Nature",
+  //     text: "It is not so much for its beauty that the forest makes a claim.",
+  //   },
+  //   {
+  //     src: "/assets/RDF Photo/DJI_0161.JPG",
+  //     header: "The Beauty of Nature",
+  //     text: "The quality of air that emanates from old trees wonderfully changes a weary spirit.",
+  //   },
+  //   {
+  //     src: "/assets/RDF Photo/CEMB (7).JPG",
+  //     header: "The Beauty of Nature",
+  //     text: "Forests renew the human soul with their silent presence.",
+  //   },
+  //   {
+  //     src: "/assets/RDF Photo/20231226_120135.jpg",
+  //     header: "The Beauty of Nature",
+  //     text: "Forests renew the human soul with their silent presence.",
+  //   },
+  // ];
 
   const cards = [
     {
@@ -56,7 +76,7 @@ const Slider = () => {
         autoplayDelay={10000}
         loop={true}
       >
-        {images.map((image, index) => (
+        {sliderinfo.map((image, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, scale: 0.95 }}
@@ -68,6 +88,7 @@ const Slider = () => {
             <img
               src={image.src}
               alt={`Slide ${index + 1}`}
+              loading="lazy"
               className="w-full h-full object-cover object-center"
             />
             {/* Text Overlay */}
