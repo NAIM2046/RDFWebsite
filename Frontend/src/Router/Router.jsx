@@ -40,7 +40,7 @@ import OurWork from "../Pages/OurWork/OurWork";
 import OurPrograms from "../Pages/OurProgram/OurPrograms";
 import Admin from "../Layout/Admin/Admin";
 import Sliderinfo from "../AdminPage/Sliderinfo/Sliderinfo";
-import AdminHome from "../AdminPage/Sliderinfo/adminHome";
+import AdminHome from "../AdminPage/AdminHome/AdminHome";
 
 const router = createBrowserRouter([
   {
