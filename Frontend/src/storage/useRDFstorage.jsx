@@ -13,7 +13,7 @@ const useRDFStore = create((set) => ({
     set({ isLoading: true });
     try {
       const response = await axios.get(
-        "http://localhost:3001/slider"
+        "https://rdfwebsite-production.up.railway.app/slider"
         // https://rdfwebsite-production.up.railway.app/
       );
       set({ sliderinfo: response.data, isLoading: false });
@@ -26,7 +26,7 @@ const useRDFStore = create((set) => ({
     set({ isLoading: true });
     try {
       const response = await axios.get(
-        "http://localhost:3001/programs"
+        "https://rdfwebsite-production.up.railway.app/programs"
         // https://rdfwebsite-production.up.railway.app/
       );
       set({ programs: response.data, isLoading: false });
@@ -39,8 +39,7 @@ const useRDFStore = create((set) => ({
     set({ isLoading: true });
     try {
       const response = await axios.get(
-        "http://localhost:3001/projects"
-        // https://rdfwebsite-production.up.railway.app/
+        "https://rdfwebsite-production.up.railway.app/projects"
       );
       set({ projects: response.data, isLoading: false });
     } catch (error) {
