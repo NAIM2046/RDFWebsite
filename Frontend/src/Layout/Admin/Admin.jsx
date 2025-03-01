@@ -47,7 +47,19 @@ const Admin = () => {
                 <li>
                   <NavLink to="/admin-rdf/slider-info">
                     <FaList></FaList>
-                    Slider Info
+                    Slider Info Menagement
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-rdf/program-page">
+                    <FaList></FaList>
+                    Program Menagement
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-rdf/project-page">
+                    <FaList></FaList>
+                    Project Menagement
                   </NavLink>
                 </li>
               </>

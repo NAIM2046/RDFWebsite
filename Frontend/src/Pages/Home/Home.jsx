@@ -14,10 +14,12 @@ const Home = () => {
   return (
     <div>
       <Slider></Slider>
-      <ImpactMetrics></ImpactMetrics>
-      <OurProgram></OurProgram>
-      <FocusAreas></FocusAreas>
+
       <WhoWeAre></WhoWeAre>
+      <OurProgram></OurProgram>
+      <ImpactMetrics></ImpactMetrics>
+      <FocusAreas></FocusAreas>
+
       <OurActivities></OurActivities>
       <RecentNews></RecentNews>
       <OurPartners></OurPartners>

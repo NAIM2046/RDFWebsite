@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react"; // Using Lucide icons
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import useRDFStore from "../../../storage/useRDFstorage";
 
 const programs = [
   {
@@ -89,6 +90,15 @@ const OurProgram = () => {
   const navigate = useNavigate();
   const autoChangeRef = useRef(null);
 
+  // const { programs, fetchPrograms } = useRDFStore();
+
+  // useEffect(() => {
+  //   if (programs.length === 0) {
+  //     fetchPrograms();
+  //   }
+  //   console.log(programs);
+  // }, []);
+
   // Function to check if scrolling is needed
   const checkScrollButtons = () => {
     if (tabRef.current) {
@@ -161,7 +171,7 @@ const OurProgram = () => {
           {programs.map((program) => (
             <div
               key={program.id}
-              className={`px-2 py-2 pt-4 pb-4 text-[14px] font-medium rounded-lg transition-all cursor-pointer text-center  min-w-[150px] sm:min-w-[160px] md:min-w-[180px] 
+              className={`px-2 py-2 pt-4 pb-4 shadow-lg text-[14px] font-medium rounded-lg transition-all cursor-pointer text-center  min-w-[150px] sm:min-w-[160px] md:min-w-[180px] 
       ${
         selected === program.id
           ? "bg-green-400 text-black"

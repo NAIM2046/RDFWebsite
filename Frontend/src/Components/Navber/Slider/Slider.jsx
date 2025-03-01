@@ -52,17 +52,17 @@ const Slider = () => {
   const cards = [
     {
       header: "OUR MISSION",
-      text: "The journey towards the vision.",
+      text: "RDF helps the poor by ensuring rights, education, skills, health, and resilience.",
       icon: missionIcon,
     },
     {
       header: "OUR VISION",
-      text: "The future the NGO intends to create.",
+      text: "RDF envisions a just, equitable society empowering women, children, and inclusivity.",
       icon: visionIcon,
     },
     {
       header: "OUR CORE VALUE",
-      text: "The guiding principles for which we stand.",
+      text: "Transparency, Accountability, Inclusiveness, Values, Respect, Integrity.",
       icon: valueIcon,
     },
   ];
@@ -71,9 +71,9 @@ const Slider = () => {
     <div className="w-full">
       {/* Slider Section */}
       <Carousel
-        className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[600px]"
+        className="w-full h-[400px]  md:h-[450px] lg:h-[500px] xl:h-[550px]"
         autoplay={true}
-        autoplayDelay={10000}
+        autoplayDelay={30000}
         loop={true}
       >
         {sliderinfo.map((image, index) => (
@@ -113,7 +113,7 @@ const Slider = () => {
                 {image.text}
               </Typography>
               <Button
-                className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn btn-info hover:bg-red-600"
+                className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn btn-info hover:"
                 size="md"
               >
                 Read more..
@@ -132,7 +132,7 @@ const Slider = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 * index, duration: 0.5 }}
             onClick={() => navigate("/vision-mission")}
-            className="bg-white p-6 rounded-xl shadow-lg max-w-sm flex flex-col items-center text-center w-full sm:w-[300px] cursor-pointer"
+            className="bg-white p-6 rounded-xl shadow-lg shadow-gray-300 hover:shadow-gray-400 max-w-sm flex flex-col items-center text-center w-full sm:w-[300px] cursor-pointer"
           >
             <div className="flex justify-center items-center w-16 h-16">
               <img
@@ -148,7 +148,11 @@ const Slider = () => {
             >
               {card.header}
             </Typography>
-            <Typography variant="paragraph" color="blue-gray">
+            <Typography
+              variant="paragraph"
+              color="blue-gray"
+              className="font-serif"
+            >
               {card.text}
             </Typography>
           </motion.div>

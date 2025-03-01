@@ -30,6 +30,11 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
      const silderinfo =  client.db("RDF").collection("silderinfo") ; 
+     const programsCol=  client.db("RDF").collection("programs") ; 
+     const projectCol=  client.db("RDF").collection("projects") ; 
+
+
+       // slider api start ;
      app.post("/slider", async (req, res) => {
       const { src, header, text } = req.body;
     
@@ -70,7 +75,45 @@ async function run() {
         res.status(500).send({ error: "Failed to delete slider" });
       }
     });
-     
+       // slider api end----------------- ; 
+
+       // programs api start ; 
+    app.post("/programs" , async(req , res)=>{
+      const program = req.body ; 
+      const result =  await programsCol.insertOne(program) ; 
+      res.send(result) ;
+    })
+    app.get("/programs" , async(req , res) =>{
+      const result =  await programsCol.find().toArray() ;
+      res.send(result) ;
+    })
+    app.delete("/programs/:id" , async(req , res) =>{
+      const id = req.params.id ; 
+      const quary = {_id : new ObjectId(id)} ;
+      const result =  await programsCol.deleteOne(quary) ;
+      res.send(result) ;
+    } )
+      // programs api end --------- ; 
+     // projects apii start ; 
+     app.post("/projects" , async(req , res) =>{
+          const project = req.body ; 
+          const result = await projectCol.insertOne(project) ; 
+          res.send(result) ;
+     })
+     app.get("/projects" , async(req , res) =>{
+      const result = await projectCol.find().toArray() ;
+      res.send(result) ;
+     })
+   
+     app.delete("/projects/:id" , async(req , res) =>{
+      const id =  req.params.id ; 
+      const quary =  {_id: new ObjectId(id)} ; 
+      const result = await programsCol.deleteOne(quary) ;
+      res.send(result) ;
+     })
+      // project api end---------------- ; 
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
