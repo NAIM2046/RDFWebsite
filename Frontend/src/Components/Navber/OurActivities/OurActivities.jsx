@@ -97,6 +97,7 @@ const OurActivities = () => {
             <img
               src={activity.img}
               alt={activity.title}
+              loading="lazy"
               className="w-full h-full sm:h-40 md:h-48 object-cover"
             />
           </div>
