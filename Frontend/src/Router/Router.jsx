@@ -43,6 +43,7 @@ import Sliderinfo from "../AdminPage/Sliderinfo/Sliderinfo";
 import AdminHome from "../AdminPage/AdminHome/AdminHome";
 import ProgramPage from "../AdminPage/ProgramPage/ProgramPage";
 import ProjectPage from "../AdminPage/ProjectPage/ProjectPage";
+import ActiviesPage from "../AdminPage/activiesPage/ActiviesPage";
 
 const router = createBrowserRouter([
   {
@@ -211,6 +212,10 @@ const router = createBrowserRouter([
       {
         path: "/admin-rdf/project-page",
         element: <ProjectPage></ProjectPage>,
+      },
+      {
+        path: "/admin-rdf/activities",
+        element: <ActiviesPage></ActiviesPage>,
       },
     ],
   },

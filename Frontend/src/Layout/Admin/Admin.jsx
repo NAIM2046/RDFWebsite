@@ -62,6 +62,12 @@ const Admin = () => {
                     Project Menagement
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/admin-rdf/activities">
+                    <FaList></FaList>
+                    activities Menagement
+                  </NavLink>
+                </li>
               </>
             }
           </ul>

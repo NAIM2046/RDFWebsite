@@ -4,11 +4,15 @@ import useAxiosPublic from "../../Hook/useAxiosPublice";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import ProjectList from "./ProjectList";
 const ProjectPage = () => {
-  const { programs, fetchPrograms, fetchProjects } = useRDFStore();
+  const { programs, fetchPrograms, fetchProjects, fetchActivites, activities } =
+    useRDFStore();
   const Axios = useAxiosPublic();
   useEffect(() => {
     if (programs.length === 0) {
       fetchPrograms();
+    }
+    if (activities.length === 0) {
+      fetchActivites();
     }
   }, []);
 
@@ -33,6 +37,7 @@ const ProjectPage = () => {
 
     images: [],
     video: "",
+    activitiesID: "",
   });
 
   const handleChange = (e) => {
@@ -126,7 +131,6 @@ const ProjectPage = () => {
           value={project.name}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <select
           name="programName"
@@ -149,7 +153,6 @@ const ProjectPage = () => {
           value={project.donor}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="text"
@@ -158,7 +161,6 @@ const ProjectPage = () => {
           value={project.budget}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="date"
@@ -166,7 +168,6 @@ const ProjectPage = () => {
           value={project.startDate}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="date"
@@ -174,7 +175,6 @@ const ProjectPage = () => {
           value={project.endDate}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <select
           name="projectState"
@@ -193,7 +193,6 @@ const ProjectPage = () => {
           value={project.projectGoal}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         ></textarea>
         <input
           type="text"
@@ -202,7 +201,6 @@ const ProjectPage = () => {
           value={project.majorInterventions.join(", ")}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <textarea
           name="projectResults"
@@ -210,7 +208,6 @@ const ProjectPage = () => {
           value={project.projectResults}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         ></textarea>
         {/* <div className="flex space-x-2 items-center">
           <input
@@ -273,7 +270,6 @@ const ProjectPage = () => {
           value={project.video}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="text"
@@ -282,7 +278,6 @@ const ProjectPage = () => {
           value={project.implementingAreas}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="text"
@@ -291,7 +286,6 @@ const ProjectPage = () => {
           value={project.directBeneficiaries.male}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="text"
@@ -300,7 +294,6 @@ const ProjectPage = () => {
           value={project.directBeneficiaries.female}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="text"
@@ -309,7 +302,6 @@ const ProjectPage = () => {
           value={project.indirectBeneficiaries.male}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <input
           type="text"
@@ -318,7 +310,6 @@ const ProjectPage = () => {
           value={project.indirectBeneficiaries.female}
           onChange={handleChange}
           className="w-full p-2 border rounded"
-          required
         />
         <textarea
           name="remarks"
@@ -327,6 +318,21 @@ const ProjectPage = () => {
           onChange={handleChange}
           className="w-full p-2 border rounded"
         ></textarea>
+        <select
+          name="activitiesID"
+          value={project.activitiesID}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+          required
+        >
+          <option value="">Select an Activity</option>
+          {activities.map((activity) => (
+            <option key={activity._id} value={activity._id}>
+              {activity.title}
+            </option>
+          ))}
+        </select>
+
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded"

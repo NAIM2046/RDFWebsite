@@ -32,6 +32,7 @@ async function run() {
      const silderinfo =  client.db("RDF").collection("silderinfo") ; 
      const programsCol=  client.db("RDF").collection("programs") ; 
      const projectCol=  client.db("RDF").collection("projects") ; 
+     const activiesCol=  client.db("RDF").collection("activies") ; 
 
 
        // slider api start ;
@@ -107,11 +108,32 @@ async function run() {
    
      app.delete("/projects/:id" , async(req , res) =>{
       const id =  req.params.id ; 
+      console.log(id) ;
       const quary =  {_id: new ObjectId(id)} ; 
-      const result = await programsCol.deleteOne(quary) ;
+      const result = await projectCol.deleteOne(quary) ;
       res.send(result) ;
      })
       // project api end---------------- ; 
+
+      // active api start 
+
+      app.post("/activities" , async(req , res) =>{
+        const activies =  req.body ; 
+        const result =  await activiesCol.insertOne(activies) ;
+        res.send(result) ;
+      })
+      app.get("/activities" , async(req , res) =>{
+        const result =  await activiesCol.find().toArray() ;
+        res.send(result) ;
+      })
+      app.delete("/activities/:id" , async(req , res) =>{
+        const id = req.params.id ; 
+        const  quary  = {_id : new ObjectId(id)} ; 
+        const result = await activiesCol.deleteOne(quary) ; 
+      
+      })
+
+      // active api end-----------------
 
 
     // Send a ping to confirm a successful connection
