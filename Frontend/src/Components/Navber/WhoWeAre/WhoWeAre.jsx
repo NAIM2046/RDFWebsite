@@ -91,10 +91,10 @@ const WhoWeAre = () => {
           {/* Read More Animation */}
           <motion.div
             className="flex items-center mt-4 text-green-400"
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Link to="#">Read More..</Link>
+            <Link to="/our-history">Read More..</Link>
           </motion.div>
         </motion.div>
       </motion.section>

@@ -17,12 +17,18 @@ const NewsDetails = () => {
       "Partnering with local communities for better outreach",
       "Sustainable and long-term impact focus",
     ],
-    content: `Our NGO has launched a new initiative to support underprivileged children with education. 
-      This program focuses on providing free learning resources, scholarships, and mentorship to children in need.\n 
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, vel a fugiat sequi, officiis qui eum inventore ratione repellendus, quidem atque quisquam? Numquam culpa dicta explicabo veniam laborum officia placeat!
-      The initiative aims to create a sustainable model by partnering with local communities and international organizations.
-      By ensuring access to quality education, we are working towards a brighter future for the next generation.\n
-      If you would like to contribute or get involved, please visit our website or contact us directly.`,
+    content: [
+      {
+        title: "Providing education for 500+ underprivileged children",
+        discribed:
+          " Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda aperiam error iusto nam cupiditate voluptate perspiciatis, quam commodi cum corrupti magnam maiores consequatur pariatur totam hic velit numquam libero ad. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum voluptates praesentium nam tempora doloribus, assumenda quidem cupiditate dolore ex sunt? Reiciendis voluptates architecto nemo quas molestiae quasi minima nulla soluta? ",
+      },
+      {
+        title: "Partnering with local communities for better outreach",
+        discribed:
+          " Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae delectus ex ipsum totam illo vel doloremque eius facilis inventore numquam ea maiores, distinctio modi nulla veniam rerum vitae molestias consequatur? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel reprehenderit perferendis non porro architecto molestias voluptatibus sapiente cumque, officia ex ab odit molestiae modi iure qui! A error odio odit! ",
+      },
+    ],
   };
 
   // Function to calculate reading time
@@ -42,21 +48,28 @@ const NewsDetails = () => {
     <div className="mx-auto p-6">
       <div className="max-w-4xl mx-auto mt-16 shadow-lg">
         {/* Title */}
-        <h1 className="text-4xl font-bold text-gray-800 p-4">{news.title}</h1>
+        <h1 className="text-4xl font-bold text-gray-800 p-4 text-center font-serif">
+          {news.title}
+        </h1>
 
         {/* Author, Date & Reading Time */}
-        <div className="flex items-center text-gray-500 text-sm mt-3 gap-4 p-4">
+        <div className="flex  justify-center items-center text-gray-500 text-sm mt-3 gap-4 p-4 ">
           <p className="flex items-center gap-2">
-            <FaUser className="text-gray-600" />{" "}
+            <FaUser className="text-orange-400" />{" "}
             <span className="font-semibold">{news.author}</span>
           </p>
+          {"|"}
           <p className="flex items-center gap-2">
-            <FaCalendarAlt className="text-gray-600" />{" "}
+            <FaCalendarAlt className="text-orange-400" />{" "}
             {new Date(news.date).toLocaleDateString()}
           </p>
+          {"|"}
           <p className="flex items-center gap-2">
-            <FaClock className="text-gray-600" />{" "}
-            {calculateReadingTime(news.content)} min read
+            <FaClock className="text-orange-400" />{" "}
+            {calculateReadingTime(
+              news.content.map((item) => item.discribed).join(" ")
+            )}{" "}
+            min read
           </p>
         </div>
 
@@ -100,7 +113,7 @@ const NewsDetails = () => {
             alt={news.title}
             className="w-full h-full object-cover rounded-md shadow-sm"
           />
-          <p className="text-sm text-gray-500 mt-1 italic">
+          <p className="text-sm text-gray-500 mt-1 italic text-center">
             {news.imageCaption}
           </p>
         </div>
@@ -119,12 +132,12 @@ const NewsDetails = () => {
 
         {/* News Content with Paragraph Headers */}
         <div className="text-gray-700 leading-7 space-y-6 p-4">
-          {news.content.split("\n").map((paragraph, index) => (
+          {news.content.map((paragraph, index) => (
             <div key={index}>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                Paragraph {index + 1}
+                {paragraph.title}
               </h3>
-              <p>{paragraph}</p>
+              <p>{paragraph.discribed}</p>
             </div>
           ))}
         </div>

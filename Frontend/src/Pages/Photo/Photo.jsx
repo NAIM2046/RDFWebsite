@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaTimes } from "react-icons/fa";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
-import coverimg from "/assets/RDF Photo/grallerycover1.avif";
+
 const images = [
   {
     id: 1,

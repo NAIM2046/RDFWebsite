@@ -68,6 +68,42 @@ const Admin = () => {
                     activities Menagement
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/admin-rdf/teams">
+                    <FaList></FaList>
+                    Teams Menagement
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-rdf/news">
+                    <FaList></FaList>
+                    News Menagement
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-rdf/photos">
+                    <FaList></FaList>
+                    Photo Menagement
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-rdf/videos">
+                    <FaList></FaList>
+                    Video Menagement
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-rdf/event">
+                    <FaList></FaList>
+                    Event Menagement
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-rdf/partner">
+                    <FaList></FaList>
+                    Partner Menagement
+                  </NavLink>
+                </li>
               </>
             }
           </ul>

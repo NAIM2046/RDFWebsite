@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FaBalanceScale,
@@ -57,37 +57,53 @@ const FocusAreas = () => {
     navigate("/key-focus-area", { state: { scrollTo: title } });
   };
 
+  // useEffect(() => {
+  //   window.scrollTo(0, 0); // Scroll to the top when the route changes
+  // }, []);
+
   return (
     <section className="py-16 px-6 bg-gray-50 text-gray-900">
       <div className="max-w-6xl mx-auto text-center">
+        {/* Section Title with Animation */}
         <motion.h2
           className="text-4xl font-bold mb-6 text-gray-800 font-serif"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
         >
           Focus Areas of RDF
         </motion.h2>
+
+        {/* Section Description */}
         <motion.p
           className="text-lg text-gray-600 mb-10 font-serif"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 1 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
+          viewport={{ once: true }}
         >
           Our programs focus on economic empowerment, climate resilience,
           education, and sustainable development.
         </motion.p>
+
+        {/* Grid Layout for Focus Areas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {focusAreas.map((area, index) => (
             <motion.div
               key={index}
-              className={`bg-white shadow-lg p-8 rounded-2xl flex flex-col justify-between items-center text-center h-full border-t-4 border-l-3 border-r-3 border-green-300 transition-all duration-300 hover:border-transparent transform hover:scale-[1.05] ${
+              className={`bg-white shadow-lg p-8 rounded-2xl flex flex-col justify-between items-center text-center h-full border-t-4 border-l-2 border-r-2 border-green-400 transition-all duration-300 hover:border-transparent transform hover:scale-[1.05] ${
                 index % 2 === 0 ? "bg-gray-100" : "bg-white"
               }`}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-              whileHover={{ scale: 1.1 }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: index * 0.2,
+                duration: 0.8,
+                ease: "easeOut",
+              }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
             >
               <div className="flex flex-col items-center">
                 {area.icon}
@@ -97,6 +113,7 @@ const FocusAreas = () => {
                 <p className="text-gray-600 mt-2">{area.description}</p>
               </div>
 
+              {/* Read More Button */}
               <button
                 onClick={() => handleNavigate(area.title)}
                 className="mt-4 px-5 py-2 transition cursor-pointer flex justify-center items-center font-semibold hover:text-green-400 "

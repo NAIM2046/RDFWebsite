@@ -81,16 +81,16 @@ const MemberDetails = () => {
           </div>
         )}
 
-        {activeTab === "academic" && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-800">
-              Academic Information
-            </h2>
-            <p className="text-gray-600 mt-2">
-              {member.academic || "No academic info available."}
-            </p>
-          </div>
-        )}
+        {activeTab === "academic" &&
+          member.academic.map((edu, index) => (
+            <div key={index} className="mt-4 border-b pb-2">
+              <p className="text-gray-700 font-semibold">
+                Institute: {edu.institute || "N/A"}
+              </p>
+              <p className="text-gray-600">Degree: {edu.degree || "N/A"}</p>
+              <p className="text-gray-600">Period: {edu.period || "N/A"}</p>
+            </div>
+          ))}
 
         {activeTab === "experience" && (
           <div>

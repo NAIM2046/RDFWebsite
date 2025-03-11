@@ -33,7 +33,7 @@ const BlogSection = () => {
       link: "#",
     },
     {
-      id: 1,
+      id: 4,
       date: "Jan 01, 2023",
       title: "Clever ways to invest in product to organize your portfolio",
       description:
@@ -42,7 +42,7 @@ const BlogSection = () => {
       link: "#",
     },
     {
-      id: 2,
+      id: 5,
       date: "Feb 01, 2023",
       title: "How to grow your profit through systematic investment with us",
       description:
@@ -51,7 +51,7 @@ const BlogSection = () => {
       link: "#",
     },
     {
-      id: 3,
+      id: 6,
       date: "Mar 01, 20233",
       title: "How to analyze every holdings of your portfolio",
       description:

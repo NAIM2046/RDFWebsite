@@ -1,189 +1,150 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import coverimg from "/assets/team.jpg";
-
-const teamMembers = [
-  {
-    name: "Md. Fazlul Karim Patwary",
-    post: "General Committee",
-    image: "/assets/member1.jpg",
-    bio: "Experienced researcher and academic specializing in data science and statistical modeling.",
-    research: "Big Data, Data Science, Machine Learning, Statistical Modeling",
-    academic: "PhD in Data Science, University of Dhaka",
-    experience: [
-      {
-        organization: "Jahangirnagar University",
-        position: "Professor",
-        period: "2010 - Present",
-      },
-      {
-        organization: "ABC Research Institute",
-        position: "Senior Researcher",
-        period: "2005 - 2010",
-      },
-    ],
-    contact: {
-      email: "karim.patwary@example.com",
-      phone: "+880 1234 567890",
-    },
-  },
-  {
-    name: "Dr. M. Mesbahuddin Sarker",
-    post: "Executive Committee",
-    image: "/assets/member2.jpeg",
-    bio: "AI and database expert with a strong focus on IoT and media digitization.",
-    research: "Database, AI, IoT, Media and Communication, Digitization",
-    academic: "PhD in Computer Science, BUET",
-    experience: [
-      {
-        organization: "BUET",
-        position: "Associate Professor",
-        period: "2012 - Present",
-      },
-      {
-        organization: "XYZ Tech",
-        position: "Lead AI Researcher",
-        period: "2008 - 2012",
-      },
-    ],
-    contact: {
-      email: "mesbah.sarker@example.com",
-      phone: "+880 1987 654321",
-    },
-  },
-  {
-    name: "Dr. M. Shamim Kaiser",
-    post: "Senior Management",
-    image: "/assets/member3.jpg",
-    bio: "Data analytics specialist with expertise in health informatics and wireless communication.",
-    research:
-      "Data Analytics, Machine Learning, Health Informatics, Wireless Communication",
-    academic: "PhD in Information Technology, University of Toronto",
-    experience: [
-      {
-        organization: "Jahangirnagar University",
-        position: "Professor",
-        period: "2015 - Present",
-      },
-      {
-        organization: "Global HealthTech",
-        position: "Data Scientist",
-        period: "2010 - 2015",
-      },
-    ],
-    contact: {
-      email: "shamim.kaiser@example.com",
-      phone: "+880 1765 432109",
-    },
-  },
-  {
-    name: "Mohammad Abu Yousuf, PhD",
-    post: "Executive Committee",
-    image: "/assets/member4.jpg",
-    bio: "Passionate about medical image processing and human-robot interaction.",
-    research:
-      "Medical Image Processing, Human-Robot Interaction, Machine Learning",
-    academic: "PhD in Robotics, University of Tokyo",
-    experience: [
-      {
-        organization: "University of Tokyo",
-        position: "Postdoctoral Researcher",
-        period: "2017 - 2020",
-      },
-      {
-        organization: "Jahangirnagar University",
-        position: "Lecturer",
-        period: "2020 - Present",
-      },
-    ],
-    contact: {
-      email: "yousuf@example.com",
-      phone: "+880 1555 678910",
-    },
-  },
-];
+import useRDFStore from "../../storage/useRDFstorage";
 
 const OurTeam = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [designation, setDesignation] = useState("");
   const navigate = useNavigate();
+  const { teams, fetchTeams } = useRDFStore();
 
-  const filteredMembers = teamMembers.filter((member) => {
+  useEffect(() => {
+    if (teams.length === 0) {
+      fetchTeams();
+    }
+  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0); // Scroll to the top when the route changes
+  // }, []);
+
+  const filteredMembers = teams.filter((member) => {
     const matchesSearchTerm =
       member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       member.research.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesDesignation = designation ? member.post === designation : true;
+    const matchesDesignation = designation ? member.type === designation : true;
 
     return matchesSearchTerm && matchesDesignation;
   });
 
+  const sortedMembers = [...filteredMembers].sort(
+    (a, b) => parseInt(a.rank) - parseInt(b.rank)
+  );
+
   return (
     <div>
-      <PageCoverPhoto
-        title="Our Team"
-        subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
-        imageUrl={coverimg}
-      />
+      {/* Page Cover with Smooth Fade-In Animation */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={true}
+      >
+        <PageCoverPhoto
+          title="Our Team"
+          subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
+          imageUrl={coverimg}
+        />
+      </motion.div>
+
+      {/* Main Container */}
       <div className="container mx-auto p-6">
-        {/* Filter Section */}
-        <div className="flex flex-wrap gap-6 mb-8 items-center justify-center">
+        {/* Filter Section with Slide-In Animation */}
+        <motion.div
+          className="flex flex-wrap gap-6 mb-8 items-center justify-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center w-full max-w-2xl">
             {/* Search Input */}
-            <div className="relative w-full sm:w-80">
+            <motion.div
+              className="relative w-full sm:w-80"
+              whileHover={{ scale: 1.05 }}
+            >
               <input
                 type="text"
                 placeholder="🔍 Search by Name..."
                 className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300 ease-in-out"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-            </div>
+            </motion.div>
 
             {/* Designation Filter Dropdown */}
-            <div className="relative w-full sm:w-auto">
+            <motion.div
+              className="relative w-full sm:w-auto"
+              whileHover={{ scale: 1.01 }}
+            >
               <select
                 className="w-full sm:w-auto p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300 ease-in-out cursor-pointer"
                 onChange={(e) => setDesignation(e.target.value)}
               >
                 <option value="">🔹 All Members</option>
-                <option value="General Committee">📌 General Committee</option>
-                <option value="Executive Committee">
+                <option value="General committee">📌 General Committee</option>
+                <option value="Executive committee">
                   ⭐ Executive Committee
                 </option>
                 <option value="Senior Management">🏆 Senior Management</option>
               </select>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Team Members Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredMembers.map((member, index) => (
-            <div
+        {/* Team Members Grid with Staggered Animation */}
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.2 },
+            },
+          }}
+        >
+          {sortedMembers.map((member, index) => (
+            <motion.div
               key={index}
-              className="bg-white shadow-lg rounded-lg p-4 text-center border border-gray-300 justify-items-center "
+              className="bg-white shadow-lg rounded-lg p-4 text-center border border-gray-300 cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-60 h-60 object-cover rounded-lg mb-4 shadow-lg"
-              />
+              {/* Centered Image */}
+              <div className="flex justify-center">
+                <motion.img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-60 h-60 object-cover rounded-lg mb-4 shadow-lg mx-auto"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+
               <h3 className="text-xl font-bold text-blue-600">{member.name}</h3>
               <p className="text-gray-700 font-semibold">{member.post}</p>
               <p className="text-sm text-gray-500 mt-2">{member.research}</p>
+
               {/* View Details Button */}
-              <button
+              <motion.button
                 onClick={() =>
                   navigate("/our-team/details", { state: { member } })
                 }
                 className="btn btn-outline btn-info mt-2"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
               >
                 View Details
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

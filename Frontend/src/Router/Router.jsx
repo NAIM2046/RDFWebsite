@@ -44,6 +44,13 @@ import AdminHome from "../AdminPage/AdminHome/AdminHome";
 import ProgramPage from "../AdminPage/ProgramPage/ProgramPage";
 import ProjectPage from "../AdminPage/ProjectPage/ProjectPage";
 import ActiviesPage from "../AdminPage/activiesPage/ActiviesPage";
+import TeamsPage from "../AdminPage/TeamsPage/TeamsPage";
+import NewsPage from "../AdminPage/NewsPage/NewsPage";
+import PhotoPage from "../AdminPage/PhotoPage/PhotoPage";
+import VideosPage from "../AdminPage/Videos/VideosPage";
+
+import EventPageadmin from "../AdminPage/EventPage/EventPageadmin";
+import PartnerPage from "../AdminPage/PartnerPage/PartnerPage";
 
 const router = createBrowserRouter([
   {
@@ -216,6 +223,30 @@ const router = createBrowserRouter([
       {
         path: "/admin-rdf/activities",
         element: <ActiviesPage></ActiviesPage>,
+      },
+      {
+        path: "/admin-rdf/teams",
+        element: <TeamsPage></TeamsPage>,
+      },
+      {
+        path: "/admin-rdf/news",
+        element: <NewsPage></NewsPage>,
+      },
+      {
+        path: "/admin-rdf/photos",
+        element: <PhotoPage></PhotoPage>,
+      },
+      {
+        path: "/admin-rdf/videos",
+        element: <VideosPage></VideosPage>,
+      },
+      {
+        path: "/admin-rdf/event",
+        element: <EventPageadmin></EventPageadmin>,
+      },
+      {
+        path: "/admin-rdf/partner",
+        element: <PartnerPage></PartnerPage>,
       },
     ],
   },

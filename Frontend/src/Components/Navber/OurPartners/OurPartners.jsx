@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import useRDFStore from "../../../storage/useRDFstorage";
 
 const OurPartners = () => {
   const responsive = {
@@ -10,37 +11,17 @@ const OurPartners = () => {
     mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
   };
 
-  const partners = [
-    {
-      src: "assets/RDF Photo/partner3.png",
-      alt: "USAID",
-      link: "#",
-    },
-    {
-      src: "assets/RDF Photo/partner4.png",
-      alt: "IDCOL",
-      link: "#",
-    },
-    {
-      src: "assets/RDF Photo/partner5.png",
-      alt: "Govt. of Bangladesh",
-      link: "#",
-    },
-    {
-      src: "assets/RDF Photo/partner6.png",
-      alt: "Govt. of Bangladesh",
-      link: "#",
-    },
-    {
-      src: "assets/RDF Photo/partner1.png",
-      alt: "Govt. of Bangladesh",
-      link: "#",
-    },
-  ];
+  const { partners, fetchPartner } = useRDFStore();
+
+  useEffect(() => {
+    if (partners.length === 0) {
+      fetchPartner();
+    }
+  }, []);
 
   return (
-    <div className="w-full flex flex-col items-center py-10 bg-white">
-      <h1 className="text-3xl font-bold mb-6 text-gray-700 font-serif">
+    <div className="w-full flex flex-col items-center py-10 bg-white font-serif">
+      <h1 className="text-4xl font-bold mb-8 text-gray-800 transition-transform duration-500 hover:scale-105">
         Our Partners
       </h1>
 
@@ -52,9 +33,9 @@ const OurPartners = () => {
         ssr={true}
         infinite={true}
         autoPlay={true}
-        autoPlaySpeed={3000}
+        autoPlaySpeed={2500}
         keyBoardControl={true}
-        customTransition="all .5s ease-in-out"
+        customTransition="transform 0.5s ease-in-out"
         transitionDuration={500}
         containerClass="carousel-container"
         removeArrowOnDeviceType={["tablet", "mobile"]}
@@ -64,13 +45,15 @@ const OurPartners = () => {
         {partners.map((partner, index) => (
           <a
             key={index}
-            href={partner.link}
-            className="flex justify-center items-center p-4"
+            href={partner.link || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex justify-center items-center p-4 group transition-transform duration-500 hover:scale-110"
           >
             <img
-              src={partner.src}
-              alt={partner.alt}
-              className="w-40 h-auto object-contain"
+              src={partner.logo}
+              alt={partner.alt || partner.name}
+              className="w-40 h-auto object-contain shadow-lg rounded-lg transition-opacity duration-500 group-hover:opacity-80"
             />
           </a>
         ))}

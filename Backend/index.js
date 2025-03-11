@@ -33,6 +33,13 @@ async function run() {
      const programsCol=  client.db("RDF").collection("programs") ; 
      const projectCol=  client.db("RDF").collection("projects") ; 
      const activiesCol=  client.db("RDF").collection("activies") ; 
+     const TeamCol=  client.db("RDF").collection("teams") ; 
+     const newsCol=  client.db("RDF").collection("news") ; 
+     const photoCol=  client.db("RDF").collection("photos") ; 
+     const videoCol=  client.db("RDF").collection("videos") ; 
+     const eventCol=  client.db("RDF").collection("events") ; 
+     const partnerCol=  client.db("RDF").collection("partners") ; 
+
 
 
        // slider api start ;
@@ -134,7 +141,125 @@ async function run() {
       })
 
       // active api end-----------------
+      // teams api start 
 
+      app.post("/teams" , async(req , res) =>{
+        const team = req.body ; 
+        const result =  await TeamCol.insertOne(team) ; 
+        res.send(result) ;
+
+      })
+      app.get("/teams" , async(req, res)=>{
+        const result = await TeamCol.find().toArray() ; 
+        res.send(result) ; 
+      } )
+      app.delete("/teams/:id" , async(req , res) =>{
+           const id =  req.params.id ; 
+           const quary = {_id : new ObjectId(id)} ; 
+           const result = await TeamCol.deleteOne(quary) ; 
+           res.send(result) ;
+      })
+      
+
+      // teams api end------
+      // news api start 
+      app.post("/news" , async(req , res) =>{
+        const news = req.body ; 
+        const result =  await newsCol.insertOne(news) ; 
+        res.send(result) ;
+
+      })
+      app.get("/news" , async(req, res)=>{
+        const result = await newsCol.find().toArray() ; 
+        res.send(result) ; 
+      } )
+      app.delete("/news/:id" , async(req , res) =>{
+           const id =  req.params.id ; 
+           const quary = {_id : new ObjectId(id)} ; 
+           const result = await newsCol.deleteOne(quary) ; 
+           res.send(result) ;
+      })
+
+      // news api end----------
+      // photo api start 
+      app.post("/photos" , async(req , res) =>{
+        const photo = req.body ; 
+        const result =  await photoCol.insertOne(photo) ; 
+        res.send(result) ;
+
+      })
+      app.get("/photos" , async(req, res)=>{
+        const result = await photoCol.find().toArray() ; 
+        res.send(result) ; 
+      } )
+      app.delete("/photos/:id" , async(req , res) =>{
+           const id =  req.params.id ; 
+           const quary = {_id : new ObjectId(id)} ; 
+           const result = await photoCol.deleteOne(quary) ; 
+           res.send(result) ;
+      })
+
+      // photo api end---------
+
+      // video api start 
+      app.post("/video" , async(req , res) =>{
+        const video = req.body ; 
+        const result =  await videoCol.insertOne(video) ; 
+        res.send(result) ;
+
+      })
+      app.get("/video" , async(req, res)=>{
+        const result = await videoCol.find().toArray() ; 
+        res.send(result) ; 
+      } )
+      app.delete("/video/:id" , async(req , res) =>{
+           const id =  req.params.id ; 
+           const quary = {_id : new ObjectId(id)} ; 
+           const result = await videoCol.deleteOne(quary) ; 
+           res.send(result) ;
+      })
+
+      // video api end-----
+      // event api start 
+      app.post("/event" , async(req , res) =>{
+        const event = req.body ; 
+        const result =  await eventCol.insertOne(event) ; 
+        res.send(result) ;
+
+      })
+      app.get("/event" , async(req, res)=>{
+        const result = await eventCol.find().toArray() ; 
+        res.send(result) ; 
+      } )
+      app.delete("/event/:id" , async(req , res) =>{
+           const id =  req.params.id ; 
+           const quary = {_id : new ObjectId(id)} ; 
+           const result = await eventCol.deleteOne(quary) ; 
+           res.send(result) ;
+      })
+
+      // event api end----
+
+      //partner api start 
+      app.post("/partner" , async(req , res) =>{
+        const partner = req.body ; 
+        const result =  await partnerCol.insertOne(partner) ; 
+        res.send(result) ;
+
+      })
+      app.get("/partner" , async(req, res)=>{
+        const result = await partnerCol.find().toArray() ; 
+        res.send(result) ; 
+      } )
+      app.delete("/partner/:id" , async(req , res) =>{
+           const id =  req.params.id ; 
+           const quary = {_id : new ObjectId(id)} ; 
+           const result = await partnerCol.deleteOne(quary) ; 
+           res.send(result) ;
+      })
+
+
+      // partner api end ----------
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
