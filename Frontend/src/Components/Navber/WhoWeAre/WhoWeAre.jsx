@@ -26,7 +26,7 @@ const WhoWeAre = () => {
         {/* Image Animation */}
         <motion.div
           className="relative w-96 h-96 pl-10"
-          whileInView={{ opacity: 1.5, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
           initial={{ opacity: 0, x: -50 }}
           transition={{ duration: 1, delay: 0.3 }}
           viewport={{ once: true }}
