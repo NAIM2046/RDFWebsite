@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useRDFStore from "../../storage/useRDFstorage";
 import { IoIosArrowForward } from "react-icons/io";
-
+import { Helmet } from "react-helmet-async";
 const NewsDetails = () => {
   const location = useLocation();
   const news = location.state?.news;
