@@ -3,10 +3,11 @@ import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosPublic from "../../Hook/useAxiosPublice";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import ProjectList from "./ProjectList";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 const ProjectPage = () => {
   const { programs, fetchPrograms, fetchProjects, fetchActivites, activities } =
     useRDFStore();
-  const Axios = useAxiosPublic();
+  const Axios = useAxiosSecure();
   useEffect(() => {
     if (programs.length === 0) {
       fetchPrograms();

@@ -2,11 +2,13 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
 require('dotenv').config() ;
 app.use(express.json()) ;
 app.use(cors()) ;
 const port = process.env.PORT || 3000 
 const compression = require("compression");
+
 app.use(compression());
 
 app.get('/', (req, res) => {
@@ -39,11 +41,65 @@ async function run() {
      const videoCol=  client.db("RDF").collection("videos") ; 
      const eventCol=  client.db("RDF").collection("events") ; 
      const partnerCol=  client.db("RDF").collection("partners") ; 
+     const adminCol=  client.db("RDF").collection("admins") ; 
+
+// middleware function 
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1]; 
+  // Extract token from Bearer header
+ // console.log(token) ;
+
+  if (!token) {
+    return res.status(403).json({ message: "Access denied. No token provided." });
+  }
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.admin = verified; // Store admin info in request
+    next(); // Move to the next middleware
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token." });
+  }
+};
 
 
+     // admin login api 
+     app.post("/admin/reg" , async(req , res)=>{
+
+           const {email , password} = req.body ;
+           const salt = await bcrypt.genSalt(10);
+           const hashedPassword = await bcrypt.hash(password, salt);
+           const result =  await adminCol.insertOne({email , password: hashedPassword}) ;
+           res.send(result) ;
+
+     })
+
+     app.post("/admin/login" , async(req, res)=>{
+      const { email, password } = req.body;
+
+      try {
+        const admin = await adminCol.findOne({ email });
+        if (!admin) return res.status(401).json({ message: "Invalid email or password" });
+    
+        const isMatch = await bcrypt.compare(password, admin.password);
+        if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
+    
+        // Generate JWT Token
+        const token = jwt.sign(
+          { adminId: admin._id, email: admin.email },
+          process.env.JWT_SECRET, // Secret key
+          { expiresIn: "10h" } // Token expiration time
+        );
+    
+        res.status(200).json({ message: "Login successful", token });
+      } catch (err) {
+        res.status(500).json({ message: "Login failed" });
+      }
+     })
 
        // slider api start ;
-     app.post("/slider", async (req, res) => {
+     app.post("/slider", verifyToken, async (req, res) => {
       const { src, header, text } = req.body;
     
       // Basic validation
@@ -61,7 +117,7 @@ async function run() {
     });
     
 
-     app.get("/slider", async (req, res) => {
+     app.get("/slider",  async (req, res) => {
       try {
         const slider = await silderinfo.find().toArray();
         res.send(slider);
@@ -70,7 +126,7 @@ async function run() {
       }
     });
     
-    app.delete("/slider/:id", async (req, res) => {
+    app.delete("/slider/:id", verifyToken, async (req, res) => {
       const id = req.params.id;
       try {
         const query = { _id: new ObjectId(id) };
@@ -86,7 +142,7 @@ async function run() {
        // slider api end----------------- ; 
 
        // programs api start ; 
-    app.post("/programs" , async(req , res)=>{
+    app.post("/programs" ,verifyToken , async(req , res)=>{
       const program = req.body ; 
       const result =  await programsCol.insertOne(program) ; 
       res.send(result) ;
@@ -95,7 +151,7 @@ async function run() {
       const result =  await programsCol.find().toArray() ;
       res.send(result) ;
     })
-    app.delete("/programs/:id" , async(req , res) =>{
+    app.delete("/programs/:id" , verifyToken, async(req , res) =>{
       const id = req.params.id ; 
       const quary = {_id : new ObjectId(id)} ;
       const result =  await programsCol.deleteOne(quary) ;
@@ -103,7 +159,7 @@ async function run() {
     } )
       // programs api end --------- ; 
      // projects apii start ; 
-     app.post("/projects" , async(req , res) =>{
+     app.post("/projects" , verifyToken,async(req , res) =>{
           const project = req.body ; 
           const result = await projectCol.insertOne(project) ; 
           res.send(result) ;
@@ -113,7 +169,7 @@ async function run() {
       res.send(result) ;
      })
    
-     app.delete("/projects/:id" , async(req , res) =>{
+     app.delete("/projects/:id" , verifyToken, async(req , res) =>{
       const id =  req.params.id ; 
       console.log(id) ;
       const quary =  {_id: new ObjectId(id)} ; 
@@ -124,7 +180,7 @@ async function run() {
 
       // active api start 
 
-      app.post("/activities" , async(req , res) =>{
+      app.post("/activities" , verifyToken , async(req , res) =>{
         const activies =  req.body ; 
         const result =  await activiesCol.insertOne(activies) ;
         res.send(result) ;
@@ -133,7 +189,7 @@ async function run() {
         const result =  await activiesCol.find().toArray() ;
         res.send(result) ;
       })
-      app.delete("/activities/:id" , async(req , res) =>{
+      app.delete("/activities/:id" , verifyToken , async(req , res) =>{
         const id = req.params.id ; 
         const  quary  = {_id : new ObjectId(id)} ; 
         const result = await activiesCol.deleteOne(quary) ; 
@@ -143,7 +199,7 @@ async function run() {
       // active api end-----------------
       // teams api start 
 
-      app.post("/teams" , async(req , res) =>{
+      app.post("/teams" , verifyToken , async(req , res) =>{
         const team = req.body ; 
         const result =  await TeamCol.insertOne(team) ; 
         res.send(result) ;
@@ -153,7 +209,7 @@ async function run() {
         const result = await TeamCol.find().toArray() ; 
         res.send(result) ; 
       } )
-      app.delete("/teams/:id" , async(req , res) =>{
+      app.delete("/teams/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
            const result = await TeamCol.deleteOne(quary) ; 
@@ -163,7 +219,7 @@ async function run() {
 
       // teams api end------
       // news api start 
-      app.post("/news" , async(req , res) =>{
+      app.post("/news" , verifyToken , async(req , res) =>{
         const news = req.body ; 
         const result =  await newsCol.insertOne(news) ; 
         res.send(result) ;
@@ -173,7 +229,7 @@ async function run() {
         const result = await newsCol.find().toArray() ; 
         res.send(result) ; 
       } )
-      app.delete("/news/:id" , async(req , res) =>{
+      app.delete("/news/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
            const result = await newsCol.deleteOne(quary) ; 
@@ -182,7 +238,7 @@ async function run() {
 
       // news api end----------
       // photo api start 
-      app.post("/photos" , async(req , res) =>{
+      app.post("/photos" , verifyToken, async(req , res) =>{
         const photo = req.body ; 
         const result =  await photoCol.insertOne(photo) ; 
         res.send(result) ;
@@ -192,7 +248,7 @@ async function run() {
         const result = await photoCol.find().toArray() ; 
         res.send(result) ; 
       } )
-      app.delete("/photos/:id" , async(req , res) =>{
+      app.delete("/photos/:id" ,verifyToken, async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
            const result = await photoCol.deleteOne(quary) ; 
@@ -202,7 +258,7 @@ async function run() {
       // photo api end---------
 
       // video api start 
-      app.post("/video" , async(req , res) =>{
+      app.post("/video" , verifyToken , async(req , res) =>{
         const video = req.body ; 
         const result =  await videoCol.insertOne(video) ; 
         res.send(result) ;
@@ -212,7 +268,7 @@ async function run() {
         const result = await videoCol.find().toArray() ; 
         res.send(result) ; 
       } )
-      app.delete("/video/:id" , async(req , res) =>{
+      app.delete("/video/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
            const result = await videoCol.deleteOne(quary) ; 
@@ -221,17 +277,17 @@ async function run() {
 
       // video api end-----
       // event api start 
-      app.post("/event" , async(req , res) =>{
+      app.post("/event" , verifyToken , async(req , res) =>{
         const event = req.body ; 
         const result =  await eventCol.insertOne(event) ; 
         res.send(result) ;
 
       })
-      app.get("/event" , async(req, res)=>{
+      app.get("/event" ,  async(req, res)=>{
         const result = await eventCol.find().toArray() ; 
         res.send(result) ; 
       } )
-      app.delete("/event/:id" , async(req , res) =>{
+      app.delete("/event/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
            const result = await eventCol.deleteOne(quary) ; 
@@ -241,7 +297,7 @@ async function run() {
       // event api end----
 
       //partner api start 
-      app.post("/partner" , async(req , res) =>{
+      app.post("/partner" ,verifyToken , async(req , res) =>{
         const partner = req.body ; 
         const result =  await partnerCol.insertOne(partner) ; 
         res.send(result) ;
@@ -251,7 +307,7 @@ async function run() {
         const result = await partnerCol.find().toArray() ; 
         res.send(result) ; 
       } )
-      app.delete("/partner/:id" , async(req , res) =>{
+      app.delete("/partner/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
            const result = await partnerCol.deleteOne(quary) ; 
@@ -260,7 +316,9 @@ async function run() {
 
 
       // partner api end ----------
+      //admin api  ;
 
+     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");

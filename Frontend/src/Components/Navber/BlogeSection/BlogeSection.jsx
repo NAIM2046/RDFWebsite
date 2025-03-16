@@ -1,118 +1,107 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { motion } from "framer-motion";
 import { FaCalendarDays } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoMdArrowRoundForward } from "react-icons/io";
+import useRDFStore from "../../../storage/useRDFstorage";
+import { useNavigate } from "react-router-dom";
+
 const BlogSection = () => {
-  // Blog data array
-  const blogs = [
-    {
-      id: 1,
-      date: "Jan 01, 2023",
-      title: "Clever ways to invest in product to organize your portfolio",
-      description:
-        "Discover smart investment strategies to streamline and organize your portfolio..",
-      imgSrc: "https://pagedone.io/asset/uploads/1696244317.png",
-      link: "#",
-    },
-    {
-      id: 2,
-      date: "Feb 01, 2023",
-      title: "How to grow your profit through systematic investment with us",
-      description:
-        "Unlock the power of systematic investment with us and watch your profits soar. Our..",
-      imgSrc: "https://pagedone.io/asset/uploads/1696244340.png",
-      link: "#",
-    },
-    {
-      id: 3,
-      date: "Mar 01, 20233",
-      title: "How to analyze every holdings of your portfolio",
-      description:
-        "Our comprehensive guide will equip you with the tools and insights needed to..",
-      imgSrc: "https://pagedone.io/asset/uploads/1696244356.png",
-      link: "#",
-    },
-    {
-      id: 4,
-      date: "Jan 01, 2023",
-      title: "Clever ways to invest in product to organize your portfolio",
-      description:
-        "Discover smart investment strategies to streamline and organize your portfolio..",
-      imgSrc: "https://pagedone.io/asset/uploads/1696244317.png",
-      link: "#",
-    },
-    {
-      id: 5,
-      date: "Feb 01, 2023",
-      title: "How to grow your profit through systematic investment with us",
-      description:
-        "Unlock the power of systematic investment with us and watch your profits soar. Our..",
-      imgSrc: "https://pagedone.io/asset/uploads/1696244340.png",
-      link: "#",
-    },
-    {
-      id: 6,
-      date: "Mar 01, 20233",
-      title: "How to analyze every holdings of your portfolio",
-      description:
-        "Our comprehensive guide will equip you with the tools and insights needed to..",
-      imgSrc: "https://pagedone.io/asset/uploads/1696244356.png",
-      link: "#",
-    },
-  ];
+  const { newss, fetchNews } = useRDFStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!newss.length) {
+      fetchNews();
+    }
+  }, []);
+
+  // Sort news by date (newest first)
+  const sortedNews = [...newss].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  // Function to limit description to 30 words
+  const truncateDescription = (text, wordLimit = 30) => {
+    return text.split(" ").slice(0, wordLimit).join(" ") + "...";
+  };
 
   return (
-    <section className="py-24 px-4">
+    <motion.section
+      className="py-24 px-4 bg-gray-100"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      viewport={{ once: true }}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-12 font-serif">
-          Our latest News And Blog
-        </h2>
+        <motion.h2
+          className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-12 font-serif"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          Our Latest News & Blogs
+        </motion.h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {blogs.map((blog) => (
-            <div
-              key={blog.id}
-              className="group border border-gray-300 rounded-2xl shadow-lg overflow-hidden transition-transform transform hover:scale-105"
+          {sortedNews.slice(0, 6).map((news, index) => (
+            <motion.div
+              key={news._id}
+              className="group border border-gray-200 rounded-2xl shadow-lg overflow-hidden transition-transform transform hover:scale-101 bg-white"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1.2, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
             >
               <div className="flex items-center">
                 <img
-                  src={blog.imgSrc}
-                  alt={`Blog image ${blog.id}`}
-                  className="rounded-t-2xl w-full object-cover"
+                  src={news.imageURL}
+                  alt={`Blog image ${news._id}`}
+                  className="rounded-t-2xl w-full h-56 object-cover"
                 />
               </div>
-              <div className="p-5 transition-all duration-300 bg-white group-hover:bg-gray-50">
-                <span className="text-indigo-600 font-medium mb-3 flex space-x-2">
-                  <FaCalendarDays className="text-xl" />{" "}
-                  <p className=""> {blog.date}</p>
+              <div className="p-6 transition-all duration-300 group-hover:bg-gray-50">
+                <span className="text-indigo-600 font-medium flex items-center space-x-2 mb-3">
+                  <FaCalendarDays className="text-lg" />
+                  <p>{new Date(news.date).toDateString()}</p>
+                  <span className="text-gray-500">| {news.author}</span>
                 </span>
-                <h4 className="text-xl text-gray-900 font-medium leading-8 mb-5">
-                  {blog.title}
+                <h4 className="text-xl text-gray-900 font-semibold leading-8 mb-4">
+                  {news.title}
                 </h4>
-                <p className="text-gray-500 leading-6 mb-10">
-                  {blog.description}
+                <p className="text-gray-600 leading-6 mb-8">
+                  {truncateDescription(news.content[0].description)}
                 </p>
-                <a
-                  href="/news/details"
-                  className="cursor-pointer text-sm text-indigo-600 font-semibold btn btn-outline btn-ghost hover:shadow-lg"
+                <button
+                  onClick={() =>
+                    navigate(`/news/${news._id}`, { state: { news } })
+                  }
+                  className="flex items-center space-x-2 text-indigo-600 font-semibold border border-indigo-600 px-4 py-2 rounded-lg transition-all hover:bg-indigo-600 hover:text-white cursor-pointer"
                 >
-                  Read Details{" "}
-                  <IoIosArrowRoundForward className="rotate-320 text-2xl" />
-                </a>
+                  <span>Read Details</span>
+                  <IoIosArrowRoundForward className="text-xl" />
+                </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
         {/* View All Button */}
-        <div className="text-center mt-12">
-          <a
-            href="/news"
-            className="text-lg text-indigo-600 font-semibold hover:underline flex justify-center items-center font-serif"
+        <motion.div
+          className="text-center mt-12 flex justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <button
+            onClick={() => navigate("/news")}
+            className="text-lg text-indigo-600 font-semibold hover:underline flex items-center space-x-2 font-serif cursor-pointer"
           >
-            VIEW ALL NEWS <IoMdArrowRoundForward className="text-2xl ml-2" />
-          </a>
-        </div>
+            <span>VIEW ALL NEWS</span>
+            <IoMdArrowRoundForward className="text-2xl ml-2" />
+          </button>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

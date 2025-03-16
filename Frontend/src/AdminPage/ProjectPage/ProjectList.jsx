@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosPublic from "../../Hook/useAxiosPublice";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const ProjectList = () => {
   const { fetchProjects, projects } = useRDFStore();
-  const Axios = useAxiosPublic();
+  const Axios = useAxiosSecure();
   const [filter, setFilter] = useState("");
 
   useEffect(() => {

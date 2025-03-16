@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import useAxiosPublic from "../../Hook/useAxiosPublice";
+// ✅ Fixed import
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import useRDFStore from "../../storage/useRDFstorage";
+import useAxiosPublic from "../../Hook/useAxiosPublice";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const NewsPage = () => {
-  const Axios = useAxiosPublic();
+  const Axios = useAxiosSecure();
   const { newss, fetchNews, programs, fetchPrograms } = useRDFStore();
+
   useEffect(() => {
     if (newss.length === 0) {
       fetchNews();
@@ -14,8 +17,10 @@ const NewsPage = () => {
       fetchPrograms();
     }
   }, []);
+
   console.log(newss);
   console.log(programs);
+
   const [news, setNews] = useState({
     title: "",
     author: "",
@@ -25,9 +30,10 @@ const NewsPage = () => {
     imageURL: "",
     imageCaption: "",
     highlights: [""],
-    content: [{ title: "", description: "" }],
+    content: [{ title: "", description: "", imageUrl: "" }],
+    socialMediaLinks: [{ header: "", link: "" }],
   });
-
+  const [loading, setLoading] = useState(false);
   // Handle input changes for text fields
   const handleChange = (e) => {
     setNews({ ...news, [e.target.name]: e.target.value });
@@ -54,11 +60,11 @@ const NewsPage = () => {
   const addContent = () => {
     setNews({
       ...news,
-      content: [...news.content, { title: "", description: "" }],
+      content: [...news.content, { title: "", description: "", imageUrl: "" }],
     });
   };
 
-  // Handle image upload
+  // Handle image upload for main image
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -67,6 +73,33 @@ const NewsPage = () => {
     if (imageUrl) {
       setNews({ ...news, imageURL: imageUrl });
     }
+  };
+
+  // Handle image upload for content sections
+  const handleContentImageUpload = async (index, e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const imageUrl = await uploadImageToImgbb(file);
+    if (imageUrl) {
+      const updatedContent = [...news.content];
+      updatedContent[index].imageUrl = imageUrl;
+      setNews({ ...news, content: updatedContent });
+    }
+  };
+
+  // Handle social media links
+  const handleSocialMediaChange = (index, field, value) => {
+    const updatedLinks = [...news.socialMediaLinks];
+    updatedLinks[index][field] = value;
+    setNews({ ...news, socialMediaLinks: updatedLinks });
+  };
+
+  const addSocialMediaLink = () => {
+    setNews({
+      ...news,
+      socialMediaLinks: [...news.socialMediaLinks, { header: "", link: "" }],
+    });
   };
 
   // Handle form submission
@@ -81,13 +114,26 @@ const NewsPage = () => {
       //   title: "",
       //   author: "",
       //   date: "",
+      //   type: "news",
+      //   program: "",
       //   imageURL: "",
       //   imageCaption: "",
       //   highlights: [""],
-      //   content: [{ title: "", description: "" }],
+      //   content: [{ title: "", description: "", imageUrl: "" }],
+      //   socialMediaLinks: [{ header: "", link: "" }],
       // });
     } catch (error) {
       console.error("Error submitting news:", error);
+    }
+  };
+
+  // Handle delete functionality
+  const handleDelete = async (id) => {
+    try {
+      await Axios.delete(`/news/${id}`);
+      fetchNews();
+    } catch (error) {
+      console.error("Error deleting news:", error);
     }
   };
 
@@ -96,7 +142,7 @@ const NewsPage = () => {
       <h2 className="text-3xl font-bold mb-6 text-center">Admin - Add News</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Title */}
+        {/* Other inputs remain unchanged */}
         <div>
           <label className="block font-medium">News Title</label>
           <input
@@ -106,6 +152,7 @@ const NewsPage = () => {
             value={news.title}
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1"
+            required
           />
         </div>
 
@@ -116,6 +163,7 @@ const NewsPage = () => {
             value={news.type}
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1"
+            required
           >
             <option value="news">News</option>
             <option value="blog">Blog</option>
@@ -176,6 +224,9 @@ const NewsPage = () => {
             onChange={handleImageUpload}
             className="w-full p-2 border rounded mt-1"
           />
+          {loading && (
+            <p className="text-blue-500 text-sm mt-1">Uploading image...</p>
+          )}
         </div>
 
         {/* Image Caption */}
@@ -213,8 +264,7 @@ const NewsPage = () => {
             + Add Highlight
           </button>
         </div>
-
-        {/* Content Section */}
+        {/* Content Section with Image Upload */}
         <div>
           <h3 className="text-lg font-semibold">Content Sections</h3>
           {news.content.map((section, index) => (
@@ -236,24 +286,63 @@ const NewsPage = () => {
                 }
                 className="w-full p-2 border rounded"
               />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleContentImageUpload(index, e)}
+                className="w-full p-2 border rounded mt-1"
+              />
+              {loading && (
+                <p className="text-blue-500 text-sm mt-1">Uploading image...</p>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Social Media Links */}
+        <div>
+          <h3 className="text-lg font-semibold">Social Media Links</h3>
+          {news.socialMediaLinks.map((link, index) => (
+            <div key={index} className="flex gap-2 mb-2">
+              <input
+                type="text"
+                placeholder="Platform (e.g., Facebook)"
+                value={link.header}
+                onChange={(e) =>
+                  handleSocialMediaChange(index, "header", e.target.value)
+                }
+                className="w-1/3 p-2 border rounded"
+              />
+              <input
+                type="text"
+                placeholder="Link"
+                value={link.link}
+                onChange={(e) =>
+                  handleSocialMediaChange(index, "link", e.target.value)
+                }
+                className="w-2/3 p-2 border rounded"
+              />
             </div>
           ))}
           <button
             type="button"
-            onClick={addContent}
+            onClick={addSocialMediaLink}
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            + Add Content
+            + Add Social Media Link
           </button>
         </div>
-
-        {/* Submit Button */}
         <div className="text-center">
           <button
             type="submit"
-            className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200"
+            className={`px-6 py-2 rounded transition duration-200 ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-500 hover:bg-green-600 text-white"
+            }`}
+            disabled={loading}
           >
-            Submit News
+            {loading ? "Uploading..." : "Submit News"}
           </button>
         </div>
       </form>

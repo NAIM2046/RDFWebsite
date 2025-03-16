@@ -124,7 +124,7 @@ const Navbar = () => {
       links: [
         { name: "News", link: "/news", icon: <FaNewspaper /> },
         { name: "Blog", link: "/blogs", icon: <FiBook /> },
-        { name: "Story", link: "/story", icon: <FiBook /> },
+
         {
           name: "Publication",
           link: "/publication",

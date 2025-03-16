@@ -1,8 +1,12 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { FaLocationDot } from "react-icons/fa6";
 const ContactUs = () => {
   return (
     <div className="mx-auto max-w-7xl">
+      <Helmet>
+        <title> RDF-Contact Us </title>
+      </Helmet>
       <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 p-8 bg-gray-200 ">
         <div className="max-w-7xl  flex flex-col md:flex-row w-full shadow-lg rounded-xl overflow-hidden space-x-4">
           {/* Left Side - Image */}

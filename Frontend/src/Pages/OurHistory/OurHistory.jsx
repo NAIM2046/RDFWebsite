@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
+import { Helmet } from "react-helmet-async";
 
 const OurHistory = () => {
   // useEffect(() => {
@@ -7,6 +8,9 @@ const OurHistory = () => {
   // }, []);
   return (
     <div className="">
+      <Helmet>
+        <title> RDF-History </title>
+      </Helmet>
       <PageCoverPhoto title={"Our History"}></PageCoverPhoto>
       <div className="bg-gradient-to-r from-green-100 to-blue-100 min-h-screen p-6">
         <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6">

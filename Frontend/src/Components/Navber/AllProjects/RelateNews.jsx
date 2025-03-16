@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const RelateNews = () => {
+const RelateNews = ({ prgramName }) => {
+  console.log(prgramName);
   const blogs = [
     {
       id: 1,

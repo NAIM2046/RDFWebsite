@@ -9,31 +9,32 @@ import OurPartners from "../../Components/Navber/OurPartners/OurPartners";
 import WhoWeAre from "../../Components/Navber/WhoWeAre/WhoWeAre";
 import OurActivities from "../../Components/Navber/OurActivities/OurActivities";
 import FocusAreas from "../../Components/Navber/WhatWeDo/FocusAreas";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const location = useLocation();
   const isFirstRender = useRef(true);
 
   useEffect(() => {
-    // Get the saved scroll position
+    // Delay the scroll restoration to ensure the page has fully loaded
     const savedScrollPosition = sessionStorage.getItem("homeScrollPosition");
 
-    // Check if there's a saved scroll position and prevent overwriting it with 0
     if (savedScrollPosition !== null && isFirstRender.current) {
       const position = parseInt(savedScrollPosition, 10);
       if (position > 0) {
-        window.scrollTo(0, position);
+        setTimeout(() => {
+          window.scrollTo(0, position);
+        }, 300); // Delay to ensure smooth scrolling
       }
     }
 
-    isFirstRender.current = false; // Prevents resetting on re-renders
+    isFirstRender.current = false;
 
     // Function to save scroll position
     const handleScroll = () => {
       sessionStorage.setItem("homeScrollPosition", window.scrollY);
     };
 
-    // Add scroll event listener
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -43,6 +44,9 @@ const Home = () => {
 
   return (
     <div>
+      <Helmet>
+        <title> RDF-Home </title>
+      </Helmet>
       <Slider />
       <WhoWeAre />
       <OurProgram />

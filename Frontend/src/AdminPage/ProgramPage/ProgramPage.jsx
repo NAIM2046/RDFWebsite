@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import useAxiosPublic from "../../Hook/useAxiosPublice";
 import useRDFStore from "../../storage/useRDFstorage";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const ProgramPage = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ const ProgramPage = () => {
     images: [],
     videoId: "",
   });
-  const Axios = useAxiosPublic();
+  const Axios = useAxiosSecure();
   const [focusInput, setFocusInput] = useState("");
   const [previewImages, setPreviewImages] = useState([]);
   const [errors, setErrors] = useState({});

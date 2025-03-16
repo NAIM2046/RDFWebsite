@@ -1,6 +1,53 @@
 import React, { useState } from "react";
+import emailjs from "emailjs-com";
 
 const ProjectPartner = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    reason: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("");
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("Sending...");
+
+    const templateParams = {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
+      reason: formData.reason,
+      message: formData.message,
+    };
+
+    console.log("📩 Sending data:", templateParams); // Debugging
+
+    try {
+      const result = await emailjs.send(
+        "service_6261ylg", // Your EmailJS service ID
+        "template_a4l2wtw", // Your EmailJS template ID
+        templateParams,
+        "repDNYNXj4X9Aeaw1" // Your EmailJS public key
+      );
+
+      setStatus("Message sent successfully!");
+      console.log("✅ Success:", result);
+    } catch (error) {
+      setStatus("Failed to send message. Please try again.");
+      console.error("❌ Error sending message:", error);
+    }
+  };
+
   return (
     <div className="bg-gray-100 py-16">
       {/* Introduction */}
@@ -85,31 +132,40 @@ const ProjectPartner = () => {
           </h2>
 
           {/* Form Fields */}
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex gap-4">
               <input
                 type="text"
+                name="firstName"
                 placeholder="First name*"
                 className="w-1/2 border border-gray-300 p-3 rounded-md"
                 required
+                onChange={handleChange}
               />
               <input
                 type="text"
+                name="lastName"
                 placeholder="Last name*"
                 className="w-1/2 border border-gray-300 p-3 rounded-md"
                 required
+                onChange={handleChange}
               />
             </div>
+
             <input
               type="email"
+              name="email"
               placeholder="Email*"
               className="w-full border border-gray-300 p-3 rounded-md"
               required
+              onChange={handleChange}
             />
 
             <select
+              name="reason"
               className="w-full border border-gray-300 p-3 rounded-md"
               required
+              onChange={handleChange}
             >
               <option value="">Reason*</option>
               <option value="partnership">Partnership Inquiry</option>
@@ -118,13 +174,14 @@ const ProjectPartner = () => {
             </select>
 
             <textarea
+              name="message"
               placeholder="Message*"
               className="w-full border border-gray-300 p-3 rounded-md"
               maxLength={200}
               required
+              onChange={handleChange}
             ></textarea>
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-red-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-red-700 transition"
@@ -132,6 +189,8 @@ const ProjectPartner = () => {
               Contact Us
             </button>
           </form>
+
+          {status && <p className="text-gray-700 mt-4">{status}</p>}
 
           {/* Privacy Notice */}
           <p className="text-sm text-gray-600 mt-4">

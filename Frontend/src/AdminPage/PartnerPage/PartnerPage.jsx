@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import useAxiosPublic from "../../Hook/useAxiosPublice";
 import useRDFStore from "../../storage/useRDFstorage";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const PartnerPage = () => {
-  const Axios = useAxiosPublic();
+  const Axios = useAxiosSecure();
   const [partner, setPartner] = useState({
     name: "",
     logo: "",

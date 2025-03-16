@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import useAxiosPublic from "../../Hook/useAxiosPublice";
 import useRDFStore from "../../storage/useRDFstorage";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const ActiviesPage = () => {
   const [goal, setGoal] = useState({ id: "", title: "", img: "" });
   const { fetchActivites, activities } = useRDFStore();
-  const Axios = useAxiosPublic();
+  const Axios = useAxiosSecure();
 
   useEffect(() => {
     fetchActivites();

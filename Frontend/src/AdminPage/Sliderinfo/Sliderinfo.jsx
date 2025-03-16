@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hook/useAxiosPublice";
 import useRDFStore from "../../storage/useRDFstorage";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const Sliderinfo = () => {
   const [slider, setSlider] = useState({
@@ -8,7 +9,7 @@ const Sliderinfo = () => {
     header: "",
     text: "",
   });
-  const AxiosPublice = useAxiosPublic();
+  const AxiosPublice = useAxiosSecure();
   const { isLoading, sliderinfo, fetchsliderinfo } = useRDFStore();
   console.log(sliderinfo);
   useEffect(() => {

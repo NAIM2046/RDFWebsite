@@ -31,7 +31,7 @@ import EventDetail from "../Pages/Events/EventDetail";
 import OurStrategy from "../Pages/OurStrategy/OurStrategy";
 import OurHistory from "../Pages/OurHistory/OurHistory";
 import Blog from "../Pages/Blog/Blog";
-import Stroy from "../Pages/Story/Stroy";
+
 import Publication from "../Pages/Publication/Publication";
 import CareerWithRDF from "../Pages/CareerWithRDF/CareerWithRDF";
 import Notices from "../Pages/Notices/Notices";
@@ -51,6 +51,8 @@ import VideosPage from "../AdminPage/Videos/VideosPage";
 
 import EventPageadmin from "../AdminPage/EventPage/EventPageadmin";
 import PartnerPage from "../AdminPage/PartnerPage/PartnerPage";
+import LoginPage from "../AdminPage/LoginPage/LoginPage";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -78,7 +80,7 @@ const router = createBrowserRouter([
         element: <AnnualReport></AnnualReport>,
       },
       {
-        path: "/program-details",
+        path: "/program-details/:id",
         element: <ProgramDetails></ProgramDetails>,
       },
       {
@@ -86,7 +88,7 @@ const router = createBrowserRouter([
         element: <AllProjects></AllProjects>,
       },
       {
-        path: "/project-details",
+        path: "/project-details/:id",
         element: <ProjectDetails></ProjectDetails>,
       },
       {
@@ -94,7 +96,7 @@ const router = createBrowserRouter([
         element: <RecentNews></RecentNews>,
       },
       {
-        path: "/news/details",
+        path: "/news/:id",
         element: <NewsDetails></NewsDetails>,
       },
 
@@ -159,7 +161,7 @@ const router = createBrowserRouter([
         element: <EventsPage></EventsPage>,
       },
       {
-        path: "/event-details",
+        path: "/event-details/:id",
         element: <EventDetail></EventDetail>,
       },
       {
@@ -174,10 +176,7 @@ const router = createBrowserRouter([
         path: "/blogs",
         element: <Blog></Blog>,
       },
-      {
-        path: "/story",
-        element: <Stroy></Stroy>,
-      },
+
       {
         path: "/publication",
         element: <Publication></Publication>,
@@ -200,9 +199,18 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  {
+    path: "admin-login",
+    element: <LoginPage></LoginPage>,
+  },
   {
     path: "/admin-rdf",
-    element: <Admin></Admin>,
+    element: (
+      <PrivateRoute>
+        <Admin></Admin>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/admin-rdf",

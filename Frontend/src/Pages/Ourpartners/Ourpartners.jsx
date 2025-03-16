@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import useRDFStore from "../../storage/useRDFstorage";
+import { Helmet } from "react-helmet-async";
 
 const OurPartners = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -23,6 +24,9 @@ const OurPartners = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      <Helmet>
+        <title> RDF-Partners </title>
+      </Helmet>
       <PageCoverPhoto title={"OUR PARTNERS"} />
       <motion.div
         className="mt-10 px-4"

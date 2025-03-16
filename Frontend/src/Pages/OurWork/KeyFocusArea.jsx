@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import coverimg from "/assets/keyof1.webp";
+import { Helmet } from "react-helmet-async";
 
 const KeyFocusArea = () => {
   const location = useLocation();
@@ -67,6 +68,9 @@ const KeyFocusArea = () => {
 
   return (
     <div className="mx-auto">
+      <Helmet>
+        <title> RDF-Focus Area </title>
+      </Helmet>
       <PageCoverPhoto
         title="Key Focus Areas by 2030"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."

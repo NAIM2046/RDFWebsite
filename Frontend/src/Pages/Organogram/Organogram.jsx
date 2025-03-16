@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
+import { Helmet } from "react-helmet-async";
 
 const organogramData = {
   title: "RDF Organogram Structure",
@@ -45,6 +46,9 @@ const organogramData = {
 const Organogram = () => {
   return (
     <div>
+      <Helmet>
+        <title> RDF-Organogram </title>
+      </Helmet>
       <PageCoverPhoto title={"Our Organogram"} />
 
       <div className="min-h-screen mx-auto max-w-7xl bg-white shadow-lg p-8 mt-24 mb-10 rounded-lg">

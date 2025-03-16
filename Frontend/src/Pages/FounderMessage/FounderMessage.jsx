@@ -2,9 +2,13 @@ import React from "react";
 import demonfounder from "/assets/CEOphoto/CEO Pic PP.jpg";
 import tower from "/assets/RDF Photo/tower.jpg";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
+import { Helmet } from "react-helmet-async";
 const FounderMessage = () => {
   return (
     <div>
+      <Helmet>
+        <title> RDF-Rounder Message </title>
+      </Helmet>
       <div>
         <PageCoverPhoto
           imageUrl={`/assets/RDF Photo/3.jpg`}

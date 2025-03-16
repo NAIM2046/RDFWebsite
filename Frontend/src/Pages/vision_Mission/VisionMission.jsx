@@ -10,6 +10,7 @@ import visionIcon from "/assets/vission.jpg";
 import missionIcon from "/assets/mission.jpg";
 import valueIcon from "/assets/value-1.jpg";
 import aboutIcon from "/assets/RDF Photo/information.png";
+import { Helmet } from "react-helmet-async";
 
 const Section = ({ icon, title, text, image, reverse }) => {
   return (
@@ -52,6 +53,9 @@ const VisionMission = () => {
 
   return (
     <div className="mx-auto">
+      <Helmet>
+        <title> RDF-Vission and Mission </title>
+      </Helmet>
       <PageCoverPhoto
         title="Our Mission"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."

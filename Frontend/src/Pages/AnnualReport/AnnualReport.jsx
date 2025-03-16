@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion"; // Import Framer Motion
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import { HiDownload } from "react-icons/hi";
+import { Helmet } from "react-helmet-async";
 
 const reports = [
   {
@@ -56,6 +57,9 @@ const AnnualReport = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      <Helmet>
+        <title> RDF-Annual Report </title>
+      </Helmet>
       {/* Cover Section */}
       <PageCoverPhoto
         title="Our Annual Report"

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HiDownload } from "react-icons/hi";
 import { FiFileText } from "react-icons/fi";
+import { Helmet } from "react-helmet-async";
 
 // Policy Data with PDF Files
 const policies = [
@@ -91,6 +92,9 @@ const PolicyDoc = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 pb-10">
+      <Helmet>
+        <title> RDF-Policy </title>
+      </Helmet>
       {/* Header Section */}
       <div className="bg-gray-800 text-white py-10 text-center">
         <h1 className="text-4xl font-bold">Our Policies</h1>

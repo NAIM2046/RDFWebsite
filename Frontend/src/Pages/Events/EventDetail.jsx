@@ -8,10 +8,10 @@ const EventDetail = () => {
   console.log(event);
 
   return (
-    <div className="">
-      <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="max-w-6xl mx-auto">
+      <div className=" px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Left Content (Main Event) */}
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 mt-20 md:mt-0">
           {/* Event Title */}
           <h1 className="text-3xl font-bold text-gray-800">{event.title}</h1>
 
@@ -34,7 +34,7 @@ const EventDetail = () => {
 
           {/* Event Image */}
           <img
-            src={event.image}
+            src={event.images[0]}
             alt={event.title}
             className="w-full h-96 object-cover rounded-lg shadow-md mt-4"
           />
@@ -48,7 +48,7 @@ const EventDetail = () => {
         {/* Photo Gallery Section */}
         <div className="p-4 bg-gray-100 rounded-lg shadow">
           <img
-            src={event.image}
+            src={event.images[1]}
             alt="Photo Gallery"
             className="w-full rounded-lg"
           />

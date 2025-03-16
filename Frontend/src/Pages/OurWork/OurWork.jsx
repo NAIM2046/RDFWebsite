@@ -5,6 +5,7 @@ import WeWorkFor from "./WeWorkFor";
 import { useLocation } from "react-router-dom";
 
 import WhereWeWork from "./WhereWeWork";
+import { Helmet } from "react-helmet-async";
 
 const OurWork = () => {
   const location = useLocation();
@@ -20,6 +21,9 @@ const OurWork = () => {
   }, [location]);
   return (
     <div>
+      <Helmet>
+        <title> RDF-Our Works </title>
+      </Helmet>
       <PageCoverPhoto title={"Our Work"}></PageCoverPhoto>
       <div>
         <section id="ourapproach">

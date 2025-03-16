@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 
 const CareerWithRDF = () => {
   const jobs = [
@@ -10,6 +11,9 @@ const CareerWithRDF = () => {
 
   return (
     <div className="mx-auto max-w-7xl">
+      <Helmet>
+        <title> RDF-Career </title>
+      </Helmet>
       <div className="container mx-auto p-6 ">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-6 mt-20 md:mt-1">
           Job Vacancy

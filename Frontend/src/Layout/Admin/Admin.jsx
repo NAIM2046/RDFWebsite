@@ -20,13 +20,19 @@ import { GiInterstellarPath } from "react-icons/gi";
 
 const Admin = () => {
   const navigate = useNavigate();
-
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    navigate("/");
+  };
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       {/* Header */}
       <header className="flex items-center justify-between bg-white shadow p-4 rounded-md">
         <h1 className="text-2xl font-bold text-gray-700">Admin Dashboard</h1>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button
+          onClick={handleLogout}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
           Logout
         </button>
       </header>

@@ -1,50 +1,20 @@
-import React, { useState } from "react";
-
-const videos = [
-  {
-    id: 1,
-    title: "NGO Education Program",
-    src: "https://www.youtube.com/embed/vrgfD6OjAJE",
-    date: " Jan 10, 2024",
-  },
-  {
-    id: 2,
-    title: "Health Camp Initiative",
-    src: "https://www.youtube.com/embed/fZAeUuiV6q0",
-    date: " Feb 5, 2024",
-  },
-  {
-    id: 3,
-    title: "Food Distribution Drive",
-    src: "https://www.youtube.com/embed/9P2nXkTqU4E",
-    date: "Mar 20, 2024",
-  },
-  {
-    id: 4,
-    title: "Women Empowerment Workshop",
-    src: "https://www.youtube.com/embed/Y3mxv9FBgok",
-    date: " Apr 15, 2024",
-  },
-  {
-    id: 5,
-    title: "Disaster Relief Efforts",
-    src: "https://www.youtube.com/embed/9xRMVmi_qb8",
-    date: " May 30, 2024",
-  },
-  {
-    id: 6,
-    title: "Tree Plantation Drive",
-    src: "https://www.youtube.com/embed/9xRMVmi_qb8",
-    date: " Jun 10, 2024",
-  },
-];
+import React, { useEffect, useState } from "react";
+import useRDFStore from "../../storage/useRDFstorage";
+import { Helmet } from "react-helmet-async";
 
 const Videos = () => {
+  const { video, fetchVideo, isLoading } = useRDFStore();
+  useEffect(() => {
+    if (video.length === 0) {
+      fetchVideo();
+    }
+  }, []);
+  console.log(video);
   const [searchTerm, setSearchTerm] = useState("");
-  const [visibleVideos, setVisibleVideos] = useState(3); // Show 3 videos initially
+  const [visibleVideos, setVisibleVideos] = useState(9); // Show 3 videos initially
 
   // Filter videos based on search input
-  const filteredVideos = videos.filter((video) =>
+  const filteredVideos = video.filter((video) =>
     video.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -55,6 +25,9 @@ const Videos = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 ">
+      <Helmet>
+        <title> RDF-videos </title>
+      </Helmet>
       <h1 className="text-3xl font-bold text-center text-blue-600 mb-6 mt-16 md:mt-4">
         DRF Video Gallery
       </h1>
@@ -74,11 +47,11 @@ const Videos = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {filteredVideos.length > 0 ? (
           filteredVideos.slice(0, visibleVideos).map((video) => (
-            <div key={video.id} className="bg-white shadow-lg rounded-lg">
+            <div key={video._id} className="bg-white shadow-lg rounded-lg">
               <div className="relative w-full h-56">
                 <iframe
                   className="w-full h-full rounded-t-lg"
-                  src={video.src}
+                  src={`https://www.youtube.com/embed/${video.videoUrl}`}
                   title={video.title}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -90,15 +63,13 @@ const Videos = () => {
                   {video.title}
                 </h2>
                 <p className="text-xs text-gray-500 whitespace-nowrap">
-                  {video.date}
+                  {video.publishedDate}
                 </p>
               </div>
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500 col-span-3">
-            No videos found.
-          </p>
+          <p className="text-center text-gray-500 col-span-3">loading....</p>
         )}
       </div>
 

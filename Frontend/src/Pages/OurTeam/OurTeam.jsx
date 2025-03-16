@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import coverimg from "/assets/team.jpg";
 import useRDFStore from "../../storage/useRDFstorage";
+import { Helmet } from "react-helmet-async";
 
 const OurTeam = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,6 +44,9 @@ const OurTeam = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={true}
       >
+        <Helmet>
+          <title> RDF-Team Members </title>
+        </Helmet>
         <PageCoverPhoto
           title="Our Team"
           subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."

@@ -20,7 +20,7 @@ const OurPartners = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center py-10 bg-white font-serif">
+    <div className="w-full flex flex-col items-center py-10 bg-gray-50 font-serif">
       <h1 className="text-4xl font-bold mb-8 text-gray-800 transition-transform duration-500 hover:scale-105">
         Our Partners
       </h1>

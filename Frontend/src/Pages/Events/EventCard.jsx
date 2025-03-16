@@ -6,7 +6,7 @@ const EventCard = ({ event }) => {
     <div className="bg-white outline-0   rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl">
       {/* Event Image */}
       <img
-        src={event.image}
+        src={event.images[0]}
         alt={event.title}
         className="w-full h-48 object-cover"
       />
@@ -21,7 +21,9 @@ const EventCard = ({ event }) => {
 
         {/* Action Button */}
         <button
-          onClick={() => navigate("/event-details", { state: { event } })}
+          onClick={() =>
+            navigate(`/event-details/${event._id}`, { state: { event } })
+          }
           className={`mt-4 cursor-pointer outline-1 px-5 py-2 w-full text-black bg-amber-50 font-semibold rounded-lg 
               ${
                 event.type === "Upcoming"

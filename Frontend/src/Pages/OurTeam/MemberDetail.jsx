@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
 const MemberDetails = () => {
@@ -8,6 +9,9 @@ const MemberDetails = () => {
   console.log(member);
   return (
     <div className="container mx-auto p-6">
+      <Helmet>
+        <title> RDF-Team Members </title>
+      </Helmet>
       {/* Profile Section */}
       <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row gap-6 mt-1">
         {/* Profile Image */}
