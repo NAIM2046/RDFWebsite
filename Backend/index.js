@@ -31,7 +31,7 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-     const silderinfo =  client.db("RDF").collection("silderinfo") ; 
+     const sliderinfo =  client.db("RDF").collection("silderinfo") ; 
      const programsCol=  client.db("RDF").collection("programs") ; 
      const projectCol=  client.db("RDF").collection("projects") ; 
      const activiesCol=  client.db("RDF").collection("activies") ; 
@@ -109,7 +109,7 @@ const verifyToken = (req, res, next) => {
     
       const slider = req.body;
       try {
-        const result = await silderinfo.insertOne(slider);
+        const result = await sliderinfo.insertOne(slider);
         res.send(result);
       } catch (error) {
         res.status(500).send({ error: "Failed to insert slider" });
