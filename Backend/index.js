@@ -119,7 +119,7 @@ const verifyToken = (req, res, next) => {
 
      app.get("/slider",  async (req, res) => {
       try {
-        const slider = await silderinfo.find().toArray();
+        const slider = await sliderinfo.find().toArray();
         res.send(slider);
       } catch (error) {
         res.status(500).send({ error: "Failed to fetch sliders" });
@@ -332,3 +332,4 @@ run().catch(console.dir);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+module.exports = app ;
