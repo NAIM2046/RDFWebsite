@@ -49,6 +49,7 @@ const JoinUs = ({ header }) => {
               src="https://i.ibb.co.com/pHNLnR4/download-removebg-preview.png"
               alt="Illustration"
               className="w-96 h-auto"
+              loading="lazy"
             />
           </div>
 

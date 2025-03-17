@@ -110,6 +110,12 @@ const Admin = () => {
                     Partner Menagement
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/">
+                    <FaHome></FaHome>
+                    Home
+                  </NavLink>
+                </li>
               </>
             }
           </ul>

@@ -10,10 +10,12 @@ import WhoWeAre from "../../Components/Navber/WhoWeAre/WhoWeAre";
 import OurActivities from "../../Components/Navber/OurActivities/OurActivities";
 import FocusAreas from "../../Components/Navber/WhatWeDo/FocusAreas";
 import { Helmet } from "react-helmet-async";
+import useRDFStore from "../../storage/useRDFstorage";
 
 const Home = () => {
   const location = useLocation();
   const isFirstRender = useRef(true);
+  const { isLoading } = useRDFStore();
 
   useEffect(() => {
     // Delay the scroll restoration to ensure the page has fully loaded

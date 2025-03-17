@@ -177,7 +177,7 @@ const Navbar = () => {
     ${
       scrolled
         ? "lg:fixed  backdrop-blur-lg bg-white/30 shadow-md"
-        : "lg:static lg:bg-[#9999ff]"
+        : "lg:static lg:bg-[rgba(116,119,221,0.91)]"
     }  
     fixed`}
     >
@@ -195,7 +195,7 @@ const Navbar = () => {
         >
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
-              <span className="cursor-pointer flex items-center gap-1 font-bold  hover:text-orange-500">
+              <span className="cursor-pointer flex items-center gap-1 font-bold font-serif hover:text-[#D2691E]">
                 {item.icon} {item.title}{" "}
                 <FaAngleDown className="group-hover:rotate-180 transition-transform duration-300" />
               </span>
@@ -203,7 +203,9 @@ const Navbar = () => {
                 {item.links.map((link, idx) => (
                   <li
                     key={idx}
-                    className="hover:bg-gray-100 hover:text-orange-400 transition-transform duration-300 p-2 rounded flex items-center gap-2"
+                    className={`hover:bg-gray-200 hover:text-orange-400 transition-transform duration-300 p-2 rounded flex items-center gap-2 ${
+                      idx % 2 === 0 ? "bg-green-100" : "bg-white"
+                    }`}
                   >
                     {link.icon}
                     <Link to={link.link} className="block text-sm font-medium">

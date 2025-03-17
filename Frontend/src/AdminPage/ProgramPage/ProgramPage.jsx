@@ -101,6 +101,11 @@ const ProgramPage = () => {
     setErrors({});
   };
 
+  const handleDelete = async (id) => {
+    await Axios.delete(`/programs/${id}`);
+    fetchPrograms();
+  };
+
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold text-center text-gray-800">
@@ -147,7 +152,7 @@ const ProgramPage = () => {
             />
             <button
               onClick={handleFocusAdd}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer"
             >
               Add
             </button>
@@ -220,11 +225,30 @@ const ProgramPage = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+          className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 cursor-pointer"
         >
           Add Project
         </button>
       </form>
+      <h2 className="text-xl font-bold mt-10 text-gray-800">Program List</h2>
+      <ul className="mt-4 space-y-4">
+        {programs?.map((program) => (
+          <li
+            key={program._id}
+            className="p-4 border rounded-lg flex justify-between items-center"
+          >
+            <div>
+              <h3 className="font-semibold">{program.title}</h3>
+            </div>
+            <button
+              onClick={() => handleDelete(program._id)}
+              className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 cursor-pointer"
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
