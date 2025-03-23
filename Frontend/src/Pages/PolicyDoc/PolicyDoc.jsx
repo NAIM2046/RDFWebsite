@@ -91,13 +91,13 @@ const PolicyDoc = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 pb-10">
+    <div className="min-h-screen bg-green-50 pb-10 ">
       <Helmet>
         <title> RDF-Policy </title>
       </Helmet>
       {/* Header Section */}
-      <div className="bg-gray-800 text-white py-10 text-center">
-        <h1 className="text-4xl font-bold">Our Policies</h1>
+      <div className="bg-gray-700 text-white py-10 text-center">
+        <h1 className="text-4xl font-bold mt-20 lg:mt-1">Our Policies</h1>
         <p className="text-lg mt-2">
           Read our policies carefully before using our services.
         </p>

@@ -61,7 +61,7 @@ const ProjectDetails = () => {
         <title> RDF-Project </title>
       </Helmet>
       {/* Project Header */}
-      <div className="p-6 bg-gray-50 text-gray-800">
+      <div className="p-6 bg-gray-50 text-gray-800 mt-10 lg:mt-5">
         {/* Header Section */}
         <div className="text-center mt-20 md:mt-5">
           <h1 className="text-3xl font-bold text-gray-900 font-serif">
@@ -78,41 +78,63 @@ const ProjectDetails = () => {
 
         {/* Project Media Section */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Cover Image (2/3 width on larger screens) */}
-          <div className="md:col-span-2 flex justify-center">
-            <img
-              src={project.images[0]}
-              alt="Project Cover"
-              className="rounded-lg shadow-lg w-full h-[300px] md:h-[450px] object-cover"
-            />
-          </div>
-
-          {/* Additional Images & Video (1/3 width) */}
-          <div className="flex flex-col space-y-4">
-            {/* Additional Images */}
-            <div className="grid grid-cols-1 gap-3">
-              {project.images.slice(1).map((img, index) => (
+          {/* Handle case when only one image exists */}
+          {project.images.length === 1 ? (
+            <div className="col-span-1 md:col-span-3 flex justify-center">
+              <img
+                src={project.images[0]}
+                alt="Project Cover"
+                className="rounded-lg shadow-lg w-full h-[300px] md:h-[450px] object-cover"
+              />
+            </div>
+          ) : (
+            <>
+              {/* Cover Image (2/3 width on larger screens) */}
+              <div className="md:col-span-2 flex justify-center">
                 <img
-                  key={index}
-                  src={img}
-                  alt={`Project ${index + 1}`}
-                  className="rounded-lg shadow-md w-full h-[120px] md:h-[180px] object-cover"
+                  src={project.images[0]}
+                  alt="Project Cover"
+                  className="rounded-lg shadow-lg w-full h-[300px] md:h-[450px] object-cover"
                 />
-              ))}
-            </div>
+              </div>
 
-            {/* Video Section */}
-            <div className="relative w-full h-48 md:h-64">
-              <iframe
-                className="absolute top-0 left-0 w-full h-full rounded-lg shadow-md"
-                src={`https://www.youtube.com/embed/${project.video}`}
-                title="Project Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
+              {/* Additional Images & Video (1/3 width) */}
+              <div className="flex flex-col space-y-4">
+                {/* Additional Images */}
+                <div className="grid grid-cols-1 gap-3">
+                  {project.images.slice(1).map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={`Project ${index + 1}`}
+                      className="rounded-lg shadow-md w-full h-[120px] md:h-[180px] object-cover"
+                    />
+                  ))}
+                </div>
+
+                {project.video && (
+                  <div
+                    className={`${
+                      project.images.length === 1
+                        ? "col-span-1 md:col-span-3"
+                        : "w-full"
+                    } relative h-48 md:h-64`}
+                  >
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full rounded-lg shadow-md"
+                      src={`https://www.youtube.com/embed/${project.video}`}
+                      title="Project Video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Video Section (Full Width if Only One Image) */}
         </div>
 
         {/* Project Details Section */}
@@ -122,6 +144,12 @@ const ProjectDetails = () => {
             <strong>Project Goal:</strong> {project.projectGoal}
           </p>
 
+          {
+            <p className="text-lg text-gray-800 font-semibold border-l-2 border-green-500 pl-3 mt-4">
+              <strong>Project Summary:</strong>{" "}
+              {project.projectSummary || "N/A"}
+            </p>
+          }
           {/* Grid Layout */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left Side Details */}

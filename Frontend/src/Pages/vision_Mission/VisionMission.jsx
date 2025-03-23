@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
-import img from "/assets/rdfphoto2/IMG_20201230_104752.jpg";
+
 import aboutImage from "/assets/rdfphoto2/IMG_20210308_181619.jpg";
 import visionImage from "/assets/rdfphoto2/IMG_1070.jpg";
 import missionImage from "/public/assets/rdfphoto2/PRA, Joyalbhanga.jpg";
@@ -20,9 +20,7 @@ const Section = ({ icon, title, text, image, reverse }) => {
       transition={{ duration: 0.9 }}
       viewport={{ once: true }}
       className={`flex flex-col md:flex-row mb-12 ${
-        reverse
-          ? "md:flex-row-reverse flex-col-reverse"
-          : "flex-col md:flex-row"
+        reverse ? "md:flex-row-reverse " : "flex-col md:flex-row"
       }`}
     >
       <div className="md:w-1/2 p-6 md:p-8">

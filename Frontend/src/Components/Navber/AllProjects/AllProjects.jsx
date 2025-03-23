@@ -4,15 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaArrowRight } from "react-icons/fa";
 import useRDFStore from "../../../storage/useRDFstorage";
+import ReactPaginate from "react-paginate";
+import { Helmet } from "react-helmet-async";
 
 const AllProjects = () => {
   const { programs, fetchPrograms, fetchProjects, projects } = useRDFStore();
   const [selected, setSelected] = useState("");
-  const [selectedtitle, setSelectedtitle] = useState("ALL");
+  const [selectedTitle, setSelectedTitle] = useState("ALL");
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
+  const [statusFilter, setStatusFilter] = useState("all"); // New state for project status filter
   const tabRef = useRef(null);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(0);
+  const projectPerPage = 12;
 
   useEffect(() => {
     if (programs.length === 0) fetchPrograms();
@@ -47,15 +52,32 @@ const AllProjects = () => {
 
   const handleTabClick = (program) => {
     setSelected(program ? program._id : "");
-    setSelectedtitle(program ? program.title : "ALL");
+    setSelectedTitle(program ? program.title : "ALL");
   };
 
-  const filteredProjects = selected
-    ? projects.filter((project) => project.programName === selected)
-    : projects;
+  // **Filter projects based on selected program and status**
+  const filteredProjects = projects
+    .filter((project) => (selected ? project.programName === selected : true))
+    .filter((project) => {
+      if (statusFilter === "Current") return project.projectState === "Current";
+      if (statusFilter === "Completed")
+        return project.projectState === "Completed";
+      return true; // Show all projects
+    });
+  const offset = currentPage * projectPerPage;
+  const currentProjects = filteredProjects.slice(
+    offset,
+    offset + projectPerPage
+  );
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   return (
     <div className="mb-12">
+      <Helmet>
+        <title> RDF-All Projects </title>
+      </Helmet>
       <PageCoverPhoto
         title="All Projects"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
@@ -94,7 +116,7 @@ const AllProjects = () => {
           {programs.map((program) => (
             <div
               key={program._id}
-              className={`px-2 py-2 pt-4 pb-4 text-[14px] font-medium rounded-lg transition-all cursor-pointer text-center  min-w-[150px] sm:min-w-[160px] md:min-w-[180px] 
+              className={`px-2 py-2 pt-4 pb-4 text-[14px] font-medium rounded-lg transition-all cursor-pointer text-center min-w-[150px] sm:min-w-[160px] md:min-w-[180px] 
               ${
                 selected === program._id
                   ? "bg-green-400 text-black"
@@ -120,45 +142,85 @@ const AllProjects = () => {
         )}
       </div>
 
+      {/* Filter Section */}
+      <div className="max-w-6xl mx-auto mt-2 flex justify-end">
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="border border-gray-300 text-gray-700 rounded-lg px-3 py-2 focus:ring focus:ring-blue-200"
+        >
+          <option value="all">All Projects</option>
+          <option value="Current">Current Projects</option>
+          <option value="Completed">Completed Projects</option>
+        </select>
+      </div>
+
       {/* Project Cards Section */}
       <div>
-        <h1 className="text-center text-xl font-serif pt-2 pb-2">
-          {selectedtitle}
+        <h1 className="text-center text-xl font-serif  pb-2 text-orange-400">
+          {selectedTitle}
         </h1>
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 font-serif">
-          {filteredProjects.map((project) => (
-            <div
-              key={project._id}
-              className="bg-white rounded-lg shadow-md shadow-gray-400 hover:shadow-lg hover:shadow-black transition flex flex-col h-full"
-            >
-              <img
-                src={project.images[0]}
-                alt={project.name}
-                className="w-full h-64 object-cover rounded-t-lg"
-              />
-              <div className="p-4 flex flex-col flex-grow">
-                <h3 className="text-lg font-semibold">{project.name}</h3>
-                <p className="text-sm text-gray-600">
-                  <strong>Donor:</strong> {project.donor}
-                </p>
-                <p className="text-sm text-gray-600">
-                  <strong>Duration:</strong> {project.startDate} to{" "}
-                  {project.endDate}
-                </p>
-                <button
-                  onClick={() =>
-                    navigate(`/project-details/${project._id}`, {
-                      state: { project },
-                    })
-                  }
-                  className="inline-flex items-center px-3 py-2 mt-auto text-sm font-medium rounded-lg btn btn-outline btn-primary focus:ring-4 focus:outline-none focus:ring-blue-300"
-                >
-                  View Details
-                  <FaArrowRight className="p-1 text-2xl pl-2" />
-                </button>
+          {currentProjects.length > 0 ? (
+            currentProjects.map((project) => (
+              <div
+                key={project._id}
+                className="bg-white rounded-lg shadow-md shadow-gray-400 hover:shadow-lg hover:shadow-black transition flex flex-col h-full"
+              >
+                <img
+                  src={project.images[0]}
+                  alt={project.name}
+                  className="w-full h-64 object-cover rounded-t-lg"
+                />
+                <div className="p-4 flex flex-col flex-grow">
+                  <h3 className="text-lg font-semibold">{project.name}</h3>
+                  <p className="text-sm text-gray-600">
+                    <strong>Donor:</strong> {project.donor}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <strong>Duration:</strong> {project.startDate} to{" "}
+                    {project.endDate || "continue"}
+                  </p>
+                  <p className="text-sm font-bold text-blue-600">
+                    Status:{" "}
+                    {project.projectState === "Current"
+                      ? "🟢 Current"
+                      : "✅ Completed"}
+                  </p>
+                  <button
+                    onClick={() =>
+                      navigate(`/project-details/${project._id}`, {
+                        state: { project },
+                      })
+                    }
+                    className="inline-flex items-center px-3 py-2 mt-auto text-sm font-medium rounded-lg btn btn-outline btn-primary focus:ring-4 focus:outline-none focus:ring-blue-300"
+                  >
+                    View Details
+                    <FaArrowRight className="p-1 text-2xl pl-2" />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No projects found.</p>
+          )}
+        </div>
+        <div className="flex justify-center p-4">
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            breakLabel="..."
+            pageRangeDisplayed={5}
+            pageCount={Math.ceil(filteredProjects.length / projectPerPage)}
+            marginPagesDisplayed={1}
+            onPageChange={handlePageClick}
+            containerClassName="flex items-center space-x-2  rounded-lg p-2"
+            pageClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"
+            activeClassName="bg-blue-500 text-white"
+            previousClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"
+            nextClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"
+            disabledClassName="opacity-50 cursor-not-allowed"
+          />
         </div>
       </div>
     </div>

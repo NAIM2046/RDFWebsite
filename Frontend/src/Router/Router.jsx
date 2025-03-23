@@ -53,6 +53,9 @@ import EventPageadmin from "../AdminPage/EventPage/EventPageadmin";
 import PartnerPage from "../AdminPage/PartnerPage/PartnerPage";
 import LoginPage from "../AdminPage/LoginPage/LoginPage";
 import PrivateRoute from "./PrivateRoute";
+import Adminhandle from "../AdminPage/Adminhandle/Adminhandle";
+import CheakOutPage from "../Payment/CheakOutPage";
+import PaymentSuccess from "../Payment/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -205,6 +208,14 @@ const router = createBrowserRouter([
     element: <LoginPage></LoginPage>,
   },
   {
+    path: "/payment",
+    element: <CheakOutPage></CheakOutPage>,
+  },
+  {
+    path: "/payment-success",
+    element: <PaymentSuccess></PaymentSuccess>,
+  },
+  {
     path: "/admin-rdf",
     element: (
       <PrivateRoute>
@@ -255,6 +266,10 @@ const router = createBrowserRouter([
       {
         path: "/admin-rdf/partner",
         element: <PartnerPage></PartnerPage>,
+      },
+      {
+        path: "/admin-rdf/admin",
+        element: <Adminhandle></Adminhandle>,
       },
     ],
   },

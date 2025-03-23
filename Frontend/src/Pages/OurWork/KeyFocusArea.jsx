@@ -14,7 +14,7 @@ const KeyFocusArea = () => {
     "Employable Skills Development": useRef(null), // This is the target
     "Climate Change Adaptation & Disaster Risk Reduction": useRef(null),
     "Promotion & Expansion of Renewable Energy": useRef(null),
-    "Social Research": useRef(null),
+    "Child Rights, Education, and Health": useRef(null),
   };
 
   // Scroll to the specific section if navigated with a state
@@ -53,13 +53,13 @@ const KeyFocusArea = () => {
       image: "/assets/RDF Photo/IMG_5223.JPG",
     },
     {
-      title: "Promotion and Expansion of Renewable Energy",
+      title: "Promotion & Expansion of Renewable Energy",
       description:
         "To support climate change adaptation and carbon emission reduction, RDF will expand and promote renewable energy solutions, particularly solar energy initiatives, ensuring sustainable and eco-friendly energy access.",
       image: "/assets/key5.webp",
     },
     {
-      title: "Social Research, Child Rights, Education, and Health",
+      title: "Child Rights, Education, and Health",
       description:
         "With a dedicated team of professional researchers, RDF will conduct social research to support advocacy at local and national levels. Key focus areas include education (especially girls' education), healthcare, and climate change vulnerability and its impact.",
       image: "/assets/RDF Photo/IMG_20231015_163140.jpg",
@@ -69,7 +69,7 @@ const KeyFocusArea = () => {
   return (
     <div className="mx-auto">
       <Helmet>
-        <title> RDF-Focus Area </title>
+        <title> RDF-Focus Areas </title>
       </Helmet>
       <PageCoverPhoto
         title="Key Focus Areas by 2030"
@@ -78,7 +78,7 @@ const KeyFocusArea = () => {
 
       <div className="max-w-6xl mx-auto p-6">
         <h1 className="text-3xl font-bold text-center mb-8 font-serif">
-          Key Focus Areas by 2030
+          Key Focus Areas
         </h1>
         <div className="space-y-8">
           {focusAreas.map((area, index) => (
@@ -92,7 +92,7 @@ const KeyFocusArea = () => {
               <img
                 src={area.image}
                 alt={area.title}
-                className="w-full md:w-1/2 h-full object-cover rounded-md"
+                className="w-full md:w-1/2 h-full object-cover rounded-md "
               />
               <div className="md:w-1/2 p-4">
                 <h3 className="text-xl font-bold font-serif">{area.title}</h3>

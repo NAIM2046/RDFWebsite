@@ -143,7 +143,7 @@ const OurHistory = () => {
 
               {/* Right Image Section with Curved Design */}
               <div className="md:w-1/2 flex justify-center relative">
-                <div className=" overflow-hidden rounded-l-full w-96 border-8 border-l-blue-400 ">
+                <div className=" overflow-hidden rounded-l-full w-96 border-8 border-blue-600 ">
                   <img
                     src="/assets/RDF Photo/DSC03002.JPG"
                     alt="Smiling Woman"
@@ -157,7 +157,7 @@ const OurHistory = () => {
             <div className="mt-12 flex justify-center">
               <img
                 src="/assets/RDF Photo/DSC03483.JPG"
-                alt="Group of children"
+                alt="Group of children "
                 className="w-full h-[400px] max-w-5xl rounded-lg shadow-lg"
               />
             </div>

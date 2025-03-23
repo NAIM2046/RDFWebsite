@@ -10,7 +10,7 @@ const certifications = [
   },
   {
     name: "NGO Affairs Bureau Certificate",
-    link: "./../../../public/assets/CertiRDF/1.jpg",
+    link: "/assets/CertiRDF/1.jpg",
   },
   { name: "Microcredit Regulatory Authority (MRA) Certificate", link: "#" },
   { name: "BTEB Certificate", link: "#" },

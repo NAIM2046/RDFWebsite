@@ -39,6 +39,7 @@ const ProjectPage = () => {
     images: [],
     video: "",
     activitiesID: "",
+    projectSummary: "",
   });
 
   const handleChange = (e) => {
@@ -163,6 +164,7 @@ const ProjectPage = () => {
           onChange={handleChange}
           className="w-full p-2 border rounded"
         />
+        <label> Start data</label>
         <input
           type="date"
           name="startDate"
@@ -170,6 +172,7 @@ const ProjectPage = () => {
           onChange={handleChange}
           className="w-full p-2 border rounded"
         />
+        <label>End data</label>
         <input
           type="date"
           name="endDate"
@@ -186,12 +189,20 @@ const ProjectPage = () => {
         >
           <option value="">Select Project State</option>
           <option value="Current">Current</option>
-          <option value="Ended">Ended</option>
+          <option value="Completed">Completed</option>
         </select>
         <textarea
           name="projectGoal"
           placeholder="Project Goal"
           value={project.projectGoal}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        ></textarea>
+
+        <textarea
+          name="projectSummary"
+          placeholder="Project summary"
+          value={project.projectSummary}
           onChange={handleChange}
           className="w-full p-2 border rounded"
         ></textarea>
@@ -242,11 +253,11 @@ const ProjectPage = () => {
             multiple
             accept="image/*"
             onChange={handleUploadImages}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded cursor-pointer"
           />
           <button
             type="button"
-            className="btn bg-blue-500 text-white px-4 py-2 rounded"
+            className="btn bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
             disabled={imgLoading}
           >
             {imgLoading ? "Uploading..." : "Upload Images"}
@@ -336,7 +347,7 @@ const ProjectPage = () => {
 
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
         >
           Submit
         </button>

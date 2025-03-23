@@ -81,7 +81,7 @@ const OurApproach = () => {
           <img
             src="/assets/ourApproach1.webp"
             alt="Empowered Woman"
-            className="absolute top-32 left-32 w-64 rounded-lg shadow-lg border-4 border-white"
+            className="hidden lg:flex absolute top-32 left-32 w-64 rounded-lg shadow-lg border-4 border-white"
           />
         </div>
       </div>

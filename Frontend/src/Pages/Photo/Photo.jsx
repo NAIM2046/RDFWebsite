@@ -88,22 +88,29 @@ const Photo = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
-          {currentPhotos.map((item) => (
-            <div
-              key={item.id}
-              className="  rounded  shadow-lg shadow-gray-300 cursor-pointer"
-              onClick={() => setSelectedImage(item)}
-            >
-              <img
-                src={item.imageUrl}
-                alt={item.title}
-                className="w-full h-64 object-cover rounded rounded-b-none"
-              />
-              <h3 className="text-center mt-2 font-light">{item.title}</h3>
-            </div>
-          ))}
-        </div>
+        {photo.length === 0 ? (
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
+            <p className="text-lg ml-3">Loading News...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+            {currentPhotos.map((item) => (
+              <div
+                key={item.id}
+                className="  rounded  shadow-lg shadow-gray-300 cursor-pointer"
+                onClick={() => setSelectedImage(item)}
+              >
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  className="w-full h-64 object-cover rounded rounded-b-none"
+                />
+                <h3 className="text-center mt-2 font-light">{item.title}</h3>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="flex justify-center p-4">
           <ReactPaginate

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/rdfnew-5.png";
 import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
@@ -30,7 +30,7 @@ const Navbar = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -176,7 +176,7 @@ const Navbar = () => {
       className={`shadow-lg w-full transition-all duration-300 z-50 bg-white 
     ${
       scrolled
-        ? "lg:fixed  backdrop-blur-lg bg-white/30 shadow-md"
+        ? "lg:fixed max-w-[1800px] backdrop-blur-lg bg-white/30 shadow-md"
         : "lg:static lg:bg-[rgba(116,119,221,0.91)]"
     }  
     fixed`}
@@ -223,7 +223,7 @@ const Navbar = () => {
           {/* Search */}
           <button
             onClick={() => setOpenSearch(!openSearch)}
-            className="bg-white p-2 rounded-full text-orange-500 cursor-pointer"
+            className="bg-gray-300 lg:bg-white p-2 rounded-full text-orange-500 cursor-pointer"
           >
             {openSearch ? (
               <RxCross2 className="text-xl" />
@@ -251,9 +251,12 @@ const Navbar = () => {
           {/* Search Icon Button */}
 
           {/* Donate Button */}
-          <button className="hidden lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group">
+          <button
+            onClick={() => navigate("/payment")}
+            className="hidden lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group"
+          >
             DONATE
-            <FaHeart className="text-xl text-red-500 transition-transform duration-900 group-hover:rotate-y-180" />
+            <FaHeart className="text-xl text-red-500 animate-spin-slow" />
           </button>
 
           {/* Mobile Menu Button */}
@@ -274,6 +277,13 @@ const Navbar = () => {
       >
         <div className="p-4 flex justify-between items-center border-b">
           <img src={img} alt="RDF Logo" className="h-10" />
+          <button
+            onClick={() => navigate("/payment")}
+            className=" lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group"
+          >
+            DONATE
+            <FaHeart className="text-xl text-red-500 animate-spin-slow" />
+          </button>
           <button className="cursor-pointer" onClick={() => setOpenMenu(false)}>
             <RxCross2 className="text-2xl text-gray-700" />
           </button>

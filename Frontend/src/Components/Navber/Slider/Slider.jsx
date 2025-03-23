@@ -8,46 +8,16 @@ import valueIcon from "/assets/value-1.jpg";
 import useRDFStore from "../../../storage/useRDFstorage";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../../Hook/useAxiosPublice";
+
 const Slider = () => {
   const { isLoading, sliderinfo, fetchsliderinfo } = useRDFStore();
-  // const [sliderinfo, setsliderinfo] = useState([]);
-  // const Axios = useAxiosPublic();
-  // const fetchsliderinfo = () => {
-  //   Axios.get("http://localhost:3001/slider").then((res) => {
-  //     console.log(res.data);
-  //     setsliderinfo(res.data);
-  //   });
-  // };
-  console.log(sliderinfo);
-  useEffect(() => {
-    if (sliderinfo.length === 0) {
-      fetchsliderinfo();
-    }
-    console.log(sliderinfo);
-  }, [sliderinfo.length, fetchsliderinfo]);
 
-  // const images = [
-  //   {
-  //     src: "https://i.ibb.co.com/b51cBsPp/BNFP-3.jpg",
-  //     header: "The Beauty of Nature",
-  //     text: "It is not so much for its beauty that the forest makes a claim.",
-  //   },
-  //   {
-  //     src: "/assets/RDF Photo/DJI_0161.JPG",
-  //     header: "The Beauty of Nature",
-  //     text: "The quality of air that emanates from old trees wonderfully changes a weary spirit.",
-  //   },
-  //   {
-  //     src: "/assets/RDF Photo/CEMB (7).JPG",
-  //     header: "The Beauty of Nature",
-  //     text: "Forests renew the human soul with their silent presence.",
-  //   },
-  //   {
-  //     src: "/assets/RDF Photo/20231226_120135.jpg",
-  //     header: "The Beauty of Nature",
-  //     text: "Forests renew the human soul with their silent presence.",
-  //   },
-  // ];
+  // Fetch slider info and set loading state
+  useEffect(() => {
+    if (sliderinfo.length === 0 && !isLoading) {
+      fetchsliderinfo(); // Trigger fetch if not already fetching
+    }
+  }, [sliderinfo.length, fetchsliderinfo, isLoading]);
 
   const cards = [
     {
@@ -66,62 +36,73 @@ const Slider = () => {
       icon: valueIcon,
     },
   ];
+
   const navigate = useNavigate();
+
   return (
     <div className="w-full">
+      {/* Loading State */}
+
       {/* Slider Section */}
-      <Carousel
-        className="w-full h-[400px]  md:h-[450px] lg:h-[500px] xl:h-[550px]"
-        autoplay={true}
-        autoplayDelay={30000}
-        loop={true}
-      >
-        {sliderinfo.map((image, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="relative w-full h-full"
-          >
-            <img
-              src={image.src}
-              alt={`Slide ${index + 1}`}
-              loading="lazy"
-              className="w-full h-full object-cover object-center"
-            />
-            {/* Text Overlay */}
+      {sliderinfo === 0 ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
+          <p className="text-lg ml-3">Loading...</p>
+        </div>
+      ) : (
+        <Carousel
+          className="w-full h-[400px] md:h-[450px] lg:h-[500px] xl:h-[550px]"
+          autoplay={true}
+          autoplayDelay={30000}
+          loop={true}
+        >
+          {sliderinfo.map((image, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10  p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
+              key={index}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="relative w-full h-full"
             >
-              <Typography
-                variant="h1"
-                color="white"
-                className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-serif"
+              <img
+                src={image.src}
+                alt={`Slide ${index + 1}`}
+                loading="lazy"
+                className="w-full h-full object-cover object-center"
+              />
+              {/* Text Overlay */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10 p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
               >
-                {image.header}
-              </Typography>
-              <Typography
-                variant="lead"
-                color="white"
-                className="mb-4 opacity-90 text-xs sm:text-sm md:text-base font-serif"
-              >
-                {image.text}
-              </Typography>
-              <Button
-                className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn btn-info hover:"
-                size="md"
-              >
-                Read more..
-              </Button>
+                <Typography
+                  variant="h1"
+                  color="white"
+                  className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-serif"
+                >
+                  {image.header}
+                </Typography>
+                <Typography
+                  variant="lead"
+                  color="white"
+                  className="mb-4 opacity-90 text-xs sm:text-sm md:text-base font-serif"
+                >
+                  {image.text}
+                </Typography>
+                <Button
+                  className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn btn-info hover:"
+                  size="md"
+                >
+                  Read more..
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        ))}
-      </Carousel>
+          ))}
+        </Carousel>
+      )}
 
       {/* Cards Section Below the Slider */}
       <div className="hidden sm:flex relative -mt-16 z-10 flex-wrap justify-center items-center gap-6 px-4">

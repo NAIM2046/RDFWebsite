@@ -8,6 +8,7 @@ app.use(express.json()) ;
 app.use(cors()) ;
 const port = process.env.PORT || 3000 
 const compression = require("compression");
+const SSLCommerzPayment = require('sslcommerz-lts') ;
 
 app.use(compression());
 
@@ -48,7 +49,7 @@ async function run() {
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; 
   // Extract token from Bearer header
- // console.log(token) ;
+  console.log(token) ;
 
   if (!token) {
     return res.status(403).json({ message: "Access denied. No token provided." });
@@ -65,7 +66,7 @@ const verifyToken = (req, res, next) => {
 
 
      // admin login api 
-     app.post("/admin/reg" , async(req , res)=>{
+     app.post("/admin/reg" , verifyToken, async(req , res)=>{
 
            const {email , password} = req.body ;
            const salt = await bcrypt.genSalt(10);
@@ -96,6 +97,17 @@ const verifyToken = (req, res, next) => {
       } catch (err) {
         res.status(500).json({ message: "Login failed" });
       }
+     })
+
+     app.get("/admin/find" ,verifyToken, async(req, res)=>{
+      const result = await adminCol.find().toArray();
+      res.send(result);
+     })
+     app.delete("/admin/:id",verifyToken , async(req , res)=>{
+       const id =  req.params.id ; 
+       const quary = {_id : new ObjectId(id)} ; 
+       const result = await adminCol.deleteOne(quary) ;
+       res.send(result) ;
      })
 
        // slider api start ;
@@ -316,7 +328,65 @@ const verifyToken = (req, res, next) => {
 
 
       // partner api end ----------
-      //admin api  ;
+      //payment api  ;
+
+      app.post("/api/payment", async (req, res) => {
+        const { amount, name, email } = req.body;
+      
+        const tran_id = "txn_" + new Date().getTime();
+        
+        const data = {
+          total_amount: amount,
+          currency: "BDT",
+          tran_id: tran_id,
+          success_url: `${process.env.SERVER_URL}/api/payment/success/${tran_id}`,
+          fail_url: `${process.env.SERVER_URL}/api/payment/fail/${tran_id}`,
+          cancel_url: `${process.env.SERVER_URL}/api/payment/cancel/${tran_id}`,
+          ipn_url: `${process.env.SERVER_URL}/api/payment/ipn`,
+          shipping_method: "No",
+          product_name: "Donation",
+          product_category: "Charity",
+          product_profile: "general",
+          cus_name: name,
+          cus_email: email,
+          cus_add1: "Dhaka",
+          cus_phone: "01700000000",
+        };
+      
+        const sslcz = new SSLCommerzPayment(process.env.STORE_ID, process.env.STORE_PASSWORD, false);
+      
+        sslcz.init(data).then(apiResponse => {
+          let GatewayPageURL = apiResponse.GatewayPageURL;
+          res.json({ GatewayPageURL });
+        }).catch(error => {
+          console.error("SSLCommerz Error:", error);
+          res.status(500).json({ error: "Payment initiation failed." });
+        });
+      });
+      
+      app.post("/api/payment/success/:tran_id", (req, res) => {
+        const { tran_id } = req.params;
+      
+        // You can update your database here (e.g., mark payment as completed)
+        console.log(`Payment successful for Transaction ID: ${tran_id}`);
+      
+        // Redirect to the frontend success page with transaction details
+        res.redirect(`${process.env.FRONTEND_URL}/payment-success?tran_id=${tran_id}`);
+      });
+      
+      
+      app.post("/api/payment/fail/:tran_id", (req, res) => {
+        res.json({ message: "Payment Failed", transactionId: req.params.tran_id });
+      });
+      
+      app.post("/api/payment/cancel/:tran_id", (req, res) => {
+        res.json({ message: "Payment Cancelled", transactionId: req.params.tran_id });
+      });
+      
+      app.post("/api/payment/ipn", (req, res) => {
+        console.log("IPN Received:", req.body);
+        res.json({ message: "IPN received successfully" });
+      });
 
      
     // Send a ping to confirm a successful connection
@@ -332,4 +402,3 @@ run().catch(console.dir);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-module.exports = app ;

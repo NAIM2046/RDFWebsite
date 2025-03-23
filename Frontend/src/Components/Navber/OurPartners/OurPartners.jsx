@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
+import { motion } from "framer-motion";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import useRDFStore from "../../../storage/useRDFstorage";
 
 const OurPartners = () => {
   const responsive = {
-    superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 5 },
-    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 4 },
-    tablet: { breakpoint: { max: 1024, min: 464 }, items: 2 },
-    mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
+    superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 6 },
+    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 5 },
+    tablet: { breakpoint: { max: 1024, min: 600 }, items: 3 },
+    mobile: { breakpoint: { max: 600, min: 0 }, items: 2 },
   };
 
   const { partners, fetchPartner } = useRDFStore();
@@ -17,48 +18,71 @@ const OurPartners = () => {
     if (partners.length === 0) {
       fetchPartner();
     }
-  }, []);
+  }, [partners, fetchPartner]);
 
   return (
-    <div className="w-full flex flex-col items-center py-10 bg-gray-50 font-serif">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800 transition-transform duration-500 hover:scale-105">
-        Our Partners
-      </h1>
-
-      <Carousel
-        swipeable={true}
-        draggable={true}
-        showDots={true}
-        responsive={responsive}
-        ssr={true}
-        infinite={true}
-        autoPlay={true}
-        autoPlaySpeed={2500}
-        keyBoardControl={true}
-        customTransition="transform 0.5s ease-in-out"
-        transitionDuration={500}
-        containerClass="carousel-container"
-        removeArrowOnDeviceType={["tablet", "mobile"]}
-        dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-padding-40-px"
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+      viewport={{ once: true }}
+      className="w-full flex flex-col justify-center items-center py-16 bg-gradient-to-br bg-green-50 text-black font-serif"
+    >
+      {/* Title with Animated Glow */}
+      <motion.h1
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className="text-4xl text-center font-bold mb-10 text-black drop-shadow-lg transition-transform duration-500 hover:scale-101"
       >
-        {partners.map((partner, index) => (
-          <a
-            key={index}
-            href={partner.link || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex justify-center items-center p-4 group transition-transform duration-500 hover:scale-110"
-          >
-            <img
-              src={partner.logo}
-              alt={partner.alt || partner.name}
-              className="w-40 h-auto object-contain shadow-lg rounded-lg transition-opacity duration-500 group-hover:opacity-80"
-            />
-          </a>
-        ))}
-      </Carousel>
-    </div>
+        Our Global Partners
+      </motion.h1>
+
+      {partners.length === 0 ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
+          <p className="text-lg ml-3">Loading partners...</p>
+        </div>
+      ) : (
+        <Carousel
+          swipeable={true}
+          draggable={true}
+          showDots={true}
+          responsive={responsive}
+          ssr={true}
+          infinite={true}
+          autoPlay={true}
+          autoPlaySpeed={2500}
+          keyBoardControl={true}
+          customTransition="transform 0.8s ease-in-out"
+          transitionDuration={800}
+          containerClass="carousel-container"
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          dotListClass="custom-dot-list-style"
+          itemClass="px-6"
+        >
+          {partners.map((partner, index) => (
+            <motion.a
+              key={index}
+              href={partner.link || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              viewport={{ once: true }}
+              className="flex justify-center items-center p-2 group bg-white w-44 h-44 shadow rounded-md"
+            >
+              <img
+                src={partner.logo}
+                alt={partner.alt || partner.name}
+                className="mx-auto max-w-44 max-h-44 p-2 object-contain transition-transform duration-300 group-hover:scale-101"
+              />
+            </motion.a>
+          ))}
+        </Carousel>
+      )}
+    </motion.div>
   );
 };
 

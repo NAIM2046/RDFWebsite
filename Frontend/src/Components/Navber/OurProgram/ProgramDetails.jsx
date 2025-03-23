@@ -94,9 +94,9 @@ const ProgramDetails = () => {
         {/* Right Side - Images & Video */}
         <div className="flex flex-col sm:flex-row lg:flex-col items-center lg:items-end gap-6">
           {/* Image Gallery */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2">
             {program.images?.map((img, index) => (
-              <div key={index} className="w-40 h-32 sm:w-56 sm:h-44">
+              <div key={index} className="w-44 h-32 sm:w-60 sm:h-44">
                 <img
                   src={img}
                   alt={`Program Image ${index + 1}`}

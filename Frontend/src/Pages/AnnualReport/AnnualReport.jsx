@@ -64,7 +64,6 @@ const AnnualReport = () => {
       <PageCoverPhoto
         title="Our Annual Report"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
-        imageUrl="/assets/annulreportcover.jpg"
       />
 
       {/* Filter Section */}

@@ -14,7 +14,7 @@ const OurActivities = () => {
   }, []);
 
   return (
-    <div className="text-center py-10 px-4">
+    <div className="text-center py-10 px-4 bg-amber-50 font-serif">
       <motion.h3
         className="text-sm text-gray-500 tracking-widest uppercase"
         initial={{ opacity: 0, y: 20 }}
@@ -35,29 +35,40 @@ const OurActivities = () => {
         Introduce Our Activities
       </motion.h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-5 mt-8 max-w-6xl mx-auto">
-        {activities.map((activity, index) => (
-          <motion.div
-            key={activity._id}
-            onClick={() =>
-              navigate("/activities-details", { state: { activity } })
-            }
-            className="rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:shadow-xl border-3 cursor-pointer border-white"
-            whileInView={{ opacity: 1, scale: 1 }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <img
-              src={activity.img}
-              alt={activity.title}
-              loading="lazy"
-              className="w-full h-full sm:h-40 md:h-48 object-cover"
-            />
-          </motion.div>
-        ))}
-      </div>
+      {activities.length === 0 ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
+          <p className="text-lg ml-3">Loading...</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-5 mt-8 max-w-6xl mx-auto ">
+          {activities.map((activity, index) => (
+            <motion.div
+              key={activity._id}
+              onClick={() =>
+                navigate("/activities-details", { state: { activity } })
+              }
+              className="rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:shadow-xl border-4 cursor-pointer border-white"
+              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: "easeOut",
+              }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <img
+                src={activity.img}
+                alt={activity.title}
+                loading="lazy"
+                className="w-full h-full sm:h-40 md:h-48 object-cover"
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

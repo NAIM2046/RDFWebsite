@@ -19,11 +19,11 @@ const FounderMessage = () => {
         <div className="min-h-screen flex items-center justify-center  px-8 py-12 mt-2 bg-gray-100">
           <div className="max-w-7xl  space-x-8 rounded-2xl  md:flex">
             {/* Left Side - Founder Image */}
-            <div className="md:w-1/3 flex flex-col justify-center items-center p-6 shadow-lg space-y-4 rounded-lg bg-white ">
+            <div className=" w-full md:w-1/3 flex flex-col justify-center items-center p-6 shadow-lg space-y-4 rounded-lg bg-white ">
               <img
                 src={demonfounder} // Replace with your actual image path
                 alt="Founder"
-                className=" shadow-2xl rounded-2xl "
+                className=" shadow-2xl rounded-xl "
               />
               <div>
                 <p className="text-3xl font-serif italic ">
@@ -39,12 +39,14 @@ const FounderMessage = () => {
                   </h3>
                 </div>
               </div>
-
-              <img
-                src={tower} // Replace with your actual image path
-                alt="Founder"
-                className=" shadow-2xl w-full "
-              />
+              <div className="w-full">
+                <img
+                  src={tower} // Replace with your actual image path
+                  alt="Founder"
+                  className=" shadow-2xl w-full object-cover "
+                />
+                <p className="text-center text-sm font-light">RDF TOWER</p>
+              </div>
             </div>
 
             {/* Right Side - Founder Message */}

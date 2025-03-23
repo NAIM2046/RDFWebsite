@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+import { Helmet } from "react-helmet-async";
 
 const ProjectPartner = () => {
   const [formData, setFormData] = useState({
@@ -50,9 +51,12 @@ const ProjectPartner = () => {
 
   return (
     <div className="bg-gray-100 py-16">
+      <Helmet>
+        <title> RDF-Project Partner </title>
+      </Helmet>
       {/* Introduction */}
       <div className="max-w-5xl mx-auto text-center px-6">
-        <h2 className="text-4xl font-bold text-gray-800">
+        <h2 className="text-4xl font-bold text-gray-800 mt-20 lg:mt-0">
           Why Partner with Us?
         </h2>
         <p className="text-lg text-gray-600 mt-4">
@@ -184,7 +188,7 @@ const ProjectPartner = () => {
 
             <button
               type="submit"
-              className="w-full bg-red-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-red-700 transition"
+              className="w-full bg-red-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-red-700 transition cursor-pointer"
             >
               Contact Us
             </button>

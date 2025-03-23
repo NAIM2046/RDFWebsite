@@ -69,7 +69,10 @@ const Videos = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500 col-span-3">loading....</p>
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
+            <p className="text-lg ml-3">Loading...</p>
+          </div>
         )}
       </div>
 

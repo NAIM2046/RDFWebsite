@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const EventCard = ({ event }) => {
   const navigate = useNavigate();
   return (
-    <div className="bg-white outline-0   rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl">
+    <div className="bg-white outline-0   rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-101 hover:shadow-2xl">
       {/* Event Image */}
       <img
         src={event.images[0]}
@@ -24,7 +24,7 @@ const EventCard = ({ event }) => {
           onClick={() =>
             navigate(`/event-details/${event._id}`, { state: { event } })
           }
-          className={`mt-4 cursor-pointer outline-1 px-5 py-2 w-full text-black bg-amber-50 font-semibold rounded-lg 
+          className={`mt-4 cursor-pointer outline-1 outline-green-500 px-5 py-2 w-full text-green-400  btn btn-outline font-semibold rounded-lg 
               ${
                 event.type === "Upcoming"
                   ? " hover:bg-blue-700"

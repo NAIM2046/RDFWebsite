@@ -4,13 +4,14 @@ import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhot
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet-async";
+import { FaArrowRight, FaCalendarAlt, FaUser } from "react-icons/fa";
 
 const RecentNews = () => {
   const { newss, fetchNews } = useRDFStore();
   const location = useLocation();
   const path = location.pathname.split("/").filter(Boolean).pop();
   const [currentPage, setCurrentPage] = useState(0);
-  const newsPerPage = 12; // Show 12 news items per page
+  const newsPerPage = 4; // Show 12 news items per page
   const navigate = useNavigate();
   useEffect(() => {
     if (!newss.length) {
@@ -22,10 +23,14 @@ const RecentNews = () => {
   const sortedNews = [...newss].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
+  const filterNews = newss.filter((news) => news.type === path);
+  console.log(filterNews);
+  console.log(newss);
+  console.log(path);
 
   // Pagination Logic
   const offset = currentPage * newsPerPage;
-  const currentNews = sortedNews.slice(offset, offset + newsPerPage);
+  const currentNews = filterNews.slice(offset, offset + newsPerPage);
   const pageCount = Math.ceil(sortedNews.length / newsPerPage);
 
   const handlePageClick = ({ selected }) => {
@@ -41,44 +46,69 @@ const RecentNews = () => {
         title={path.toUpperCase()}
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
       />
-      <div className="mx-auto max-w-7xl mb-5">
+      <div className="mx-auto max-w-6xl mb-5">
         <h2 className="text-3xl font-bold text-gray-800 my-6 text-center">
           LATEST {path.toUpperCase()}
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className=" m-2 md:m-0 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentNews.length > 0 ? (
             currentNews.map((news) => (
               <div
                 key={news._id}
-                className="rounded-lg shadow-lg overflow-hidden bg-white"
+                className="rounded-lg shadow-md bg-white transition duration-300 hover:shadow-xl flex flex-col flex-grow"
               >
-                <img
-                  src={news.imageURL}
-                  alt={news.title}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold my-2">{news.title}</h3>
-                  <p className="text-sm text-gray-600">
-                    {news.author} | {new Date(news.date).toLocaleDateString()}
+                {/* Image Section */}
+                <div className="relative w-full h-64 overflow-hidden rounded-t-lg">
+                  <img
+                    src={news.imageURL}
+                    alt={news.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+
+                {/* Content Section */}
+                <div className="p-5 flex flex-col flex-grow">
+                  {/* News Title */}
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {news.title}
+                  </h3>
+
+                  {/* Author & Date with Icons */}
+                  <div className="flex items-center text-sm text-gray-600 gap-4">
+                    <span className="flex items-center gap-1">
+                      <FaUser className="text-gray-500" /> {news.author}{" "}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <FaCalendarAlt className="text-gray-500" />{" "}
+                      {new Date(news.date).toLocaleDateString()}
+                    </span>
+                  </div>
+
+                  {/* Short Content Preview */}
+                  <p className="text-gray-700 mt-3 leading-relaxed flex-grow">
+                    {news.content &&
+                    news.content.length > 0 &&
+                    news.content[0].description
+                      ? news.content[0].description.slice(0, 150) + "..."
+                      : "No description available."}
                   </p>
-                  <p className="mt-2 text-gray-700">
-                    {news.content[0]?.description.slice(0, 100)}...
-                  </p>
+
+                  {/* Read More Button at Bottom */}
                   <button
                     onClick={() =>
                       navigate(`/news/${news._id}`, { state: { news } })
                     }
-                    className="text-blue-500 font-semibold mt-3 inline-block"
+                    className="flex gap-2 btn w-[50%] btn-outline btn-dash text-blue-600"
                   >
-                    Read More →
+                    Read More <FaArrowRight />
                   </button>
                 </div>
               </div>
             ))
           ) : (
-            <p className="text-gray-500 text-center col-span-3">
+            <p className="text-gray-500 text-center col-span-3 font-bold font-serif">
               No news available.
             </p>
           )}
@@ -95,7 +125,7 @@ const RecentNews = () => {
               marginPagesDisplayed={1}
               pageRangeDisplayed={5}
               onPageChange={handlePageClick}
-              containerClassName="flex items-center space-x-2 border rounded-lg p-2"
+              containerClassName="flex items-center space-x-2  rounded-lg p-2"
               pageClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"
               activeClassName="bg-blue-500 text-white"
               previousClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"

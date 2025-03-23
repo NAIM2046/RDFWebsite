@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const WhoWeAre = () => {
   return (
-    <div className="bg-gray-100 py-10">
+    <div className="bg-gray-50 py-10">
       {/* Title Animation */}
       <motion.h1
         className="text-4xl font-bold text-green-400 text-center font-serif mt-10   p-4"
@@ -17,7 +17,7 @@ const WhoWeAre = () => {
       </motion.h1>
 
       <motion.section
-        className="flex flex-col lg:flex-row items-center justify-center space-x-16 p-10 bg-white  "
+        className="flex flex-col lg:flex-row items-center justify-center space-x-16 p-10  "
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: 50 }}
         transition={{ duration: 1 }}
@@ -35,7 +35,7 @@ const WhoWeAre = () => {
             <img
               src="/assets/RDF Photo/CEO.jpeg"
               alt="CEO"
-              className="w-full h-full object-cover rounded-full p-4"
+              className="w-full h-full object-cover rounded-full p-2"
             />
           </div>
           <div className="absolute bottom-12 left-12 rounded-full border-2 border-green-400">
@@ -58,13 +58,13 @@ const WhoWeAre = () => {
 
         {/* Text Animation */}
         <motion.div
-          className="lg:w-1/2 text-gray-700 lg:mt-0 lg:ml-10"
+          className="lg:w-1/2 text-gray-700 lg:mt-0 lg:ml-10 font-serif"
           whileInView={{ opacity: 1, x: 0 }}
           initial={{ opacity: 0, x: 50 }}
           transition={{ duration: 1, delay: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-bold text-gray-900 font-serif">
+          <h2 className="text-3xl font-bold text-gray-900 ">
             Resource Development Foundation (RDF)
           </h2>
           <p className="mt-4 text-[18px]">
@@ -90,11 +90,11 @@ const WhoWeAre = () => {
 
           {/* Read More Animation */}
           <motion.div
-            className="flex items-center mt-4 text-green-400"
+            className="flex items-center mt-4 text-green-400 hover:underline"
             whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Link to="/our-history">Read More..</Link>
+            <Link to="/our-history">Read More...</Link>
           </motion.div>
         </motion.div>
       </motion.section>

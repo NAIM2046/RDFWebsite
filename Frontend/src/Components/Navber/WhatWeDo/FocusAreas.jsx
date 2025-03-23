@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import {
   FaBalanceScale,
@@ -57,14 +57,10 @@ const FocusAreas = () => {
     navigate("/key-focus-area", { state: { scrollTo: title } });
   };
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0); // Scroll to the top when the route changes
-  // }, []);
-
   return (
-    <section className="py-16 px-6 bg-gray-50 text-gray-900">
+    <section className="py-16 px-6 bg-white text-gray-900 font-serif">
       <div className="max-w-6xl mx-auto text-center">
-        {/* Section Title with Animation */}
+        {/* Section Title */}
         <motion.h2
           className="text-4xl font-bold mb-6 text-gray-800 font-serif"
           initial={{ opacity: 0, y: -30 }}
@@ -92,9 +88,9 @@ const FocusAreas = () => {
           {focusAreas.map((area, index) => (
             <motion.div
               key={index}
-              className={`bg-white shadow-lg p-8 rounded-2xl flex flex-col justify-between items-center text-center h-full border-t-4 border-l-2 border-r-2 border-green-400 transition-all duration-300 hover:border-transparent transform hover:scale-[1.05] ${
-                index % 2 === 0 ? "bg-gray-100" : "bg-white"
-              }`}
+              className="group  shadow-lg p-8 rounded-2xl flex flex-col justify-between items-center text-center h-full 
+                        border-t-4 border-l-2 border-r-2 border-green-400 transition-all duration-300 
+                        hover:border-transparent transform hover:scale-105 hover:shadow-2xl odd:bg-gray-100 even:bg-sky-50 hover:bg-white"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
@@ -103,7 +99,6 @@ const FocusAreas = () => {
                 ease: "easeOut",
               }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
             >
               <div className="flex flex-col items-center">
                 {area.icon}
@@ -114,12 +109,15 @@ const FocusAreas = () => {
               </div>
 
               {/* Read More Button */}
-              <button
+              <div
+                role="button"
                 onClick={() => handleNavigate(area.title)}
-                className="mt-4 px-5 py-2 transition cursor-pointer flex justify-center items-center font-semibold hover:text-green-400 "
+                className="mt-4 btn btn-outline btn-dash text-green-500 px-5 py-2 transition cursor-pointer flex justify-center items-center font-semibold 
+                           hover:text-green-400"
               >
-                Read More <IoIosArrowRoundForward className="text-2xl ml-3" />
-              </button>
+                Read More{" "}
+                <IoIosArrowRoundForward className="text-2xl ml-3 rotate-315" />
+              </div>
             </motion.div>
           ))}
         </div>

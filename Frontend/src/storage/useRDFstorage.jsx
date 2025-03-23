@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const BASE_URL = "https://rdfwebserver.onrender.com"; // Change to your production URL when needed
+const BASE_URL = "http://localhost:3001"; // Change to your production URL when needed
 
 const useRDFStore = create((set) => ({
   sliderinfo: [],
@@ -16,6 +16,7 @@ const useRDFStore = create((set) => ({
   partners: [],
 
   isLoading: false,
+
   fetchPartner: async () => {
     set({ isLoading: true });
     try {

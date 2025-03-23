@@ -33,7 +33,9 @@ const NewsPage = () => {
     content: [{ title: "", description: "", imageUrl: "" }],
     socialMediaLinks: [{ header: "", link: "" }],
   });
+
   const [loading, setLoading] = useState(false);
+  const [contentLoading, setContentLoading] = useState({});
   // Handle input changes for text fields
   const handleChange = (e) => {
     setNews({ ...news, [e.target.name]: e.target.value });
@@ -69,7 +71,10 @@ const NewsPage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    setLoading(true);
     const imageUrl = await uploadImageToImgbb(file);
+    setLoading(false);
+
     if (imageUrl) {
       setNews({ ...news, imageURL: imageUrl });
     }
@@ -80,14 +85,16 @@ const NewsPage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    setContentLoading({ ...contentLoading, [index]: true });
     const imageUrl = await uploadImageToImgbb(file);
+    setContentLoading({ ...contentLoading, [index]: false });
+
     if (imageUrl) {
       const updatedContent = [...news.content];
       updatedContent[index].imageUrl = imageUrl;
       setNews({ ...news, content: updatedContent });
     }
   };
-
   // Handle social media links
   const handleSocialMediaChange = (index, field, value) => {
     const updatedLinks = [...news.socialMediaLinks];
@@ -166,8 +173,8 @@ const NewsPage = () => {
             required
           >
             <option value="news">News</option>
-            <option value="blog">Blog</option>
-            <option value="published">Published</option>
+            <option value="blogs">Blog</option>
+            <option value="publication">Published</option>
           </select>
         </div>
 
@@ -224,9 +231,13 @@ const NewsPage = () => {
             onChange={handleImageUpload}
             className="w-full p-2 border rounded mt-1"
           />
-          {loading && (
+          {loading ? (
             <p className="text-blue-500 text-sm mt-1">Uploading image...</p>
-          )}
+          ) : news.imageURL ? (
+            <p className="text-green-500 text-sm mt-1">
+              Image uploaded successfully!
+            </p>
+          ) : null}
         </div>
 
         {/* Image Caption */}
@@ -274,7 +285,12 @@ const NewsPage = () => {
                 placeholder="Section Title"
                 value={section.title}
                 onChange={(e) =>
-                  handleContentChange(index, "title", e.target.value)
+                  setNews({
+                    ...news,
+                    content: news.content.map((c, i) =>
+                      i === index ? { ...c, title: e.target.value } : c
+                    ),
+                  })
                 }
                 className="w-full p-2 border rounded mb-2"
               />
@@ -282,7 +298,12 @@ const NewsPage = () => {
                 placeholder="Section Description"
                 value={section.description}
                 onChange={(e) =>
-                  handleContentChange(index, "description", e.target.value)
+                  setNews({
+                    ...news,
+                    content: news.content.map((c, i) =>
+                      i === index ? { ...c, description: e.target.value } : c
+                    ),
+                  })
                 }
                 className="w-full p-2 border rounded"
               />
@@ -292,9 +313,13 @@ const NewsPage = () => {
                 onChange={(e) => handleContentImageUpload(index, e)}
                 className="w-full p-2 border rounded mt-1"
               />
-              {loading && (
+              {contentLoading[index] ? (
                 <p className="text-blue-500 text-sm mt-1">Uploading image...</p>
-              )}
+              ) : section.imageUrl ? (
+                <p className="text-green-500 text-sm mt-1">
+                  Image uploaded successfully!
+                </p>
+              ) : null}
             </div>
           ))}
         </div>

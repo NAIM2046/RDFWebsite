@@ -54,7 +54,7 @@ const OurProgram = () => {
         const currentIndex = programs.findIndex((p) => p._id === prev);
         return programs[(currentIndex + 1) % programs.length]._id; // Fixed _id reference
       });
-    }, 90000);
+    }, 10000);
   };
 
   const handleTabClick = (id) => {
@@ -120,89 +120,97 @@ const OurProgram = () => {
       </div>
 
       {/* Program Details */}
-      <AnimatePresence mode="wait">
-        {programs.map(
-          (program) =>
-            selected === program._id && (
-              <motion.div
-                key={program._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.8 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-6 px-6 py-8 bg-white rounded-lg shadow-md"
-              >
-                <div>
-                  <img
-                    src={program.images[0]}
-                    alt={program.title}
-                    className="w-full h-auto max-h-[400px] rounded-lg shadow-lg object-cover"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-bold text-orange-600 leading-snug font-serif">
-                    {program.title}
-                  </h3>
-                  <p className="mt-3 text-gray-600 leading-relaxed">
-                    {program.description.split(" ").slice(0, 30).join(" ")} ....
-                  </p>
-
-                  <h4 className="mt-6 text-lg font-semibold text-gray-800">
-                    program under this Projects :
-                  </h4>
-                  <ul className="mt-3 list-disc pl-5 space-y-2">
-                    <ul className="mt-3 list-disc pl-5 space-y-2">
-                      {filteredProjects.length > 0 ? (
-                        filteredProjects.slice(0, 4).map((project, index) => (
-                          <li
-                            key={project._id}
-                            className={`cursor-pointer transition-colors duration-300 ${
-                              index % 2 === 0
-                                ? "text-blue-600"
-                                : "text-green-600"
-                            } hover:text-red-500`}
-                            onClick={() =>
-                              navigate(`/project-details/${project._id}`, {
-                                state: { project },
-                              })
-                            }
-                          >
-                            {project.name}
-                          </li>
-                        ))
-                      ) : (
-                        <li className="text-gray-500">
-                          No projects available.
-                        </li>
-                      )}
-                    </ul>
-                  </ul>
-
-                  <div className="mt-6 flex flex-wrap gap-4">
-                    <button
-                      onClick={() =>
-                        navigate(`/program-details/${program._id}`, {
-                          state: { program },
-                        })
-                      }
-                      className="px-5 py-2 rounded-lg shadow-md transition hover:shadow-lg cursor-pointer btn btn-outline btn-primary"
-                    >
-                      Read More...
-                    </button>
-                    <button
-                      onClick={() => navigate("/all-projects")}
-                      className="btn btn-outline btn-success px-5 py-2 rounded-lg shadow-md transition hover:shadow-lg"
-                    >
-                      See All Projects
-                    </button>
+      {projects.length === 0 && programs.length === 0 ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
+          <p className="text-lg ml-3">Loading...</p>
+        </div>
+      ) : (
+        <AnimatePresence mode="wait">
+          {programs.map(
+            (program) =>
+              selected === program._id && (
+                <motion.div
+                  key={program._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.8 }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-6 px-6 py-8 bg-white rounded-lg shadow-lg"
+                >
+                  <div>
+                    <img
+                      src={program.images[0]}
+                      alt={program.title}
+                      className="w-full h-auto max-h-[400px] rounded-lg  object-cover"
+                      loading="lazy"
+                    />
                   </div>
-                </div>
-              </motion.div>
-            )
-        )}
-      </AnimatePresence>
+
+                  <div>
+                    <h3 className="text-2xl font-bold text-orange-600 leading-snug font-serif">
+                      {program.title}
+                    </h3>
+                    <p className="mt-3 text-gray-600 leading-relaxed">
+                      {program.description.split(" ").slice(0, 20).join(" ")}{" "}
+                      ....
+                    </p>
+
+                    <h4 className="mt-6 text-lg font-semibold text-gray-800">
+                      program under this Projects :
+                    </h4>
+                    <ul className="mt-3 list-disc pl-5 space-y-2">
+                      <ul className="mt-3 list-disc pl-5 space-y-2">
+                        {filteredProjects.length > 0 ? (
+                          filteredProjects.slice(0, 4).map((project, index) => (
+                            <li
+                              key={project._id}
+                              className={`cursor-pointer transition-colors duration-300 ${
+                                index % 2 === 0
+                                  ? "text-blue-600"
+                                  : "text-green-600"
+                              } hover:text-red-500`}
+                              onClick={() =>
+                                navigate(`/project-details/${project._id}`, {
+                                  state: { project },
+                                })
+                              }
+                            >
+                              {project.name}
+                            </li>
+                          ))
+                        ) : (
+                          <li className="text-gray-500">
+                            No projects available.
+                          </li>
+                        )}
+                      </ul>
+                    </ul>
+
+                    <div className="mt-6 flex flex-wrap gap-4">
+                      <button
+                        onClick={() =>
+                          navigate(`/program-details/${program._id}`, {
+                            state: { program },
+                          })
+                        }
+                        className="px-5 py-2 rounded-lg shadow-md transition hover:shadow-lg cursor-pointer btn btn-outline btn-primary"
+                      >
+                        Read More...
+                      </button>
+                      <button
+                        onClick={() => navigate("/all-projects")}
+                        className="btn btn-outline btn-success px-5 py-2 rounded-lg shadow-md transition hover:shadow-lg"
+                      >
+                        See All Projects
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+          )}
+        </AnimatePresence>
+      )}
     </div>
   );
 };
