@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const BASE_URL = "https://rdfwebsite-production.up.railway.app"; // Change to your production URL when needed
+const BASE_URL = "http://localhost:3001"; // Change to your production URL when needed
 
 const useRDFStore = create((set) => ({
   sliderinfo: [],
@@ -14,9 +14,20 @@ const useRDFStore = create((set) => ({
   video: [],
   events: [],
   partners: [],
+  reports: [],
 
   isLoading: false,
 
+  fetchReport: async () => {
+    set({ isLoading: true });
+    try {
+      const response = await axios.get(`${BASE_URL}/reports`);
+      set({ reports: response.data, isLoading: false });
+    } catch (error) {
+      console.error("Error fetching slider info:", error);
+      set({ isLoading: false });
+    }
+  },
   fetchPartner: async () => {
     set({ isLoading: true });
     try {

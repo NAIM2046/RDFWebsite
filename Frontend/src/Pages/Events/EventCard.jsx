@@ -8,7 +8,7 @@ const EventCard = ({ event }) => {
       <img
         src={event.images[0]}
         alt={event.title}
-        className="w-full h-48 object-cover"
+        className="w-full h-56 object-cover"
       />
 
       {/* Event Details */}
@@ -24,14 +24,14 @@ const EventCard = ({ event }) => {
           onClick={() =>
             navigate(`/event-details/${event._id}`, { state: { event } })
           }
-          className={`mt-4 cursor-pointer outline-1 outline-green-500 px-5 py-2 w-full text-green-400  btn btn-outline font-semibold rounded-lg 
+          className={`mt-4 cursor-pointer bg-green-500 outline-green-500 px-5 py-2 w-full text-white  btn btn-outline font-semibold rounded-lg 
               ${
                 event.type === "Upcoming"
                   ? " hover:bg-blue-700"
                   : " hover:bg-gray-600"
               } transition-colors`}
         >
-          {event.type === "Upcoming" ? "Register Now" : "View Details"}
+          {"View Details"}
         </button>
       </div>
     </div>

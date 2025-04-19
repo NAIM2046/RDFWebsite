@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useRDFStore from "../../../storage/useRDFstorage";
+import { Helmet } from "react-helmet-async";
 
 const ProgramDetails = () => {
   const location = useLocation();
@@ -29,9 +30,12 @@ const ProgramDetails = () => {
 
   return (
     <div className="container mx-auto max-w-7xl px-6 py-12 lg:py-16 ">
+      <Helmet>
+        <title>{program.title}</title>
+      </Helmet>
       {/* Title Section */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500">
+        <h1 className="text-4xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500 mt-20 lg:mt-0">
           {program.title}
         </h1>
         <p className="mt-4 text-gray-700 text-lg text-start">
@@ -46,14 +50,14 @@ const ProgramDetails = () => {
           {/* Key Focus Areas */}
           {program.focus?.length > 0 && (
             <div>
-              <h2 className="text-2xl font-semibold text-gray-800">
-                Key Focus Areas
+              <h2 className="text-2xl font-semibold text-green-500 font-serif">
+                Key Focus Areas:
               </h2>
               <ul className="list-disc list-inside text-gray-700 mt-3 space-y-2">
                 {program.focus.map((area, index) => (
                   <li
                     key={index}
-                    className="hover:text-blue-600 transition duration-300"
+                    className="hover:text-blue-600 transition duration-300 even:text-orange-400 odd:text-blue-600"
                   >
                     {area}
                   </li>

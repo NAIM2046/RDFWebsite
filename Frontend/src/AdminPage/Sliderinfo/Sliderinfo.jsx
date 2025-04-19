@@ -9,7 +9,8 @@ const Sliderinfo = () => {
     header: "",
     text: "",
   });
-  const AxiosPublice = useAxiosSecure();
+
+  const AxiosSecure = useAxiosSecure();
   const { isLoading, sliderinfo, fetchsliderinfo } = useRDFStore();
   console.log(sliderinfo);
   useEffect(() => {
@@ -27,7 +28,7 @@ const Sliderinfo = () => {
     e.preventDefault();
 
     console.log(slider);
-    const result = await AxiosPublice.post("/slider", slider);
+    const result = await AxiosSecure.post("/slider", slider);
     if (result.data) {
       console.log(result.data);
       alert("Slider Info Saved Successfully!");
@@ -39,7 +40,7 @@ const Sliderinfo = () => {
     if (!window.confirm("Are you sure you want to delete this slider?")) return;
 
     try {
-      const result = await AxiosPublice.delete(`/slider/${id}`);
+      const result = await AxiosSecure.delete(`/slider/${id}`);
       if (result.data) {
         alert("Slider Deleted Successfully!");
         fetchsliderinfo(); // Refresh list after deletion

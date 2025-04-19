@@ -41,8 +41,8 @@ const OurApproach = () => {
       <div className="flex flex-col md:flex-row  justify-between gap-8 mt-1 bg-gray-100 pl-8 pt-4 rounded-lg min-h-[300px]">
         {/* Left Content */}
         <div className="md:w-1/2">
-          <h1 className="text-4xl font-bold">
-            Our <span className="text-orange-500">Approach</span>
+          <h1 className="text-4xl font-bold font-serif">
+            Our <span className="text-green-500">Approach</span>
           </h1>
           <p className="text-gray-700 mt-4">
             Placing women and girls at the center of focus and working with
@@ -65,7 +65,7 @@ const OurApproach = () => {
           </p>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-orange-500 font-semibold mt-4 inline-block hover:underline transition-all duration-300 cursor-pointer"
+            className="text-green-500 font-semibold mt-4 inline-block hover:underline transition-all duration-300 cursor-pointer"
           >
             {isExpanded ? "Read Less -" : "Read More +"}
           </button>
@@ -87,13 +87,13 @@ const OurApproach = () => {
       </div>
 
       {/* Work Approach Steps */}
-      <div className="space-y-12 mt-24">
+      <div className="space-y-10 mt-10">
         {workApproach.map((step, index) => (
           <div
             key={index}
             className={`flex flex-col md:flex-row ${
-              index % 2 === 0 ? "md:flex-row-reverse" : ""
-            } bg-white shadow-lg rounded-lg hover:shadow-xl transition-all p-6`}
+              index % 2 === 0 ? "md:flex-row-reverse bg-green-50" : "bg-blue-50"
+            }  shadow-lg rounded-lg hover:shadow-xl transition-all p-6`}
           >
             {/* Image Section */}
             <div className="w-full md:w-1/2 flex justify-center">
@@ -106,7 +106,9 @@ const OurApproach = () => {
 
             {/* Text Section */}
             <div className="w-full md:w-1/2 p-6">
-              <h3 className="text-xl font-bold">{step.title}</h3>
+              <h3 className="text-xl font-bold text-green-500 font-serif">
+                {step.title}
+              </h3>
               <p className="text-gray-600 mt-2">{step.description}</p>
             </div>
           </div>

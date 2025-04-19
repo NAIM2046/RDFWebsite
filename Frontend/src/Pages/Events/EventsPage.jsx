@@ -20,12 +20,9 @@ const EventsPage = () => {
         <Helmet>
           <title> RDF-Events </title>
         </Helmet>
-        <h1 className="text-4xl font-bold text-center mb-8 text-blue-600">
-          Our Events
-        </h1>
 
         {/* Upcoming Events Section */}
-        <h2 className="text-2xl font-semibold mb-6 text-gray-800 text-center">
+        <h2 className="text-2xl font-semibold mb-6 text-blue-900 font-serif text-center">
           🎉 Upcoming Events
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -37,7 +34,7 @@ const EventsPage = () => {
         </div>
 
         {/* Past Events Section */}
-        <h2 className="text-2xl font-semibold mt-12 mb-6 text-gray-800 text-center">
+        <h2 className="text-2xl font-semibold mt-12 mb-6 text-blue-900 font-serif text-center">
           📌 Past Events
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

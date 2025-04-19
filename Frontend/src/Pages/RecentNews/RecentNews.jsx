@@ -47,7 +47,7 @@ const RecentNews = () => {
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
       />
       <div className="mx-auto max-w-6xl mb-5">
-        <h2 className="text-3xl font-bold text-gray-800 my-6 text-center">
+        <h2 className="text-3xl font-bold text-gray-800 my-6 text-center font-serif">
           LATEST {path.toUpperCase()}
         </h2>
 
@@ -56,10 +56,10 @@ const RecentNews = () => {
             currentNews.map((news) => (
               <div
                 key={news._id}
-                className="rounded-lg shadow-md bg-white transition duration-300 hover:shadow-xl flex flex-col flex-grow"
+                className="rounded-xl shadow-lg bg-white hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden w-full max-w-md mx-auto"
               >
                 {/* Image Section */}
-                <div className="relative w-full h-64 overflow-hidden rounded-t-lg">
+                <div className="relative w-full h-56 sm:h-64 md:h-72">
                   <img
                     src={news.imageURL}
                     alt={news.title}
@@ -69,41 +69,44 @@ const RecentNews = () => {
                 </div>
 
                 {/* Content Section */}
-                <div className="p-5 flex flex-col flex-grow">
-                  {/* News Title */}
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                <div className="p-4 sm:p-6 flex flex-col justify-between flex-grow space-y-4">
+                  {/* Title */}
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 hover:text-blue-600 transition">
                     {news.title}
                   </h3>
 
-                  {/* Author & Date with Icons */}
-                  <div className="flex items-center text-sm text-gray-600 gap-4">
-                    <span className="flex items-center gap-1">
-                      <FaUser className="text-gray-500" /> {news.author}{" "}
+                  {/* Author and Date */}
+                  <div className="flex flex-wrap items-center text-sm text-gray-500 gap-4">
+                    <span className="flex items-center gap-2">
+                      <FaUser className="text-blue-700" />
+                      {news.author}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <FaCalendarAlt className="text-gray-500" />{" "}
+                    <span className="flex items-center gap-2">
+                      <FaCalendarAlt className="text-blue-600" />
                       {new Date(news.date).toLocaleDateString()}
                     </span>
                   </div>
 
-                  {/* Short Content Preview */}
-                  <p className="text-gray-700 mt-3 leading-relaxed flex-grow">
+                  {/* Description */}
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                     {news.content &&
                     news.content.length > 0 &&
                     news.content[0].description
-                      ? news.content[0].description.slice(0, 150) + "..."
+                      ? news.content[0].description.slice(0, 120) + "..."
                       : "No description available."}
                   </p>
 
-                  {/* Read More Button at Bottom */}
-                  <button
-                    onClick={() =>
-                      navigate(`/news/${news._id}`, { state: { news } })
-                    }
-                    className="flex gap-2 btn w-[50%] btn-outline btn-dash text-blue-600"
-                  >
-                    Read More <FaArrowRight />
-                  </button>
+                  {/* Read More Button */}
+                  <div className="mt-4">
+                    <button
+                      onClick={() =>
+                        navigate(`/news/${news._id}`, { state: { news } })
+                      }
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition font-medium w-[40%] sm:w-auto cursor-pointer"
+                    >
+                      Read More <FaArrowRight />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))

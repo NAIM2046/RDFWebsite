@@ -6,9 +6,9 @@ import aboutImage from "/assets/rdfphoto2/IMG_20210308_181619.jpg";
 import visionImage from "/assets/rdfphoto2/IMG_1070.jpg";
 import missionImage from "/public/assets/rdfphoto2/PRA, Joyalbhanga.jpg";
 import valuesImage from "/assets/6-circle-value9999s.jpg";
-import visionIcon from "/assets/vission.jpg";
-import missionIcon from "/assets/mission.jpg";
-import valueIcon from "/assets/value-1.jpg";
+import visionIcon from "/assets/RDF Photo/vission.png";
+import missionIcon from "/assets/RDF Photo/mission.png";
+import valueIcon from "/assets/RDF Photo/value.png";
 import aboutIcon from "/assets/RDF Photo/information.png";
 import { Helmet } from "react-helmet-async";
 
@@ -25,13 +25,15 @@ const Section = ({ icon, title, text, image, reverse }) => {
     >
       <div className="md:w-1/2 p-6 md:p-8">
         <div className="flex items-center mb-3">
-          <img src={icon} alt="icon" className="w-12 h-12 mr-3" />
-          <h2 className="text-3xl font-bold text-gray-800 font-serif">
+          <img src={icon} alt="icon" className="w-14 h-14 mr-3" />
+          <h2 className="text-3xl font-bold text-green-400 font-serif">
             {title}
           </h2>
         </div>
         <div className="h-1 w-full bg-gradient-to-r from-green-400 to-blue-500 mb-4"></div>
-        <p className="text-gray-600 leading-relaxed">{text}</p>
+        <p className="text-gray-600 leading-relaxed text-[20px] font-serif">
+          {text}
+        </p>
       </div>
       <div className="md:w-1/2 p-6">
         <img
@@ -55,12 +57,12 @@ const VisionMission = () => {
         <title> RDF-Vission and Mission </title>
       </Helmet>
       <PageCoverPhoto
-        title="Our Mission"
+        title=" Vission&Mission"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
       />
 
-      <div className="bg-gray-100 min-h-screen py-12">
-        <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+      <div className="bg-white min-h-screen py-12">
+        <div className="max-w-6xl mx-auto bg-green-50 shadow-lg rounded-2xl p-8">
           <Section
             icon={visionIcon}
             title="Vision"
@@ -99,10 +101,10 @@ const VisionMission = () => {
           className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-8 mt-12 flex flex-col md:flex-row items-center gap-8"
         >
           <div className="md:w-1/2 p-6">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4 font-serif">
+            <h1 className="text-4xl font-bold text-blue-600 mb-4 font-serif">
               Vision 2030
             </h1>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">
+            <h3 className="text-xl font-semibold text-green-400 mb-2">
               RDF’s shared vision for the future
             </h3>
             <p className="text-gray-700 leading-relaxed">

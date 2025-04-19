@@ -28,8 +28,7 @@ import Voluntear from "../Pages/Voluntear/Voluntear";
 import ActivitiesDetail from "../Components/Navber/OurActivities/ActivitiesDetail";
 import EventsPage from "../Pages/Events/EventsPage";
 import EventDetail from "../Pages/Events/EventDetail";
-import OurStrategy from "../Pages/OurStrategy/OurStrategy";
-import OurHistory from "../Pages/OurHistory/OurHistory";
+
 import Blog from "../Pages/Blog/Blog";
 
 import Publication from "../Pages/Publication/Publication";
@@ -56,6 +55,8 @@ import PrivateRoute from "./PrivateRoute";
 import Adminhandle from "../AdminPage/Adminhandle/Adminhandle";
 import CheakOutPage from "../Payment/CheakOutPage";
 import PaymentSuccess from "../Payment/PaymentSuccess";
+import ReportPage from "../AdminPage/ReportPage/ReportPage";
+import AboutRDF from "../Pages/AboutRDF/AboutRDF";
 
 const router = createBrowserRouter([
   {
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
         element: <OurTeam></OurTeam>,
       },
       {
-        path: "/our-team/details",
+        path: "/our-team/:name",
         element: <MemberDetail></MemberDetail>,
       },
       {
@@ -168,13 +169,10 @@ const router = createBrowserRouter([
         element: <EventDetail></EventDetail>,
       },
       {
-        path: "/our-strategy",
-        element: <OurStrategy></OurStrategy>,
+        path: "/about-rdf",
+        element: <AboutRDF></AboutRDF>,
       },
-      {
-        path: "/our-history",
-        element: <OurHistory></OurHistory>,
-      },
+
       {
         path: "/blogs",
         element: <Blog></Blog>,
@@ -270,6 +268,10 @@ const router = createBrowserRouter([
       {
         path: "/admin-rdf/admin",
         element: <Adminhandle></Adminhandle>,
+      },
+      {
+        path: "/admin-rdf/report",
+        element: <ReportPage></ReportPage>,
       },
     ],
   },

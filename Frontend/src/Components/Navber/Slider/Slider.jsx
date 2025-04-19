@@ -1,13 +1,12 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
-import slide1 from "../../../assets/1st-slide.webp"; // Adjust the local image path
+
 import { useNavigate } from "react-router-dom";
 import visionIcon from "/assets/vission.jpg";
 import missionIcon from "/assets/mission.jpg";
 import valueIcon from "/assets/value-1.jpg";
 import useRDFStore from "../../../storage/useRDFstorage";
-import { useEffect, useState } from "react";
-import useAxiosPublic from "../../../Hook/useAxiosPublice";
+import { useEffect } from "react";
 
 const Slider = () => {
   const { isLoading, sliderinfo, fetchsliderinfo } = useRDFStore();
@@ -42,6 +41,9 @@ const Slider = () => {
   return (
     <div className="w-full">
       {/* Loading State */}
+      <h1 className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center text-2xl font-serif font-bold text-white">
+        Resource Development Foundation (RDF)
+      </h1>
 
       {/* Slider Section */}
       {sliderinfo === 0 ? (
@@ -53,7 +55,7 @@ const Slider = () => {
         <Carousel
           className="w-full h-[400px] md:h-[450px] lg:h-[500px] xl:h-[550px]"
           autoplay={true}
-          autoplayDelay={30000}
+          autoplayDelay={9000}
           loop={true}
         >
           {sliderinfo.map((image, index) => (
@@ -93,7 +95,7 @@ const Slider = () => {
                   {image.text}
                 </Typography>
                 <Button
-                  className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn btn-info hover:"
+                  className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn border-2 border-red-400 bg-green-500"
                   size="md"
                 >
                   Read more..
@@ -113,18 +115,20 @@ const Slider = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 * index, duration: 0.5 }}
             onClick={() => navigate("/vision-mission")}
-            className="bg-white p-6 rounded-xl shadow-lg shadow-gray-300 hover:shadow-gray-400 max-w-sm flex flex-col items-center text-center w-full sm:w-[300px] cursor-pointer"
+            className={`p-6 rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-105 cursor-pointer max-w-sm flex flex-col items-center text-center w-full sm:w-[300px] ${
+              (index + 1) % 2 === 0 ? "bg-green-700" : "bg-green-700"
+            }`}
           >
-            <div className="flex justify-center items-center w-16 h-16">
+            <div className="flex justify-center items-center w-20 h-20">
               <img
                 src={card.icon}
                 alt=""
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain rounded-xl"
               />
             </div>
             <Typography
               variant="h5"
-              color="red"
+              color="white"
               className="font-bold uppercase mt-2 mb-3 font-serif"
             >
               {card.header}
@@ -132,7 +136,9 @@ const Slider = () => {
             <Typography
               variant="paragraph"
               color="blue-gray"
-              className="font-serif"
+              className={`font-serif ${
+                index % 2 === 0 ? "text-gray-100" : "text-white"
+              }`}
             >
               {card.text}
             </Typography>

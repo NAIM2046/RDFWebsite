@@ -16,7 +16,7 @@ const OurActivities = () => {
   return (
     <div className="text-center py-10 px-4 bg-amber-50 font-serif">
       <motion.h3
-        className="text-sm text-gray-500 tracking-widest uppercase"
+        className="text-sm text-green-500 tracking-widest uppercase"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -41,14 +41,14 @@ const OurActivities = () => {
           <p className="text-lg ml-3">Loading...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-5 mt-8 max-w-6xl mx-auto ">
+        <div className="flex flex-wrap justify-center gap-5 mt-8 max-w-6xl mx-auto px-4">
           {activities.map((activity, index) => (
             <motion.div
               key={activity._id}
               onClick={() =>
                 navigate("/activities-details", { state: { activity } })
               }
-              className="rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:shadow-xl border-4 cursor-pointer border-white"
+              className="rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:shadow-xl border-4 cursor-pointer border-white w-full sm:w-[calc(33.333%-1.25rem)] lg:w-[calc(20%-1.25rem)]"
               whileInView={{ opacity: 1, scale: 1 }}
               initial={{ opacity: 0, scale: 0.9 }}
               transition={{

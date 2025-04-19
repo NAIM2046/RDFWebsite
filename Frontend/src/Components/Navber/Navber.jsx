@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/rdfnew-5.png";
 import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
-import { MdWorkHistory } from "react-icons/md";
+
 import { MdPlace } from "react-icons/md";
 import { FaProjectDiagram } from "react-icons/fa";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
@@ -24,6 +24,7 @@ import { CiSearch } from "react-icons/ci";
 import { Search } from "lucide-react";
 import { FiUsers, FiBriefcase, FiBook } from "react-icons/fi";
 import { MdVolunteerActivism, MdOutlineWork } from "react-icons/md";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -50,6 +51,11 @@ const Navbar = () => {
       icon: <FaUsers />,
       links: [
         {
+          name: "About RDF",
+          link: "/about-rdf",
+          icon: <IoMdInformationCircleOutline />,
+        },
+        {
           name: "Vision & Mission",
           link: "/vision-mission",
           icon: <FiUsers />,
@@ -73,12 +79,6 @@ const Navbar = () => {
         },
         { name: "Organogram", link: "/organogram", icon: <FaClipboardList /> },
         { name: "Certification", link: "/certification", icon: <FiBook /> },
-        {
-          name: "Our Strategy",
-          link: "/our-strategy",
-          icon: <FaClipboardList />,
-        },
-        { name: "Our History", link: "/our-history", icon: <MdWorkHistory /> },
       ],
     },
     {
@@ -177,7 +177,7 @@ const Navbar = () => {
     ${
       scrolled
         ? "lg:fixed max-w-[1800px] backdrop-blur-lg bg-white/30 shadow-md"
-        : "lg:static lg:bg-[rgba(116,119,221,0.91)]"
+        : "lg:static lg:bg-white"
     }  
     fixed`}
     >
@@ -195,7 +195,7 @@ const Navbar = () => {
         >
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
-              <span className="cursor-pointer flex items-center gap-1 font-bold font-serif hover:text-[#D2691E]">
+              <span className="cursor-pointer flex items-center gap-1 font-bold font-serif hover:text-orange-400">
                 {item.icon} {item.title}{" "}
                 <FaAngleDown className="group-hover:rotate-180 transition-transform duration-300" />
               </span>
@@ -223,12 +223,12 @@ const Navbar = () => {
           {/* Search */}
           <button
             onClick={() => setOpenSearch(!openSearch)}
-            className="bg-gray-300 lg:bg-white p-2 rounded-full text-orange-500 cursor-pointer"
+            className="bg-gray-300 lg:bg-white p-2 rounded-full text-red-700 cursor-pointer"
           >
             {openSearch ? (
-              <RxCross2 className="text-xl" />
+              <RxCross2 className="text-xl stroke-1" />
             ) : (
-              <CiSearch className="text-xl" />
+              <CiSearch className="text-2xl stroke-[1] " />
             )}
           </button>
           {openSearch && (
@@ -253,10 +253,10 @@ const Navbar = () => {
           {/* Donate Button */}
           <button
             onClick={() => navigate("/payment")}
-            className="hidden lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group"
+            className="hidden lg:flex bg-white btn border-3 border-red-600 text-green-500 px-4 py-2 rounded-lg font-bold group "
           >
             DONATE
-            <FaHeart className="text-xl text-red-500 animate-spin-slow" />
+            <FaHeart className="text-xl text-green-500 animate-spin-slow" />
           </button>
 
           {/* Mobile Menu Button */}
@@ -279,7 +279,7 @@ const Navbar = () => {
           <img src={img} alt="RDF Logo" className="h-10" />
           <button
             onClick={() => navigate("/payment")}
-            className=" lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group"
+            className="lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group"
           >
             DONATE
             <FaHeart className="text-xl text-red-500 animate-spin-slow" />

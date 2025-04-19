@@ -26,7 +26,7 @@ const OurPartners = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="w-full flex flex-col justify-center items-center py-16 bg-gradient-to-br bg-green-50 text-black font-serif"
+      className="w-full flex flex-col justify-center items-center py-8 bg-gradient-to-br bg-white text-black font-serif"
     >
       {/* Title with Animated Glow */}
       <motion.h1
@@ -71,7 +71,7 @@ const OurPartners = () => {
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               viewport={{ once: true }}
-              className="flex justify-center items-center p-2 group bg-white w-44 h-44 shadow rounded-md"
+              className="flex justify-center items-center p-2 group bg-green-50 border border-green-400 w-44 h-44 shadow rounded-md"
             >
               <img
                 src={partner.logo}

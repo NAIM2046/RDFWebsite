@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
-import coverimg from "/assets/keyof1.webp";
+
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 const KeyFocusArea = () => {
   const location = useLocation();
@@ -67,38 +68,49 @@ const KeyFocusArea = () => {
   ];
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto bg-gradient-to-b from-[#fdfbff] via-[#f8f7ff] to-[#f3f3ff]">
       <Helmet>
         <title> RDF-Focus Areas </title>
       </Helmet>
+
       <PageCoverPhoto
         title="Key Focus Areas by 2030"
         subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
       />
 
       <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-3xl font-bold text-center mb-8 font-serif">
+        {/* Gradient Text Heading */}
+        <h1 className="text-3xl font-bold text-center mb-8 font-serif bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
           Key Focus Areas
         </h1>
+
         <div className="space-y-8">
           {focusAreas.map((area, index) => (
-            <div
+            <motion.div
               key={index}
-              ref={focusSectionRefs[area.title]} // Attach ref to each section
-              className={`flex flex-col md:flex-row  ${
-                index % 2 === 0 ? "md:flex-row-reverse bg-gray-100" : "bg-white"
+              ref={focusSectionRefs[area.title]}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className={`flex flex-col md:flex-row ${
+                index % 2 === 0
+                  ? "md:flex-row-reverse bg-purple-50"
+                  : "bg-white"
               } shadow-lg rounded-lg p-6 hover:shadow-xl transition-all`}
             >
               <img
                 src={area.image}
                 alt={area.title}
-                className="w-full md:w-1/2 h-full object-cover rounded-md "
+                className="w-full md:w-1/2 h-full object-cover rounded-md transition-transform duration-500 hover:scale-105"
               />
               <div className="md:w-1/2 p-4">
-                <h3 className="text-xl font-bold font-serif">{area.title}</h3>
+                <h3 className="text-xl font-bold font-serif text-purple-700">
+                  {area.title}
+                </h3>
                 <p className="text-gray-600 mt-2">{area.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

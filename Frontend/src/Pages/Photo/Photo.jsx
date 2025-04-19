@@ -63,21 +63,32 @@ const Photo = () => {
       />
 
       <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col md:flex-row items-center gap-4 mt-6 p-6 bg-white  rounded-lg">
-          <div className="relative w-full md:w-1/2">
-            <input
-              type="text"
-              placeholder="🔍 Search by title..."
-              value={searchTitle}
-              onChange={(e) => setSearchTitle(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm"
-            />
+        <div className="flex flex-col md:flex-row items-stretch gap-4 mt-6 p-6 bg-white rounded-xl ">
+          {/* Search Input */}
+          <div className="w-full md:w-1/2">
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Search by Title
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="🔍 Type a title..."
+                value={searchTitle}
+                onChange={(e) => setSearchTitle(e.target.value)}
+                className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm placeholder-gray-400"
+              />
+            </div>
           </div>
-          <div className="relative w-full md:w-1/2">
+
+          {/* Filter Dropdown */}
+          <div className="w-full md:w-1/2">
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Filter by Category
+            </label>
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm bg-white"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm bg-white text-gray-700"
             >
               <option value="">📂 All Categories</option>
               <option value="Event">🎉 Event</option>
@@ -89,24 +100,26 @@ const Photo = () => {
         </div>
 
         {photo.length === 0 ? (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center py-10">
             <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
             <p className="text-lg ml-3">Loading News...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
             {currentPhotos.map((item) => (
               <div
                 key={item.id}
-                className="  rounded  shadow-lg shadow-gray-300 cursor-pointer"
+                className="rounded-lg shadow-lg shadow-gray-300 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
                 onClick={() => setSelectedImage(item)}
               >
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="w-full h-64 object-cover rounded rounded-b-none"
+                  className="w-full h-56 sm:h-64 md:h-72 object-cover rounded-t-lg"
                 />
-                <h3 className="text-center mt-2 font-light">{item.title}</h3>
+                <p className="text-center px-2 py-2 text-sm sm:text-base font-light text-gray-700">
+                  {item.title}
+                </p>
               </div>
             ))}
           </div>
@@ -131,32 +144,43 @@ const Photo = () => {
       </div>
 
       {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center animate-fadeIn">
-          <div className="relative bg-white rounded-md shadow-2xl max-w-lg md:max-w-xl w-full text-center transition-all duration-300 ease-in-out transform scale-95">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 animate-fadeIn z-50">
+          <div className="relative bg-white rounded-lg shadow-2xl w-full max-w-[90%] sm:max-w-md md:max-w-xl lg:max-w-2xl text-center transition-all duration-300 ease-in-out transform scale-95">
+            {/* Close button */}
             <button
-              className="absolute top-2 right-2 text-red-500 cursor-pointer hover:text-red-700 transition-colors duration-300"
+              className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"
               onClick={() => setSelectedImage(null)}
             >
               <FaTimes size={24} />
             </button>
+
+            {/* Image */}
             <img
               src={selectedImage.imageUrl}
               alt={selectedImage.title}
-              className="w-full h-[500px] rounded-xl mb-4 shadow-md"
+              className="w-full h-auto max-h-[60vh] sm:max-h-[70vh] rounded-t-lg object-contain mb-4"
             />
-            <h2 className="text-lg font-bold text-gray-800">
+
+            {/* Title */}
+            <h2 className="text-base sm:text-lg font-bold text-gray-800 px-4">
               {selectedImage.title}
             </h2>
-            <p className="text-sm text-gray-600">{selectedImage.text}</p>
-            <div className="flex justify-between ml-4 mr-4 mb-2">
+
+            {/* Description */}
+            <p className="text-sm sm:text-base text-gray-600 px-4 mb-4">
+              {selectedImage.text}
+            </p>
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between items-center px-6 pb-4">
               <button
-                className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-300"
+                className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
                 onClick={handlePrev}
               >
                 <FaArrowLeft size={24} />
               </button>
               <button
-                className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-300"
+                className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
                 onClick={handleNext}
               >
                 <FaArrowRight size={24} />

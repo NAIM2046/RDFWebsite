@@ -54,7 +54,7 @@ const OurProgram = () => {
         const currentIndex = programs.findIndex((p) => p._id === prev);
         return programs[(currentIndex + 1) % programs.length]._id; // Fixed _id reference
       });
-    }, 10000);
+    }, 9000);
   };
 
   const handleTabClick = (id) => {
@@ -95,8 +95,8 @@ const OurProgram = () => {
               className={`px-2 py-2 pt-4 pb-4 shadow-lg text-[14px] font-medium rounded-lg transition-all cursor-pointer text-center  min-w-[150px] 
                 ${
                   selected === program._id
-                    ? "bg-green-400 text-black"
-                    : "bg-white border border-red-500 hover:border-amber-300 text-gray-700"
+                    ? "bg-green-400 text-white"
+                    : "bg-white border-2 border-amber-300  hover:border-red-500 text-green-500"
                 }`}
               onClick={() => handleTabClick(program._id)}
             >
@@ -156,8 +156,8 @@ const OurProgram = () => {
                       ....
                     </p>
 
-                    <h4 className="mt-6 text-lg font-semibold text-gray-800">
-                      program under this Projects :
+                    <h4 className="mt-6 text-lg font-semibold text-green-500">
+                      Projects under this program :
                     </h4>
                     <ul className="mt-3 list-disc pl-5 space-y-2">
                       <ul className="mt-3 list-disc pl-5 space-y-2">
@@ -168,7 +168,7 @@ const OurProgram = () => {
                               className={`cursor-pointer transition-colors duration-300 ${
                                 index % 2 === 0
                                   ? "text-blue-600"
-                                  : "text-green-600"
+                                  : "text-orange-400"
                               } hover:text-red-500`}
                               onClick={() =>
                                 navigate(`/project-details/${project._id}`, {

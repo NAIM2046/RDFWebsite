@@ -2,7 +2,7 @@ import React from "react";
 
 const PageCoverPhoto = ({ title, subtitle, imageUrl }) => {
   return (
-    <div className="relative w-full h-[450px] md:h-[500px] lg:h-[600px] flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-[450px] md:h-[500px] lg:h-[500px] flex items-center justify-center overflow-hidden">
       {/* Background Image with Blur Effect */}
       <img
         src={imageUrl || `/assets/RDF Photo/3.jpg`} // Use fallback if imageUrl is undefined

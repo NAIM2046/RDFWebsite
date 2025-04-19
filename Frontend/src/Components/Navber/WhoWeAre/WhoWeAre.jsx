@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 const WhoWeAre = () => {
   return (
-    <div className="bg-gray-50 py-10">
+    <div className="bg-gray-50 mt-10">
       {/* Title Animation */}
       <motion.h1
-        className="text-4xl font-bold text-green-400 text-center font-serif mt-10   p-4"
+        className="text-4xl font-bold text-black text-center font-serif"
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -20 }}
         transition={{ duration: 1 }}
@@ -31,25 +31,26 @@ const WhoWeAre = () => {
           transition={{ duration: 1, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <div className="rounded-full border-4 border-green-500">
+          <div className="rounded-full border-3 border-green-500 overflow-hidden w-96 h-96 ">
             <img
-              src="/assets/RDF Photo/CEO.jpeg"
+              src="https://i.ibb.co.com/YBWPqYxc/CEO-PIC-88-1.jpg"
               alt="CEO"
-              className="w-full h-full object-cover rounded-full p-2"
+              className="w-full h-full rounded-full p-4 object-cover"
             />
           </div>
-          <div className="absolute bottom-12 left-12 rounded-full border-2 border-green-400">
+
+          <div className="absolute top-60 right-40 md:top-55 md:right-45 rounded-full border-2 border-red-600">
             <div className="p-2 bg-white rounded-full">
               <motion.div
-                className="bg-green-600 text-white rounded-full shadow-lg flex flex-col justify-center items-center w-36 h-36 p-2"
+                className="bg-green-600 text-white rounded-full shadow-lg flex flex-col justify-center items-center w-48 h-48 p-2"
                 whileInView={{ scale: 1 }}
                 initial={{ scale: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
                 viewport={{ once: true }}
               >
-                <span className="text-3xl font-bold">32+</span>
+                <span className="text-3xl font-bold">40+</span>
                 <span className="text-sm text-center font-serif">
-                  Year Work Experience
+                  In Experience
                 </span>
               </motion.div>
             </div>
@@ -64,7 +65,7 @@ const WhoWeAre = () => {
           transition={{ duration: 1, delay: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-bold text-gray-900 ">
+          <h2 className="text-3xl font-bold text-green-500 mt-20 md:mt-0 ">
             Resource Development Foundation (RDF)
           </h2>
           <p className="mt-4 text-[18px]">

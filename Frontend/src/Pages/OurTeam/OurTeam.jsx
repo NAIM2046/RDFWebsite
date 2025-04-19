@@ -55,7 +55,7 @@ const OurTeam = () => {
       </motion.div>
 
       {/* Main Container */}
-      <div className="container mx-auto p-6">
+      <div className="container mx-auto p-6 bg-green-50  ">
         {/* Filter Section with Slide-In Animation */}
         <motion.div
           className="flex flex-wrap gap-6 mb-8 items-center justify-center"
@@ -99,7 +99,7 @@ const OurTeam = () => {
 
         {/* Team Members Grid with Staggered Animation */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto max-w-7xl"
           initial="hidden"
           animate="visible"
           variants={{
@@ -111,42 +111,27 @@ const OurTeam = () => {
           }}
         >
           {sortedMembers.map((member, index) => (
-            <motion.div
-              key={index}
-              className="bg-white shadow-lg rounded-lg p-4 text-center border border-gray-300 cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
+            <div className=" w-72 h-72  bg-white shadow-2xl rounded-xl relative">
               {/* Centered Image */}
-              <div className="flex justify-center">
-                <motion.img
+              <div className="flex justify-center p-4 ">
+                <img
                   src={member.image}
                   alt={member.name}
-                  className="w-60 h-60 object-cover rounded-lg mb-4 shadow-lg mx-auto"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
+                  className="w-64 h-64 object-cover bg-gray-300 rounded-xl"
                 />
               </div>
 
-              <h3 className="text-xl font-bold text-blue-600">{member.name}</h3>
-              <p className="text-gray-700 font-semibold">{member.post}</p>
-              <p className="text-sm text-gray-500 mt-2">{member.research}</p>
-
-              {/* View Details Button */}
-              <motion.button
+              {/* Name and Position */}
+              <div
                 onClick={() =>
-                  navigate("/our-team/details", { state: { member } })
+                  navigate(`/our-team/${member.name}`, { state: { member } })
                 }
-                className="btn btn-outline btn-info mt-2"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.3 }}
+                className="bg-green-400 p-4 w-72 h-auto rounded text-white absolute top-52 cursor-pointer"
               >
-                View Details
-              </motion.button>
-            </motion.div>
+                <h3 className="text-lg font-bold">{member.name}</h3>
+                <p className="text-sm font-medium">{member.post}</p>
+              </div>
+            </div>
           ))}
         </motion.div>
       </div>

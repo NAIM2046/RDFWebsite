@@ -117,6 +117,12 @@ const Admin = () => {
                   </NavLink>
                 </li>
                 <li>
+                  <NavLink to="/admin-rdf/report">
+                    <FaList></FaList>
+                    Report Menagement
+                  </NavLink>
+                </li>
+                <li>
                   <NavLink to="/">
                     <FaHome></FaHome>
                     Home

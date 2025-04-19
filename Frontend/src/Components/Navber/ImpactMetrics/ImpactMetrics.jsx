@@ -32,7 +32,7 @@ const ImpactMetrics = () => {
   return (
     <section
       ref={ref}
-      className="py-16 px-6 bg-gradient-to-r from-green-50 to-green-100 text-gray-900"
+      className="py-16 px-6 bg-gradient-to-r bg-green-50 text-gray-900"
     >
       <div className="max-w-6xl mx-auto text-center font-serif">
         {/* Heading Animation */}
@@ -47,7 +47,7 @@ const ImpactMetrics = () => {
 
         {/* Subtitle Animation */}
         <motion.p
-          className="text-lg text-gray-600 mb-10 font-serif"
+          className="text-lg text-green-500 mb-10 font-serif"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3, duration: 1 }}
@@ -58,22 +58,22 @@ const ImpactMetrics = () => {
         {/* Cards Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <motion.div
-            className="bg-white shadow-xl p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
+            className="bg-blue-950  p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0 * 0.2, duration: 0.9 }}
             whileHover={{ scale: 1.1 }}
           >
             {/* Icon */}
-            <div className="text-green-600">{metrics[0].icon}</div>
+            <div className="text-green-400">{metrics[0].icon}</div>
 
             {/* Title */}
-            <h3 className="text-lg font-semibold mt-4 text-gray-700">
+            <h3 className="text-lg font-semibold mt-4 text-white">
               {metrics[0].title}
             </h3>
 
             {/* CountUp Animation */}
-            <p className="text-3xl font-bold text-green-600 mt-2">
+            <p className="text-3xl font-bold text-green-400 mt-2">
               {inView ? (
                 <CountUp end={metrics[0].value} duration={2.5} separator="," />
               ) : (
@@ -83,22 +83,22 @@ const ImpactMetrics = () => {
             </p>
           </motion.div>
           <motion.div
-            className="bg-white shadow-xl p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-r from-blue-800 to-blue-900  p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 1 * 0.2, duration: 0.9 }}
             whileHover={{ scale: 1.1 }}
           >
             {/* Icon */}
-            <div className="text-green-600">{metrics[1].icon}</div>
+            <div className="text-yellow-500">{metrics[1].icon}</div>
 
             {/* Title */}
-            <h3 className="text-lg font-semibold mt-4 text-gray-700">
+            <h3 className="text-lg font-semibold mt-4 text-white">
               {metrics[1].title}
             </h3>
 
             {/* CountUp Animation */}
-            <p className="text-3xl font-bold text-green-600 mt-2">
+            <p className="text-3xl font-bold text-pink-400 mt-2">
               {inView ? (
                 <CountUp end={metrics[1].value} duration={2.5} separator="," />
               ) : (
@@ -107,48 +107,24 @@ const ImpactMetrics = () => {
               +
             </p>
           </motion.div>
-          <motion.div
-            className="bg-white shadow-xl p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 2 * 0.2, duration: 0.9 }}
-            whileHover={{ scale: 1.1 }}
-          >
-            {/* Icon */}
-            <div className="text-green-600">{metrics[2].icon}</div>
 
-            {/* Title */}
-            <h3 className="text-lg font-semibold mt-4 text-gray-700">
-              {metrics[2].title}
-            </h3>
-
-            {/* CountUp Animation */}
-            <p className="text-3xl font-bold text-green-600 mt-2">
-              {inView ? (
-                <CountUp end={metrics[2].value} duration={2.5} separator="," />
-              ) : (
-                0
-              )}
-              M+
-            </p>
-          </motion.div>
           <motion.div
-            className="bg-white shadow-xl p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
+            className="bg-blue-950   p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 3 * 0.2, duration: 0.9 }}
             whileHover={{ scale: 1.1 }}
           >
             {/* Icon */}
-            <div className="text-green-600">{metrics[3].icon}</div>
+            <div className="text-green-400">{metrics[3].icon}</div>
 
             {/* Title */}
-            <h3 className="text-lg font-semibold mt-4 text-gray-700">
+            <h3 className="text-lg font-semibold mt-4 text-white">
               {metrics[3].title}
             </h3>
 
             {/* CountUp Animation */}
-            <p className="text-3xl font-bold text-green-600 mt-2 ">
+            <p className="text-3xl font-bold text-green-400 mt-2 ">
               {inView ? (
                 <CountUp
                   end={metrics[3].value + projects.length}
@@ -159,6 +135,31 @@ const ImpactMetrics = () => {
                 0
               )}
               +
+            </p>
+          </motion.div>
+          <motion.div
+            className="bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl p-8 rounded-2xl flex flex-col items-center transition-all duration-300 hover:scale-105"
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 2 * 0.2, duration: 0.9 }}
+            whileHover={{ scale: 1.1 }}
+          >
+            {/* Icon */}
+            <div className="text-yellow-500">{metrics[2].icon}</div>
+
+            {/* Title */}
+            <h3 className="text-lg font-semibold mt-4 text-white">
+              {metrics[2].title}
+            </h3>
+
+            {/* CountUp Animation */}
+            <p className="text-3xl font-bold text-pink-400  mt-2">
+              {inView ? (
+                <CountUp end={metrics[2].value} duration={2.5} separator="," />
+              ) : (
+                0
+              )}
+              M+
             </p>
           </motion.div>
         </div>

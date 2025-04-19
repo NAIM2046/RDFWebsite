@@ -15,7 +15,7 @@ const CareerWithRDF = () => {
         <title> RDF-Career </title>
       </Helmet>
       <div className="container mx-auto p-6 ">
-        <h2 className="text-3xl font-bold text-gray-800 text-center mb-6 mt-20 md:mt-1">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-6 mt-20 md:mt-1 font-serif">
           Job Vacancy
         </h2>
         <div className="flex flex-col items-center">
@@ -28,8 +28,8 @@ const CareerWithRDF = () => {
           ))}
         </div>
         <a
-          href="#"
-          className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 md:absolute top-30 right-10"
+          href={jobs[0].applyLink}
+          className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:shadow-xl shadow-lg  shadow-blue-600 transition duration-300 md:absolute top-30 right-10"
         >
           Apply Now
         </a>

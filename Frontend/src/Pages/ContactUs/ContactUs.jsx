@@ -14,7 +14,7 @@ const ContactUs = () => {
           {/* Left Side - Image */}
           <div className="w-full md:w-1/3 h-full  shadow-lg    rounded-xl">
             <img
-              src="/assets/RDF Photo/tower.jpg" // Replace with your image path
+              src="https://i.ibb.co.com/5XRkVs9d/Screenshot-2025-04-12-151210.png" // Replace with your image path
               alt="Office Building"
               className="w-full object-cover rounded-xl shadow-xl "
             />
@@ -22,7 +22,7 @@ const ContactUs = () => {
 
           {/* Right Side - Contact Info */}
           <div className="w-full md:w-2/3 flex flex-col justify-between p-8 bg-white shadow-2xl   rounded-xl">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center font-serif">
+            <h2 className="text-2xl font-bold mb-4 text-green-500 text-center font-serif">
               Contact Us
             </h2>
 
@@ -32,8 +32,8 @@ const ContactUs = () => {
                 href="https://www.google.com/maps/place/RDF+Tower/@22.1519777,90.1285341,16z/data=!4m14!1m7!3m6!1s0x30aa998d296c6c1f:0x567c97ad6ae76f66!2sRDF+Tower!8m2!3d22.151842!4d90.1308193!16s%2Fg%2F11c1wx0l52!3m5!1s0x30aa998d296c6c1f:0x567c97ad6ae76f66!8m2!3d22.151842!4d90.1308193!16s%2Fg%2F11c1wx0l52?entry=ttu&g_ep=EgoyMDI1MDIxMS4wIKXMDSoASAFQAw%3D%3D"
                 className="text-xl font-semibold text-gray-700 flex items-center gap-2"
               >
-                <FaLocationDot className="text-orange-600 text-2xl" />
-                <strong> Head Office</strong>
+                <FaLocationDot className="text-orange-600 text-3xl" />
+                <h1 className="font-bold"> Head Office</h1>
               </a>
               <p className="text-gray-600 ml-7">
                 542J+P8P, Police Line Rd, Dhaka
@@ -47,7 +47,7 @@ const ContactUs = () => {
                 className="text-xl font-semibold text-gray-700 flex items-center gap-2"
               >
                 <FaLocationDot className="text-orange-600 text-2xl" />{" "}
-                <strong> Dhaka Office</strong>
+                <h1 className="font-bold"> Dhaka Office</h1>
               </a>
               <p className="text-gray-600 ml-7">
                 House # 21, Road # 12, Pisciculture, Housing Society, Block-Kha,
@@ -59,7 +59,7 @@ const ContactUs = () => {
             <div className="mb-6">
               <h3 className="text-xl font-semibold text-gray-700 flex items-center gap-2">
                 <MdOutlineMail className="text-2xl text-orange-600"></MdOutlineMail>{" "}
-                <strong>Mail Us</strong>
+                <h1 className="font-bold">Mail Us</h1>
               </h3>
               <p className="text-gray-600 ml-7">
                 <strong>Head Office:</strong> rdfbangladesh@hotmail.com,
@@ -71,7 +71,7 @@ const ContactUs = () => {
 
             {/* Phone Numbers */}
             <div>
-              <h3 className="text-xl font-semibold text-gray-700 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-gray-700 flex items-center gap-2 ">
                 <FiPhoneCall className="text-2xl text-orange-600"></FiPhoneCall>{" "}
                 Call Us
               </h3>

@@ -47,7 +47,7 @@ const Home = () => {
   return (
     <div>
       <Helmet>
-        <title> RDF-Home </title>
+        <title> Home|Resource Development Foundation </title>
       </Helmet>
       <Slider />
       <WhoWeAre />

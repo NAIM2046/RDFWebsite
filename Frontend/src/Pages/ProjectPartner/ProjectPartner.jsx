@@ -52,97 +52,99 @@ const ProjectPartner = () => {
   return (
     <div className="bg-gray-100 py-16">
       <Helmet>
-        <title> RDF-Project Partner </title>
+        <title>RDF - Project Partner</title>
       </Helmet>
-      {/* Introduction */}
+
+      {/* Header */}
       <div className="max-w-5xl mx-auto text-center px-6">
-        <h2 className="text-4xl font-bold text-gray-800 mt-20 lg:mt-0">
+        <h1 className="text-4xl font-bold text-gray-800 mt-20 lg:mt-0 font-serif">
           Why Partner with Us?
-        </h2>
-        <p className="text-lg text-gray-600 mt-4">
+        </h1>
+        <p className="text-lg text-gray-600 mt-4 ">
           We are a globally recognized organization creating sustainable change.
           By partnering with us, you can help transform lives and make an
           impact.
         </p>
       </div>
 
-      {/* Impact Statistics */}
+      {/* Impact Stats */}
       <div className="mt-12 flex flex-wrap justify-center gap-6 px-6">
-        <div className="bg-white shadow-lg rounded-lg p-6 text-center w-64">
-          <h3 className="text-3xl font-bold text-blue-600">105M+</h3>
-          <p className="text-gray-700">Children helped in 2023</p>
-        </div>
-        <div className="bg-white shadow-lg rounded-lg p-6 text-center w-64">
-          <h3 className="text-3xl font-bold text-green-600">33.7M+</h3>
-          <p className="text-gray-700">
-            Children reached with health & nutrition
-          </p>
-        </div>
-        <div className="bg-white shadow-lg rounded-lg p-6 text-center w-64">
-          <h3 className="text-3xl font-bold text-red-600">120+</h3>
-          <p className="text-gray-700">Emergency responses in 2023</p>
-        </div>
+        {[
+          { value: "105M+", label: "Children helped in 2023", color: "blue" },
+          {
+            value: "33.7M+",
+            label: "Children reached with health & nutrition",
+            color: "green",
+          },
+          { value: "120+", label: "Emergency responses in 2024", color: "red" },
+        ].map((stat, i) => (
+          <div
+            key={i}
+            className="bg-white shadow-lg rounded-lg p-6 text-center w-64"
+          >
+            <h3 className={`text-3xl font-bold text-${stat.color}-600`}>
+              {stat.value}
+            </h3>
+            <p className="text-gray-700">{stat.label}</p>
+          </div>
+        ))}
       </div>
 
-      {/* Benefits of Partnering */}
+      {/* Partnering Benefits */}
       <div className="mt-16 max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800">
+        <h2 className="text-3xl font-bold text-center text-gray-800 font-serif">
           What Partnering Means for You
         </h2>
         <p className="text-lg text-gray-600 mt-4 text-center">
           From creating life-saving products to inspiring staff for fundraising,
           our partnerships make a difference.
         </p>
+
         <div className="mt-8 space-y-6">
-          <div className="flex items-center bg-white p-6 rounded-lg shadow-md">
-            <div className="bg-blue-500 text-white w-12 h-12 flex items-center justify-center text-2xl font-bold rounded-full mr-6">
-              1
+          {[
+            "Work with us to develop sustainable, long-term solutions.",
+            "Collaborate with communities to create lasting impact.",
+            "Engage your employees and customers in social impact projects.",
+          ].map((text, i) => (
+            <div
+              key={i}
+              className="flex items-center bg-white p-6 rounded-lg shadow-md"
+            >
+              <div
+                className={`bg-${
+                  ["blue", "green", "red"][i]
+                }-500 text-white w-12 h-12 flex items-center justify-center text-2xl font-bold rounded-full mr-6`}
+              >
+                {i + 1}
+              </div>
+              <p className="text-gray-700">{text}</p>
             </div>
-            <p className="text-gray-700">
-              Work with us to develop **sustainable, long-term solutions**.
-            </p>
-          </div>
-          <div className="flex items-center bg-white p-6 rounded-lg shadow-md">
-            <div className="bg-green-500 text-white w-12 h-12 flex items-center justify-center text-2xl font-bold rounded-full mr-6">
-              2
-            </div>
-            <p className="text-gray-700">
-              **Collaborate with communities** to create lasting impact.
-            </p>
-          </div>
-          <div className="flex items-center bg-white p-6 rounded-lg shadow-md">
-            <div className="bg-red-500 text-white w-12 h-12 flex items-center justify-center text-2xl font-bold rounded-full mr-6">
-              3
-            </div>
-            <p className="text-gray-700">
-              Engage your employees and customers in **social impact projects**.
-            </p>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Call to Action */}
+      {/* Call to Action + Contact Form */}
       <div className="mt-16 text-center flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-gray-800">Partner With Us</h2>
+        <h2 className="text-3xl font-bold text-gray-800 font-serif">
+          Partner With Us
+        </h2>
         <p className="text-lg text-gray-600 mt-4">
           Let's create meaningful change together.
         </p>
 
-        {/* Modal Content */}
+        {/* Form */}
         <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 mt-6">
-          {/* Form Title */}
-          <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
+          <h3 className="text-2xl font-bold text-gray-800 text-center mb-4">
             Submit an Inquiry
-          </h2>
+          </h3>
 
-          {/* Form Fields */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex gap-4">
               <input
                 type="text"
                 name="firstName"
                 placeholder="First name*"
-                className="w-1/2 border border-gray-300 p-3 rounded-md"
+                className="w-1/2 border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
                 required
                 onChange={handleChange}
               />
@@ -150,7 +152,7 @@ const ProjectPartner = () => {
                 type="text"
                 name="lastName"
                 placeholder="Last name*"
-                className="w-1/2 border border-gray-300 p-3 rounded-md"
+                className="w-1/2 border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
                 required
                 onChange={handleChange}
               />
@@ -160,14 +162,14 @@ const ProjectPartner = () => {
               type="email"
               name="email"
               placeholder="Email*"
-              className="w-full border border-gray-300 p-3 rounded-md"
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
               required
               onChange={handleChange}
             />
 
             <select
               name="reason"
-              className="w-full border border-gray-300 p-3 rounded-md"
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
               required
               onChange={handleChange}
             >
@@ -180,7 +182,7 @@ const ProjectPartner = () => {
             <textarea
               name="message"
               placeholder="Message*"
-              className="w-full border border-gray-300 p-3 rounded-md"
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
               maxLength={200}
               required
               onChange={handleChange}
@@ -188,19 +190,19 @@ const ProjectPartner = () => {
 
             <button
               type="submit"
-              className="w-full bg-red-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-red-700 transition cursor-pointer"
+              className="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition"
             >
               Contact Us
             </button>
           </form>
 
-          {status && <p className="text-gray-700 mt-4">{status}</p>}
+          {status && <p className="text-gray-700 mt-4 text-center">{status}</p>}
 
           {/* Privacy Notice */}
-          <p className="text-sm text-gray-600 mt-4">
+          <p className="text-sm text-gray-600 mt-4 text-center">
             By clicking submit, you confirm you are over 18 and agree to receive
             emails about our work. You can opt out anytime. See our{" "}
-            <a href="#" className="text-blue-600">
+            <a href="#" className="text-red-500 hover:underline">
               privacy policy
             </a>
             .

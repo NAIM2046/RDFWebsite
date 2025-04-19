@@ -8,7 +8,7 @@ const MemberDetails = () => {
   const [activeTab, setActiveTab] = useState("research"); // Default active tab
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 bg-gray-50">
+    <div className="container mx-auto p-4 sm:p-6 bg-gray-100">
       <Helmet>
         <title> RDF-Team Members </title>
       </Helmet>
@@ -25,7 +25,7 @@ const MemberDetails = () => {
           <h3 className="text-center text-lg sm:text-xl font-bold text-blue-600 mt-3">
             {member.name}
           </h3>
-          <p className="text-center text-gray-700 font-semibold text-sm sm:text-base">
+          <p className="text-center text-green-400 font-semibold text-sm sm:text-base">
             {member.post}
           </p>
         </div>
@@ -36,24 +36,13 @@ const MemberDetails = () => {
             PROFILE
           </h1>
           <div className="mt-4">
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold text-green-400">
               SHORT BIOGRAPHY
             </h2>
             <p className="text-gray-600 mt-2 text-sm sm:text-base">
               {member.bio || "N/A"}
             </p>
           </div>
-
-          {member.research && (
-            <div className="mt-4">
-              <h2 className="text-lg font-semibold text-gray-800">
-                RESEARCH INTEREST
-              </h2>
-              <p className="text-gray-600 mt-2 text-sm sm:text-base">
-                {member.research || "N/A"}
-              </p>
-            </div>
-          )}
         </div>
       </div>
 
@@ -70,7 +59,7 @@ const MemberDetails = () => {
             onClick={() => setActiveTab(tab.id)}
             className={`cursor-pointer hover:text-blue-800 font-serif px-2 sm:px-3 py-1 rounded ${
               activeTab === tab.id
-                ? "text-blue-800 border-b-2 border-blue-800"
+                ? "text-green-400 border-b-2 border-blue-800"
                 : ""
             }`}
           >

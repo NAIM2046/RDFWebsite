@@ -56,178 +56,165 @@ const ProjectDetails = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-2">
       <Helmet>
-        <title> RDF-Project </title>
+        <title> RDF-Project Details </title>
       </Helmet>
       {/* Project Header */}
-      <div className="p-6 bg-gray-50 text-gray-800 mt-10 lg:mt-5">
+      <div className="p-6 bg-gray-50 text-gray-800 mt-10 lg:mt-0">
         {/* Header Section */}
         <div className="text-center mt-20 md:mt-5">
-          <h1 className="text-3xl font-bold text-gray-900 font-serif">
+          <h1 className="text-4xl font-extrabold font-serif bg-gradient-to-r from-indigo-500 via-green-400 to-red-400 text-transparent bg-clip-text drop-shadow-md tracking-wide">
             {project.name}
           </h1>
-          <p className="text-gray-700 mt-2">
-            <strong>Donor:</strong> {project.donor} | <strong>Budget:</strong>{" "}
-            {project.budget}
-          </p>
-          <p className="text-gray-700">
-            <strong>Duration:</strong> {project.startDate} - {project.endDate}
-          </p>
         </div>
 
         {/* Project Media Section */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Handle case when only one image exists */}
-          {project.images.length === 1 ? (
+          {project.images && (
             <div className="col-span-1 md:col-span-3 flex justify-center">
               <img
                 src={project.images[0]}
                 alt="Project Cover"
-                className="rounded-lg shadow-lg w-full h-[300px] md:h-[450px] object-cover"
+                className="rounded-lg shadow-lg w-full h-[300px] md:h-[500px] object-cover"
               />
             </div>
-          ) : (
-            <>
-              {/* Cover Image (2/3 width on larger screens) */}
-              <div className="md:col-span-2 flex justify-center">
-                <img
-                  src={project.images[0]}
-                  alt="Project Cover"
-                  className="rounded-lg shadow-lg w-full h-[300px] md:h-[450px] object-cover"
-                />
-              </div>
-
-              {/* Additional Images & Video (1/3 width) */}
-              <div className="flex flex-col space-y-4">
-                {/* Additional Images */}
-                <div className="grid grid-cols-1 gap-3">
-                  {project.images.slice(1).map((img, index) => (
-                    <img
-                      key={index}
-                      src={img}
-                      alt={`Project ${index + 1}`}
-                      className="rounded-lg shadow-md w-full h-[120px] md:h-[180px] object-cover"
-                    />
-                  ))}
-                </div>
-
-                {project.video && (
-                  <div
-                    className={`${
-                      project.images.length === 1
-                        ? "col-span-1 md:col-span-3"
-                        : "w-full"
-                    } relative h-48 md:h-64`}
-                  >
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full rounded-lg shadow-md"
-                      src={`https://www.youtube.com/embed/${project.video}`}
-                      title="Project Video"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                )}
-              </div>
-            </>
           )}
-
-          {/* Video Section (Full Width if Only One Image) */}
         </div>
 
         {/* Project Details Section */}
-        <div className="mt-6 p-4 md:p-6 mx-auto max-w-6xl bg-white shadow-md rounded-lg">
-          {/* Project Goal */}
-          <p className="text-lg text-gray-800 font-semibold border-l-2 border-green-500 pl-3">
-            <strong>Project Goal:</strong> {project.projectGoal}
-          </p>
-
-          {
-            <p className="text-lg text-gray-800 font-semibold border-l-2 border-green-500 pl-3 mt-4">
-              <strong>Project Summary:</strong>{" "}
-              {project.projectSummary || "N/A"}
+        <div className="mt-6 p-4 md:p-6 mx-auto max-w-7xl bg-white shadow-md rounded-lg flex flex-col md:flex-row gap-6">
+          {/* Left Section */}
+          <div className="w-full md:w-2/3">
+            {/* Project Goal */}
+            <p className="text-lg text-gray-800 ">
+              <h1 className="text-xl font-semibold text-gray-900 border-l-5 border-green-500 pl-1">
+                <strong> Project Goal:</strong>
+              </h1>
+              <p className="pl-4">{project.projectGoal}</p>
             </p>
-          }
-          {/* Grid Layout */}
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Left Side Details */}
-            <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-green-700 border-b pb-2">
-                Project Details
-              </h3>
 
-              <p className="text-gray-700">
-                <strong>State:</strong> {project.projectState}
-              </p>
-              <p className="text-gray-700">
-                <strong>Areas:</strong> {project.implementingAreas}
-              </p>
-              <p className="text-gray-700">
-                <strong>Completion Report:</strong>{" "}
-                <span className="text-blue-500">
-                  {project.projectCompletionReport || "N/A"}
-                </span>
-              </p>
-              <p className="text-gray-700">
-                <strong>Remarks:</strong>{" "}
-                <span className="italic text-gray-500">
-                  {project.remarks || "N/A"}
-                </span>
-              </p>
+            {/* Project Summary */}
+            <p className="text-lg text-gray-800  mt-4">
+              <h1 className="text-xl font-semibold text-gray-900 border-l-5 border-green-500 pl-2">
+                {" "}
+                <strong>Project Summary:</strong>
+              </h1>
+              <p className="pl-4"> {project.projectSummary || "N/A"}</p>
+            </p>
+
+            {/* Major Interventions */}
+            <div className="mt-8 p-4 bg-gray-50 rounded-lg">
+              <h2 className="text-xl font-bold text-gray-900 border-l-4 border-green-500 pl-4">
+                Major Interventions
+              </h2>
+              <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1 pl-4">
+                {project.majorInterventions.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
             </div>
 
-            {/* Beneficiaries */}
-            <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-green-700 border-b pb-2">
-                Beneficiaries
-              </h3>
-              <p className="text-gray-700 mt-2">
-                <strong>Direct Beneficiaries:</strong>{" "}
-                <span className="text-blue-600">
-                  Male: {project.directBeneficiaries.male}
-                </span>
-                ,
-                <span className="text-pink-600">
-                  {" "}
-                  Female: {project.directBeneficiaries.female}
-                </span>
-              </p>
-              <p className="text-gray-700">
-                <strong>Indirect Beneficiaries:</strong>{" "}
-                <span className="text-blue-600">
-                  Male: {project.indirectBeneficiaries.male}
-                </span>
-                ,
-                <span className="text-pink-600">
-                  {" "}
-                  Female: {project.indirectBeneficiaries.female}
-                </span>
+            {/* Project Results */}
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h2 className="text-xl font-bold text-gray-900 border-l-4 border-green-500 pl-4">
+                Project Results
+              </h2>
+              <p className="text-gray-700 mt-2 pl-4">
+                {project.projectResults || "No results available yet."}
               </p>
             </div>
           </div>
 
-          {/* Major Interventions */}
-          <div className="mt-8 p-4 bg-white">
-            <h2 className="text-xl font-semibold text-gray-900 border-l-2 border-green-500 pl-3">
-              Major Interventions
-            </h2>
-            <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1">
-              {project.majorInterventions.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
+          {/* Right Section */}
+          <div className="w-full md:w-1/3 border-2 border-blue-600 bg-gray-100 rounded-xl">
+            <h1 className="text-center border-b-2 p-3 text-green-600 text-xl font-bold bg-white rounded-t-xl font-serif">
+              Project Information
+            </h1>
 
-          {/* Project Results */}
-          <div className="mt-6 p-4 bg-white">
-            <h2 className="text-xl font-semibold text-gray-900 border-l-2 border-gray-400 pl-3">
-              Project Results
-            </h2>
-            <p className="text-gray-700 mt-2">
-              {project.projectResults || "No results available yet."}
-            </p>
+            <div className="p-4 space-y-2 text-blue-900 text-sm md:text-base">
+              <p>
+                <strong>Donor:</strong> {project.donor}
+              </p>
+              <p>
+                <strong>Budget:</strong> {project.budget}
+              </p>
+              <p>
+                <strong>Duration:</strong> {project.startDate} to{" "}
+                {project.endDate}
+              </p>
+              <p>
+                <strong>Project State:</strong> {project.projectState}
+              </p>
+              <p>
+                <strong>Implementing Areas:</strong>{" "}
+                {project.implementingAreas.join(", ")}
+              </p>
+
+              <p>
+                <strong>Direct Beneficiaries:</strong>
+                Male: {project.directBeneficiaries.male}, Female:{" "}
+                {project.directBeneficiaries.female}
+              </p>
+
+              <p>
+                <strong>Indirect Beneficiaries:</strong>
+                Male: {project.indirectBeneficiaries.male}, Female:{" "}
+                {project.indirectBeneficiaries.female}
+              </p>
+
+              {project.projectCompletionReport && (
+                <p>
+                  <strong>Completion Report:</strong>
+                  <a
+                    href={project.projectCompletionReport}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 underline ml-1"
+                  >
+                    View Report
+                  </a>
+                </p>
+              )}
+            </div>
+
+            {/* Project Image Gallery */}
+            {project.images?.length > 0 && (
+              <div className="p-4">
+                <h2 className="text-center text-lg font-semibold text-green-500 mb-2 border-2 rounded-md bg-white">
+                  Project Gallery
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {project.images.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={`Project Image ${index + 1}`}
+                      className="w-full h-40 object-cover rounded-lg border border-gray-300 shadow-sm"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Project Video */}
+            {project.video && (
+              <div className=" p-4">
+                <h2 className="text-center text-lg font-semibold text-green-500 mb-2">
+                  Project Video
+                </h2>
+                <div className="aspect-w-16 aspect-h-9">
+                  <iframe
+                    className="w-full h-32 rounded-lg border border-gray-300 shadow-sm"
+                    src={`https://www.youtube.com/embed/${project.video}`}
+                    title="Project Video"
+                    frameBorder="0"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

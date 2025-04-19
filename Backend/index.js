@@ -4,12 +4,16 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
 require('dotenv').config() ;
-app.use(express.json()) ;
-app.use(cors()) ;
+
 const port = process.env.PORT || 3000 
 const compression = require("compression");
 const SSLCommerzPayment = require('sslcommerz-lts') ;
+const multer = require('multer') ;
+const path = require('path')
 
+
+app.use(express.json()) ;
+app.use(cors()) ;
 app.use(compression());
 
 app.get('/', (req, res) => {
@@ -43,6 +47,7 @@ async function run() {
      const eventCol=  client.db("RDF").collection("events") ; 
      const partnerCol=  client.db("RDF").collection("partners") ; 
      const adminCol=  client.db("RDF").collection("admins") ; 
+     const reportsCollection=  client.db("RDF").collection("reports") ; 
 
 // middleware function 
 
@@ -63,6 +68,53 @@ const verifyToken = (req, res, next) => {
     res.status(401).json({ message: "Invalid token." });
   }
 };
+
+// report upload 
+const storage = multer.diskStorage({
+  destination: "./uploads",
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
+app.post("/upload", upload.single("pdf"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
+  const { title } = req.body;
+  const filePath = `/uploads/${req.file.filename}`;
+
+  try {
+    const result = await reportsCollection.insertOne({ title, filePath, uploadedAt: new Date() });
+    res.json({ message: "Report uploaded successfully!", report: { _id: result.insertedId, title, filePath } });
+  } catch (error) {
+    res.status(500).json({ message: "Error saving report", error });
+  }
+});
+app.get("/reports", async (req, res) => {
+  try {
+    const reports = await reportsCollection.find().toArray();
+    res.json(reports);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching reports", error });
+  }
+});
+
+// Delete Report
+app.delete("/report/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await reportsCollection.deleteOne({ _id: new ObjectId(id) });
+    res.json({ message: "Report deleted successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting report", error });
+  }
+});
+
+const __dirname = path.resolve(); // Fix __dirname in CommonJS
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 
      // admin login api 
@@ -138,11 +190,11 @@ const verifyToken = (req, res, next) => {
       }
     });
     
-    app.delete("/slider/:id", verifyToken, async (req, res) => {
+    app.delete("/slider/:id", verifyToken, async (req, res) => { 
       const id = req.params.id;
       try {
         const query = { _id: new ObjectId(id) };
-        const result = await silderinfo.deleteOne(query);
+        const result = await sliderinfo.deleteOne(query);
         if (result.deletedCount === 0) {
           return res.status(404).send({ error: "Slider not found" });
         }

@@ -19,7 +19,7 @@ const OurPartners = () => {
 
   return (
     <motion.div
-      className="bg-gray-100 min-h-screen pb-10 font-serif"
+      className="bg-gray-50 min-h-screen pb-10 font-serif"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -38,7 +38,7 @@ const OurPartners = () => {
         <h2 className="text-3xl font-bold text-center text-gray-800">
           OUR PARTNERS & DONORS
         </h2>
-        <p className="text-center text-gray-600 max-w-3xl mx-auto mt-2">
+        <p className="text-center text-green-400 max-w-3xl mx-auto mt-2">
           Our partnerships are one of our key approaches and an essential part
           of how we achieve success.
         </p>
@@ -57,8 +57,8 @@ const OurPartners = () => {
               className={`px-5 py-3 rounded-lg cursor-pointer shadow-md text-md font-semibold transition-all duration-300 
                 ${
                   activeTab === category
-                    ? "bg-green-500 text-white scale-105"
-                    : "bg-green-200 text-gray-800 hover:bg-gray-300"
+                    ? "bg-red-500 text-white scale-105"
+                    : "bg-green-400 text-gray-950 hover:bg-gray-300"
                 }`}
               onClick={() => setActiveTab(category)}
             >
@@ -68,7 +68,7 @@ const OurPartners = () => {
         </motion.div>
 
         {/* Partner Logos */}
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-6 mx-auto max-w-6xl">
           <motion.div
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl w-full px-4"
             initial={{ opacity: 0 }}
@@ -87,7 +87,7 @@ const OurPartners = () => {
                   href={partner.link || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white p-4 hover:border-gray-300 rounded-lg shadow-2xl flex justify-center items-center relative group overflow-hidden transition-all duration-300 hover:shadow-xl"
+                  className="bg-white p-4 border border-green-400 hover:border-gray-300 rounded-lg shadow-2xl flex justify-center items-center relative group overflow-hidden transition-all duration-300 hover:shadow-xl"
                   whileHover={{ scale: 1.05 }}
                 >
                   <img
