@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const WhoWeAre = () => {
+  const [open, setopen] = useState(false);
   return (
     <div className="bg-gray-50 mt-10">
       {/* Title Animation */}
@@ -91,11 +92,27 @@ const WhoWeAre = () => {
 
           {/* Read More Animation */}
           <motion.div
-            className="flex items-center mt-4 text-green-400 hover:underline"
-            whileHover={{ scale: 1.01 }}
+            className="flex  flex-col mt-4"
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Link to="/our-history">Read More...</Link>
+            {open && (
+              <p className="text-[18px] mt-2">
+                RDF is a non-profit, non-political, and non-religious
+                organization. It is registered with the Social Welfare
+                Department of the Government of Bangladesh. RDF is also a member
+                of the Bangladesh NGO Network for Radio and Communication
+                (BNNRC) and the Bangladesh NGO Federation for Radio and
+                Communication (BNFRC). It has been actively working since 1995
+                in the fields of education, health, nutrition, and women’s
+                empowerment.
+              </p>
+            )}
+            <button
+              onClick={() => setopen(!open)}
+              className="text-green-600 font-semibold underline mt-2 cursor-pointer text-start"
+            >
+              {open ? "Read Less" : "Read More..."}
+            </button>
           </motion.div>
         </motion.div>
       </motion.section>

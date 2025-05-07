@@ -55,7 +55,7 @@ const OurTeam = () => {
       </motion.div>
 
       {/* Main Container */}
-      <div className="container mx-auto p-6 bg-green-50  ">
+      <div className="container mx-auto p-6 bg-gray-100  ">
         {/* Filter Section with Slide-In Animation */}
         <motion.div
           className="flex flex-wrap gap-6 mb-8 items-center justify-center"
@@ -111,7 +111,7 @@ const OurTeam = () => {
           }}
         >
           {sortedMembers.map((member, index) => (
-            <div className=" w-72 h-72  bg-white shadow-2xl rounded-xl relative">
+            <div className=" w-72 h-72  bg-green-200 shadow-2xl rounded-xl relative">
               {/* Centered Image */}
               <div className="flex justify-center p-4 ">
                 <img

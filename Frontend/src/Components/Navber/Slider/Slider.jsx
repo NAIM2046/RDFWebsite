@@ -41,7 +41,11 @@ const Slider = () => {
   return (
     <div className="w-full">
       {/* Loading State */}
-      <h1 className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center text-2xl font-serif font-bold text-white">
+      <h1
+        className="absolute z-10 text-center font-serif font-bold text-white px-2
+  text-md sm:text-lg md:text-lg lg:text-xl xl:text-4xl
+  top-1/6 sm:top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      >
         Resource Development Foundation (RDF)
       </h1>
 
@@ -78,12 +82,12 @@ const Slider = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
-                className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 sm:bg-black/10 p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
+                className="absolute bottom-10 right-5 md:right-10 lg:bg-black/50 bg-black/10 p-6 md:p-8 rounded-xl max-w-xs md:max-w-lg text-right z-10"
               >
                 <Typography
                   variant="h1"
                   color="white"
-                  className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-serif"
+                  className="mb-2 text-md sm:text-xl md:text-2xl lg:text-3xl font-bold font-serif"
                 >
                   {image.header}
                 </Typography>
@@ -94,12 +98,9 @@ const Slider = () => {
                 >
                   {image.text}
                 </Typography>
-                <Button
-                  className="cursor-pointer hover:scale-110 transition-transform duration-300 text-white btn border-2 border-red-400 bg-green-500"
-                  size="md"
-                >
+                <button className="cursor-pointer hover:scale-110 transition-transform duration-300 btn btn-sm md:btn-md bg-green-600 text-white">
                   Read more..
-                </Button>
+                </button>
               </motion.div>
             </motion.div>
           ))}

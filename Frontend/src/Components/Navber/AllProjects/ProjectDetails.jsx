@@ -64,7 +64,7 @@ const ProjectDetails = () => {
       <div className="p-6 bg-gray-50 text-gray-800 mt-10 lg:mt-0">
         {/* Header Section */}
         <div className="text-center mt-20 md:mt-5">
-          <h1 className="text-4xl font-extrabold font-serif bg-gradient-to-r from-indigo-500 via-green-400 to-red-400 text-transparent bg-clip-text drop-shadow-md tracking-wide">
+          <h1 className="text-4xl font-extrabold font-serif text-green-500  ">
             {project.name}
           </h1>
         </div>
@@ -77,7 +77,7 @@ const ProjectDetails = () => {
               <img
                 src={project.images[0]}
                 alt="Project Cover"
-                className="rounded-lg shadow-lg w-full h-[300px] md:h-[500px] object-cover"
+                className="rounded-lg  w-full h-[300px] md:h-[600px] object-cover"
               />
             </div>
           )}
@@ -90,7 +90,7 @@ const ProjectDetails = () => {
             {/* Project Goal */}
             <p className="text-lg text-gray-800 ">
               <h1 className="text-xl font-semibold text-gray-900 border-l-5 border-green-500 pl-1">
-                <strong> Project Goal:</strong>
+                <strong className=""> Project Goal:</strong>
               </h1>
               <p className="pl-4">{project.projectGoal}</p>
             </p>
@@ -128,8 +128,8 @@ const ProjectDetails = () => {
           </div>
 
           {/* Right Section */}
-          <div className="w-full md:w-1/3 border-2 border-blue-600 bg-gray-100 rounded-xl">
-            <h1 className="text-center border-b-2 p-3 text-green-600 text-xl font-bold bg-white rounded-t-xl font-serif">
+          <div className="w-full md:w-1/3 border-3 border-green-700 bg-gray-100 rounded-lg">
+            <h1 className="text-center  p-3 text-white text-xl font-bold bg-green-700 rounded-t-md font-serif">
               Project Information
             </h1>
 
@@ -182,7 +182,7 @@ const ProjectDetails = () => {
             {/* Project Image Gallery */}
             {project.images?.length > 0 && (
               <div className="p-4">
-                <h2 className="text-center text-lg font-semibold text-green-500 mb-2 border-2 rounded-md bg-white">
+                <h2 className="text-center text-lg font-semibold text-white mb-2 border-2 rounded-md bg-green-600">
                   Project Gallery
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -206,7 +206,7 @@ const ProjectDetails = () => {
                 </h2>
                 <div className="aspect-w-16 aspect-h-9">
                   <iframe
-                    className="w-full h-32 rounded-lg border border-gray-300 shadow-sm"
+                    className="w-full h-36 rounded-lg border border-gray-300 shadow-sm"
                     src={`https://www.youtube.com/embed/${project.video}`}
                     title="Project Video"
                     frameBorder="0"

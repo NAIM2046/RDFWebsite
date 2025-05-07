@@ -143,7 +143,7 @@ const AllProjects = () => {
       </div>
 
       {/* Filter Section */}
-      <div className="max-w-6xl mx-auto mt-2 flex justify-end">
+      <div className="max-w-6xl mx-auto mt-2 flex justify-center md:justify-end">
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
@@ -160,7 +160,7 @@ const AllProjects = () => {
         <h1 className="text-center text-xl font-serif  pb-2 text-orange-400">
           {selectedTitle}
         </h1>
-        <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 font-serif">
+        <div className="max-w-6xl mx-auto p-3 mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
           {currentProjects.length > 0 ? (
             currentProjects.map((project) => (
               <div
@@ -173,13 +173,22 @@ const AllProjects = () => {
                   className="w-full h-64 object-cover rounded-t-lg"
                 />
                 <div className="p-4 flex flex-col flex-grow">
-                  <h3 className="text-lg font-semibold">{project.name}</h3>
+                  <h3 className="text-lg font-semibold font-serif">
+                    {project.name}
+                  </h3>
                   <p className="text-sm text-gray-600">
                     <strong>Donor:</strong> {project.donor}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    <strong>Duration:</strong> {project.startDate} to{" "}
-                    {project.endDate || "continue"}
+                  <p>
+                    <strong>Direct Beneficiaries:</strong>
+                    {parseInt(project.directBeneficiaries.male) +
+                      parseInt(project.directBeneficiaries.female)}
+                  </p>
+
+                  <p>
+                    <strong>Indirect Beneficiaries:</strong>
+                    {parseInt(project.indirectBeneficiaries.male) +
+                      parseInt(project.indirectBeneficiaries.female)}
                   </p>
                   <p className="text-sm font-bold text-blue-600">
                     Status:{" "}
@@ -193,7 +202,7 @@ const AllProjects = () => {
                         state: { project },
                       })
                     }
-                    className="inline-flex items-center px-3 py-2 mt-auto text-sm font-medium rounded-lg btn btn-outline btn-primary focus:ring-4 focus:outline-none focus:ring-blue-300"
+                    className="inline-flex items-center px-3 py-3 mt-auto text-sm font-medium rounded-lg btn btn-outline btn-primary bg-blue-500 text-white hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   >
                     View Details
                     <FaArrowRight className="p-1 text-2xl pl-2" />

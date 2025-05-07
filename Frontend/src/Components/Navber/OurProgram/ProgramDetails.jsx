@@ -29,13 +29,13 @@ const ProgramDetails = () => {
   );
 
   return (
-    <div className="container mx-auto max-w-7xl px-6 py-12 lg:py-16 ">
+    <div className="container mx-auto max-w-7xl px-6 py-12 lg:py-10 ">
       <Helmet>
         <title>{program.title}</title>
       </Helmet>
       {/* Title Section */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500 mt-20 lg:mt-0">
+        <h1 className="text-4xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500 mt-20 lg:mt-0">
           {program.title}
         </h1>
         <p className="mt-4 text-gray-700 text-lg text-start">

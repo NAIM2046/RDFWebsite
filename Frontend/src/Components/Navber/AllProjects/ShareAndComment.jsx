@@ -114,7 +114,7 @@ const ShareAndComment = () => {
           />
 
           <button
-            className="w-full max-w-sm bg-gradient-to-r from-blue-500 via-teal-400 to-green-500 text-white py-3 rounded-lg hover:from-green-500 hover:to-teal-400 transition"
+            className="w-full max-w-sm bg-green-600 text-white py-3 rounded-lg cursor-pointer transition"
             onClick={handleCommentSubmit}
           >
             Post Comment
