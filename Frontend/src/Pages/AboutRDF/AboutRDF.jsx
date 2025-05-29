@@ -1,6 +1,7 @@
 import React from "react";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import { Helmet } from "react-helmet-async";
+import FounderMessage from "../FounderMessage/FounderMessage";
 
 const AboutRDF = () => {
   const data = [
@@ -22,9 +23,9 @@ const AboutRDF = () => {
       regSince: "21.07.2009",
     },
     {
-      authority: "System for Award Management (SAM)",
-      regNumber: "Application Ref:",
-      regSince: "Under Process",
+      authority: "UEI/System for Award Management (SAM)",
+      regNumber: "T3UDU311V6L3",
+      regSince: "27.11.2024",
     },
   ];
   return (
@@ -42,72 +43,123 @@ const AboutRDF = () => {
             </div>
 
             {/* Content Section */}
-            <div className="text-justify text-gray-800 space-y-4 text-[15px] leading-relaxed">
+            <div className="text-justify text-gray-800 space-y-5 text-[16px] leading-relaxed">
               <p>
-                <b className="text-green-500">
-                  {" "}
+                <b className="text-green-600 text-lg">
+                  Resource Development Foundation (RDF)
+                </b>
+                started its{" "}
+                <span className="text-blue-600 font-medium">
+                  voluntary journey in 1970
+                </span>{" "}
+                in response to the devastating cyclone. The initiative was led
+                by the{" "}
+                <span className="text-orange-500 font-medium">
+                  Founder of RDF
+                </span>
+                , who at that time was just a young boy. The spirit of{" "}
+                <span className="italic text-blue-600">
+                  humanitarian response and recovery
+                </span>{" "}
+                laid the foundation of RDF's legacy.
+              </p>
+
+              <p>
+                Over time, the group transformed into an official entity and in{" "}
+                <b className="text-green-600">1993</b>, it was registered with
+                the{" "}
+                <span className="text-purple-600 font-medium">
+                  Department of Social Service (DSS)
+                </span>
+                , under the{" "}
+                <span className="text-purple-600 font-medium">
+                  Ministry of Social Welfare
+                </span>
+                , Government of Bangladesh, as a voluntary social development
+                organization. Since then,{" "}
+                <b className="text-green-600">
                   Resource Development Foundation (RDF)
                 </b>{" "}
-                has started its voluntary activities in response to support the
-                victims of the catastrophic cyclone in 1970 by responding to
-                catastrophe cyclone initiated by the founder of Resource
-                Development Foundation. Since then the group of volunteers under
-                the leadership of the Founder of RDF, who was a little boy,
-                continued with their spirit and early recovery activities for
-                the neighboring victims in order to restore their lives into
-                livelihood led normalcy.
+                has been known and respected for its grassroots efforts.
               </p>
+
               <p>
-                Since then, the philanthropic group continued their voluntary
-                social works and got formal organizational identity in 1993
-                being registered with department of Social Service (DSS), under
-                the ministry of Social Welfare of the Government of Bangladesh,
-                as a voluntary social development organization named Resource
-                Development Foundation, popularly known with its acronym “RDF”.
-              </p>
-              <p>
-                Since its inception as a devoted social development
-                organization, with clear Vision, Mission and Objectives, RDF
-                have served local (initially in Barguna, a district located in
-                southern part of Bangladesh). Eventually, RDF was registered
-                under other concern government authorities and departments, like
-                NGO Affairs Bureau, Micro-credit Regulatory Authority (MRA) etc.
-              </p>
-              <p>
-                RDF has recently revisited and revised its strategic pathways as
-                its Core Businesses (Focus) based on its expertise as well as
-                national and international priorities and commitments into four
-                (4) major thematic areas, like <br />
-                <b className="text-orange-400">
+                Initially focusing on{" "}
+                <span className="text-blue-600 font-medium">Barguna</span>{" "}
+                district, RDF later registered with
+                <span className="text-purple-600 font-medium">
                   {" "}
-                  (i) Social Development, (contributing to the SDG-1,2,3,4,5 &
-                  11){" "}
+                  NGO Affairs Bureau
+                </span>{" "}
+                and
+                <span className="text-purple-600 font-medium">
+                  {" "}
+                  Micro-credit Regulatory Authority (MRA)
+                </span>
+                to expand its reach and capabilities across the nation.
+              </p>
+
+              <p>
+                <b className="text-xl text-green-700">
+                  Strategic Focus Areas of RDF:
                 </b>
                 <br />
-                <b className="text-green-500">
-                  {" "}
-                  (ii) Economic Empowerment (contributing to the SDG-1,2,3,5 &
-                  8)
-                </b>{" "}
-                <br />{" "}
-                <b className="text-orange-400">
-                  (iii) Resilience to Climate Change (contributing to the
-                  SDG-1,2,3,7 & 11)
-                </b>{" "}
-                <br />{" "}
-                <b className="text-green-500">
-                  (iv) Capacity Building/HRD and Research (contributing to the
-                  SDG-1,2,3,4,5,6 & 11)
+                RDF has recently revised its strategic focus areas based on
+                national and global development priorities. It now operates
+                through{" "}
+                <b className="text-blue-700 font-semibold">
+                  six (6) major thematic areas
+                </b>
+                :
+                <br />
+                <b className="text-orange-500">
+                  ➊ Food Security, Livelihood, Skills, and Economic Empowerment
                 </b>{" "}
                 <br />
-                The strategic priorities of RDF contributes to the mentioned
-                SDGs through implementation of all its activities.
+                <b className="text-green-600">
+                  ➋ Resilience to Climate Change & Disaster Risk Reduction
+                </b>{" "}
+                <br />
+                <b className="text-orange-500">➌ Emergency Response</b> <br />
+                <b className="text-green-600">
+                  ➍ Child Rights, Ending Child Marriage, Education, Health,
+                  Nutrition, and SRHR
+                </b>{" "}
+                <br />
+                <b className="text-orange-500">
+                  ➎ Water, Sanitation, and Hygiene (WASH)
+                </b>{" "}
+                <br />
+                <b className="text-green-600">
+                  ➏ Cross-cutting programme: Gender Transformation, Disability
+                  Inclusion, and Locally-led Initiatives
+                </b>
               </p>
+
               <p>
-                All these four (4) thematic focuses/areas of interventions are
-                interlinked and intra-contributory. Currently, RDF have (in
-                2022-23) implemented its interventions in <b>48 districts</b> of
-                Bangladesh.
+                📌 These thematic areas are{" "}
+                <span className="text-blue-600 font-semibold">
+                  interlinked and mutually reinforcing
+                </span>
+                , ensuring holistic development across all RDF programs.
+                <br />✅ RDF’s activities directly support the{" "}
+                <span className="text-purple-600 font-semibold">
+                  Sustainable Development Goals (SDGs)
+                </span>
+                :
+                <span className="text-pink-500 font-medium">
+                  {" "}
+                  1, 2, 3, 4, 5, 6, 8, 11
+                </span>{" "}
+                and <span className="text-pink-500 font-medium">13</span>.
+              </p>
+
+              <p>
+                🌍 As of <b className="text-green-700">2022–2023</b>, RDF has
+                implemented its interventions in
+                <b className="text-orange-600 text-lg"> 48 districts</b> across
+                Bangladesh, reaching communities with impact-driven, sustainable
+                programs.
               </p>
             </div>
 
@@ -127,113 +179,239 @@ const AboutRDF = () => {
               </h2>
             </div>
 
+            {/* Intro Paragraph */}
             <p className="text-gray-800 mb-4">
-              Focusing service delivery with an inclusive approach, RDF’s
-              development intervention continued covering programs under its
-              Social Development, Economic Empowerment, Resilience to Climate
-              Change and DRR and Human Resources Capacity Building components.
-              During the year 2022–‘23, RDF’s multifaceted programs were
-              implemented in in <b>48 districts</b> under{" "}
-              <b>
+              Focusing service delivery with an inclusive approach,
+              <span className="font-semibold text-green-700">
+                {" "}
+                RDF’s development intervention
+              </span>
+              continued covering programs under its
+              <span className="text-blue-600 font-medium">
+                {" "}
+                Social Development, Economic Empowerment, Resilience to Climate
+                Change and DRR, and Human Resources Capacity Building
+              </span>{" "}
+              components. During the year{" "}
+              <span className="font-bold text-purple-600">2022–‘23</span>, RDF’s
+              multifaceted programs were implemented in
+              <span className="font-bold text-orange-600">
+                {" "}
+                48 districts
+              </span>{" "}
+              under
+              <span className="text-blue-700 font-semibold">
                 Dhaka, Barishal, Khulna, Rajshahi, Rangpur, Sylhet, Mymensingh
                 and Chattogram
-              </b>{" "}
+              </span>{" "}
               divisions. RDF continued its multifaceted intervention covering
-              the poor, landless, marginal & small farmers, disadvantaged
-              families & communities in & at coastal zone and Bangladesh. The
-              promotion of Social Safeguarding Human rights was focused with
-              conduction of different rights-based programs.
+              the
+              <span className="text-pink-600 font-semibold">
+                {" "}
+                poor, landless, marginal & small farmers, disadvantaged families
+                & communities
+              </span>
+              in & at coastal zone and Bangladesh. The promotion of
+              <span className="text-indigo-600 font-semibold">
+                {" "}
+                Social Safeguarding Human rights
+              </span>{" "}
+              was focused with conduction of different rights-based programs.
             </p>
 
+            {/* Social Development */}
             <p className="text-gray-800 mb-4">
-              Activities under the Social Development component sensitized the
-              service providers/stakeholders (government and non-government) for
-              providing responsive services to the disadvantaged people as both
-              target people became aware of and demanding their entitlements.
-              Women participation in decision-making at both family and the
-              societal level was especially emphasized.
+              Activities under the{" "}
+              <span className="font-semibold text-green-700">
+                Social Development
+              </span>{" "}
+              component sensitized the service providers/stakeholders
+              (government and non-government) for providing responsive services
+              to the disadvantaged people as both target people became aware of
+              and demanding their entitlements.
+              <span className="text-pink-600 font-medium">
+                Women participation
+              </span>{" "}
+              in decision-making at both family and the societal level was
+              especially emphasized.
             </p>
 
+            {/* Key Projects Under Social Development */}
             <p className="text-gray-800 mb-4">
-              Under the Social Development Sector, RDF implemented its
-              interventions on combatting early and forced marriage, health &
-              adolescent girls and young women nutrition and Sexual Reproductive
-              Health and Rights, Providing Employable Technical Skills along
-              with “productive asset transfer”, “Stop Violence Against Women”,
-              “Child Safeguarding” and “Rights to Education” under three
-              distinct project like, (i) “Combating Early Marriage in Bangladesh
-              (CEMB)”, (ii) “Girls Get Equal (GGE)” which reached <b>180,809</b>{" "}
-              and (iii) “Out of School” programme & “Back to School” programme”
-              with the support from UK AID and MoPME. Under this component, RDF
-              created a scope for <b>12,600</b>
-              adolescent girls that supports in <b>420 schools</b>. A total of{" "}
-              <b>180,809</b> disadvantaged and vulnerable adolescent girls and
-              young women were included in education and life skills training &{" "}
-              <b>180,809</b> adolescent girls were covered under SRHR-related
-              messages in their households & communities.
+              Under the{" "}
+              <span className="text-green-700 font-semibold">
+                Social Development Sector
+              </span>
+              , RDF implemented its interventions on:
+              <span className="text-purple-700 font-semibold">
+                {" "}
+                combatting early and forced marriage
+              </span>
+              ,
+              <span className="text-blue-700 font-semibold">
+                {" "}
+                health & adolescent girls and young women nutrition
+              </span>
+              , and{" "}
+              <span className="text-rose-700 font-semibold">
+                Sexual Reproductive Health and Rights (SRHR)
+              </span>
+              . Other efforts included:
+              <span className="font-medium text-orange-600">
+                {" "}
+                Employable Technical Skills, Productive Asset Transfer, Stop
+                Violence Against Women, Child Safeguarding, Rights to Education
+              </span>
+              under three projects:
+              <br />
+              <span className="pl-4 block text-green-800 font-semibold">
+                • (i) “Combating Early Marriage in Bangladesh (CEMB)”
+              </span>
+              <span className="pl-4 block text-green-800 font-semibold">
+                • (ii) “Girls Get Equal (GGE)” – reached{" "}
+                <span className="text-purple-700 font-bold">180,809</span>{" "}
+                beneficiaries
+              </span>
+              <span className="pl-4 block text-green-800 font-semibold">
+                • (iii) “Out of School” & “Back to School” programmes
+              </span>
+              <br />
+              With support from{" "}
+              <span className="text-indigo-700 font-semibold">
+                UK AID and MoPME
+              </span>
+              , RDF created opportunities for
+              <span className="text-purple-600 font-bold">
+                {" "}
+                12,600 adolescent girls
+              </span>{" "}
+              in
+              <span className="text-purple-600 font-bold"> 420 schools</span>. A
+              total of{" "}
+              <span className="text-purple-600 font-bold">180,809</span> girls
+              and young women received
+              <span className="text-blue-700 font-semibold">
+                {" "}
+                life skills training
+              </span>{" "}
+              and
+              <span className="text-rose-700 font-semibold">
+                SRHR awareness
+              </span>{" "}
+              in households and communities.
             </p>
 
+            {/* Economic Empowerment */}
             <p className="text-gray-800 mb-4">
-              Under Economic Empowerment component, RDF provided its services
-              like health and gender awareness, creating access to finance for
-              income generating activities, etc. under two different
-              sub-component, (i) Micro-Finance Support Programme, (ii)
-              Entrepreneurship Development Scheme (EDS) to poor & disadvantaged
-              people about <b>99%</b> of whom are female.
+              Under{" "}
+              <span className="text-green-700 font-semibold">
+                Economic Empowerment
+              </span>
+              , RDF provided services like
+              <span className="text-blue-700 font-semibold">
+                {" "}
+                health, gender awareness, and access to finance
+              </span>{" "}
+              under:
+              <br />
+              <span className="pl-4 block text-green-800 font-semibold">
+                • (i) Micro-Finance Support Programme
+              </span>
+              <span className="pl-4 block text-green-800 font-semibold">
+                • (ii) Entrepreneurship Development Scheme (EDS)
+              </span>
+              benefiting mostly
+              <span className="text-pink-600 font-bold">
+                99% female participants
+              </span>
+              .
             </p>
 
+            {/* Microfinance Details */}
             <p className="text-gray-800 mb-4">
-              Under its Microfinance component being operated through{" "}
-              <b>68 branches</b> in <b>13 districts</b>, since inception, RDF
-              supported
-              <b>319,135 borrowers</b> by creating access to finance for income
-              generating activities. During the year 2022-‘23, a total{" "}
-              <b>83,871 borrowers</b> were directly reached to receive the
-              financial support out of which <b>36,608</b> were under credit
-              scheme in 13 districts including <b>2,263 entrepreneurs</b> under
-              EDS component. During that year, RDF mobilized
-              program-participated clients to its savings program who saved
-              about <b>17,452,522</b> as of June 2023.
+              RDF’s{" "}
+              <span className="text-indigo-700 font-semibold">
+                Microfinance
+              </span>{" "}
+              operations through
+              <span className="text-blue-600 font-bold"> 68 branches</span> in
+              <span className="text-blue-600 font-bold">
+                {" "}
+                13 districts
+              </span>{" "}
+              have supported
+              <span className="text-purple-700 font-bold">
+                319,135 borrowers
+              </span>
+              . In
+              <span className="text-green-700 font-bold">2022–23</span> alone,
+              <span className="text-purple-700 font-bold">
+                83,871 borrowers
+              </span>{" "}
+              were served, including{" "}
+              <span className="text-pink-600 font-bold">
+                36,608 under credit schemes
+              </span>{" "}
+              and
+              <span className="text-pink-600 font-bold">
+                2,263 entrepreneurs
+              </span>{" "}
+              via EDS. Clients saved a total of
+              <span className="text-orange-700 font-bold">৳17,452,522</span> by
+              June 2023.
             </p>
 
+            {/* Climate Change & DRR */}
             <p className="text-gray-800 mb-4">
-              The issues relating to resilience to climate change & DRR were
-              addressed as also major components of environment-concerned drive
-              under RDF’s Resilience to Climate Change Sector. Targeting the
-              most vulnerable population, the multifaceted development on
-              Disaster Risk Reduction issues. A total <b>204,829</b> household
-              are being directly benefitted under RDF’s resilience program which
-              includes <b>2,599 Solar Rooftop System</b>,{" "}
-              <b>25,640 Steel Ring based Latrine</b> and <b>144</b> Rainwater
-              Irrigation Pumping System (SIPS) producing{" "}
-              <b>13.46 MW Solar Power</b> and replaced <b>1,724 diesel units</b>{" "}
-              covered <b>25,763 bigahas</b> of land in 3 seasons by{" "}
-              <b>10,198</b> farmers (families) for which RDF continued to
-              provide technical supports during the year 2022-‘23.
+              RDF addressed{" "}
+              <span className="text-green-700 font-semibold">
+                Resilience to Climate Change & Disaster Risk Reduction (DRR)
+              </span>
+              through multifaceted development programs for vulnerable
+              populations. A total of{" "}
+              <span className="text-purple-700 font-bold">
+                204,829 households
+              </span>{" "}
+              benefited from:
+              <ul className="list-disc list-inside text-gray-700 pl-2">
+                <li>
+                  <span className="font-bold text-green-600">2,599</span> Solar
+                  Rooftop Systems
+                </li>
+                <li>
+                  <span className="font-bold text-green-600">25,640</span> Steel
+                  Ring-based Latrines
+                </li>
+                <li>
+                  <span className="font-bold text-green-600">144</span>{" "}
+                  Rainwater Irrigation Pumping Systems (SIPS)
+                </li>
+              </ul>
+              These initiatives produced{" "}
+              <span className="font-bold text-orange-700">
+                13.46 MW solar power
+              </span>
+              , replaced
+              <span className="text-red-600 font-bold">
+                {" "}
+                1,724 diesel units
+              </span>
+              , and irrigated
+              <span className="text-blue-600 font-bold">25,763 bighas</span> of
+              land across 3 seasons, benefiting
+              <span className="text-pink-700 font-bold">
+                10,198 farmers
+              </span>{" "}
+              with ongoing technical support in
+              <span className="text-green-700 font-semibold">2022–23</span>.
             </p>
           </div>
+
           <div className="mt-8 ">
             <h2 className="text-xl font-semibold text-green-500 font-serif">
               ABOUT THE FOUNDER
             </h2>
-            <p className="text-gray-700 mt-2">
-              <b> Resource Development Foundation (RDF)</b> is the ‘brain child’
-              of <b>M Golam Mostofa</b>, an economist and a Philanthropist, the
-              Founder and the Chief Executive Officer of RDF. The Foundation had
-              been in the process of formation when the catastrophic cyclone of
-              12th November 1970 hit the coastal districts including Barguna
-              district, resulting great miseries of the people of the coastal
-              area of Bangladesh where the Founder was born in. Mr. Mostofa
-              carried this “trauma like” condition in his mind till he became
-              adult. In the mean time he witnessed several more catastrophic
-              natural disasters almost every year. He also witnessed the
-              destruction sufferings, migration, trafficking and hunger induced
-              by the natural calamities. Finally, in 1993 he along with his
-              mates who were committed and contributed to support the victims,
-              formally transformed their group into a formal organization and
-              named it as “Resource Development Foundation (RDF) and was legally
-              registered first in <b>1995</b>
-            </p>
+            <FounderMessage></FounderMessage>
           </div>
 
           <div className=" px-4 py-10">

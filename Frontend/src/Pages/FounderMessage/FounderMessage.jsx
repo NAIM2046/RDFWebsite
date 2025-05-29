@@ -6,18 +6,9 @@ import { Helmet } from "react-helmet-async";
 const FounderMessage = () => {
   return (
     <div>
-      <Helmet>
-        <title> RDF-Rounder Message </title>
-      </Helmet>
       <div>
-        <PageCoverPhoto
-          imageUrl={`/assets/RDF Photo/3.jpg`}
-          title={"FOUNDER MESSAGE"}
-        ></PageCoverPhoto>
-      </div>
-      <div>
-        <div className="min-h-screen flex items-center justify-center  px-8 py-12 mt-2 bg-green-50">
-          <div className="max-w-7xl  space-x-8 rounded-2xl  md:flex">
+        <div className="min-h-screen flex items-center justify-center ">
+          <div className="max-w-7xl  space-x-4 rounded-2xl  md:flex">
             {/* Left Side - Founder Image */}
             <div className=" w-full md:w-1/3 flex flex-col justify-center items-center p-6 shadow-lg space-y-4 rounded-lg bg-white ">
               <img
@@ -33,8 +24,8 @@ const FounderMessage = () => {
                   capacity building, and research to support national goals.
                 </p>
                 <div className="flex  flex-col justify-center items-center font-serif mt-2">
-                  <p className="text-green-500"> M Golam Mostofa </p>
-                  <h3 className="font-semibold text-lg text-red-500">
+                  <p className="text-green-500 text-lg"> M Golam Mostofa </p>
+                  <h3 className="font-semibold text-sm text-red-500">
                     Founder & Chief Executive officer
                   </h3>
                 </div>
@@ -54,42 +45,37 @@ const FounderMessage = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-green-400 text-center font-serif ">
                 Message from Our Founder
               </h2>
-              <p className="text-gray-600 mt-4 leading-relaxed font-semibold ">
+              <p className="text-gray-600 mt-4 leading-relaxed">
                 It is just two & half decades since its inception in March 1993
-                as a small organization in a remote areas of southern corner of
-                Bangladesh, RDF has grown gradually and became one of the most
-                successful development organizations in Bangladesh. This
+                as a small organization in a remote area of the southern corner
+                of Bangladesh, RDF has grown gradually and became one of the
+                most successful development organizations in Bangladesh. This
                 watershed moment therefore provides an opportunity to reflect on
                 these last 28 years and look ahead for the challenges that will
                 confront us in the years ahead. The year 2022-23, RDF has
-                restored its full energy and enthusiasm after the Covid19 Global
-                Pandemic situation. However during the crisis, our team members
-                were proactively present in the field. During this year, RDF has
-                revised and revisited its Strategic and Core Areas of Businesses
-                and activities in the four thematic areas which are, (a) Social
+                restored its full energy and enthusiasm after the Covid-19
+                Global Pandemic situation. However, during the crisis, our team
+                members were proactively present in the field. RDF has revised
+                and revisited its Strategic and Core Areas of Businesses and
+                activities in the four thematic areas which are, (a) Social
                 Development, (b) Economic Empowerment, (c) Resilience to Climate
                 Change and (d) Capacity Building, Green Energy Activities and
-                Research. It is our strong believe that newly redevised thematic
-                areas, RDF will be concentrating more to contribute to 10 (ten)
-                different SDGs and other national and international commitments
-                of the country. Moreover, RDF will also concentrating more on
+                Research. It is our strong belief that with newly redevised
+                thematic areas, RDF will be concentrating more to contribute to
+                10 (ten) different SDGs and other national and international
+                commitments of the country. Moreover, RDF will also focus on
                 Social Development Research activities including renewable
-                energy in the upcoming years. I thank all the stakeholders of
-                the organization, all our beneficiaries, financial institutions,
-                donors, Bankers, Financial Supporters, implementing partners and
-                without their support it was impossible on our part to make
-                2022-2023 a great success. We are pledge-bound to continue our
-                focus on exploring new horizons, embanking new commitments,
+                energy in the upcoming years. We are pledge-bound to continue
+                our focus on exploring new horizons, embanking new commitments,
                 emphasizing the new challenges, demands and opportunities. Let
-                us move towards to contribute to achieve the national targets by
-                2030 thus achieve the status of “developing country”. I am
-                thankful to our Executive Committee (EC) and management
-                committee for their valued guidance, support and cooperation.
-                Finally, I would like to thank all RDF employees for their
-                restless efforts to sustain the trend of program activities. I
-                do believe that the Annual Report 2021-’22 upholds the yearly
-                facts & figures of the organization intervention to its valued
-                stakeholders.
+                us move forward to contribute to achieving the national targets
+                by 2030 and thus achieve the status of “developing country”. I
+                am thankful to our Executive Committee (EC) and management
+                committee for their valued guidance and cooperation. Finally, I
+                would like to thank all RDF employees for their restless efforts
+                to sustain the trend of program activities. I do believe that
+                the Annual Report 2021-’22 upholds the yearly facts & figures of
+                the organization intervention to its valued stakeholders.
               </p>
             </div>
           </div>
