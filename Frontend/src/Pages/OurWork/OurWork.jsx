@@ -24,7 +24,7 @@ const OurWork = () => {
       <Helmet>
         <title> RDF-Our Works </title>
       </Helmet>
-      <PageCoverPhoto title={"Our Work"}></PageCoverPhoto>
+      <PageCoverPhoto title={"Our Approach "}></PageCoverPhoto>
       <div>
         <section id="ourapproach">
           <OurApproach></OurApproach>

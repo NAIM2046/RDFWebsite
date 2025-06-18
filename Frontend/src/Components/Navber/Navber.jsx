@@ -67,11 +67,7 @@ const Navbar = () => {
           icon: <FaClipboardList />,
         },
         { name: "Policy Document", link: "/policy-document", icon: <FiBook /> },
-        {
-          name: "Founder Messages",
-          link: "/founder-messages",
-          icon: <FaUsers />,
-        },
+
         {
           name: "Our Partners",
           link: "/our-partners",

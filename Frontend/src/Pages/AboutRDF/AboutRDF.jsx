@@ -28,6 +28,38 @@ const AboutRDF = () => {
       regSince: "27.11.2024",
     },
   ];
+  const affiliations = [
+    {
+      name: "Infrastructure Development Company Limited Partner Organizations’ Forum",
+      acronym: "IDCOL-PO Forum",
+      type: "Forum",
+    },
+    {
+      name: "Association of Development Agencies in Bangladesh",
+      acronym: "ADAB",
+      type: "NGO Association",
+    },
+    {
+      name: "Credit and Development Forum",
+      acronym: "CDF",
+      type: "Forum",
+    },
+    {
+      name: "NGO FORUM for Drinking Water and Sanitation",
+      acronym: "NGO FORUM",
+      type: "Forum",
+    },
+    {
+      name: "Coastal Fisher-Folk Community Network",
+      acronym: "COFCON",
+      type: "Community Network",
+    },
+    {
+      name: "Coastal NGO Forum",
+      acronym: "CNF",
+      type: "Forum",
+    },
+  ];
   return (
     <div className="">
       <Helmet>
@@ -465,6 +497,56 @@ const AboutRDF = () => {
               </div>
             </div>
           </div>
+          <div className="max-w-6xl mx-auto px-4 py-12">
+            <h1 className="text-4xl font-bold text-green-700 font-serif mb-6  ">
+              Affiliation
+            </h1>
+            <p className="text-gray-700 text-lg mb-10 leading-relaxed  max-w-4xl mx-auto">
+              <strong>Resource Development Foundation (RDF)</strong> is
+              affiliated with several national and regional networking
+              organizations and forums. These strategic alliances enhance RDF’s
+              institutional capacity, foster collaboration, and enable
+              collective action to address critical development challenges
+              across Bangladesh.
+            </p>
+
+            <div className="overflow-x-auto shadow-lg rounded-xl border border-gray-200">
+              <table className="min-w-full bg-white text-sm">
+                <thead className="bg-green-100 text-green-800 text-base">
+                  <tr>
+                    <th className="text-left px-6 py-4 border-r border-b border-gray-300">
+                      Networking Organization
+                    </th>
+                    <th className="text-left px-6 py-4 border-b border-r border-gray-300">
+                      Acronym
+                    </th>
+                    <th className="text-left px-6 py-4 border-b border-gray-300">
+                      Type
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {affiliations.map((affiliation, index) => (
+                    <tr
+                      key={index}
+                      className="hover:bg-gray-50 transition duration-200"
+                    >
+                      <td className="px-6 py-4 border-r border-b border-gray-200 text-gray-800">
+                        {affiliation.name}
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-200 text-gray-700 font-medium">
+                        {affiliation.acronym}
+                      </td>
+                      <td className="px-6 py-4 border-b border-gray-200 text-gray-600">
+                        {affiliation.type}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <div className="relative w-full  min-h-screen bg-gradient-to-b from-white to-blue-100 ">
             {/* Top Section */}
             <div className="flex flex-col md:flex-row items-center md:items-start max-w-5xl mx-auto">

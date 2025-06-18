@@ -1,28 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import { FaDownload } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-
-const certifications = [
-  {
-    name: "Department of Social Service Certificate",
-    link: "/assets/RDF-Annual-Report-2022-23.pdf",
-  },
-  {
-    name: "NGO Affairs Bureau Certificate",
-    link: "/assets/CertiRDF/1.jpg",
-  },
-  { name: "Microcredit Regulatory Authority (MRA) Certificate", link: "#" },
-  { name: "BTEB Certificate", link: "#" },
-  { name: "Copyright Registration Certificate", link: "#" },
-  {
-    name: "National Skills Development Authority (NSDA) Certificate",
-    link: "#",
-  },
-  { name: "Income Tax Certificate 2023-2024", link: "#" },
-];
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const Certifications = () => {
+  const [certifications, setCertifications] = useState([]);
+  const AxiosSecure = useAxiosSecure();
+  const fetchCertifications = async () => {
+    try {
+      const res = await AxiosSecure.get("/api/admin/certifications");
+      setCertifications(res.data);
+    } catch (error) {
+      console.error("Failed to fetch certifications:", error);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetchCertifications();
+  }, []);
+  console.log(certifications);
   return (
     <div className="font-serif">
       <Helmet>
@@ -38,7 +36,7 @@ const Certifications = () => {
             {certifications.map((cert, index) => (
               <a
                 key={index}
-                href={cert.link}
+                href={cert.filePath}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex justify-between items-center bg-white shadow-lg shadow-gray-300 rounded-lg p-4 pr-8 transition-transform transform hover:scale-101 "

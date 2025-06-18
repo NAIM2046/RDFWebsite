@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const weWorkForData = [
   {
@@ -43,55 +44,115 @@ const WeWorkFor = () => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   return (
-    <div id="weworkfor" className="max-w-6xl mx-auto p-6 text-center">
-      <h2 className="text-4xl font-bold text-gray-800 mb-6 font-serif">
-        We <span className="text-orange-400">Work For</span>
-      </h2>
-      <p className="text-green-400 max-w-3xl mx-auto mb-10">
-        Our organization is committed to uplifting marginalized communities by
-        addressing their unique challenges and empowering them through
-        sustainable solutions.
-      </p>
+    <section id="weworkfor" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif">
+            We <span className="text-orange-500">Work For</span>
+          </h2>
+          <div className="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Our organization is committed to uplifting marginalized communities
+            by addressing their unique challenges and empowering them through
+            sustainable solutions.
+          </p>
+        </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {weWorkForData.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl transition-all cursor-pointer"
-            onClick={() => setSelectedItem(item)}
-          >
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-52 object-cover rounded-md"
-            />
-            <h3 className="text-xl font-semibold text-green-400 font-serif mt-4">
-              {item.title}
-            </h3>
-          </div>
-        ))}
-      </div>
-
-      {/* Modal */}
-      {selectedItem && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white max-w-2xl w-full p-6 rounded-md shadow-lg relative">
-            <h3 className="text-2xl font-bold mb-4 text-gray-800 border-b p-2">
-              {selectedItem.title}
-            </h3>
-            <p className="text-gray-700 mb-4 text-justify">
-              {selectedItem.detail}
-            </p>
-            <button
-              onClick={() => setSelectedItem(null)}
-              className="absolute top-5 cursor-pointer bg-green-400 p-2 rounded-full right-2 text-red-500 text-xl font-bold "
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {weWorkForData.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group"
+              onClick={() => setSelectedItem(item)}
             >
-              X
-            </button>
-          </div>
+              <div className="relative overflow-hidden h-60">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <h3 className="absolute bottom-0 left-0 right-0 text-white text-xl font-semibold p-6 font-serif">
+                  {item.title}
+                </h3>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      )}
-    </div>
+
+        {/* Modal */}
+        <AnimatePresence>
+          {selectedItem && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
+              onClick={() => setSelectedItem(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25 }}
+                className="relative bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="sticky top-0 bg-white z-10 p-4 border-b flex justify-between items-center">
+                  <h3 className="text-2xl font-bold text-gray-800">
+                    {selectedItem.title}
+                  </h3>
+                  <button
+                    onClick={() => setSelectedItem(null)}
+                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-8 w-8"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="p-6">
+                  <div className="mb-6">
+                    <img
+                      src={selectedItem.image}
+                      alt={selectedItem.title}
+                      className="w-full h-64 object-cover rounded-lg"
+                    />
+                  </div>
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    {selectedItem.detail}
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
   );
 };
 

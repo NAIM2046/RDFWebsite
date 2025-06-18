@@ -10,6 +10,8 @@ const compression = require("compression");
 const SSLCommerzPayment = require('sslcommerz-lts') ;
 const multer = require('multer') ;
 const path = require('path')
+const fs = require('fs');
+
 
 
 app.use(express.json()) ;
@@ -48,6 +50,8 @@ async function run() {
      const partnerCol=  client.db("RDF").collection("partners") ; 
      const adminCol=  client.db("RDF").collection("admins") ; 
      const reportsCollection=  client.db("RDF").collection("reports") ; 
+     const PolicyCollection=  client.db("RDF").collection("policys") ; 
+     const CertificationCollection=  client.db("RDF").collection("certifications") ; 
 
 // middleware function 
 
@@ -76,17 +80,147 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-const upload = multer({ storage });
-app.post("/upload", upload.single("pdf"), async (req, res) => {
+const upload = multer({ storage })
+// upload a Certifications document (pdf)
+
+// ...existing code...
+
+// Upload a Certifications document (PDF)
+app.post("/api/admin/certification-upload",   async (req, res) => {
+  console.log("Call")
+ console.log(req.body)
+
+  const { name , filePath } = req.body;
+  console.log(name , filePath) ;
+ 
+
+  try {
+    const result = await CertificationCollection.insertOne({
+      name,
+      filePath,
+      uploadedAt: new Date(),
+    });
+
+    res.status(200).json({
+      message: "Certification uploaded successfully",
+      certification: { _id: result.insertedId, name, filePath },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to upload certification", error });
+  }
+});
+
+// Get all certifications
+app.get("/api/admin/certifications", async (req, res) => {
+  try {
+    const certifications = await CertificationCollection.find().sort({ uploadedAt: -1 }).toArray();
+    res.status(200).json(certifications);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch certifications", error });
+  }
+});
+
+// Delete a certification
+app.delete("/api/admin/certifications/:id", verifyToken, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const certification = await CertificationCollection.findOne({ _id: new ObjectId(id) });
+
+    if (!certification) {
+      return res.status(404).json({ message: "Certification not found" });
+    }
+
+    
+
+    await CertificationCollection.deleteOne({ _id: new ObjectId(id) });
+
+    res.status(200).json({ message: "Certification deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete certification", error });
+  }
+});
+
+// ...existing code...
+
+
+
+// Upload a policy document (PDF)
+app.post("/api/admin/policy-upload", verifyToken, upload.single("pdf"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
 
-  const { title } = req.body;
+  const { name } = req.body;
+  console.log(name)
   const filePath = `/uploads/${req.file.filename}`;
 
   try {
-    const result = await reportsCollection.insertOne({ title, filePath, uploadedAt: new Date() });
+    const result = await PolicyCollection.insertOne({
+      name,
+      filePath,
+      uploadedAt: new Date(),
+    });
+
+    res.status(200).json({
+      message: "Policy uploaded successfully",
+      policy: { _id: result.insertedId, name, filePath },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to upload policy", error });
+  }
+});
+
+app.get("/api/admin/policies",  async (req, res) => {
+  try {
+    const policies = await PolicyCollection.find().sort({ uploadedAt: -1 }).toArray();
+    res.status(200).json(policies);
+  } catch (error) {
+    console.error("Failed to fetch policies:", error);
+    res.status(500).json({ message: "Failed to fetch policies", error });
+  }
+});
+
+app.delete("/api/admin/policies/:id", verifyToken, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the policy document
+    const policy = await PolicyCollection.findOne({ _id: new ObjectId(id) });
+
+    if (!policy) {
+      return res.status(404).json({ message: "Policy not found" });
+    }
+
+    // Delete the file from disk
+    const filePath = path.join(process.cwd(), policy.filePath);
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.warn("File deletion failed:", err.message);
+      }
+    });
+
+    // Delete the document from the database
+    await PolicyCollection.deleteOne({ _id: new ObjectId(id) });
+
+    res.status(200).json({ message: "Policy deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting policy:", error);
+    res.status(500).json({ message: "Failed to delete policy", error });
+  }
+});
+// report post : 
+
+app.post("/upload",verifyToken, upload.single("pdf"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
+  const { title , coverImage } = req.body;
+  const filePath = `/uploads/${req.file.filename}`;
+
+  try {
+    const result = await reportsCollection.insertOne({ title, filePath,coverImage, uploadedAt: new Date() });
     res.json({ message: "Report uploaded successfully!", report: { _id: result.insertedId, title, filePath } });
   } catch (error) {
     res.status(500).json({ message: "Error saving report", error });
@@ -101,16 +235,45 @@ app.get("/reports", async (req, res) => {
   }
 });
 
+
 // Delete Report
+
 app.delete("/report/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await reportsCollection.deleteOne({ _id: new ObjectId(id) });
-    res.json({ message: "Report deleted successfully!" });
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid report ID" });
+    }
+
+    // First, find the report to get the file path
+    const report = await reportsCollection.findOne({ _id: new ObjectId(id) });
+
+    if (!report) {
+      return res.status(404).json({ message: "Report not found" });
+    }
+
+    // Delete the file from the uploads folder
+    const filePath = path.join(__dirname, "uploads", path.basename(report.filePath)); // Safely resolve path
+
+    fs.unlink(filePath, async (err) => {
+      if (err && err.code !== "ENOENT") {
+        console.error("File deletion error:", err);
+        return res.status(500).json({ message: "Failed to delete file", error: err.message });
+      }
+
+      // File deleted (or didn't exist) — now delete from DB
+      await reportsCollection.deleteOne({ _id: new ObjectId(id) });
+
+      res.status(200).json({ message: "Report and file deleted successfully!" });
+    });
+
   } catch (error) {
-    res.status(500).json({ message: "Error deleting report", error });
+    console.error("Error deleting report:", error);
+    res.status(500).json({ message: "Error deleting report", error: error.message });
   }
 });
+
 
 const __dirname = path.resolve(); // Fix __dirname in CommonJS
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -273,6 +436,24 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
         const result = await TeamCol.find().toArray() ; 
         res.send(result) ; 
       } )
+      app.patch('/teams/:id' , async(req , res) => {
+        try{
+        const {id} =  req.params ; 
+        console.log(id) ;
+        const updateData =  req.body ; 
+        const quary = {_id : new ObjectId(id)} ;
+        const result =  await TeamCol.updateOne(quary , {$set: updateData}) ;
+         if (result.matchedCount === 0) {
+      return res.status(404).json({ message: "Team member not found" });
+    } 
+        res.status(200).json({message: "Team member updated successfully", result});
+
+        } catch(err){
+          console.error("Error updating team member:", err);
+    res.status(500).json({ message: "Internal server error" });
+        }
+
+      })
       app.delete("/teams/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
@@ -383,7 +564,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
       //payment api  ;
 
       app.post("/api/payment", async (req, res) => {
-        const { amount, name, email } = req.body;
+        
+        const { amount, name, email,donationType } = req.body;
       
         const tran_id = "txn_" + new Date().getTime();
         

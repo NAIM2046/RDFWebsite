@@ -63,7 +63,7 @@ const OurTeam = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center w-full max-w-2xl">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full max-w-6xl mx-auto px-4">
             {/* Search Input */}
             <motion.div
               className="relative w-full sm:w-80"
@@ -77,22 +77,63 @@ const OurTeam = () => {
               />
             </motion.div>
 
-            {/* Designation Filter Dropdown */}
+            {/* Designation Filter */}
             <motion.div
-              className="relative w-full sm:w-auto"
+              className="w-full sm:w-auto"
               whileHover={{ scale: 1.01 }}
             >
-              <select
-                className="w-full sm:w-auto p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300 ease-in-out cursor-pointer"
-                onChange={(e) => setDesignation(e.target.value)}
-              >
-                <option value="">🔹 All Members</option>
-                <option value="General committee">📌 General Committee</option>
-                <option value="Executive committee">
-                  ⭐ Executive Committee
-                </option>
-                <option value="Senior Management">🏆 Senior Management</option>
-              </select>
+              {/* Mobile: Select Dropdown */}
+              <div className="block sm:hidden">
+                <select
+                  value={designation}
+                  onChange={(e) => setDesignation(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+                >
+                  <option value="">🔹 All Members</option>
+                  <option value="General committee">
+                    📌 General Committee
+                  </option>
+                  <option value="Executive committee">
+                    ⭐ Executive Committee
+                  </option>
+                  <option value="Senior Management">
+                    🏆 Senior Management
+                  </option>
+                </select>
+              </div>
+
+              {/* Desktop: Radio Buttons Styled as Tags */}
+              <div className="hidden sm:flex flex-wrap gap-2">
+                {[
+                  { label: "🔹 All Members", value: "" },
+                  { label: "📌 General Committee", value: "General committee" },
+                  {
+                    label: "⭐ Executive Committee",
+                    value: "Executive committee",
+                  },
+                  { label: "🏆 Senior Management", value: "Senior Management" },
+                ].map((item) => (
+                  <label key={item.value}>
+                    <input
+                      type="radio"
+                      name="designation"
+                      value={item.value}
+                      checked={designation === item.value}
+                      onChange={(e) => setDesignation(e.target.value)}
+                      className="hidden"
+                    />
+                    <span
+                      className={`px-4 py-2 rounded-lg cursor-pointer border transition text-sm sm:text-base whitespace-nowrap ${
+                        designation === item.value
+                          ? "bg-blue-500 text-white"
+                          : "bg-white text-gray-700 border-gray-300"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </label>
+                ))}
+              </div>
             </motion.div>
           </div>
         </motion.div>

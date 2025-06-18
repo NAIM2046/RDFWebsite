@@ -16,7 +16,7 @@ import NewsDetails from "../Pages/RecentNews/NewsDetails";
 import KeyFocusArea from "../Pages/OurWork/KeyFocusArea";
 import Photo from "../Pages/Photo/Photo";
 import Videos from "../Pages/Video/Videos";
-import FounderMessage from "../Pages/FounderMessage/FounderMessage";
+
 import PolicyDoc from "../Pages/PolicyDoc/PolicyDoc";
 import OurPartners from "../Pages/Ourpartners/Ourpartners";
 import Organogram from "../Pages/Organogram/Organogram";
@@ -57,6 +57,8 @@ import CheakOutPage from "../Payment/CheakOutPage";
 import PaymentSuccess from "../Payment/PaymentSuccess";
 import ReportPage from "../AdminPage/ReportPage/ReportPage";
 import AboutRDF from "../Pages/AboutRDF/AboutRDF";
+import PolicyDocPage from "../AdminPage/PolicyDocPage/PolicyDocPage";
+import CertificationsPage from "../AdminPage/CertificationsPage/CertificationsPage";
 
 const router = createBrowserRouter([
   {
@@ -120,10 +122,7 @@ const router = createBrowserRouter([
         path: "/videos",
         element: <Videos></Videos>,
       },
-      {
-        path: "/founder-messages",
-        element: <FounderMessage></FounderMessage>,
-      },
+
       {
         path: "/policy-document",
         element: <PolicyDoc></PolicyDoc>,
@@ -272,6 +271,14 @@ const router = createBrowserRouter([
       {
         path: "/admin-rdf/report",
         element: <ReportPage></ReportPage>,
+      },
+      {
+        path: "/admin-rdf/policy",
+        element: <PolicyDocPage></PolicyDocPage>,
+      },
+      {
+        path: "/admin-rdf/certification",
+        element: <CertificationsPage></CertificationsPage>,
       },
     ],
   },

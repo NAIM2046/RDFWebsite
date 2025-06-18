@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
-import useAxiosPublic from "../../Hook/useAxiosPublice";
 import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 const TeamsPage = () => {
   const Axios = useAxiosSecure();
+  const [uploading, setUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+
   const { teams, fetchTeams } = useRDFStore();
   useEffect(() => {
     if (teams.length === 0) {
@@ -20,7 +23,6 @@ const TeamsPage = () => {
     rank: "",
     type: "General committe",
 
-    research: "",
     academic: [{ institute: "", period: "", degree: "" }],
     experience: [{ organization: "", position: "", period: "" }],
     contact: { email: "", phone: "" },
@@ -68,27 +70,80 @@ const TeamsPage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const imageUrl = await uploadImageToImgbb(file);
-    if (imageUrl) {
-      setMember({ ...member, image: imageUrl });
+    setUploading(true);
+    try {
+      const imageUrl = await uploadImageToImgbb(file);
+      if (imageUrl) {
+        setMember({ ...member, image: imageUrl });
+      }
+    } catch (error) {
+      console.error("Image upload failed:", error);
+    } finally {
+      setUploading(false);
     }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Member Data:", member);
-    Axios.post("/teams", member)
+    setSubmitting(true);
+
+    const request = editingId
+      ? Axios.patch(`/teams/${editingId}`, member)
+      : Axios.post("/teams", member);
+
+    request
       .then((res) => {
         console.log(res.data);
+
+        alert(`Member ${editingId ? "updated" : "added"} successfully!`);
+        fetchTeams();
+        setMember({
+          name: "",
+          post: "",
+          image: "",
+          bio: "",
+          rank: "",
+          type: "General committee",
+          academic: [{ institute: "", period: "", degree: "" }],
+          experience: [{ organization: "", position: "", period: "" }],
+          contact: { email: "", phone: "" },
+        });
+        setEditingId(null);
+        setSubmitting(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
+
   const handleDelete = (id) => {
     Axios.delete(`/teams/${id}`)
       .then((res) => {
         console.log(res.data);
+        alert("Member deleted successfully!");
         fetchTeams();
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleEdit = (teamMember) => {
+    setEditingId(teamMember._id);
+    setMember({
+      name: teamMember.name || "",
+      post: teamMember.post || "",
+      image: teamMember.image || "",
+      bio: teamMember.bio || "",
+      rank: teamMember.rank || "",
+      type: teamMember.type || "General committee",
+      academic: teamMember.academic?.length
+        ? teamMember.academic
+        : [{ institute: "", period: "", degree: "" }],
+      experience: teamMember.experience?.length
+        ? teamMember.experience
+        : [{ organization: "", position: "", period: "" }],
+      contact: teamMember.contact || { email: "", phone: "" },
+    });
   };
 
   return (
@@ -134,8 +189,9 @@ const TeamsPage = () => {
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded cursor-pointer"
         />
+        {uploading && <p className="text-blue-500">Uploading image...</p>}
 
         {/* Preview Uploaded Image */}
         {member.image && (
@@ -152,14 +208,6 @@ const TeamsPage = () => {
           onChange={handleChange}
           className="w-full p-2 border rounded"
         ></textarea>
-        <input
-          type="text"
-          name="research"
-          placeholder="Research Areas"
-          value={member.research}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
 
         <h3 className="text-lg font-medium">Academic Information</h3>
         {member.academic.map((edu, index) => (
@@ -261,9 +309,10 @@ const TeamsPage = () => {
 
         <button
           type="submit"
-          className="w-full bg-green-500 text-white p-2 rounded"
+          className="w-full bg-green-500 text-white p-2 rounded cursor-pointer"
+          disabled={submitting}
         >
-          Submit
+          {submitting ? "Submitting..." : editingId ? "Update" : "Submit"}
         </button>
       </form>
       <h2 className="text-2xl font-semibold mt-6 mb-4">Team Members</h2>
@@ -277,12 +326,21 @@ const TeamsPage = () => {
               <p className="text-lg font-semibold">{teamMember.name}</p>
               <p className="text-sm text-gray-600">{teamMember.post}</p>
             </div>
-            <button
-              onClick={() => handleDelete(teamMember._id)}
-              className="bg-red-500 text-white p-2 rounded"
-            >
-              Delete
-            </button>
+            <div className="flex space-x-2 ">
+              <button
+                onClick={() => handleEdit(teamMember)}
+                className="bg-yellow-500 text-white p-2 rounded"
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => handleDelete(teamMember._id)}
+                className="bg-red-500 text-white p-2 rounded"
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

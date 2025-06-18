@@ -1,42 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion"; // Import Framer Motion
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import { HiDownload } from "react-icons/hi";
 import { Helmet } from "react-helmet-async";
+import useRDFStore from "../../storage/useRDFstorage";
 
-const reports = [
-  {
-    id: 1,
-    title: "Annual Report 2023",
+// const reports = [
+//   {
+//     id: 1,
+//     title: "Annual Report 2023",
 
-    year: "2023",
-    fileUrl: "/assets/RDF-Annual-Report-2022-23.pdf",
-    coverImageUrl: "/assets/annual-report-cover.png",
-  },
-  {
-    id: 2,
-    title: "Annual Report 2022",
+//     year: "2023",
+//     fileUrl: "/assets/RDF-Annual-Report-2022-23.pdf",
+//     coverImageUrl: "/assets/annual-report-cover.png",
+//   },
+//   {
+//     id: 2,
+//     title: "Annual Report 2022",
 
-    year: "2022",
-    fileUrl: "/reports/annual_report_2022.pdf",
-    coverImageUrl: "/assets/Screenshot_6.jpg",
-  },
-  {
-    id: 3,
-    title: "Annual Report 2021",
+//     year: "2022",
+//     fileUrl: "/reports/annual_report_2022.pdf",
+//     coverImageUrl: "/assets/Screenshot_6.jpg",
+//   },
+//   {
+//     id: 3,
+//     title: "Annual Report 2021",
 
-    year: "2021",
-    fileUrl: "/reports/annual_report_2021.pdf",
-    coverImageUrl: "/assets/annual-report-cover2.png",
-  },
-];
+//     year: "2021",
+//     fileUrl: "/reports/annual_report_2021.pdf",
+//     coverImageUrl: "/assets/annual-report-cover2.png",
+//   },
+// ];
 
 const AnnualReport = () => {
   const [searchYear, setSearchYear] = useState("");
-  // useEffect(() => {
-  //   window.scrollTo(0, 0); // Scroll to the top when the route changes
-  // }, []);
+  const { reports, fetchReport } = useRDFStore();
+  useEffect(() => {
+    if (reports.length === 0) {
+      fetchReport();
+    }
+  }, []);
 
+  console.log(reports);
   const handleDownload = (fileUrl, title) => {
     const link = document.createElement("a");
     link.href = fileUrl;
@@ -48,7 +53,7 @@ const AnnualReport = () => {
 
   // Filter reports based on search year
   const filteredReports = searchYear
-    ? reports.filter((report) => report.year.includes(searchYear))
+    ? reports.filter((report) => report.title.includes(searchYear))
     : reports;
 
   return (
@@ -78,7 +83,7 @@ const AnnualReport = () => {
           <label className="text-green-400 font-medium">Filter by Year:</label>
           <input
             type="text"
-            placeholder="Enter year (e.g. 2023)"
+            placeholder="Enter title (e.g. 2023)"
             className="p-2 border rounded-lg w-40 text-center shadow-sm"
             onChange={(e) => setSearchYear(e.target.value)}
           />
@@ -118,7 +123,7 @@ const AnnualReport = () => {
               >
                 {/* Cover Image */}
                 <motion.img
-                  src={report.coverImageUrl}
+                  src={report.coverImage}
                   alt={`Cover of ${report.title}`}
                   className="w-64 h-80 object-cover rounded-lg mb-2 shadow-md"
                   whileHover={{ scale: 1 }}
@@ -135,7 +140,7 @@ const AnnualReport = () => {
                 <div className="flex gap-4 mt-4">
                   {/* View Report */}
                   <motion.a
-                    href={report.fileUrl}
+                    href={`http://localhost:3001${report.filePath}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-outline btn-info px-4 py-2 transition duration-300 ease-in-out shadow-md"
@@ -146,7 +151,9 @@ const AnnualReport = () => {
 
                   {/* Download Report */}
                   <motion.button
-                    onClick={() => handleDownload(report.fileUrl, report.title)}
+                    onClick={() =>
+                      handleDownload(report.filePath, report.title)
+                    }
                     className="bg-gradient-to-r btn btn-outline btn-success px-5 py-2.5 flex items-center gap-2 shadow-md transition-all duration-300 ease-in-out"
                     whileHover={{ scale: 1 }}
                   >

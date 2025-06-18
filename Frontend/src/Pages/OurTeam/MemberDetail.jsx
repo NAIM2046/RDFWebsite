@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 const MemberDetails = () => {
   const location = useLocation();
   const member = location.state?.member || {};
-  const [activeTab, setActiveTab] = useState("research"); // Default active tab
+  const [activeTab, setActiveTab] = useState("academic"); // Default active tab
 
   return (
     <div className="container mx-auto p-4 sm:p-6 bg-gray-100">
@@ -32,7 +32,7 @@ const MemberDetails = () => {
 
         {/* Profile Details */}
         <div className="flex-1">
-          <h1 className="text-xl sm:text-2xl  font-bold text-blue-800 border-2 rounded-lg border-r-white border-l-white pb-2 pl-2">
+          <h1 className="text-xl sm:text-2xl font-bold text-blue-800 border-2 rounded-lg border-r-white border-l-white pb-2 pl-2">
             PROFILE
           </h1>
           <div className="mt-4">
@@ -46,10 +46,9 @@ const MemberDetails = () => {
         </div>
       </div>
 
-      {/* Tabs Section */}
+      {/* Tabs */}
       <div className="mt-6 border-b pb-2 flex flex-wrap gap-4 sm:gap-6 justify-center md:justify-start text-blue-600 font-semibold text-sm sm:text-lg">
         {[
-          { id: "research", label: "RESEARCH & PUBLICATION" },
           { id: "academic", label: "ACADEMIC INFO" },
           { id: "experience", label: "EXPERIENCE" },
           { id: "contact", label: "CONTACT" },
@@ -69,31 +68,26 @@ const MemberDetails = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="mt-6">
-        {activeTab === "research" && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-800">
-              Research & Publications
-            </h2>
-            <p className="text-gray-600 mt-2 text-sm sm:text-base">
-              {member.research || "No research details available."}
-            </p>
-          </div>
-        )}
-
+      <div className="mt-4">
         {activeTab === "academic" &&
-          member.academic?.map((edu, index) => (
-            <div key={index} className="mt-4 pb-2">
-              <p className="text-gray-700 font-semibold">
-                Institute: {edu.institute || "N/A"}
-              </p>
-              <p className="text-gray-600 text-sm sm:text-base">
-                Degree: {edu.degree || "N/A"}
-              </p>
-              <p className="text-gray-600 text-sm sm:text-base">
-                Period: {edu.period || "N/A"}
-              </p>
-            </div>
+          (member.academic?.length ? (
+            member.academic.map((edu, index) => (
+              <div key={index} className="mt-4 pb-2">
+                <p className="text-gray-700 font-semibold">
+                  Institute: {edu.institute || "N/A"}
+                </p>
+                <p className="text-gray-600 text-sm sm:text-base">
+                  Degree: {edu.degree || "N/A"}
+                </p>
+                <p className="text-gray-600 text-sm sm:text-base">
+                  Period: {edu.period || "N/A"}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600 mt-2 text-sm sm:text-base">
+              No academic details available.
+            </p>
           ))}
 
         {activeTab === "experience" && (
@@ -135,7 +129,7 @@ const MemberDetails = () => {
           </div>
         )}
       </div>
-    </div>
+    </div> // ✅ single wrapping <div>
   );
 };
 
