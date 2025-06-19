@@ -12,7 +12,6 @@ const OurPrograms = () => {
       </Helmet>
       <PageCoverPhoto title={"OUR PROGRAM"}></PageCoverPhoto>
       <OurProgram></OurProgram>
-      <BlogSection></BlogSection>
     </div>
   );
 };

@@ -5,11 +5,21 @@ import ShareAndComment from "./ShareAndComment";
 import useRDFStore from "../../../storage/useRDFstorage";
 
 import { IoIosArrowForward } from "react-icons/io";
-import { FaUserAlt, FaCalendarAlt } from "react-icons/fa";
+import {
+  FaUserAlt,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaMoneyBillWave,
+  FaUsers,
+  FaClock,
+} from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+import { FiExternalLink } from "react-icons/fi";
 
 const ProjectDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { newss, fetchNews } = useRDFStore();
 
   // Retrieve from location or fallback to stored project
   const storedProject = localStorage.getItem("selectedProject");
@@ -17,269 +27,380 @@ const ProjectDetails = () => {
     location.state?.project ||
     (storedProject ? JSON.parse(storedProject) : null);
 
-  console.log(project);
-
   // Save project to localStorage if it exists
   useEffect(() => {
     if (project) {
       localStorage.setItem("selectedProject", JSON.stringify(project));
     }
-  }, [project]);
+    if (!newss.length) {
+      fetchNews();
+    }
+  }, [project, newss]);
 
   if (!project)
-    return <p className="text-center text-red-500">Project not found!</p>;
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <p className="text-center text-red-500 text-xl font-medium bg-white p-6 rounded-lg shadow-md">
+          Project not found!
+        </p>
+      </div>
+    );
 
   // Handle video embedding
   const videoUrl = project.video.includes("http")
     ? project.video
     : `https://www.youtube.com/embed/${project.video}`;
 
-  const { newss, fetchNews } = useRDFStore();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!newss.length) {
-      fetchNews();
-    }
-  }, []);
-
-  console.log("news", newss);
-
   const filterNews = newss.filter(
     (news) => String(news.program) === String(project.programName)
   );
 
-  console.log("filternews", filterNews);
-
   const truncateDescription = (text, wordLimit = 30) => {
+    if (!text) return "";
     return text.split(" ").slice(0, wordLimit).join(" ") + "...";
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-2">
+    <div className="max-w-7xl mx-auto p-4">
       <Helmet>
-        <title> RDF-Project Details </title>
+        <title>{project.name} | RDF Project Details</title>
+        <meta
+          name="description"
+          content={project.projectGoal || "RDF Project Details"}
+        />
       </Helmet>
+
       {/* Project Header */}
-      <div className="p-6 bg-gray-50 text-gray-800 mt-10 lg:mt-0">
+      <div className="p-6 bg-gradient-to-r from-green-50 to-green-100 rounded-xl shadow-sm mt-10 lg:mt-0">
         {/* Header Section */}
-        <div className="text-center mt-20 md:mt-5">
-          <h1 className="text-4xl font-extrabold font-serif text-green-500  ">
+        <div className="text-center mt-10 md:mt-5">
+          <h1 className="text-4xl font-extrabold font-serif text-green-700">
             {project.name}
           </h1>
+          <div className="w-24 h-1 bg-green-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
         {/* Project Media Section */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Handle case when only one image exists */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           {project.images && (
             <div className="col-span-1 md:col-span-3 flex justify-center">
               <img
                 src={project.images[0]}
                 alt="Project Cover"
-                className="rounded-lg  w-full h-[300px] md:h-[600px] object-cover"
+                className="rounded-xl w-full h-[300px] md:h-[500px] object-cover shadow-lg"
               />
             </div>
           )}
         </div>
+      </div>
 
-        {/* Project Details Section */}
-        <div className="mt-6 p-4 md:p-6 mx-auto max-w-7xl bg-white shadow-md rounded-lg flex flex-col md:flex-row gap-6">
-          {/* Left Section */}
-          <div className="w-full md:w-2/3">
-            {/* Project Goal */}
-            <p className="text-lg text-gray-800 ">
-              <h1 className="text-xl font-semibold text-gray-900 border-l-5 border-green-500 pl-1">
-                <strong className=""> Project Goal:</strong>
-              </h1>
-              <p className="pl-4">{project.projectGoal}</p>
-            </p>
-
-            {/* Project Summary */}
-            <p className="text-lg text-gray-800  mt-4">
-              <h1 className="text-xl font-semibold text-gray-900 border-l-5 border-green-500 pl-2">
-                {" "}
-                <strong>Project Summary:</strong>
-              </h1>
-              <p className="pl-4"> {project.projectSummary || "N/A"}</p>
-            </p>
-
-            {/* Major Interventions */}
-            <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-              <h2 className="text-xl font-bold text-gray-900 border-l-4 border-green-500 pl-4">
-                Major Interventions
-              </h2>
-              <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1 pl-4">
-                {project.majorInterventions.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+      {/* Project Details Section */}
+      <div className="mt-8 p-4 md:p-6 mx-auto bg-white shadow-md rounded-xl flex flex-col md:flex-row gap-8">
+        {/* Left Section */}
+        <div className="w-full md:w-2/3">
+          {/* Project Goal */}
+          <div className="mb-8">
+            <div className="flex items-center mb-4">
+              <div className="w-2 h-8 bg-green-600 rounded-full mr-3"></div>
+              <h2 className="text-2xl font-bold text-gray-800">Project Goal</h2>
             </div>
-
-            {/* Project Results */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-              <h2 className="text-xl font-bold text-gray-900 border-l-4 border-green-500 pl-4">
-                Project Results
-              </h2>
-              <p className="text-gray-700 mt-2 pl-4">
-                {project.projectResults || "No results available yet."}
-              </p>
-            </div>
+            <p className="text-gray-600 pl-5 leading-relaxed">
+              {project.projectGoal}
+            </p>
           </div>
 
-          {/* Right Section */}
-          <div className="w-full md:w-1/3 border-3 border-green-700 bg-gray-100 rounded-lg">
-            <h1 className="text-center  p-3 text-white text-xl font-bold bg-green-700 rounded-t-md font-serif">
+          {/* Project Summary */}
+          <div className="mb-8">
+            <div className="flex items-center mb-4">
+              <div className="w-2 h-8 bg-green-600 rounded-full mr-3"></div>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Project Summary
+              </h2>
+            </div>
+            <p className="text-gray-600 pl-5 leading-relaxed">
+              {project.projectSummary || "N/A"}
+            </p>
+          </div>
+
+          {/* Major Interventions */}
+          <div className="mt-8 p-6 bg-green-50 rounded-xl">
+            <div className="flex items-center mb-4">
+              <div className="w-2 h-8 bg-green-600 rounded-full mr-3"></div>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Major Interventions
+              </h2>
+            </div>
+            <ul className="space-y-3 pl-5">
+              {project.majorInterventions.map((item, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="inline-block w-2 h-2 bg-green-600 rounded-full mt-2 mr-3"></span>
+                  <span className="text-gray-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Project Results */}
+          <div className="mt-8 p-6 bg-green-50 rounded-xl">
+            <div className="flex items-center mb-4">
+              <div className="w-2 h-8 bg-green-600 rounded-full mr-3"></div>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Project Results
+              </h2>
+            </div>
+            <p className="text-gray-700 pl-5 leading-relaxed">
+              {project.projectResults || "No results available yet."}
+            </p>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="w-full md:w-1/3 border border-green-200 bg-white rounded-xl shadow-sm">
+          <div className="bg-green-700 px-6 py-4 rounded-t-xl">
+            <h1 className="text-center text-white text-xl font-bold font-serif">
               Project Information
             </h1>
+          </div>
 
-            <div className="p-4 space-y-2 text-blue-900 text-sm md:text-base">
-              <p>
-                <strong>Donor:</strong> {project.donor}
-              </p>
-              <p>
-                <strong>Budget:</strong> {project.budget}
-              </p>
-              <p>
-                <strong>Duration:</strong> {project.startDate} to{" "}
-                {project.endDate}
-              </p>
-              <p>
-                <strong>Project State:</strong> {project.projectState}
-              </p>
-              <p>
-                <strong>Implementing Areas:</strong>{" "}
-                {project.implementingAreas.join(", ")}
-              </p>
-
-              <p>
-                <strong>Direct Beneficiaries:</strong>
-                Male: {project.directBeneficiaries.male}, Female:{" "}
-                {project.directBeneficiaries.female}
-              </p>
-
-              <p>
-                <strong>Indirect Beneficiaries:</strong>
-                Male: {project.indirectBeneficiaries.male}, Female:{" "}
-                {project.indirectBeneficiaries.female}
-              </p>
-
-              {project.projectCompletionReport && (
-                <p>
-                  <strong>Completion Report:</strong>
-                  <a
-                    href={project.projectCompletionReport}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-700 underline ml-1"
-                  >
-                    View Report
-                  </a>
-                </p>
-              )}
+          <div className="p-6 space-y-4">
+            <div className="flex items-start">
+              <FaMoneyBillWave className="text-green-600 mt-1 mr-3 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-gray-500">Donor</p>
+                <p className="text-gray-800">{project.donor}</p>
+              </div>
             </div>
 
-            {/* Project Image Gallery */}
-            {project.images?.length > 0 && (
-              <div className="p-4">
-                <h2 className="text-center text-lg font-semibold text-white mb-2 border-2 rounded-md bg-green-600">
-                  Project Gallery
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {project.images.map((img, index) => (
-                    <img
+            <div className="flex items-start">
+              <FaMoneyBillWave className="text-green-600 mt-1 mr-3 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-gray-500">Budget</p>
+                <p className="text-gray-800">{project.budget}</p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <FaClock className="text-green-600 mt-1 mr-3 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-gray-500">Duration</p>
+                <p className="text-gray-800">
+                  {project.startDate} to {project.endDate}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <div className="mt-1 mr-3 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center">
+                <div
+                  className={`w-3 h-3 rounded-full ${
+                    project.projectState === "Ongoing"
+                      ? "bg-yellow-500"
+                      : "bg-green-500"
+                  }`}
+                ></div>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Project State
+                </p>
+                <p className="text-gray-800">{project.projectState}</p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <FaMapMarkerAlt className="text-green-600 mt-1 mr-3 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Implementing Areas
+                </p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {project.implementingAreas.map((area, index) => (
+                    <span
                       key={index}
-                      src={img}
-                      alt={`Project Image ${index + 1}`}
-                      className="w-full h-40 object-cover rounded-lg border border-gray-300 shadow-sm"
-                    />
+                      className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
+                    >
+                      {area}
+                    </span>
                   ))}
                 </div>
               </div>
-            )}
+            </div>
 
-            {/* Project Video */}
-            {project.video && (
-              <div className=" p-4">
-                <h2 className="text-center text-lg font-semibold text-green-500 mb-2">
-                  Project Video
-                </h2>
-                <div className="aspect-w-16 aspect-h-9">
-                  <iframe
-                    className="w-full h-36 rounded-lg border border-gray-300 shadow-sm"
-                    src={`https://www.youtube.com/embed/${project.video}`}
-                    title="Project Video"
-                    frameBorder="0"
-                    allowFullScreen
-                  ></iframe>
+            <div className="space-y-4 pt-2">
+              <div className="flex items-start">
+                <FaUsers className="text-green-600 mt-1 mr-3 flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Direct Beneficiaries
+                  </p>
+                  <div className="flex gap-4 mt-1">
+                    <div>
+                      <span className="text-xs text-gray-500">Male</span>
+                      <p className="text-gray-800">
+                        {project.directBeneficiaries.male}
+                      </p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-gray-500">Female</span>
+                      <p className="text-gray-800">
+                        {project.directBeneficiaries.female}
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <div className="flex items-start">
+                <FaUsers className="text-green-600 mt-1 mr-3 flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Indirect Beneficiaries
+                  </p>
+                  <div className="flex gap-4 mt-1">
+                    <div>
+                      <span className="text-xs text-gray-500">Male</span>
+                      <p className="text-gray-800">
+                        {project.indirectBeneficiaries.male}
+                      </p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-gray-500">Female</span>
+                      <p className="text-gray-800">
+                        {project.indirectBeneficiaries.female}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {project.projectCompletionReport && (
+              <div className="pt-4 border-t border-gray-200">
+                <a
+                  href={project.projectCompletionReport}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-green-600 hover:text-green-800 font-medium text-sm"
+                >
+                  View Completion Report
+                  <FiExternalLink className="ml-2" />
+                </a>
               </div>
             )}
           </div>
+
+          {/* Project Image Gallery */}
+          {project.images?.length > 0 && (
+            <div className="p-4 border-t border-gray-200">
+              <h2 className="text-center text-lg font-semibold text-green-700 mb-4">
+                Project Gallery
+              </h2>
+              <div className="grid grid-cols-2 gap-3">
+                {project.images.slice(0, 4).map((img, index) => (
+                  <div key={index} className="relative group">
+                    <img
+                      src={img}
+                      alt={`Project Image ${index + 1}`}
+                      className="w-full h-28 object-cover rounded-lg border border-gray-200 shadow-sm group-hover:shadow-md transition-shadow"
+                    />
+                    {index === 3 && project.images.length > 4 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
+                        <span className="text-white font-medium">
+                          +{project.images.length - 4}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Project Video */}
+          {project.video && (
+            <div className="p-4 border-t border-gray-200">
+              <h2 className="text-center text-lg font-semibold text-green-700 mb-4">
+                Project Video
+              </h2>
+              <div className="aspect-w-16 aspect-h-9">
+                <iframe
+                  className="w-full h-48 rounded-lg shadow-sm"
+                  src={videoUrl}
+                  title="Project Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      <section className="py-16  bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-manrope text-4xl font-bold text-gray-900 text-center mb-12">
-            Relate News
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {/* Related News Section */}
+      <section className="py-12 bg-gray-50 mt-12 rounded-xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">
+              Related News
+            </h2>
+            <div className="w-16 h-1 bg-green-500 mx-auto rounded-full"></div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filterNews.map((news) => (
               <div
                 key={news._id}
-                className="group border border-gray-300 rounded-3xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
-                <img
-                  src={news.imageURL}
-                  alt={`Blog image ${news._id}`}
-                  className="w-full h-64 object-cover rounded-t-3xl"
-                />
-                <div className="p-6 bg-white group-hover:bg-indigo-50 transition-all duration-300">
-                  <div className="flex justify-between items-center mb-4">
-                    {/* Author Section */}
-                    <div className="flex items-center space-x-2">
-                      <FaUserAlt className="text-indigo-600 text-xl" />
-                      <span className="text-indigo-600 font-semibold">
-                        {news.author}
-                      </span>
-                    </div>
-                    {/* Date Section */}
-                    <div className="flex items-center space-x-2">
-                      <FaCalendarAlt className="text-indigo-600 text-xl" />
-                      <span className="text-gray-500 text-sm">{news.date}</span>
-                    </div>
+                <div className="relative h-48">
+                  <img
+                    src={news.imageURL}
+                    alt={news.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                    <span className="text-xs text-white bg-green-600 px-2 py-1 rounded-full">
+                      {news.date}
+                    </span>
                   </div>
-                  <h4 className="text-xl text-gray-900 font-semibold mt-2 mb-4">
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <FaUserAlt className="mr-2 text-green-600" />
+                    <span>{news.author}</span>
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
                     {news.title}
                   </h4>
-                  <p className="text-gray-600 text-base mb-6">
-                    {truncateDescription(news.content[0].description)}
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {truncateDescription(news.content[0]?.description)}
                   </p>
                   <button
                     onClick={() =>
                       navigate(`/news/${news._id}`, { state: { news } })
                     }
-                    className="flex items-center space-x-2 text-indigo-600 font-semibold border border-indigo-600 px-4 py-2 rounded-lg transition-all hover:bg-indigo-600 hover:text-white cursor-pointer"
+                    className="flex items-center text-green-600 hover:text-green-800 font-medium text-sm"
                   >
                     Read Details
-                    <IoIosArrowForward className="text-xl" />
+                    <IoIosArrowForward className="ml-1" />
                   </button>
                 </div>
               </div>
             ))}
           </div>
-          {/* View All Button */}
-          <div className="text-center mt-12">
-            <a
-              href="/news"
-              className="text-lg text-indigo-600 font-semibold hover:underline"
-            >
-              View All News
-            </a>
-          </div>
+          {filterNews.length > 0 && (
+            <div className="text-center mt-10">
+              <button
+                onClick={() => navigate("/news")}
+                className="inline-flex items-center px-5 py-2.5 border border-green-600 text-sm font-medium rounded-md text-green-600 bg-white hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              >
+                View All News
+              </button>
+            </div>
+          )}
         </div>
       </section>
+
       <ShareAndComment />
     </div>
   );

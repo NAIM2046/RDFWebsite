@@ -4,291 +4,405 @@ import {
   FaCalendarAlt,
   FaShareAlt,
   FaUserAlt,
-} from "react-icons/fa"; // Import icons
-import RelateNews from "../../Components/Navber/AllProjects/RelateNews";
-import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa6";
+  FaRegBookmark,
+} from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaTwitter,
+  FaRegComment,
+} from "react-icons/fa6";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useRDFStore from "../../storage/useRDFstorage";
 import { IoIosArrowForward } from "react-icons/io";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+
 const NewsDetails = () => {
   const location = useLocation();
   const news = location.state?.news;
-  console.log(news);
-
-  // Function to calculate reading time
-  const calculateReadingTime = (text) => {
-    const wordsPerMinute = 200; // Average reading speed
-    const wordCount = text.split(/\s+/).length;
-    return Math.ceil(wordCount / wordsPerMinute);
-  };
-
   const currentUrl = encodeURIComponent(window.location.href);
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
-
   const { newss, fetchNews } = useRDFStore();
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!newss.length) {
       fetchNews();
     }
   }, []);
 
-  console.log("news", newss);
-
+  // Filter related news
   const filterNews = (newss || []).filter(
     (newsss) =>
       String(newsss.program) === String(news?.program) &&
       String(newsss._id) !== String(news?._id)
   );
 
-  console.log("filternews", filterNews);
-
-  const truncateDescription = (text, wordLimit = 30) => {
-    return text.split(" ").slice(0, wordLimit).join(" ") + "...";
+  // Calculate reading time
+  const calculateReadingTime = (text) => {
+    if (!text) return 0;
+    const wordsPerMinute = 200;
+    const wordCount = text.split(/\s+/).length;
+    return Math.ceil(wordCount / wordsPerMinute);
   };
 
+  // Format date beautifully
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  // Social share links
+  const socialLinks = [
+    {
+      platform: "Facebook",
+      icon: <FaFacebookF />,
+      url: `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`,
+      color: "text-blue-600 hover:bg-blue-100",
+    },
+    {
+      platform: "Twitter",
+      icon: <FaTwitter />,
+      url: `https://twitter.com/intent/tweet?url=${currentUrl}`,
+      color: "text-blue-400 hover:bg-blue-100",
+    },
+    {
+      platform: "LinkedIn",
+      icon: <FaLinkedinIn />,
+      url: `https://www.linkedin.com/shareArticle?url=${currentUrl}`,
+      color: "text-blue-700 hover:bg-blue-100",
+    },
+  ];
+
   return (
-    <div className="mx-auto p-6">
+    <div className="bg-gray-50 min-h-screen">
       <Helmet>
-        <title> RDF-News-details </title>
+        <title>{`RDF - ${news?.title || "News Details"}`}</title>
+        <meta
+          name="description"
+          content={news?.content?.[0]?.description || ""}
+        />
       </Helmet>
-      <div className="max-w-4xl mx-auto mt-16 lg:mt-0 shadow-lg mb-4">
-        {/* Title */}
-        <h1 className="text-4xl font-bold text-orange-400 p-4 text-center font-serif">
-          {news.title}
-        </h1>
 
-        {/* Author, Date & Reading Time */}
-        <div className="flex  justify-center items-center text-gray-500 text-sm mt-3 gap-4 p-4 ">
-          <p className="flex items-center gap-2">
-            <FaUser className="text-orange-400" />{" "}
-            <span className="font-semibold">{news.author}</span>
-          </p>
-          {"|"}
-          <p className="flex items-center gap-2">
-            <FaCalendarAlt className="text-orange-400" />{" "}
-            {new Date(news.date).toLocaleDateString()}
-          </p>
-          {"|"}
-          <p className="flex items-center gap-2">
-            <FaClock className="text-orange-400" />{" "}
-            {calculateReadingTime(
-              news.content.map((item) => item.discribed).join(" ")
-            )}{" "}
-            min read
-          </p>
-        </div>
-
-        {/* Social Share Buttons */}
-
-        {/* Featured Image */}
-        <div className="my-4">
-          <img
-            src={news.imageURL}
-            alt={news.title}
-            className="w-full max-h-[600px] object-cover"
-          />
-          <p className="text-sm text-gray-500 mt-1 italic text-center">
-            {news.imageCaption}
-          </p>
-        </div>
-
-        {/* Key Highlights / Takeaways */}
-        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6">
-          <h2 className="text-xl font-semibold mb-2">Key Highlights</h2>
-          <ul className="list-disc pl-5 text-gray-700">
-            {news.highlights.map((highlight, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <FaClock className="text-blue-500" /> {highlight}
+      {/* Breadcrumb */}
+      <div className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <nav className="flex" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-4">
+              <li>
+                <div>
+                  <a href="/" className="text-gray-400 hover:text-gray-500">
+                    <span className="text-blue-600">Home</span>
+                  </a>
+                </div>
               </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* News Content with Paragraph Headers */}
-        <div className="text-gray-700 leading-7 space-y-6 p-4">
-          {news?.content?.length > 0 ? (
-            news.content.map((paragraph, index) => (
-              <div key={index}>
-                <h3 className="text-xl font-semibold text-blue-500 mb-2">
-                  {paragraph.title}
-                </h3>
-                <p>{paragraph.description}</p>
-                {paragraph.imageUrl ? (
-                  <img
-                    src={paragraph.imageUrl}
-                    alt={paragraph.title || "News Image"}
-                    className="w-96 mx-auto"
-                    loading="lazy"
-                  />
-                ) : (
-                  <p className="text-gray-500 italic">No image available</p>
-                )}
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No news available</p>
-          )}
-        </div>
-        {news?.socialMediaLinks?.some((link) => link.link) && (
-          <div className="mt-6 p-4 ">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3 font-serif">
-              Related Links
-            </h3>
-            <ul className="space-y-2">
-              {news.socialMediaLinks.map(
-                (item, index) =>
-                  item.link && (
-                    <li key={index} className="">
-                      {item.header || "Click here"}
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline ml-2"
-                      >
-                        Click here
-                      </a>
-                    </li>
-                  )
-              )}
-            </ul>
-          </div>
-        )}
-
-        <div className="border-t pt-6 flex justify-between border-b pb-4 px-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
-            <FaShareAlt className="text-orange-500" /> Share
-          </h2>
-          <div className="flex gap-3">
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center border rounded-full text-blue-600 hover:bg-blue-100 transition"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href={`https://twitter.com/intent/tweet?url=${currentUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center border rounded-full text-blue-400 hover:bg-blue-100 transition"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              href={`https://www.linkedin.com/shareArticle?url=${currentUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center border rounded-full text-blue-700 hover:bg-blue-100 transition"
-            >
-              <FaLinkedinIn />
-            </a>
-          </div>
+              <li>
+                <div className="flex items-center">
+                  <IoIosArrowForward className="flex-shrink-0 h-4 w-4 text-gray-400" />
+                  <a
+                    href="/news"
+                    className="ml-4 text-gray-400 hover:text-gray-500"
+                  >
+                    News
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <IoIosArrowForward className="flex-shrink-0 h-4 w-4 text-gray-400" />
+                  <span className="ml-4 text-gray-500 font-medium">
+                    {news?.title}
+                  </span>
+                </div>
+              </li>
+            </ol>
+          </nav>
         </div>
       </div>
 
-      {/* Related News Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-manrope text-4xl font-bold text-gray-900 text-center mb-12">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <motion.article
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-xl shadow-md overflow-hidden"
+        >
+          {/* Article Header */}
+          <div className="px-8 pt-8 pb-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-4">
+                  {news?.type}
+                </span>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                  {news?.title}
+                </h1>
+              </div>
+              <button className="text-gray-400 hover:text-blue-600 p-2">
+                <FaRegBookmark className="text-xl" />
+              </button>
+            </div>
+
+            {/* Meta Information */}
+            <div className="flex flex-wrap items-center gap-4 text-gray-500 mb-6">
+              <div className="flex items-center">
+                <FaUser className="mr-2 text-blue-600" />
+                <span className="font-medium">
+                  {news?.author || "Unknown Author"}
+                </span>
+              </div>
+              <div className="flex items-center">
+                <FaCalendarAlt className="mr-2 text-blue-600" />
+                <time dateTime={news?.date}>{formatDate(news?.date)}</time>
+              </div>
+              <div className="flex items-center">
+                <FaClock className="mr-2 text-blue-600" />
+                <span>
+                  {calculateReadingTime(
+                    news?.content?.map((item) => item?.description).join(" ") ||
+                      ""
+                  )}{" "}
+                  min read
+                </span>
+              </div>
+              <div className="flex items-center">
+                <FaRegComment className="mr-2 text-blue-600" />
+                <span>Leave a comment</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Featured Image */}
+          <div className="relative h-[600px] w-full overflow-hidden">
+            <img
+              src={news?.imageURL}
+              alt={news?.title}
+              className=" object-cover"
+              loading="eager"
+            />
+            {news?.imageCaption && (
+              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 text-sm">
+                {news.imageCaption}
+              </div>
+            )}
+          </div>
+
+          {/* Article Content */}
+          <div className="px-8 py-8">
+            {/* Key Highlights */}
+            {news?.highlights?.length > 0 && (
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8 rounded-r-lg">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  Key Highlights
+                </h2>
+                <ul className="space-y-3">
+                  {news.highlights.map((highlight, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="flex-shrink-0 text-blue-500 mr-3 mt-1">
+                        •
+                      </span>
+                      <span className="text-gray-700">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Main Content */}
+            <div className="prose max-w-none text-gray-700">
+              {news?.content?.length > 0 ? (
+                news.content.map((paragraph, index) => (
+                  <div key={index} className="mb-8">
+                    {paragraph.title && (
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                        {paragraph.title}
+                      </h3>
+                    )}
+                    <p className="mb-4 leading-relaxed">
+                      {paragraph.description}
+                    </p>
+                    {paragraph.imageUrl && (
+                      <figure className="my-6">
+                        <img
+                          src={paragraph.imageUrl}
+                          alt={paragraph.title || "Content image"}
+                          className="rounded-lg shadow-md w-full max-w-2xl mx-auto"
+                          loading="lazy"
+                        />
+                        {paragraph.imageCaption && (
+                          <figcaption className="text-center text-sm text-gray-500 mt-2">
+                            {paragraph.imageCaption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No content available</p>
+              )}
+            </div>
+
+            {/* Related Links */}
+            {news?.socialMediaLinks?.some((link) => link.link) && (
+              <div className="mt-8 border-t pt-8">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  Related Links
+                </h3>
+                <ul className="space-y-3">
+                  {news.socialMediaLinks.map(
+                    (item, index) =>
+                      item.link && (
+                        <li key={index}>
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline flex items-start"
+                          >
+                            <span className="mr-2">→</span>
+                            <span>{item.header || "Related Link"}</span>
+                          </a>
+                        </li>
+                      )
+                  )}
+                </ul>
+              </div>
+            )}
+
+            {/* Social Sharing */}
+            <div className="mt-12 pt-6 border-t flex flex-col sm:flex-row justify-between items-center">
+              <div className="flex items-center mb-4 sm:mb-0">
+                <span className="text-gray-700 font-medium mr-3">Share:</span>
+                <div className="flex space-x-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.platform}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-10 h-10 flex items-center justify-center border rounded-full ${social.color} transition-colors`}
+                      aria-label={`Share on ${social.platform}`}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 transition-colors"
+              >
+                Back to Top
+              </button>
+            </div>
+          </div>
+        </motion.article>
+
+        {/* Related News Section */}
+        <section className="mt-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
             Related News
           </h2>
 
           {filterNews.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {filterNews.slice(0, 3).map((news) => (
-                <div
-                  key={news._id}
-                  className="group border border-gray-300 rounded-3xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filterNews.slice(0, 3).map((relatedNews) => (
+                <motion.div
+                  key={relatedNews._id}
+                  whileHover={{ y: -5 }}
+                  className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg"
                 >
-                  <img
-                    src={news.imageURL}
-                    alt={`Blog image ${news._id}`}
-                    className="w-full h-64 object-cover rounded-t-3xl"
-                  />
-                  <div className="p-6 bg-white group-hover:bg-indigo-50 transition-all duration-300">
-                    <div className="flex justify-between items-center mb-4">
-                      <div className="flex items-center space-x-2">
-                        <FaUserAlt className="text-indigo-600 text-xl" />
-                        <span className="text-indigo-600 font-semibold">
-                          {news.author}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <FaCalendarAlt className="text-indigo-600 text-xl" />
-                        <span className="text-gray-500 text-sm">
-                          {new Date(news.date).toLocaleDateString()}
-                        </span>
-                      </div>
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <img
+                      src={relatedNews.imageURL}
+                      alt={relatedNews.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center text-sm text-gray-500 mb-3">
+                      <span className="flex items-center mr-4">
+                        <FaUser className="mr-1 text-blue-600" />
+                        {relatedNews.author}
+                      </span>
+                      <span className="flex items-center">
+                        <FaCalendarAlt className="mr-1 text-blue-600" />
+                        {formatDate(relatedNews.date)}
+                      </span>
                     </div>
-                    <h4 className="text-xl text-gray-900 font-semibold mt-2 mb-4">
-                      {news.title}
-                    </h4>
-                    <p className="text-gray-600 text-base mb-6">
-                      {news.content?.[0]?.description
-                        ? news.content[0].description
-                            .split(" ")
-                            .slice(0, 20)
-                            .join(" ") + "..."
-                        : "No description available."}
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                      {relatedNews.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {relatedNews.content?.[0]?.description ||
+                        "No description available"}
                     </p>
-
                     <button
                       onClick={() =>
-                        navigate(`/news/${news._id}`, { state: { news } })
+                        navigate(`/news/${relatedNews._id}`, {
+                          state: { news: relatedNews },
+                        })
                       }
-                      className="flex items-center space-x-2 text-indigo-600 font-semibold border border-indigo-600 px-4 py-2 rounded-lg transition-all hover:bg-indigo-600 hover:text-white cursor-pointer"
+                      className="text-blue-600 font-medium hover:text-blue-800 transition-colors flex items-center"
                     >
-                      Read Details
-                      <IoIosArrowForward className="text-xl" />
+                      Read More <IoIosArrowForward className="ml-1" />
                     </button>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           ) : (
-            <div className="text-center bg-white rounded-2xl shadow p-10 max-w-2xl mx-auto">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/6134/6134065.png"
-                alt="No news found"
-                className="w-24 h-24 mx-auto mb-6 opacity-70"
-              />
-              <h3 className="text-2xl font-semibold text-gray-800 mb-2">
-                No Related News Found
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Please check back later or explore other categories.
-              </p>
-              <a
-                href="/news"
-                className="inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
-              >
-                View All News
-              </a>
+            <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+              <div className="max-w-md mx-auto">
+                <svg
+                  className="h-16 w-16 text-gray-400 mx-auto"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1}
+                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <h3 className="mt-4 text-lg font-medium text-gray-900">
+                  No related news found
+                </h3>
+                <p className="mt-2 text-gray-500">
+                  We couldn't find any related news articles. Check back later
+                  or explore our other news stories.
+                </p>
+                <div className="mt-6">
+                  <a
+                    href="/news"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                    View All News
+                  </a>
+                </div>
+              </div>
             </div>
           )}
 
-          {/* View All Button (only if there’s related news) */}
-          {filterNews.length > 0 && (
-            <div className="text-center mt-12">
+          {filterNews.length > 3 && (
+            <div className="mt-8 text-center">
               <a
                 href="/news"
-                className="text-lg text-indigo-600 font-semibold hover:underline"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 View All News
+                <IoIosArrowForward className="ml-2" />
               </a>
             </div>
           )}
-        </div>
-      </section>
+        </section>
+      </main>
     </div>
   );
 };

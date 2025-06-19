@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useRDFStore from "../../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 const ProgramDetails = () => {
   const location = useLocation();
@@ -10,9 +11,11 @@ const ProgramDetails = () => {
 
   if (!program) {
     return (
-      <p className="text-center text-red-500 text-xl mt-10">
-        Program not found!
-      </p>
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-center text-red-500 text-xl font-medium">
+          Program not found! Please go back and select a program.
+        </p>
+      </div>
     );
   }
 
@@ -29,99 +32,167 @@ const ProgramDetails = () => {
   );
 
   return (
-    <div className="container mx-auto max-w-7xl px-6 py-12 lg:py-10 ">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-emerald-50">
       <Helmet>
-        <title>{program.title}</title>
+        <title>{program.title} | RDF Program</title>
+        <meta
+          name="description"
+          content={program.description.substring(0, 160)}
+        />
       </Helmet>
-      {/* Title Section */}
-      <div className="text-center">
-        <h1 className="text-4xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500 mt-20 lg:mt-0">
-          {program.title}
-        </h1>
-        <p className="mt-4 text-gray-700 text-lg text-start">
-          {program.description}
-        </p>
-      </div>
 
-      {/* Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
-        {/* Left Side - Text & Info */}
-        <div className="space-y-8">
-          {/* Key Focus Areas */}
-          {program.focus?.length > 0 && (
-            <div>
-              <h2 className="text-2xl font-semibold text-green-500 font-serif">
-                Key Focus Areas:
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Title Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
+            {program.title}
+          </h1>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-emerald-400 to-teal-300 mx-auto mt-4 rounded-full"></div>
+          <p className="mt-6 text-gray-700 text-[20px] max-w-5xl mx-auto text-left leading-relaxed">
+            {program.description}
+          </p>
+        </motion.div>
+
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Left Side - Text & Info */}
+          <div className="space-y-10">
+            {/* Key Focus Areas */}
+            {program.focus?.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-400"
+              >
+                <h2 className="text-2xl font-semibold text-gray-800 font-serif mb-4 flex items-center">
+                  <span className="w-3 h-3 bg-emerald-400 rounded-full mr-2"></span>
+                  Key Focus Areas
+                </h2>
+                <ul className="space-y-3">
+                  {program.focus.map((area, index) => (
+                    <motion.li
+                      key={index}
+                      whileHover={{ x: 5 }}
+                      className={`flex items-start py-2 px-3 rounded-lg transition-all ${
+                        index % 2 === 0 ? "bg-emerald-50" : "bg-teal-50"
+                      }`}
+                    >
+                      <span className="text-emerald-500 mr-2">•</span>
+                      <span className="text-gray-700">{area}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+
+            {/* Projects List */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-teal-400"
+            >
+              <h2 className="text-2xl font-semibold text-gray-800 font-serif mb-4 flex items-center">
+                <span className="w-3 h-3 bg-teal-400 rounded-full mr-2"></span>
+                Projects Under This Program
               </h2>
-              <ul className="list-disc list-inside text-gray-700 mt-3 space-y-2">
-                {program.focus.map((area, index) => (
-                  <li
-                    key={index}
-                    className="hover:text-blue-600 transition duration-300 even:text-orange-400 odd:text-blue-600"
-                  >
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Projects List */}
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-800">
-              Projects Under This Program
-            </h2>
-            <ul className="mt-3 space-y-3">
               {filteredProjects.length > 0 ? (
-                filteredProjects.slice(0, 4).map((project, index) => (
-                  <li
-                    key={project._id}
-                    className={`cursor-pointer text-lg transition duration-300 ${
-                      index % 2 === 0 ? "text-blue-600" : "text-green-600"
-                    } hover:text-red-500`}
-                    onClick={() =>
-                      navigate(`/project-details/${project._id}`, {
-                        state: { project },
-                      })
-                    }
-                  >
-                    ➤ {project.name}
-                  </li>
-                ))
+                <ul className="space-y-3">
+                  {filteredProjects.map((project, index) => (
+                    <motion.li
+                      key={project._id}
+                      whileHover={{ x: 5 }}
+                      onClick={() =>
+                        navigate(`/project-details/${project._id}`, {
+                          state: { project },
+                        })
+                      }
+                      className={`flex items-center py-2 px-3 rounded-lg cursor-pointer transition-all ${
+                        index % 2 === 0 ? "bg-emerald-50" : "bg-teal-50"
+                      } hover:bg-emerald-100`}
+                    >
+                      <span
+                        className={`mr-3 ${
+                          index % 2 === 0 ? "text-emerald-600" : "text-teal-600"
+                        }`}
+                      >
+                        ➤
+                      </span>
+                      <span className="text-gray-700 font-medium">
+                        {project.name}
+                      </span>
+                    </motion.li>
+                  ))}
+                </ul>
               ) : (
-                <li className="text-gray-500">No projects available.</li>
+                <p className="text-gray-500 italic py-3">
+                  No projects available under this program yet.
+                </p>
               )}
-            </ul>
-          </div>
-        </div>
-
-        {/* Right Side - Images & Video */}
-        <div className="flex flex-col sm:flex-row lg:flex-col items-center lg:items-end gap-6">
-          {/* Image Gallery */}
-          <div className="grid grid-cols-2 gap-2">
-            {program.images?.map((img, index) => (
-              <div key={index} className="w-44 h-32 sm:w-60 sm:h-44">
-                <img
-                  src={img}
-                  alt={`Program Image ${index + 1}`}
-                  className="w-full h-full object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
+            </motion.div>
           </div>
 
-          {/* Video Embed */}
-          {program.videoId && (
-            <div className="w-full sm:w-[500px] h-64">
-              <iframe
-                className="w-full h-full rounded-lg shadow-md"
-                src={`https://www.youtube.com/embed/${program.videoId}`}
-                title="Program Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          )}
+          {/* Right Side - Images & Video */}
+          <div className="space-y-8">
+            {/* Image Gallery */}
+            {program.images?.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="bg-white p-4 rounded-xl shadow-lg"
+              >
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 font-serif">
+                  Program Gallery
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {program.images.map((img, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ scale: 1.03 }}
+                      className="overflow-hidden rounded-lg shadow-md"
+                    >
+                      <img
+                        src={img}
+                        alt={`Program ${index + 1}`}
+                        className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Video Embed */}
+            {program.videoId && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="bg-white p-4 rounded-xl shadow-lg"
+              >
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 font-serif">
+                  Program Video
+                </h3>
+                <div className="aspect-w-16 aspect-h-9">
+                  <iframe
+                    className="w-full h-64 sm:h-80 rounded-lg"
+                    src={`https://www.youtube.com/embed/${program.videoId}`}
+                    title="Program Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </motion.div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -25,6 +25,7 @@ import { Search } from "lucide-react";
 import { FiUsers, FiBriefcase, FiBook } from "react-icons/fi";
 import { MdVolunteerActivism, MdOutlineWork } from "react-icons/md";
 import { IoMdInformationCircleOutline } from "react-icons/io";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -97,7 +98,7 @@ const Navbar = () => {
           icon: <FaClipboardList />,
         },
         {
-          name: "Current Projects",
+          name: "All Projects",
           link: "/current-projects",
           icon: <FaNewspaper />,
         },
@@ -184,30 +185,29 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <ul
-          className={`hidden lg:flex space-x-6 ${
-            scrolled ? "text-black" : "text-black "
-          } font-semibold`}
-        >
+        <ul className="hidden lg:flex space-x-6 text-gray-800 font-medium font-serif">
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
-              <span className="cursor-pointer flex items-center gap-1 font-bold font-serif hover:text-orange-400">
-                {item.icon} {item.title}{" "}
-                <FaAngleDown className="group-hover:rotate-180 transition-transform duration-300" />
-              </span>
-              <ul className="absolute left-0 top-12 w-56 z-50 bg-white text-gray-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2">
+              <motion.div
+                className="cursor-pointer flex items-center gap-1.5 hover:text-green-500 transition-colors"
+                whileHover={{ scale: 1.05 }}
+              >
+                <span className="text-green-600">{item.icon}</span>
+                <span className="font-semibold">{item.title}</span>
+                <FaAngleDown className="text-xs mt-0.5 group-hover:rotate-180 transition-transform duration-300" />
+              </motion.div>
+              <ul className="absolute left-0 top-full mt-1 w-56 z-50 bg-white text-gray-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2 space-y-1 border border-gray-100">
                 {item.links.map((link, idx) => (
-                  <li
+                  <motion.li
                     key={idx}
-                    className={`hover:bg-gray-200 hover:text-orange-400 transition-transform duration-300 p-2 rounded flex items-center gap-2 ${
-                      idx % 2 === 0 ? "bg-green-100" : "bg-white"
-                    }`}
+                    className="hover:bg-orange-50 hover:text-orange-600 transition-colors p-2 rounded flex items-center gap-2"
+                    whileHover={{ x: 5 }}
                   >
-                    {link.icon}
-                    <Link to={link.link} className="block text-sm font-medium">
+                    <span className="text-green-600">{link.icon}</span>
+                    <Link to={link.link} className="block text-sm">
                       {link.name}
                     </Link>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </li>
@@ -247,13 +247,21 @@ const Navbar = () => {
           {/* Search Icon Button */}
 
           {/* Donate Button */}
-          <button
+          <motion.button
             onClick={() => navigate("/payment")}
-            className="hidden lg:flex bg-white btn border-3 border-red-600 text-green-500 px-4 py-2 rounded-lg font-bold group "
+            className="hidden lg:flex items-center bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2.5 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            DONATE
-            <FaHeart className="text-xl text-green-500 animate-spin-slow" />
-          </button>
+            <span>DONATE </span>
+            <motion.span
+              className="ml-2"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              <FaHeart className="text-xl" />
+            </motion.span>
+          </motion.button>
 
           {/* Mobile Menu Button */}
           <button
@@ -266,59 +274,89 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`lg:hidden fixed top-0 left-0 h-full w-72 bg-white shadow-md transition-transform duration-300 ${
-          openMenu ? "translate-x-0" : "-translate-x-full"
+      <motion.div
+        className={`lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity ${
+          openMenu ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
+        onClick={() => setOpenMenu(false)}
       >
-        <div className="p-4 flex justify-between items-center border-b">
-          <img src={img} alt="RDF Logo" className="h-10" />
-          <button
-            onClick={() => navigate("/payment")}
-            className="lg:flex bg-white btn btn-outline btn-warning text-blue-900 px-4 py-2 rounded-lg font-semibold group"
-          >
-            DONATE
-            <FaHeart className="text-xl text-red-500 animate-spin-slow" />
-          </button>
-          <button className="cursor-pointer" onClick={() => setOpenMenu(false)}>
-            <RxCross2 className="text-2xl text-gray-700" />
-          </button>
-        </div>
-        <ul className=" absolute z-50 p-4 space-y-4 text-gray-800 font-semibold bg-white ">
-          {navItems.map((item, index) => (
-            <li className="z-50" key={index}>
-              <div
-                className="flex justify-between items-center cursor-pointer "
-                onClick={() =>
-                  setActiveDropdown(activeDropdown === index ? null : index)
-                }
-              >
-                {item.icon} {item.title}
-                <FaAngleDown
-                  className={`${
-                    activeDropdown === index ? "rotate-180" : ""
-                  } transition-transform`}
-                />
-              </div>
-              {activeDropdown === index && (
-                <ul className="mt-2 space-y-2 pl-4 text-sm">
-                  {item.links.map((link, idx) => (
-                    <li
-                      key={idx}
-                      className="hover:bg-gray-100 hover:text-amber-500 p-2 rounded flex items-center gap-2"
+        <motion.div
+          className={`fixed top-0 left-0 h-full w-72 bg-white shadow-xl transition-transform duration-300 ${
+            openMenu ? "translate-x-0" : "-translate-x-full"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+          initial={false}
+        >
+          <div className="p-4 flex justify-between items-center border-b border-gray-200">
+            <img src={img} alt="RDF Logo" className="h-12" />
+            <motion.button
+              onClick={() => navigate("/payment")}
+              className="flex items-center bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              DONATE
+              <FaHeart className="ml-2" />
+            </motion.button>
+            <button
+              className="cursor-pointer text-gray-600 hover:text-gray-800"
+              onClick={() => setOpenMenu(false)}
+            >
+              <RxCross2 className="text-2xl" />
+            </button>
+          </div>
+          <div className="h-[calc(100%-64px)] overflow-y-auto p-4">
+            <ul className="space-y-4">
+              {navItems.map((item, index) => (
+                <li key={index}>
+                  <div
+                    className="flex justify-between items-center cursor-pointer p-2 rounded-lg hover:bg-gray-100"
+                    onClick={() =>
+                      setActiveDropdown(activeDropdown === index ? null : index)
+                    }
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-green-600">{item.icon}</span>
+                      <span className="font-medium">{item.title}</span>
+                    </div>
+                    <FaAngleDown
+                      className={`transition-transform ${
+                        activeDropdown === index ? "rotate-180" : ""
+                      }`}
+                    />
+                  </div>
+                  {activeDropdown === index && (
+                    <motion.ul
+                      className="mt-2 space-y-1 pl-4 text-sm"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      {link.icon}
-                      <Link to={link.link} className="block">
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+                      {item.links.map((link, idx) => (
+                        <motion.li
+                          key={idx}
+                          className="hover:bg-orange-50 hover:text-orange-600 p-2 rounded flex items-center gap-2"
+                          whileHover={{ x: 5 }}
+                        >
+                          <span className="text-orange-400">{link.icon}</span>
+                          <Link
+                            to={link.link}
+                            className="block"
+                            onClick={() => setOpenMenu(false)}
+                          >
+                            {link.name}
+                          </Link>
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+      </motion.div>
     </nav>
   );
 };

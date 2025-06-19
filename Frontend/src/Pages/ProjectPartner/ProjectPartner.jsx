@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
 import { Helmet } from "react-helmet-async";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProjectPartner = () => {
   const [formData, setFormData] = useState({
@@ -10,8 +12,6 @@ const ProjectPartner = () => {
     reason: "",
     message: "",
   });
-
-  const [status, setStatus] = useState("");
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -35,13 +35,14 @@ const ProjectPartner = () => {
 
     try {
       const result = await emailjs.send(
-        "service_6261ylg", // Your EmailJS service ID
-        "template_a4l2wtw", // Your EmailJS template ID
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
-        "repDNYNXj4X9Aeaw1" // Your EmailJS public key
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
       setStatus("Message sent successfully!");
+      toast.success("Message sent successfully! We'll contact you soon.");
       console.log("✅ Success:", result);
     } catch (error) {
       setStatus("Failed to send message. Please try again.");
@@ -53,7 +54,12 @@ const ProjectPartner = () => {
     <div className="bg-gray-100 py-16">
       <Helmet>
         <title>RDF - Project Partner</title>
+        <meta
+          name="description"
+          content="Partner with RDF to create sustainable change and transform lives"
+        />
       </Helmet>
+      <ToastContainer position="top-center" autoClose={3000} />
 
       {/* Header */}
       <div className="max-w-5xl mx-auto text-center px-6">
@@ -195,8 +201,6 @@ const ProjectPartner = () => {
               Contact Us
             </button>
           </form>
-
-          {status && <p className="text-gray-700 mt-4 text-center">{status}</p>}
 
           {/* Privacy Notice */}
           <p className="text-sm text-gray-600 mt-4 text-center">

@@ -4,15 +4,17 @@ import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhot
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet-async";
-import { FaArrowRight, FaCalendarAlt, FaUser } from "react-icons/fa";
+import { FaArrowRight, FaCalendarAlt, FaUser, FaClock } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const RecentNews = () => {
   const { newss, fetchNews } = useRDFStore();
   const location = useLocation();
   const path = location.pathname.split("/").filter(Boolean).pop();
   const [currentPage, setCurrentPage] = useState(0);
-  const newsPerPage = 4; // Show 12 news items per page
+  const newsPerPage = 9; // Show 9 news items per page for better grid layout
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!newss.length) {
       fetchNews();
@@ -24,117 +26,179 @@ const RecentNews = () => {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
   const filterNews = newss.filter((news) => news.type === path);
-  console.log(filterNews);
-  console.log(newss);
-  console.log(path);
 
   // Pagination Logic
   const offset = currentPage * newsPerPage;
   const currentNews = filterNews.slice(offset, offset + newsPerPage);
-  const pageCount = Math.ceil(sortedNews.length / newsPerPage);
+  const pageCount = Math.ceil(filterNews.length / newsPerPage);
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Format date to be more readable
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  // Calculate reading time
+  const calculateReadingTime = (text) => {
+    const wordsPerMinute = 200;
+    const textLength = text ? text.split(/\s+/).length : 0;
+    return Math.ceil(textLength / wordsPerMinute);
   };
 
   return (
-    <div className="mx-auto">
+    <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title> RDF-News </title>
+        <title>{`RDF - ${path.charAt(0).toUpperCase() + path.slice(1)}`}</title>
       </Helmet>
+
       <PageCoverPhoto
-        title={path.toUpperCase()}
-        subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
+        title={path
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")}
+        subtitle="Stay updated with our latest news and announcements"
       />
-      <div className="mx-auto max-w-6xl mb-5">
-        <h2 className="text-3xl font-bold text-gray-800 my-6 text-center font-serif">
-          LATEST {path.toUpperCase()}
-        </h2>
 
-        <div className=" m-2 md:m-0 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentNews.length > 0 ? (
-            currentNews.map((news) => (
-              <div
-                key={news._id}
-                className="rounded-xl shadow-lg bg-white hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden w-full max-w-md mx-auto"
-              >
-                {/* Image Section */}
-                <div className="relative w-full h-56 sm:h-64 md:h-72">
-                  <img
-                    src={news.imageURL}
-                    alt={news.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                </div>
+      <div className="container mx-auto px-4 py-12 max-w-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-12 text-center"
+        >
+          <h2 className="text-4xl font-bold text-gray-800 mb-4 font-serif">
+            Latest{" "}
+            {path
+              .split("-")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")}
+          </h2>
+          <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+        </motion.div>
 
-                {/* Content Section */}
-                <div className="p-4 sm:p-6 flex flex-col justify-between flex-grow space-y-4">
-                  {/* Title */}
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 hover:text-blue-600 transition">
-                    {news.title}
-                  </h3>
-
-                  {/* Author and Date */}
-                  <div className="flex flex-wrap items-center text-sm text-gray-500 gap-4">
-                    <span className="flex items-center gap-2">
-                      <FaUser className="text-blue-700" />
-                      {news.author}
-                    </span>
-                    <span className="flex items-center gap-2">
-                      <FaCalendarAlt className="text-blue-600" />
-                      {new Date(news.date).toLocaleDateString()}
-                    </span>
+        {currentNews.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {currentNews.map((news) => (
+                <motion.div
+                  key={news._id}
+                  whileHover={{ y: -5 }}
+                  className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col h-full"
+                >
+                  {/* Image Section */}
+                  <div className="relative h-60 w-full overflow-hidden">
+                    <img
+                      src={news.imageURL}
+                      alt={news.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                    <div className="absolute bottom-4 left-4">
+                      <span className="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        {news.type}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                    {news.content &&
-                    news.content.length > 0 &&
-                    news.content[0].description
-                      ? news.content[0].description.slice(0, 120) + "..."
-                      : "No description available."}
-                  </p>
+                  {/* Content Section */}
+                  <div className="p-6 flex flex-col flex-grow">
+                    {/* Meta Info */}
+                    <div className="flex items-center text-sm text-gray-500 mb-3 space-x-4">
+                      <span className="flex items-center">
+                        <FaUser className="mr-1 text-blue-600" />
+                        {news.author}
+                      </span>
+                      <span className="flex items-center">
+                        <FaCalendarAlt className="mr-1 text-blue-600" />
+                        {formatDate(news.date)}
+                      </span>
+                    </div>
 
-                  {/* Read More Button */}
-                  <div className="mt-4">
-                    <button
-                      onClick={() =>
-                        navigate(`/news/${news._id}`, { state: { news } })
-                      }
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition font-medium w-[40%] sm:w-auto cursor-pointer"
-                    >
-                      Read More <FaArrowRight />
-                    </button>
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-blue-600 transition-colors">
+                      {news.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-gray-600 mb-4 flex-grow">
+                      {news.content?.[0]?.description
+                        ? `${news.content[0].description.substring(0, 150)}...`
+                        : "No description available."}
+                    </p>
+
+                    {/* Footer */}
+                    <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+                      <span className="flex items-center text-sm text-gray-500">
+                        <FaClock className="mr-1" />
+                        {calculateReadingTime(
+                          news.content?.[0]?.description || ""
+                        )}{" "}
+                        min read
+                      </span>
+                      <button
+                        onClick={() =>
+                          navigate(`/news/${news._id}`, { state: { news } })
+                        }
+                        className="flex items-center text-blue-600 font-medium hover:text-blue-800 transition-colors cursor-pointer"
+                      >
+                        Read More <FaArrowRight className="ml-2" />
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {pageCount > 1 && (
+              <div className="flex justify-center mt-12">
+                <ReactPaginate
+                  previousLabel={
+                    <span className="px-3 py-1 rounded-md border border-gray-300 hover:bg-gray-100">
+                      « Previous
+                    </span>
+                  }
+                  nextLabel={
+                    <span className="px-3 py-1 rounded-md border border-gray-300 hover:bg-gray-100">
+                      Next »
+                    </span>
+                  }
+                  breakLabel={<span className="px-3 py-1">...</span>}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={1}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName="flex items-center space-x-2"
+                  pageClassName="hidden sm:block"
+                  pageLinkClassName="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100"
+                  activeLinkClassName="bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
+                  previousClassName="mr-2"
+                  nextClassName="ml-2"
+                  disabledClassName="opacity-50 cursor-not-allowed"
+                />
               </div>
-            ))
-          ) : (
-            <p className="text-gray-500 text-center col-span-3 font-bold font-serif">
-              No news available.
+            )}
+          </>
+        ) : (
+          <div className="text-center py-20">
+            <h3 className="text-2xl font-semibold text-gray-700 mb-4">
+              No news available at the moment
+            </h3>
+            <p className="text-gray-500 mb-6">
+              Check back later for updates or explore other sections of our
+              site.
             </p>
-          )}
-        </div>
-
-        {/* Pagination */}
-        {pageCount > 1 && (
-          <div className="flex justify-center mt-6">
-            <ReactPaginate
-              previousLabel="«"
-              nextLabel="»"
-              breakLabel="..."
-              pageCount={pageCount}
-              marginPagesDisplayed={1}
-              pageRangeDisplayed={5}
-              onPageChange={handlePageClick}
-              containerClassName="flex items-center space-x-2  rounded-lg p-2"
-              pageClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"
-              activeClassName="bg-blue-500 text-white"
-              previousClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"
-              nextClassName="px-3 py-1 border rounded cursor-pointer hover:bg-gray-200"
-              disabledClassName="opacity-50 cursor-not-allowed"
-            />
+            <Link
+              to="/"
+              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Return to Home
+            </Link>
           </div>
         )}
       </div>

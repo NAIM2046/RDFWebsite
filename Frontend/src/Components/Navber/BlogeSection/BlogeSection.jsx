@@ -15,7 +15,6 @@ const BlogSection = () => {
     }
   }, [newss, fetchNews]);
 
-  // Optimized sorting and limiting with useMemo
   const sortedNews = useMemo(
     () =>
       [...newss]
@@ -26,84 +25,119 @@ const BlogSection = () => {
 
   return (
     <motion.section
-      className="py-2 px-6 bg-gray-50"
+      className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true }}
     >
-      <div className="max-w-6xl mx-auto">
-        {/* Section Title */}
-        <motion.h2
-          className="text-4xl font-extrabold text-green-900 text-center mb-5 font-serif"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          Latest News & Blogs
-        </motion.h2>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <motion.span
+            className="inline-block px-3 py-1 text-sm font-medium text-green-700 bg-green-100 rounded-full mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Latest Updates
+          </motion.span>
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            News & Blog
+          </motion.h2>
+          <motion.p
+            className="max-w-2xl mx-auto text-lg text-gray-600"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Stay updated with our latest stories, insights, and company news
+          </motion.p>
+        </div>
 
         {/* Blog Grid */}
         {newss.length === 0 ? (
-          <div className="flex justify-center items-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
-            <p className="text-lg ml-3">Loading News...</p>
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-pulse flex space-x-4">
+              <div className="flex-1 space-y-6 py-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="h-96 bg-gray-200 rounded-xl"></div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {sortedNews.map((news, index) => (
               <motion.article
                 key={news._id}
-                className="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
+                className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                onClick={() =>
+                  navigate(`/news/${news._id}`, { state: { news } })
+                }
               >
-                {/* Image */}
-                <img
-                  src={news.imageURL}
-                  alt={news.title}
-                  className="w-full h-60 object-cover rounded-t-xl group-hover:brightness-90 transition-all"
-                />
+                {/* Image Container */}
+                <div className="relative overflow-hidden h-60">
+                  <img
+                    src={news.imageURL || "/placeholder-news.jpg"}
+                    alt={news.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                    <span className="text-white font-medium">Read More →</span>
+                  </div>
+                </div>
 
-                {/* Blog Content */}
+                {/* Content */}
                 <div className="p-6">
                   {/* Meta Info */}
-                  <div className="flex justify-between text-sm text-gray-500 mb-3">
-                    <span className="flex items-center gap-2">
-                      <FaCalendarAlt className="text-indigo-600" />
-                      {new Date(news.date).toDateString()}
+                  <div className="flex justify-between text-xs text-gray-500 mb-3">
+                    <span className="flex items-center gap-1.5">
+                      <FaCalendarAlt className="text-indigo-500" />
+                      {new Date(news.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
                     </span>
-                    <span className="flex items-center gap-2">
-                      <FaUser className="text-indigo-600" />
-                      {news.author}
+                    <span className="flex items-center gap-1.5">
+                      <FaUser className="text-indigo-500" />
+                      {news.author || "Admin"}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-semibold text-gray-900 leading-7 mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
                     {news.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    {news.content &&
-                    news.content.length > 0 &&
-                    news.content[0].description
-                      ? news.content[0].description.slice(0, 150) + "..."
-                      : "No description available."}
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {news.content?.[0]?.description ||
+                      "No description available."}
                   </p>
 
                   {/* Read More Button */}
                   <button
-                    onClick={() =>
-                      navigate(`/news/${news._id}`, { state: { news } })
-                    }
-                    className="flex items-center gap-2 text-indigo-600 font-semibold border border-indigo-600 px-2 py-2 rounded-lg transition-all hover:bg-indigo-600 hover:text-white cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/news/${news._id}`, { state: { news } });
+                    }}
+                    className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium cursor-pointer transition-colors"
                   >
-                    <span>Read More</span>
-                    <IoIosArrowRoundForward className="text-2xl rotate-315 " />
+                    Read more
+                    <IoIosArrowRoundForward className="ml-1 text-xl" />
                   </button>
                 </div>
               </motion.article>
@@ -111,19 +145,19 @@ const BlogSection = () => {
           </div>
         )}
 
-        {/* View All Button - Perfectly Centered */}
+        {/* View All Button */}
         <motion.div
-          className="flex justify-center mt-14"
+          className="flex justify-center mt-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <button
             onClick={() => navigate("/news")}
-            className="text-lg text-indigo-600 font-semibold font-serif hover:underline flex items-center gap-2 cursor-pointer"
+            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer"
           >
-            <span>VIEW ALL NEWS</span>
-            <IoIosArrowRoundForward className="text-2xl" />
+            View All News
+            <IoIosArrowRoundForward className="text-xl" />
           </button>
         </motion.div>
       </div>
