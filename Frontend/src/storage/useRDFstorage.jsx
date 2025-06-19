@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001"; // Change to your production URL when needed
+//const BASE_URL = "http://localhost:3001"; // Change to your production URL when needed
+const BASE_URL = "https://rdfwebsite-production.up.railway.app"; // Change to your production URL when needed
 
 const useRDFStore = create((set) => ({
   sliderinfo: [],
