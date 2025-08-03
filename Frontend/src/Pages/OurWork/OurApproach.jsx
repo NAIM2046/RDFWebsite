@@ -5,9 +5,9 @@ const workApproach = [
   {
     title: "Identifying Issues",
     description:
-      "We conduct thorough research and assessments to identify the most pressing community issues. Our team engages with local communities, gathers data, and evaluates the social, economic, and environmental challenges they face.",
+      "We begin with a deep understanding of vulnerabilities in coastal regions, including climate change, economic exclusion, dropout rates, and lack of access to essential services.",
     expandedText:
-      "This initial phase involves comprehensive field studies, interviews with community members, and analysis of existing data. We identify root causes rather than just symptoms, ensuring our solutions address the core problems. Our multidisciplinary team brings together sociologists, economists, and environmental experts to create a holistic understanding of each challenge.",
+      "RDF identifies the root causes of community challenges by conducting field studies, engaging with local populations across 48 districts, and analyzing pressing issues such as climate vulnerability, child marriage, WASH access, and educational gaps. This ensures our interventions are grounded in evidence and address real needs.",
     image: "/assets/photo-41.1-400x284.jpg",
     color: "bg-gradient-to-r from-blue-500 to-teal-400",
     icon: (
@@ -30,9 +30,9 @@ const workApproach = [
   {
     title: "Planning & Strategy",
     description:
-      "Developing strategic action plans with measurable goals to address identified problems effectively. We collaborate with stakeholders, experts, and local leaders to design targeted interventions.",
+      "We design multi-sectoral programs aligned with national strategies and the SDGs, ensuring inclusive, scalable, and sustainable solutions.",
     expandedText:
-      "Our planning process includes SWOT analysis, risk assessment, and resource mapping. We establish clear KPIs and timelines for each initiative. Regular strategy sessions ensure we remain agile and can adapt to changing circumstances while maintaining our core objectives. All plans are developed with sustainability and scalability in mind.",
+      "Our strategies incorporate gender transformation, disability inclusion, and locally-led action across programs in food security, climate resilience, education, and emergency response. Each plan includes clear goals and integrates cross-cutting themes to maximize impact.",
     image: "/assets/our2.webp",
     color: "bg-gradient-to-r from-purple-500 to-indigo-500",
     icon: (
@@ -55,9 +55,9 @@ const workApproach = [
   {
     title: "Community Engagement",
     description:
-      "Working closely with local communities to ensure participatory solutions that drive real impact. We believe that empowering people to take an active role in their development leads to lasting change.",
+      "We prioritize participatory development through locally-led initiatives, community ownership, and inclusive governance.",
     expandedText:
-      "We conduct regular town hall meetings, focus groups, and participatory workshops. Our community liaisons live in the areas we serve, ensuring constant communication. We establish community advisory boards that help guide our programs and provide feedback. This approach builds local ownership of projects and ensures cultural appropriateness of all initiatives.",
+      "RDF works closely with communities, empowering women's groups and youth leaders while collaborating with local bodies to co-create solutions. Our participatory approach ensures that all interventions are contextually appropriate, culturally sensitive, and community-driven.",
     image: "/assets/our3.webp",
     color: "bg-gradient-to-r from-orange-500 to-pink-500",
     icon: (
@@ -80,9 +80,9 @@ const workApproach = [
   {
     title: "Implementation",
     description:
-      "Executing projects and programs with transparency, efficiency, and sustainability in mind. Our on-the-ground teams work tirelessly to bring our plans to life.",
+      "We bring our plans to life through strong field presence, practical solutions, and partnerships across sectors.",
     expandedText:
-      "Implementation follows strict quality control protocols with regular progress reporting. We employ local workforce whenever possible to boost the economy. Each project has a dedicated manager overseeing timelines and budgets. Our transparent reporting system allows donors and stakeholders to track progress in real-time through our online portal.",
+      "From Skills Training Centres to solar tech, microloans, and emergency support, RDF implements programs that respond to real community needs. Our approach includes capacity building in STEM, AI, and entrepreneurship, and links beneficiaries with government and private services.",
     image: "/assets/our4.webp",
     color: "bg-gradient-to-r from-green-500 to-emerald-500",
     icon: (
@@ -105,9 +105,10 @@ const workApproach = [
   {
     title: "Monitoring & Evaluation",
     description:
-      "Tracking progress, evaluating results, and continuously improving for long-term effectiveness. We use data-driven approaches to measure the success of our initiatives.",
+      "We track progress through robust governance and data-driven evaluation, ensuring accountability and long-term impact.",
     expandedText:
-      "Our monitoring system collects both quantitative and qualitative data through surveys, interviews, and field observations. We conduct quarterly impact assessments and share results with all stakeholders. Lessons learned are incorporated into future projects. Our five-year follow-up program ensures sustained benefits and allows us to measure long-term impact beyond project completion.",
+      "With oversight from our General Council and Executive Committee, RDF uses strong internal controls, ethical practices, and impact assessments to measure success. We emphasize transparency, continuous learning, and alignment with our mission, vision, and values.",
+    image: "/assets/our4.webp",
     image: "/assets/our4.webp",
     color: "bg-gradient-to-r from-red-500 to-yellow-500",
     icon: (
