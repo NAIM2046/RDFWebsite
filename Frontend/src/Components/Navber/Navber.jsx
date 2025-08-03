@@ -75,7 +75,8 @@ const Navbar = () => {
           icon: <FaHandHoldingHeart />,
         },
         { name: "Organogram", link: "/organogram", icon: <FaClipboardList /> },
-        { name: "Certification", link: "/certification", icon: <FiBook /> },
+        { name: "Governance", link: "/", icon: <FaClipboardList /> },
+        // { name: "Certification", link: "/certification", icon: <FiBook /> },
       ],
     },
     {
@@ -87,32 +88,32 @@ const Navbar = () => {
           link: "/our-work#ourapproach",
           icon: <FaNewspaper />,
         },
-        {
-          name: "We Work For",
-          link: "/our-work#weworkfor",
-          icon: <FiUsers />,
-        },
+        // {
+        //   name: "We Work For",
+        //   link: "/our-work#weworkfor",
+        //   icon: <FiUsers />,
+        // },
         {
           name: "Key Focus Area",
           link: "/key-focus-area",
           icon: <FaClipboardList />,
         },
         {
-          name: "All Projects",
+          name: "Major Projects",
           link: "/current-projects",
           icon: <FaNewspaper />,
         },
 
-        {
-          name: "Where We Work",
-          link: "/our-work#wherewework",
-          icon: <MdPlace />,
-        },
-        {
-          name: "Our Programs",
-          link: "/our-programs",
-          icon: <FaProjectDiagram />,
-        },
+        // {
+        //   name: "Where We Work",
+        //   link: "/our-work#wherewework",
+        //   icon: <MdPlace />,
+        // },
+        // {
+        //   name: "Our Programs",
+        //   link: "/our-programs",
+        //   icon: <FaProjectDiagram />,
+        // },
       ],
     },
     {

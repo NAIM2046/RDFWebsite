@@ -90,7 +90,7 @@ const VisionMission = () => {
           <Section
             icon={visionIcon}
             title="Our Vision"
-            text="RDF envisions a socio-economically just and equitable society where the potentials of women and children are fully realized through intersectional inclusiveness and sustainable development."
+            text="“RDF envisions a socio-economically just and equitable society and capitalization of the potentials of women and children along with intersectional inclusiveness”"
             image={visionImage}
           />
         </div>
@@ -99,23 +99,28 @@ const VisionMission = () => {
           <Section
             icon={missionIcon}
             title="Our Mission"
-            text="Our institutional mission is to create positive change and ensure human rights for disadvantaged communities, with a focus on:"
+            text="“The Institutional Mission is to bring positive changes and ensure human rights for the poor and disadvantaged people especially women and children in education, technical skills, health, economic, resilience to climate change with actions and socio-cultural environment both in rural and urban areas”"
             image={missionImage}
             reverse
           >
-            <ul className="space-y-3 list-disc pl-5 marker:text-emerald-500">
+            {/* <ul className="space-y-3 list-disc pl-5 marker:text-emerald-500">
               <li>Education and technical skills development</li>
               <li>Healthcare access and awareness</li>
               <li>Economic empowerment initiatives</li>
               <li>Climate change resilience programs</li>
               <li>Socio-cultural transformation in rural and urban areas</li>
-            </ul>
+            </ul> */}
           </Section>
         </div>
 
         <div className="bg-white rounded-3xl shadow-lg overflow-hidden mb-16">
           <Section icon={valueIcon} title="Our Core Values" image={valuesImage}>
-            <div className="grid md:grid-cols-2 gap-6">
+            We strive to transform lives by ensuring human rights and empowering
+            the disadvantaged, especially women and children, through
+            comprehensive programs in livelihood, youth development, education,
+            health, WASH, gender equality, and climate resilience across rural
+            and urban communities
+            {/* <div className="grid md:grid-cols-2 gap-6">
               <div className="p-5 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
                 <h3 className="text-xl font-bold text-emerald-700 mb-2">
                   Transparency
@@ -161,11 +166,11 @@ const VisionMission = () => {
                   to continuously improve.
                 </p>
               </div>
-            </div>
+            </div> */}
           </Section>
         </div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -215,7 +220,7 @@ const VisionMission = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </main>
     </div>
   );

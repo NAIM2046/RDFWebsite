@@ -7,7 +7,7 @@ const WhoWeAre = () => {
   return (
     <div className="bg-gray-50 mt-10">
       {/* Title Animation */}
-      <motion.h1
+      {/* <motion.h1
         className="text-4xl font-bold text-black text-center font-serif"
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -20 }}
@@ -15,7 +15,7 @@ const WhoWeAre = () => {
         viewport={{ once: true }} // Animates once when in view
       >
         Who We Are
-      </motion.h1>
+      </motion.h1> */}
 
       <motion.section
         className="flex flex-col lg:flex-row items-center justify-center space-x-16 p-10  "

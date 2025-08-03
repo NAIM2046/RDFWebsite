@@ -51,7 +51,7 @@ const OurPartners = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          {categories.map((category) => (
+          {/* {categories.map((category) => (
             <button
               key={category}
               className={`px-5 py-3 rounded-lg cursor-pointer shadow-md text-md font-semibold transition-all duration-300 
@@ -64,7 +64,7 @@ const OurPartners = () => {
             >
               {category}
             </button>
-          ))}
+          ))} */}
         </motion.div>
 
         {/* Partner Logos */}

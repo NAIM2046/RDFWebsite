@@ -198,7 +198,7 @@ const AboutRDF = () => {
             {/* Image Section */}
             <div className="mt-8 ">
               <img
-                src="https://i.ibb.co.com/0jH0sNMZ/IMG-20190917-160446.jpg" // replace with actual path
+                src="https://i.ibb.co/8nNpR7VM/276995751-7840379539312908-4749845572993626328-n-webp.webp" // replace with actual path
                 alt="RDF About"
                 className="w-full h-[500px] object-cover rounded-lg"
               />

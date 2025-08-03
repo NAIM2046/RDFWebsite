@@ -481,6 +481,17 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
            res.send(result) ;
       })
 
+      app.patch('/news/:id', verifyToken, async (req, res) => {
+        const { id } = req.params;
+        const updateData = req.body;
+        const query = { _id: new ObjectId(id) };
+        const result = await newsCol.updateOne(query, { $set: updateData });
+        if (result.matchedCount === 0) {
+          return res.status(404).json({ message: "News not found" });
+        }
+        res.status(200).json({ message: "News updated successfully", result });
+      });
+
       // news api end----------
       // photo api start 
       app.post("/photos" , verifyToken, async(req , res) =>{

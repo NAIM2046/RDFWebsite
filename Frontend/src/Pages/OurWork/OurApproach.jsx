@@ -103,7 +103,7 @@ const workApproach = [
     ),
   },
   {
-    title: "Monitoring & Impact",
+    title: "Monitoring & Evaluation",
     description:
       "Tracking progress, evaluating results, and continuously improving for long-term effectiveness. We use data-driven approaches to measure the success of our initiatives.",
     expandedText:

@@ -89,7 +89,7 @@ const OurTeam = () => {
                   onChange={(e) => setDesignation(e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
                 >
-                  <option value="">🔹 All Members</option>
+                  {/* <option value="">🔹 All Members</option> */}
                   <option value="General committee">
                     📌 General Committee
                   </option>
@@ -105,7 +105,7 @@ const OurTeam = () => {
               {/* Desktop: Radio Buttons Styled as Tags */}
               <div className="hidden sm:flex flex-wrap gap-2">
                 {[
-                  { label: "🔹 All Members", value: "" },
+                  // { label: "🔹 All Members", value: "" },
                   { label: "📌 General Committee", value: "General committee" },
                   {
                     label: "⭐ Executive Committee",

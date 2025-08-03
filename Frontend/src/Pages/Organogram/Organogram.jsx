@@ -5,60 +5,47 @@ import { Helmet } from "react-helmet-async";
 
 const organogramData = {
   title: "RDF Organogram Structure",
-  image: "/assets/RDF Photo/organogram.png",
+  image: "https://i.ibb.co/FkXT0hKj/RDF-Organogram-1.jpg",
   governance: {
     heading: "Governance Overview",
 
-    description: `A number of 21 General Council Members of RDF is the socially owned authority of the organization
-      who elect several 7 members Executive Committee (EC) for a period of 3 years. EC always guides the
-      Organization’s Management Committee (OMC) of the organization. The Executive Committee is the policy
-      and decision-making body, and the Management Committee is the implementing body of the organization.
-      EC consists of socially distinguished and professionally renowned members. The overall responsibility for
-      managing the organization is entrusted to the Chief Executive Officer (CEO).
-  
-      The President of the Executive Committee is the head of the organization and guides the Chief Executive
-      Officer. The CEO is accountable to the EC as well as the President for his roles & responsibilities. The constitution
-      of the organization was approved by the Department of Social Services (DSS) under the Ministry of Social Welfare.
-  
-      Founder members of the organization have established it and are the permanent members of the General Council
-      along with 21 members. The General Council members socially own the organization, and they are the decision-makers.
-      The Executive Committee members are elected by the General Members for a three-year term.
-  
-      The Founder and Co-Founder are only the founder members but not the owners of the Organization.
-      Meetings of the General Council (GC) and Executive Committees are held according to the Constitution.
-      Decisions taken in meetings are implemented and followed up. The Mission, Vision, and Values are clearly
-      identified in the organizational documents and regularly followed.`,
+    description: `RDF is governed by a well-structured and effective system led by its 21-member General Council. This council, which includes its founding members, plays a crucial role in ensuring that the organisation remains socially owned. From this council, a 7-member Executive Committee (EC) is elected every three years. The EC, guided by its chairman, is responsible for offering strategic direction and overseeing the Chief Executive Officer (CEO).
+
+The organisation remains steadfast in following its foundational mission, vision, and values as outlined in its guiding principles. It enforces robust internal controls, ensuring that everyone understands their roles clearly, promotes participatory decision-making, and nurtures an inclusive work environment, with a special emphasis on empowering women.
+
+RDF is deeply committed to ethical behaviour and has a strict policy of zero tolerance for any violations. This commitment helps maintain its accountability and credibility, reinforcing its mission to advance sustainable development in Bangladesh.
+`,
   },
-  sections: [
-    {
-      title: "Central Coordination Unit (CCU)",
-      description:
-        "Consists of 21 senior officials (Finance, HR, Program, etc.). The ED is the Chairman of CCU.",
-    },
-    {
-      title: "Regional Coordination Unit (RCU)",
-      description:
-        "Five RCU teams ensure coordination between central and field offices.",
-    },
-    {
-      title: "District Focal Team (DFT)",
-      description: "Manages all ongoing programs within each district.",
-    },
-    {
-      title: "Upazila Focal Team (UFT)",
-      description:
-        "Oversees Upazila programs, conducts review and planning meetings.",
-    },
-  ],
-  decisionMaking: {
-    heading: "Decision-Making Process",
-    description:
-      "The governance structure follows a two-way decision-making process, ensuring accountability from both top-down and bottom-up approaches.",
-    points: [
-      "GC → EC → ED → CCU → RCU → DFT → UFT",
-      "AGM ensures annual review, discussions, and budget approvals.",
-    ],
-  },
+  // sections: [
+  //   {
+  //     title: "Central Coordination Unit (CCU)",
+  //     description:
+  //       "Consists of 21 senior officials (Finance, HR, Program, etc.). The ED is the Chairman of CCU.",
+  //   },
+  //   {
+  //     title: "Regional Coordination Unit (RCU)",
+  //     description:
+  //       "Five RCU teams ensure coordination between central and field offices.",
+  //   },
+  //   {
+  //     title: "District Focal Team (DFT)",
+  //     description: "Manages all ongoing programs within each district.",
+  //   },
+  //   {
+  //     title: "Upazila Focal Team (UFT)",
+  //     description:
+  //       "Oversees Upazila programs, conducts review and planning meetings.",
+  //   },
+  // ],
+  // decisionMaking: {
+  //   heading: "Decision-Making Process",
+  //   description:
+  //     "The governance structure follows a two-way decision-making process, ensuring accountability from both top-down and bottom-up approaches.",
+  //   points: [
+  //     "GC → EC → ED → CCU → RCU → DFT → UFT",
+  //     "AGM ensures annual review, discussions, and budget approvals.",
+  //   ],
+  // },
 };
 
 const Organogram = () => {
@@ -121,7 +108,7 @@ const Organogram = () => {
         </motion.div>
 
         {/* Coordination Units - Smooth Animation */}
-        <div className="space-y-6 max-w-4xl mx-auto">
+        {/* <div className="space-y-6 max-w-4xl mx-auto">
           {organogramData.sections.map((section, index) => (
             <motion.div
               key={index}
@@ -145,10 +132,10 @@ const Organogram = () => {
               </p>
             </motion.div>
           ))}
-        </div>
+        </div> */}
 
         {/* Decision-Making Process with Staggered Animation */}
-        <motion.div
+        {/* <motion.div
           className="bg-sky-100 p-6 rounded-lg mt-10 max-w-4xl mx-auto shadow"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -181,7 +168,7 @@ const Organogram = () => {
               </motion.li>
             ))}
           </motion.ul>
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );

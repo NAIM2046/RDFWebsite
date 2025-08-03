@@ -3,40 +3,52 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const weWorkForData = [
   {
-    title: "The most socially & politically marginalized women",
+    title: "•	Coastal Communities in Bangladesh",
     image: "/assets/rdfphoto2/PRA, Joyalbhanga.jpg",
     detail:
-      "Lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit necessitatibus autem soluta culpa quod amet officiis consequatur quas reprehenderit quidem! Hic ad sit officia iusto voluptatem fugit ab voluptatum sequi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam odio explicabo blanditiis mollitia voluptates ipsam modi ipsum. Iusto, quidem harum! Optio nulla nesciunt beatae laborum corporis iste fugiat soluta quisquam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quia, cum nulla provident aperiam similique perspiciatis. Beatae ut iure est aperiam! Rerum in voluptatem, id facilis consequatur laboriosam natus porro. ",
+      "RDF specifically works in areas highly susceptible to climate change, prioritising interventions that support these vulnerable populations",
   },
   {
-    title: "Underprivileged children & youth",
+    title: "Women, Girls, and Children",
     image: "/assets/children.webp",
     detail:
-      "Lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit necessitatibus autem soluta culpa quod amet officiis consequatur quas reprehenderit quidem! Hic ad sit officia iusto voluptatem fugit ab voluptatum sequi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam odio explicabo blanditiis mollitia voluptates ipsam modi ipsum. Iusto, quidem harum! Optio nulla nesciunt beatae laborum corporis iste fugiat soluta quisquam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quia, cum nulla provident aperiam similique perspiciatis. Beatae ut iure est aperiam! Rerum in voluptatem, id facilis consequatur laboriosam natus porro. ",
+      "RDF places a strong emphasis on supporting these groups, recognising their increased vulnerability in the face of environmental and societal challenges.",
   },
   {
-    title: "Rural & Indigenous communities",
+    title: "Economically Deprived Groups",
     image: "/assets/rdfphoto2/IMG_20210320_164610.jpg",
     detail:
-      "Lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit necessitatibus autem soluta culpa quod amet officiis consequatur quas reprehenderit quidem! Hic ad sit officia iusto voluptatem fugit ab voluptatum sequi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam odio explicabo blanditiis mollitia voluptates ipsam modi ipsum. Iusto, quidem harum! Optio nulla nesciunt beatae laborum corporis iste fugiat soluta quisquam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quia, cum nulla provident aperiam similique perspiciatis. Beatae ut iure est aperiam! Rerum in voluptatem, id facilis consequatur laboriosam natus porro. ",
+      "RDF targets economically marginalised communities that experience exclusion from market systems, with a particular focus on those who heavily rely on agricultural labor.",
   },
   {
-    title: "People affected by natural disasters",
+    title: "Education and Skills Development",
     image: "/assets/rdfphoto2/IMG_20201231_111258.jpg",
     detail:
-      "Lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit necessitatibus autem soluta culpa quod amet officiis consequatur quas reprehenderit quidem! Hic ad sit officia iusto voluptatem fugit ab voluptatum sequi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam odio explicabo blanditiis mollitia voluptates ipsam modi ipsum. Iusto, quidem harum! Optio nulla nesciunt beatae laborum corporis iste fugiat soluta quisquam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quia, cum nulla provident aperiam similique perspiciatis. Beatae ut iure est aperiam! Rerum in voluptatem, id facilis consequatur laboriosam natus porro. ",
+      "Addressing the high dropout rate in Bangladesh, RDF supports skills development to enhance access to the labour market, aiming to reduce the 70% dropout rate before the completion of higher secondary education.",
   },
   {
-    title: "Persons with disabilities",
+    title: "Minority and Adivasi Communities",
     image: "/assets/rdfphoto1/DSC03021.JPG",
     detail:
-      "Lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit necessitatibus autem soluta culpa quod amet officiis consequatur quas reprehenderit quidem! Hic ad sit officia iusto voluptatem fugit ab voluptatum sequi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam odio explicabo blanditiis mollitia voluptates ipsam modi ipsum. Iusto, quidem harum! Optio nulla nesciunt beatae laborum corporis iste fugiat soluta quisquam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quia, cum nulla provident aperiam similique perspiciatis. Beatae ut iure est aperiam! Rerum in voluptatem, id facilis consequatur laboriosam natus porro. ",
+      "These communities are consistently prioritized in RDF's program execution to ensure their inclusion and support.",
   },
   {
-    title: "Elderly & abandoned seniors",
+    title: "Girls at Risk of Child Marriage and Trafficking",
     image: "/assets/rdfphoto1/Edsc.JPG",
     detail:
-      "Lorem Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit necessitatibus autem soluta culpa quod amet officiis consequatur quas reprehenderit quidem! Hic ad sit officia iusto voluptatem fugit ab voluptatum sequi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam odio explicabo blanditiis mollitia voluptates ipsam modi ipsum. Iusto, quidem harum! Optio nulla nesciunt beatae laborum corporis iste fugiat soluta quisquam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quia, cum nulla provident aperiam similique perspiciatis. Beatae ut iure est aperiam! Rerum in voluptatem, id facilis consequatur laboriosam natus porro. ",
+      "RDF runs programs designed to support and protect girls who are at risk, aiming to reduce incidents of child marriage and human trafficking.",
+  },
+  {
+    title: "Youth Leadership and Governance",
+    image: "/assets/rdfphoto1/Edsc.JPG",
+    detail:
+      "RDF engages with youth groups to increase leadership skills and encourage their active participation in good governance practices.",
+  },
+  {
+    title: "Digital Technology and AI Enthusiasts",
+    image: "/assets/rdfphoto1/Edsc.JPG",
+    detail:
+      "Support is offered for children and youth interested in STEM, digital technology and AI programs, nurturing their skills in these cutting-edge fields.",
   },
 ];
 
