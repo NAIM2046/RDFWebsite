@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const weWorkForData = [
   {
-    title: "•	Coastal Communities in Bangladesh",
+    title: "Coastal Communities in Bangladesh",
     image: "/assets/rdfphoto2/PRA, Joyalbhanga.jpg",
     detail:
       "RDF specifically works in areas highly susceptible to climate change, prioritising interventions that support these vulnerable populations",
   },
   {
     title: "Women, Girls, and Children",
-    image: "/assets/children.webp",
+    image: "https://i.ibb.co.com/0jH0sNMZ/IMG-20190917-160446.jpg",
     detail:
       "RDF places a strong emphasis on supporting these groups, recognising their increased vulnerability in the face of environmental and societal challenges.",
   },
@@ -34,19 +34,20 @@ const weWorkForData = [
   },
   {
     title: "Girls at Risk of Child Marriage and Trafficking",
-    image: "/assets/rdfphoto1/Edsc.JPG",
+    image: "https://i.ibb.co.com/WNqT28VG/IMG20210404110010-jpg.jpg",
     detail:
       "RDF runs programs designed to support and protect girls who are at risk, aiming to reduce incidents of child marriage and human trafficking.",
   },
   {
     title: "Youth Leadership and Governance",
-    image: "/assets/rdfphoto1/Edsc.JPG",
+    image:
+      "https://i.ibb.co.com/wZxxDk3z/Comments-Picture-1-Mohema-working-in-her-tailoring-shop-jpg.jpg",
     detail:
       "RDF engages with youth groups to increase leadership skills and encourage their active participation in good governance practices.",
   },
   {
     title: "Digital Technology and AI Enthusiasts",
-    image: "/assets/rdfphoto1/Edsc.JPG",
+    image: "https://i.ibb.co.com/7J9yLck9/gettyimages-758288309-612x612.jpg",
     detail:
       "Support is offered for children and youth interested in STEM, digital technology and AI programs, nurturing their skills in these cutting-edge fields.",
   },
@@ -67,10 +68,10 @@ const WeWorkFor = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif">
-            We <span className="text-orange-500">Work For</span>
+            We <span className="text-green-600">Work For</span>
           </h2>
-          <div className="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <div className="w-20 h-1 bg-green-600 mx-auto mb-6"></div>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto font-serif">
             Our organization is committed to uplifting marginalized communities
             by addressing their unique challenges and empowering them through
             sustainable solutions.
@@ -120,11 +121,12 @@ const WeWorkFor = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
                 transition={{ type: "spring", damping: 25 }}
-                className="relative bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+                className="relative bg-white rounded-xl w-full max-w-3xl lg:max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               >
+                {/* Header */}
                 <div className="sticky top-0 bg-white z-10 p-4 border-b flex justify-between items-center">
-                  <h3 className="text-2xl font-bold text-gray-800">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-800">
                     {selectedItem.title}
                   </h3>
                   <button
@@ -133,7 +135,7 @@ const WeWorkFor = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8"
+                      className="h-7 w-7 sm:h-8 sm:w-8"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -147,15 +149,17 @@ const WeWorkFor = () => {
                     </svg>
                   </button>
                 </div>
-                <div className="p-6">
-                  <div className="mb-6">
+
+                {/* Content */}
+                <div className="p-4 sm:p-6">
+                  <div className="mb-4 sm:mb-6">
                     <img
                       src={selectedItem.image}
                       alt={selectedItem.title}
-                      className="w-full h-64 object-cover rounded-lg"
+                      className="w-full h-auto max-h-[400px] object-cover rounded-lg"
                     />
                   </div>
-                  <p className="text-gray-700 text-lg leading-relaxed">
+                  <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-serif">
                     {selectedItem.detail}
                   </p>
                 </div>

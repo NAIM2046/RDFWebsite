@@ -49,9 +49,9 @@ const PolicyDoc = () => {
       </Helmet>
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16 text-center shadow-lg">
+      <div className="bg-gradient-to-r from-green-400 to-green-400 text-white py-16 text-center shadow-lg">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Policies</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4"> Policies</h1>
           <p className="text-lg md:text-xl max-w-2xl mx-auto">
             Read our policies carefully before using our services.
           </p>
@@ -60,7 +60,7 @@ const PolicyDoc = () => {
 
       {/* Search Box */}
       <div className="container mx-auto px-4 py-8 sm:py-12">
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-4">
+        <div className="max-w-md mx-auto bg-white rounded-lg  p-4">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FiSearch className="text-green-600" />

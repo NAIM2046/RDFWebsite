@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const workApproach = [
   {
     title: "Identifying Issues",
     description:
-      "We begin with a deep understanding of vulnerabilities in coastal regions, including climate change, economic exclusion, dropout rates, and lack of access to essential services.",
+      "RDF's approach to work is systematic and community-centric, encompassing a full project cycle. It begins with Identifying Issues through a deep understanding of the vulnerabilities faced by its target populations, particularly in coastal regions. ",
     expandedText:
-      "RDF identifies the root causes of community challenges by conducting field studies, engaging with local populations across 48 districts, and analyzing pressing issues such as climate vulnerability, child marriage, WASH access, and educational gaps. This ensures our interventions are grounded in evidence and address real needs.",
+      "This includes specific challenges like climate change impacts, high dropout rates, economic exclusion, child marriage risks, and limited access to essential services like WASH, identified through their presence across 48 districts.",
     image: "/assets/photo-41.1-400x284.jpg",
     color: "bg-gradient-to-r from-blue-500 to-teal-400",
     icon: (
@@ -30,10 +29,11 @@ const workApproach = [
   {
     title: "Planning & Strategy",
     description:
-      "We design multi-sectoral programs aligned with national strategies and the SDGs, ensuring inclusive, scalable, and sustainable solutions.",
+      "Planning & Strategy involves designing comprehensive, multi-sectoral programs aligned with national strategies (e.g., Bangladesh Climate Change Strategy) and the SDGs Strategies are tailored to address identified issues, integrating cross-cutting themes like gender transformation, disability inclusion,",
     expandedText:
-      "Our strategies incorporate gender transformation, disability inclusion, and locally-led action across programs in food security, climate resilience, education, and emergency response. Each plan includes clear goals and integrates cross-cutting themes to maximize impact.",
-    image: "/assets/our2.webp",
+      " and locally-led action into all initiatives, from food security and climate resilience to education and emergency response.",
+    image:
+      "https://i.ibb.co.com/1fLW7LW5/ACCESS-TO-FINANCE-Ranapasa-Union-Nalcity-Upazila-Jhalokath-jpg.jpg",
     color: "bg-gradient-to-r from-purple-500 to-indigo-500",
     icon: (
       <svg
@@ -55,10 +55,10 @@ const workApproach = [
   {
     title: "Community Engagement",
     description:
-      "We prioritize participatory development through locally-led initiatives, community ownership, and inclusive governance.",
+      "Community Engagement is fundamental prioritizing locally-led initiatives and participatory decision-making. RDF actively works with communities, engaging youth in governance, empowering women's groups, and ",
     expandedText:
-      "RDF works closely with communities, empowering women's groups and youth leaders while collaborating with local bodies to co-create solutions. Our participatory approach ensures that all interventions are contextually appropriate, culturally sensitive, and community-driven.",
-    image: "/assets/our3.webp",
+      "collaborating with local bodies (e.g. for WASH infrastructure), ensuring solutions are grounded in the local context and ownership.",
+    image: "https://i.ibb.co.com/My2bJG0t/Grameen-Shakti-png.png",
     color: "bg-gradient-to-r from-orange-500 to-pink-500",
     icon: (
       <svg
@@ -80,10 +80,10 @@ const workApproach = [
   {
     title: "Implementation",
     description:
-      "We bring our plans to life through strong field presence, practical solutions, and partnerships across sectors.",
+      "During Implementation, RDF executes its strategic programs through its strong field presence and approved planning, utilising the practical needs of the target people, like establishing Skills Training Centres, deploying solar technologies (irrigation, rooftops, lighting), providing microloans and asset transfers,running awareness campaigns, ",
     expandedText:
-      "From Skills Training Centres to solar tech, microloans, and emergency support, RDF implements programs that respond to real community needs. Our approach includes capacity building in STEM, AI, and entrepreneurship, and links beneficiaries with government and private services.",
-    image: "/assets/our4.webp",
+      " and partnering with organisations for emergency response. Implementation focuses on building capacity (technical skills, STEM/AI, entrepreneurship) and providing direct support and linkages with the government, non-government and private sector service providers.",
+    image: "https://i.ibb.co.com/Vcynj5yM/IMG-5277-webp.webp",
     color: "bg-gradient-to-r from-green-500 to-emerald-500",
     icon: (
       <svg
@@ -105,11 +105,11 @@ const workApproach = [
   {
     title: "Monitoring & Evaluation",
     description:
-      "We track progress through robust governance and data-driven evaluation, ensuring accountability and long-term impact.",
+      "Finally, Monitoring and Evaluation is underpinned by robust governance (General Council, Executive Committee oversight of the CEO) and strong internal controls.RDF's commitment to ethical behaviour, accountability, zero-tolerance for violations, and adherence to its mission, vision, and values ensures programs are tracked for effectiveness and impact, maintaining  ",
     expandedText:
-      "With oversight from our General Council and Executive Committee, RDF uses strong internal controls, ethical practices, and impact assessments to measure success. We emphasize transparency, continuous learning, and alignment with our mission, vision, and values.",
-    image: "/assets/our4.webp",
-    image: "/assets/our4.webp",
+      "credibility and enabling continuous improvement in serving vulnerable communities. This structured approach ensures interventions are relevant, participatory, effectively delivered, and accountable, aiming for sustainable and transformative change.",
+    image: "https://i.ibb.co.com/0jH0sNMZ/IMG-20190917-160446.jpg",
+
     color: "bg-gradient-to-r from-red-500 to-yellow-500",
     icon: (
       <svg
@@ -133,7 +133,7 @@ const workApproach = [
 const OurApproach = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [expandedStep, setExpandedStep] = useState(null);
-  const navigate = useNavigate();
+
   const toggleStep = (index) => {
     setExpandedStep(expandedStep === index ? null : index);
   };
@@ -141,47 +141,11 @@ const OurApproach = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-green-600 to-blue-700 rounded-2xl overflow-hidden shadow-2xl mb-16">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="relative z-10 px-6 py-12 md:py-20 lg:px-16 flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <h1 className="text-4xl md:text-5xl font-bold text-white font-serif mb-4">
-              Our <span className="text-yellow-300">Approach</span>
-            </h1>
-            <p className="text-lg text-white mb-6">
-              Placing women and girls at the center of focus and working with
-              government, national and international NGOs, and civil society
-              partners, RDF is working with millions.
-              {isExpanded && (
-                <>
-                  {" "}
-                  Through its projects and programs, RDF aims to create lasting
-                  change by strengthening marginalized communities and
-                  amplifying their voices. Our comprehensive approach ensures
-                  sustainable development and measurable impact.
-                </>
-              )}
-            </p>
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="px-6 py-2 bg-white text-green-700 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              {isExpanded ? "Read Less" : "Read More"}
-            </button>
-          </div>
-          <div className="md:w-1/2 relative">
-            <img
-              src="/assets/ourapproach.webp"
-              alt="Community Women"
-              className="w-full max-w-md rounded-lg shadow-xl transform rotate-2 border-4 border-white"
-            />
-            <img
-              src="/assets/ourApproach1.webp"
-              alt="Empowered Woman"
-              className="hidden lg:block absolute -bottom-10 -right-10 w-56 rounded-lg shadow-xl border-4 border-white transform -rotate-6"
-            />
-          </div>
-        </div>
+      <div className="">
+        <h1 className="text-4xl md:text-5xl font-bold text-white font-serif mb-4 text-center m-4 pb-4">
+          <span className="text-green-500"> Our</span>{" "}
+          <span className="text-red-500">Approach</span>
+        </h1>
       </div>
 
       {/* Work Approach Steps */}
@@ -213,15 +177,15 @@ const OurApproach = () => {
 
             {/* Text Section */}
             <div className={`w-full  lg:w-1/2 p-8 `}>
-              <div
+              {/* <div
                 className={`inline-block ${step.color} text-white px-4 py-1 rounded-full text-sm font-semibold mb-3`}
               >
                 Step {index + 1}
-              </div>
+              </div> */}
               <h3 className="text-2xl font-bold text-gray-800 font-serif mb-4">
                 {step.title}
               </h3>
-              <p className="text-gray-600 mb-4">{step.description}</p>
+              <p className="text-gray-600 mb-2">{step.description}</p>
 
               {/* Expanded Content */}
               <div
@@ -229,7 +193,7 @@ const OurApproach = () => {
                   expandedStep === index ? "max-h-96" : "max-h-0"
                 }`}
               >
-                <p className="text-gray-600 pt-4 border-t border-gray-200 mt-4">
+                <p className="text-gray-600 pt-1 border-t border-gray-200 mt-4">
                   {step.expandedText}
                 </p>
               </div>
@@ -262,7 +226,7 @@ const OurApproach = () => {
       </div>
 
       {/* Call to Action */}
-      <div className="mt-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl p-8 md:p-12 text-center text-white shadow-2xl">
+      {/* <div className="mt-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl p-8 md:p-12 text-center text-white shadow-2xl">
         <h2 className="text-3xl font-bold font-serif mb-4">
           Ready to Make a Difference?
         </h2>
@@ -284,7 +248,7 @@ const OurApproach = () => {
             Volunteer
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

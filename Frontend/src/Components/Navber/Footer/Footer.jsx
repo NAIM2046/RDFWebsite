@@ -15,7 +15,7 @@ import { IoLogoLinkedin } from "react-icons/io5";
 import { FaSquareXTwitter } from "react-icons/fa6";
 const Footer = () => {
   return (
-    <footer className="bg-[#262626] text-base-content  py-10 px-5 font-serif">
+    <footer className="bg-[#262626] text-base-content  py-10 px-4 font-serif">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
         {/* Logo & Info */}
         <div className="flex flex-col items-center md:items-start space-y-3">
@@ -27,7 +27,6 @@ const Footer = () => {
           />
           <p className="text-md font-light text-white">
             Resource Development Foundation (RDF) <br />
-            Providing reliable service since 1992
           </p>
         </div>
 
@@ -50,7 +49,7 @@ const Footer = () => {
 
             <p className="flex items-center gap-2 text-sm">
               <FaPhoneVolume className="text-green-400 text-2xl" />{" "}
-              +8802-22243850, +8801733065522
+              +8802-222243850, +8801733065522
             </p>
             <p className="flex items-center gap-2 text-sm">
               <MdOutlineEmail className="text-green-400 text-2xl" />{" "}

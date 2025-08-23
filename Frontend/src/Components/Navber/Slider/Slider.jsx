@@ -18,23 +18,23 @@ const Slider = () => {
     }
   }, [sliderinfo.length, fetchsliderinfo, isLoading]);
 
-  const cards = [
-    {
-      header: "OUR MISSION",
-      text: "RDF helps the poor by ensuring rights, education, skills, health, and resilience.",
-      icon: missionIcon,
-    },
-    {
-      header: "OUR VISION",
-      text: "RDF envisions a just, equitable society empowering women, children, and inclusivity.",
-      icon: visionIcon,
-    },
-    {
-      header: "OUR CORE VALUE",
-      text: "Transparency, Accountability, Inclusiveness, Values, Respect, Integrity.",
-      icon: valueIcon,
-    },
-  ];
+  // const cards = [
+  //   {
+  //     header: "OUR MISSION",
+  //     text: "The Institutional Mission is to bring positive changes and ensure human rights for the poor and disadvantaged people, especially women and children, in education, technical skills, health, economic, resilience to climate change, with actions and socio-cultural environment both in rural and urban areas.",
+  //     icon: missionIcon,
+  //   },
+  //   {
+  //     header: "OUR VISION",
+  //     text: "RDF envisions a socio-economically just and equitable society and capitalization of the potential of women and children along with intersectional inclusiveness.",
+  //     icon: visionIcon,
+  //   },
+  //   {
+  //     header: "OUR CORE VALUE",
+  //     text: "Transparency, Accountability, Inclusiveness, Integrity.",
+  //     icon: valueIcon,
+  //   },
+  // ];
 
   const navigate = useNavigate();
 
@@ -108,7 +108,7 @@ const Slider = () => {
       )}
 
       {/* Cards Section Below the Slider */}
-      <div className="hidden sm:flex relative -mt-16 z-10 flex-wrap justify-center items-center gap-6 px-4">
+      {/* <div className="hidden sm:flex relative -mt-16 z-10 flex-wrap justify-center items-center gap-6 px-4">
         {cards.map((card, index) => (
           <motion.div
             key={index}
@@ -145,7 +145,7 @@ const Slider = () => {
             </Typography>
           </motion.div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

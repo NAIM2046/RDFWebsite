@@ -42,9 +42,9 @@ const FounderMessage = () => {
 
             {/* Right Side - Founder Message */}
             <div className="md:w-2/3 p-6 flex flex-col rounded-lg  shadow-lg bg-white">
-              <h2 className="text-2xl md:text-3xl font-bold text-green-400 text-center font-serif ">
-                Message from Our Founder
-              </h2>
+              {/* <h2 className="text-xl md:text-2xl font-bold text-green-400 text-center font-serif ">
+                Message from Our Founder and Chief Executive Officer(CEO)
+              </h2> */}
               <p className="text-gray-600 mt-4 leading-relaxed">
                 It is just two & half decades since its inception in March 1993
                 as a small organization in a remote area of the southern corner
@@ -57,25 +57,30 @@ const FounderMessage = () => {
                 Global Pandemic situation. However, during the crisis, our team
                 members were proactively present in the field. RDF has revised
                 and revisited its Strategic and Core Areas of Businesses and
-                activities in the four thematic areas which are, (a) Social
-                Development, (b) Economic Empowerment, (c) Resilience to Climate
-                Change and (d) Capacity Building, Green Energy Activities and
-                Research. It is our strong belief that with newly redevised
-                thematic areas, RDF will be concentrating more to contribute to
-                10 (ten) different SDGs and other national and international
-                commitments of the country. Moreover, RDF will also focus on
-                Social Development Research activities including renewable
-                energy in the upcoming years. We are pledge-bound to continue
-                our focus on exploring new horizons, embanking new commitments,
-                emphasizing the new challenges, demands and opportunities. Let
-                us move forward to contribute to achieving the national targets
-                by 2030 and thus achieve the status of “developing country”. I
-                am thankful to our Executive Committee (EC) and management
-                committee for their valued guidance and cooperation. Finally, I
-                would like to thank all RDF employees for their restless efforts
-                to sustain the trend of program activities. I do believe that
-                the Annual Report 2021-’22 upholds the yearly facts & figures of
-                the organization intervention to its valued stakeholders.
+                activities in the six program areas which are, (a)Food Security,
+                Livelihood, Skills, and Economic Empowerment (b) Resilience to
+                Climate Change & Disaster Risk Reduction (c) Emergency Response
+                (d) Child Rights, Ending Child Marriage, Education, Health,
+                Nutrition, and Sexual and Reproductive Health Rights (SRHR) (e)
+                Water, Sanitation, and Hygiene (WASH) (f) Cross-cutting
+                programme: Gender Transformation, Disability Inclusion and
+                Locally-led Initiatives . It is our strong belief that with
+                newly redevised thematic areas, RDF will be concentrating more
+                to contribute to 10 (ten) different SDGs and other national and
+                international commitments of the country. Moreover, RDF will
+                also focus on Social Development Research activities including
+                renewable energy in the upcoming years. We are pledge-bound to
+                continue our focus on exploring new horizons, embanking new
+                commitments, emphasizing the new challenges, demands and
+                opportunities. Let us move forward to contribute to achieving
+                the national targets by 2030 and thus achieve the status of
+                “developing country”. I am thankful to our Executive Committee
+                (EC) and management committee for their valued guidance and
+                cooperation. Finally, I would like to thank all RDF employees
+                for their restless efforts to sustain the trend of program
+                activities. I do believe that the Annual Report 2021-’22 upholds
+                the yearly facts & figures of the organization intervention to
+                its valued stakeholders.
               </p>
             </div>
           </div>

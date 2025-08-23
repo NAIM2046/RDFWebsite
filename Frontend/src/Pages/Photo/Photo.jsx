@@ -83,7 +83,7 @@ const Photo = () => {
       </Helmet>
 
       <PageCoverPhoto
-        title="Our Gallery"
+        title="Gallery"
         subtitle="Capturing moments that inspire change and document our journey towards making a difference."
       />
 
@@ -91,7 +91,7 @@ const Photo = () => {
         {/* Search and Filter Section */}
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-            Explore Our Gallery
+            Gallery
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

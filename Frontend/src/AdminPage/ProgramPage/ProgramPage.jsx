@@ -8,6 +8,7 @@ import {
   FaSpinner,
   FaCheckCircle,
   FaTimes,
+  FaEdit,
 } from "react-icons/fa";
 
 const ProgramPage = () => {
@@ -24,6 +25,7 @@ const ProgramPage = () => {
   const [uploading, setUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [notification, setNotification] = useState({
     show: false,
     type: "",
@@ -120,15 +122,29 @@ const ProgramPage = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await Axios.post("/programs", formData);
-      if (response.data) {
-        showNotification("success", "Program added successfully!");
-        fetchPrograms();
-        resetForm();
+      if (editingId) {
+        // Update existing program
+        const response = await Axios.put(`/programs/${editingId}`, formData);
+        if (response.data) {
+          showNotification("success", "Program updated successfully!");
+          fetchPrograms();
+          resetForm();
+        }
+      } else {
+        // Create new program
+        const response = await Axios.post("/programs", formData);
+        if (response.data) {
+          showNotification("success", "Program added successfully!");
+          fetchPrograms();
+          resetForm();
+        }
       }
     } catch (error) {
       console.error("Submission error:", error);
-      showNotification("error", "Failed to add program");
+      showNotification(
+        "error",
+        `Failed to ${editingId ? "update" : "add"} program`
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -145,6 +161,20 @@ const ProgramPage = () => {
     setPreviewImages([]);
     setFocusInput("");
     setErrors({});
+    setEditingId(null);
+  };
+
+  const handleEdit = (program) => {
+    setFormData({
+      title: program.title,
+      description: program.description,
+      focus: [...program.focus],
+      images: [...program.images],
+      videoId: program.videoId || "",
+    });
+    setPreviewImages([...program.images]);
+    setEditingId(program._id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleDelete = async (id) => {
@@ -155,10 +185,23 @@ const ProgramPage = () => {
       await Axios.delete(`/programs/${id}`);
       showNotification("success", "Program deleted successfully!");
       fetchPrograms();
+
+      // If we're deleting the program we're currently editing, reset the form
+      if (editingId === id) {
+        resetForm();
+      }
     } catch (error) {
       console.error("Delete error:", error);
       showNotification("error", "Failed to delete program");
     }
+  };
+
+  const handleImageRemove = (index) => {
+    setPreviewImages(previewImages.filter((_, i) => i !== index));
+    setFormData({
+      ...formData,
+      images: formData.images.filter((_, i) => i !== index),
+    });
   };
 
   return (
@@ -183,8 +226,22 @@ const ProgramPage = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Add New Program
+          {editingId ? "Edit Program" : "Add New Program"}
         </h2>
+
+        {editingId && (
+          <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-blue-800 text-sm">
+              You are currently editing a program.{" "}
+              <button
+                onClick={resetForm}
+                className="text-blue-600 font-medium underline hover:text-blue-800"
+              >
+                Cancel edit
+              </button>
+            </p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Title Field */}
@@ -310,7 +367,7 @@ const ProgramPage = () => {
             {previewImages.length > 0 && (
               <div className="mt-4">
                 <h4 className="text-sm font-medium text-gray-700 mb-2">
-                  Image Previews
+                  {editingId ? "Current Images" : "Image Previews"}
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                   {previewImages.map((img, index) => (
@@ -322,17 +379,7 @@ const ProgramPage = () => {
                       />
                       <button
                         type="button"
-                        onClick={() => {
-                          setPreviewImages(
-                            previewImages.filter((_, i) => i !== index)
-                          );
-                          setFormData({
-                            ...formData,
-                            images: formData.images.filter(
-                              (_, i) => i !== index
-                            ),
-                          });
-                        }}
+                        onClick={() => handleImageRemove(index)}
                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <FaTimes size={10} />
@@ -374,6 +421,8 @@ const ProgramPage = () => {
                 <FaSpinner className="animate-spin mr-2" />
                 Processing...
               </>
+            ) : editingId ? (
+              "Update Program"
             ) : (
               "Add Program"
             )}
@@ -392,22 +441,41 @@ const ProgramPage = () => {
           <ul className="divide-y divide-gray-200">
             {programs.map((program) => (
               <li key={program._id} className="py-4">
-                <div className="flex justify-between items-center">
-                  <div>
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
                     <h3 className="font-semibold text-gray-800">
                       {program.title}
                     </h3>
                     <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                       {program.description}
                     </p>
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {program.focus.map((focus, index) => (
+                        <span
+                          key={index}
+                          className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
+                        >
+                          {focus}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <button
-                    onClick={() => handleDelete(program._id)}
-                    className="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-50 transition-colors"
-                    title="Delete program"
-                  >
-                    <FaTrash />
-                  </button>
+                  <div className="flex gap-2 ml-4">
+                    <button
+                      onClick={() => handleEdit(program)}
+                      className="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50 transition-colors"
+                      title="Edit program"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(program._id)}
+                      className="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-50 transition-colors"
+                      title="Delete program"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}

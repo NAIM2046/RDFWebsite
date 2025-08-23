@@ -9,6 +9,7 @@ import {
   FiUpload,
   FiX,
   FiSave,
+  FiUsers,
 } from "react-icons/fi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,11 +33,7 @@ const TeamsPage = () => {
     post: "",
     image: "",
     bio: "",
-    rank: "",
-    type: "General committee",
-    academic: [{ institute: "", period: "", degree: "" }],
-    experience: [{ organization: "", position: "", period: "" }],
-    contact: { email: "", phone: "" },
+    committees: [{ rank: "", committee_name: "" }], // Changed to array of committees
   });
 
   const resetForm = () => {
@@ -45,11 +42,7 @@ const TeamsPage = () => {
       post: "",
       image: "",
       bio: "",
-      rank: "",
-      type: "General committee",
-      academic: [{ institute: "", period: "", degree: "" }],
-      experience: [{ organization: "", position: "", period: "" }],
-      contact: { email: "", phone: "" },
+      committees: [{ rank: "", committee_name: "" }],
     });
     setEditingId(null);
   };
@@ -59,50 +52,28 @@ const TeamsPage = () => {
     setMember({ ...member, [name]: value });
   };
 
-  const handleAcademicChange = (index, field, value) => {
-    const updatedAcademic = [...member.academic];
-    updatedAcademic[index][field] = value;
-    setMember({ ...member, academic: updatedAcademic });
+  // Handle committee changes
+  const handleCommitteeChange = (index, field, value) => {
+    const updatedCommittees = [...member.committees];
+    updatedCommittees[index][field] = value;
+    setMember({ ...member, committees: updatedCommittees });
   };
 
-  const addAcademic = () => {
+  // Add new committee field
+  const addCommittee = () => {
     setMember({
       ...member,
-      academic: [...member.academic, { institute: "", period: "", degree: "" }],
+      committees: [...member.committees, { rank: "", committee_name: "" }],
     });
   };
 
-  const removeAcademic = (index) => {
-    const updatedAcademic = [...member.academic];
-    updatedAcademic.splice(index, 1);
-    setMember({ ...member, academic: updatedAcademic });
-  };
-
-  const handleExperienceChange = (index, field, value) => {
-    const updatedExperience = [...member.experience];
-    updatedExperience[index][field] = value;
-    setMember({ ...member, experience: updatedExperience });
-  };
-
-  const addExperience = () => {
-    setMember({
-      ...member,
-      experience: [
-        ...member.experience,
-        { organization: "", position: "", period: "" },
-      ],
-    });
-  };
-
-  const removeExperience = (index) => {
-    const updatedExperience = [...member.experience];
-    updatedExperience.splice(index, 1);
-    setMember({ ...member, experience: updatedExperience });
-  };
-
-  const handleContactChange = (e) => {
-    const { name, value } = e.target;
-    setMember({ ...member, contact: { ...member.contact, [name]: value } });
+  // Remove committee field
+  const removeCommittee = (index) => {
+    if (member.committees.length > 1) {
+      const updatedCommittees = [...member.committees];
+      updatedCommittees.splice(index, 1);
+      setMember({ ...member, committees: updatedCommittees });
+    }
   };
 
   const handleImageUpload = async (e) => {
@@ -128,9 +99,25 @@ const TeamsPage = () => {
     e.preventDefault();
     setSubmitting(true);
 
+    // Validate committees
+    const validCommittees = member.committees.filter(
+      (committee) => committee.rank && committee.committee_name
+    );
+
+    if (validCommittees.length === 0) {
+      toast.error("Please add at least one valid committee assignment.");
+      setSubmitting(false);
+      return;
+    }
+
+    const memberData = {
+      ...member,
+      committees: validCommittees,
+    };
+
     const request = editingId
-      ? Axios.patch(`/teams/${editingId}`, member)
-      : Axios.post("/teams", member);
+      ? Axios.patch(`/teams/${editingId}`, memberData)
+      : Axios.post("/teams", memberData);
 
     request
       .then((res) => {
@@ -172,15 +159,10 @@ const TeamsPage = () => {
       post: teamMember.post || "",
       image: teamMember.image || "",
       bio: teamMember.bio || "",
-      rank: teamMember.rank || "",
-      type: teamMember.type || "General committee",
-      academic: teamMember.academic?.length
-        ? teamMember.academic
-        : [{ institute: "", period: "", degree: "" }],
-      experience: teamMember.experience?.length
-        ? teamMember.experience
-        : [{ organization: "", position: "", period: "" }],
-      contact: teamMember.contact || { email: "", phone: "" },
+      committees:
+        teamMember.committees && teamMember.committees.length > 0
+          ? teamMember.committees
+          : [{ rank: "", committee_name: "" }],
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -230,37 +212,84 @@ const TeamsPage = () => {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Rank/Order
-                  </label>
-                  <input
-                    type="number"
-                    name="rank"
-                    placeholder="Display order (lower numbers appear first)"
-                    value={member.rank}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
+                {/* Committee Assignments */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Committee Assignments *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={addCommittee}
+                      className="flex items-center text-sm text-blue-600 hover:text-blue-800"
+                    >
+                      <FiPlus className="mr-1" /> Add Committee
+                    </button>
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Member Type *
-                  </label>
-                  <select
-                    name="type"
-                    value={member.type}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  >
-                    <option value="General committee">General Committee</option>
-                    <option value="Executive committee">
-                      Executive Committee
-                    </option>
-                    <option value="Senior Management">Senior Management</option>
-                  </select>
+                  {member.committees.map((committee, index) => (
+                    <div
+                      key={index}
+                      className="flex gap-2 items-start p-3 bg-gray-50 rounded-lg"
+                    >
+                      <div className="flex-1 grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="block text-xs text-gray-500 mb-1">
+                            Rank
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="Rank"
+                            value={committee.rank}
+                            onChange={(e) =>
+                              handleCommitteeChange(
+                                index,
+                                "rank",
+                                e.target.value
+                              )
+                            }
+                            className="w-full px-3 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs text-gray-500 mb-1">
+                            Committee
+                          </label>
+                          <select
+                            value={committee.committee_name}
+                            onChange={(e) =>
+                              handleCommitteeChange(
+                                index,
+                                "committee_name",
+                                e.target.value
+                              )
+                            }
+                            className="w-full px-3 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500"
+                          >
+                            <option value="">Select Committee</option>
+                            <option value="Executive Committee">
+                              Executive Committee
+                            </option>
+                            <option value="General Committee">
+                              General Committee
+                            </option>
+                            <option value="Senior Management">
+                              Senior Management
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      {member.committees.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeCommittee(index)}
+                          className="p-1 text-red-500 hover:text-red-700 mt-5"
+                        >
+                          <FiX size={16} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -317,207 +346,6 @@ const TeamsPage = () => {
               </div>
             </div>
 
-            {/* Contact Information */}
-            <div className="border-t pt-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                Contact Information
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="member@example.com"
-                    value={member.contact.email}
-                    onChange={handleContactChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone
-                  </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    placeholder="+1234567890"
-                    value={member.contact.phone}
-                    onChange={handleContactChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Academic Information */}
-            <div className="border-t pt-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  Academic Background
-                </h3>
-                <button
-                  type="button"
-                  onClick={addAcademic}
-                  className="flex items-center text-sm text-blue-600 hover:text-blue-800"
-                >
-                  <FiPlus className="mr-1" /> Add Academic
-                </button>
-              </div>
-              {member.academic.map((edu, index) => (
-                <div
-                  key={index}
-                  className="border rounded-lg p-4 mb-4 relative"
-                >
-                  <button
-                    type="button"
-                    onClick={() => removeAcademic(index)}
-                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
-                    title="Remove"
-                  >
-                    <FiX />
-                  </button>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Institution
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="University/School"
-                        value={edu.institute}
-                        onChange={(e) =>
-                          handleAcademicChange(
-                            index,
-                            "institute",
-                            e.target.value
-                          )
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Degree
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Degree/Certificate"
-                        value={edu.degree}
-                        onChange={(e) =>
-                          handleAcademicChange(index, "degree", e.target.value)
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Period
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Year or Duration"
-                        value={edu.period}
-                        onChange={(e) =>
-                          handleAcademicChange(index, "period", e.target.value)
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Professional Experience */}
-            <div className="border-t pt-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  Professional Experience
-                </h3>
-                <button
-                  type="button"
-                  onClick={addExperience}
-                  className="flex items-center text-sm text-blue-600 hover:text-blue-800"
-                >
-                  <FiPlus className="mr-1" /> Add Experience
-                </button>
-              </div>
-              {member.experience.map((exp, index) => (
-                <div
-                  key={index}
-                  className="border rounded-lg p-4 mb-4 relative"
-                >
-                  <button
-                    type="button"
-                    onClick={() => removeExperience(index)}
-                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
-                    title="Remove"
-                  >
-                    <FiX />
-                  </button>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Organization
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Company/Organization"
-                        value={exp.organization}
-                        onChange={(e) =>
-                          handleExperienceChange(
-                            index,
-                            "organization",
-                            e.target.value
-                          )
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Position
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Job Title"
-                        value={exp.position}
-                        onChange={(e) =>
-                          handleExperienceChange(
-                            index,
-                            "position",
-                            e.target.value
-                          )
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Period
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Year or Duration"
-                        value={exp.period}
-                        onChange={(e) =>
-                          handleExperienceChange(
-                            index,
-                            "period",
-                            e.target.value
-                          )
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
             {/* Form Actions */}
             <div className="flex justify-end space-x-4 pt-6 border-t">
               {editingId && (
@@ -562,11 +390,16 @@ const TeamsPage = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {teams
-                  .sort((a, b) => (a.rank || 0) - (b.rank || 0))
+                  .sort((a, b) => {
+                    // Sort by the first committee's rank
+                    const aRank = a.committees?.[0]?.rank || 0;
+                    const bRank = b.committees?.[0]?.rank || 0;
+                    return aRank - bRank;
+                  })
                   .map((teamMember) => (
                     <div
                       key={teamMember._id}
-                      className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                      className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow bg-white"
                     >
                       <div className="h-48 bg-gray-100 overflow-hidden relative">
                         {teamMember.image ? (
@@ -604,14 +437,27 @@ const TeamsPage = () => {
                         <p className="text-blue-600 font-medium">
                           {teamMember.post}
                         </p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          {teamMember.type}
-                        </p>
-                        {teamMember.rank && (
-                          <p className="text-xs text-gray-400 mt-1">
-                            Rank: {teamMember.rank}
-                          </p>
-                        )}
+
+                        {/* Display Committees */}
+                        {teamMember.committees &&
+                          teamMember.committees.length > 0 && (
+                            <div className="mt-2">
+                              <div className="flex items-center text-sm text-gray-500 mb-1">
+                                <FiUsers className="mr-1" /> Committees:
+                              </div>
+                              {teamMember.committees.map((committee, index) => (
+                                <div
+                                  key={index}
+                                  className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded mb-1"
+                                >
+                                  {committee.committee_name}{" "}
+                                  {committee.rank &&
+                                    `(Rank: ${committee.rank})`}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
                         {teamMember.bio && (
                           <p className="text-sm text-gray-600 mt-2 line-clamp-2">
                             {teamMember.bio}

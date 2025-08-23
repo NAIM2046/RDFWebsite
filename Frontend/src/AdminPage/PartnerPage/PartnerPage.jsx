@@ -144,24 +144,6 @@ const PartnerPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Category*
-              </label>
-              <select
-                name="category"
-                value={partner.category}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="Current Partners">Current Partners</option>
-                <option value="Donors">Donors</option>
-                <option value="Strategic Partners">Strategic Partners</option>
-                <option value="Govt. Ministries">Government Ministries</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Website URL*
               </label>
               <input

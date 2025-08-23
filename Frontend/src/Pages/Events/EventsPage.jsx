@@ -87,7 +87,7 @@ const EventsPage = () => {
       </Helmet>
 
       <PageCoverPhoto
-        title="Our Events"
+        title="Events"
         description="Join our community through these meaningful events"
       />
 

@@ -4,10 +4,10 @@ import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhot
 import { Helmet } from "react-helmet-async";
 
 const organogramData = {
-  title: "RDF Organogram Structure",
+  title: " Organogram ",
   image: "https://i.ibb.co/FkXT0hKj/RDF-Organogram-1.jpg",
   governance: {
-    heading: "Governance Overview",
+    heading: "Governance",
 
     description: `RDF is governed by a well-structured and effective system led by its 21-member General Council. This council, which includes its founding members, plays a crucial role in ensuring that the organisation remains socially owned. From this council, a 7-member Executive Committee (EC) is elected every three years. The EC, guided by its chairman, is responsible for offering strategic direction and overseeing the Chief Executive Officer (CEO).
 
@@ -16,50 +16,46 @@ The organisation remains steadfast in following its foundational mission, vision
 RDF is deeply committed to ethical behaviour and has a strict policy of zero tolerance for any violations. This commitment helps maintain its accountability and credibility, reinforcing its mission to advance sustainable development in Bangladesh.
 `,
   },
-  // sections: [
-  //   {
-  //     title: "Central Coordination Unit (CCU)",
-  //     description:
-  //       "Consists of 21 senior officials (Finance, HR, Program, etc.). The ED is the Chairman of CCU.",
-  //   },
-  //   {
-  //     title: "Regional Coordination Unit (RCU)",
-  //     description:
-  //       "Five RCU teams ensure coordination between central and field offices.",
-  //   },
-  //   {
-  //     title: "District Focal Team (DFT)",
-  //     description: "Manages all ongoing programs within each district.",
-  //   },
-  //   {
-  //     title: "Upazila Focal Team (UFT)",
-  //     description:
-  //       "Oversees Upazila programs, conducts review and planning meetings.",
-  //   },
-  // ],
-  // decisionMaking: {
-  //   heading: "Decision-Making Process",
-  //   description:
-  //     "The governance structure follows a two-way decision-making process, ensuring accountability from both top-down and bottom-up approaches.",
-  //   points: [
-  //     "GC → EC → ED → CCU → RCU → DFT → UFT",
-  //     "AGM ensures annual review, discussions, and budget approvals.",
-  //   ],
-  // },
 };
 
 const Organogram = () => {
   return (
     <div>
       <Helmet>
-        <title> RDF-Organogram </title>
+        <title>RDF-Organogram | Resource Development Foundation (RDF)</title>
+        <meta
+          name="description"
+          content="Explore the RDF Organogram and Governance structure. Learn how the Resource Development Foundation (RDF) is governed by its General Council and Executive Committee to achieve sustainable social impact in Bangladesh."
+        />
+        <meta
+          name="keywords"
+          content="RDF, Resource Development Foundation, Organogram, Governance, Executive Committee, Bangladesh NGO, Social Development"
+        />
+        <meta
+          property="og:title"
+          content="RDF-Organogram | Resource Development Foundation (RDF)"
+        />
+        <meta
+          property="og:description"
+          content="Learn about RDF's governance structure and Executive Committee. Discover how RDF ensures social accountability and sustainable development in Bangladesh."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://i.ibb.co/FkXT0hKj/RDF-Organogram-1.jpg"
+        />
+        <meta property="og:url" content={window.location.href} />
       </Helmet>
-      <PageCoverPhoto title={"Our Organogram"} />
+
+      <PageCoverPhoto
+        title={"ORGANOGRAM & GOVERNANCE"}
+        subtitle={"Creating Sustainable Impact through Transformation"}
+      />
 
       <div className="min-h-screen mx-auto max-w-7xl bg-white shadow-lg p-8 mt-24 mb-10 rounded-lg">
         {/* Page Header with Animation */}
         <motion.h1
-          className="text-4xl font-bold text-center text-orange-500 mb-6 font-serif"
+          className="text-4xl font-bold text-center text-red-500 mb-6 font-serif"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -82,93 +78,57 @@ const Organogram = () => {
           />
         </motion.div>
 
-        {/* Governance Overview with Fade-in */}
+        {/* Governance Overview with Professional Card Style */}
         <motion.div
-          className="bg-green-50 p-6 rounded-lg mb-8 max-w-4xl mx-auto"
+          className="bg-white shadow-lg rounded-2xl p-8 mb-12 max-w-4xl mx-auto border border-gray-200"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl font-semibold text-green-400 border-l-4 border-orange-400 pl-2 ">
-            {organogramData.governance.heading}
-          </h2>
-
-          {/* Convert description into multiple paragraphs */}
-          {organogramData.governance.description
-            .split("\n")
-            .map((paragraph, index) => (
-              <p
-                key={index}
-                className="text-gray-600 leading-relaxed mt-2 ml-4"
-              >
-                {paragraph}
-              </p>
-            ))}
-        </motion.div>
-
-        {/* Coordination Units - Smooth Animation */}
-        {/* <div className="space-y-6 max-w-4xl mx-auto">
-          {organogramData.sections.map((section, index) => (
-            <motion.div
-              key={index}
-              className={`p-6 rounded-lg ${
-                index % 2 === 0 ? "bg-blue-100" : "bg-blue-100"
-              }`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                ease: "easeOut",
-                delay: index * 0.2,
-              }}
-              viewport={{ once: true }}
+          {/* Heading with Icon */}
+          <div className="flex items-center gap-3 mb-6">
+            <svg
+              className="w-8 h-8 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <h3 className="text-xl font-semibold text-green-400 border-l-4 border-orange-400 pl-2">
-                {section.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed mt-2 ml-4">
-                {section.description}
-              </p>
-            </motion.div>
-          ))}
-        </div> */}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <h2 className="text-3xl font-bold text-gray-800">
+              {organogramData.governance.heading}
+            </h2>
+          </div>
 
-        {/* Decision-Making Process with Staggered Animation */}
-        {/* <motion.div
-          className="bg-sky-100 p-6 rounded-lg mt-10 max-w-4xl mx-auto shadow"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-2xl font-semibold text-green-400 border-l-4 border-orange-400 pl-4">
-            {organogramData.decisionMaking.heading}
-          </h2>
-          <p className="text-gray-600 leading-relaxed mt-2">
-            {organogramData.decisionMaking.description}
-          </p>
-          <motion.ul
-            className="list-disc pl-6 mt-3 text-gray-600"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ staggerChildren: 0.2 }}
-            viewport={{ once: true }}
-          >
-            {organogramData.decisionMaking.points.map((point, index) => (
-              <motion.li
-                key={index}
-                className="opacity-0"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-              >
-                {point}
-              </motion.li>
-            ))}
-          </motion.ul>
-        </motion.div> */}
+          {/* Description with Bullets */}
+          <div className="space-y-4 text-gray-700 text-base leading-relaxed">
+            {organogramData.governance.description
+              .split("\n")
+              .filter((p) => p.trim() !== "")
+              .map((paragraph, index) => {
+                // Highlight key points as bullet
+                if (
+                  paragraph.includes("EC") ||
+                  paragraph.includes("internal controls") ||
+                  paragraph.includes("zero tolerance")
+                ) {
+                  return (
+                    <ul key={index} className="list-disc list-inside ml-5">
+                      <li>{paragraph}</li>
+                    </ul>
+                  );
+                }
+                // Normal paragraph
+                return <p key={index}>{paragraph}</p>;
+              })}
+          </div>
+        </motion.div>
       </div>
     </div>
   );

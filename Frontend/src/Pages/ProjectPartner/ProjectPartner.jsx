@@ -62,7 +62,7 @@ const ProjectPartner = () => {
       <ToastContainer position="top-center" autoClose={3000} />
 
       {/* Header */}
-      <div className="max-w-5xl mx-auto text-center px-6">
+      {/* <div className="max-w-5xl mx-auto text-center px-6">
         <h1 className="text-4xl font-bold text-gray-800 mt-20 lg:mt-0 font-serif">
           Why Partner with Us?
         </h1>
@@ -71,10 +71,10 @@ const ProjectPartner = () => {
           By partnering with us, you can help transform lives and make an
           impact.
         </p>
-      </div>
+      </div> */}
 
       {/* Impact Stats */}
-      <div className="mt-12 flex flex-wrap justify-center gap-6 px-6">
+      {/* <div className="mt-12 flex flex-wrap justify-center gap-6 px-6">
         {[
           { value: "105M+", label: "Children helped in 2023", color: "blue" },
           {
@@ -94,10 +94,10 @@ const ProjectPartner = () => {
             <p className="text-gray-700">{stat.label}</p>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Partnering Benefits */}
-      <div className="mt-16 max-w-5xl mx-auto px-6">
+      {/* <div className="mt-16 max-w-5xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-center text-gray-800 font-serif">
           What Partnering Means for You
         </h2>
@@ -127,16 +127,16 @@ const ProjectPartner = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Call to Action + Contact Form */}
       <div className="mt-16 text-center flex flex-col items-center">
         <h2 className="text-3xl font-bold text-gray-800 font-serif">
           Partner With Us
         </h2>
-        <p className="text-lg text-gray-600 mt-4">
+        {/* <p className="text-lg text-gray-600 mt-4">
           Let's create meaningful change together.
-        </p>
+        </p> */}
 
         {/* Form */}
         <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 mt-6">

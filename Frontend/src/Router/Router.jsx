@@ -59,6 +59,8 @@ import ReportPage from "../AdminPage/ReportPage/ReportPage";
 import AboutRDF from "../Pages/AboutRDF/AboutRDF";
 import PolicyDocPage from "../AdminPage/PolicyDocPage/PolicyDocPage";
 import CertificationsPage from "../AdminPage/CertificationsPage/CertificationsPage";
+import WeWorkFor from "../Pages/OurWork/WeWorkFor";
+import WhereWeWork from "../Pages/OurWork/WhereWeWork";
 
 const router = createBrowserRouter([
   {
@@ -190,12 +192,20 @@ const router = createBrowserRouter([
         element: <Notices></Notices>,
       },
       {
-        path: "/our-programs",
+        path: "/our-program",
         element: <OurPrograms></OurPrograms>,
       },
       {
         path: "/current-projects",
         element: <AllProjects></AllProjects>,
+      },
+      {
+        path: "/weworkfor",
+        element: <WeWorkFor></WeWorkFor>,
+      },
+      {
+        path: "/wherewework",
+        element: <WhereWeWork></WhereWeWork>,
       },
     ],
   },

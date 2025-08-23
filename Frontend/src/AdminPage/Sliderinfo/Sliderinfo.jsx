@@ -67,6 +67,7 @@ const Sliderinfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    console.log(slider);
 
     try {
       const result = await AxiosSecure.post("/slider", slider);

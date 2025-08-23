@@ -80,7 +80,7 @@ const AllProjects = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-emerald-50">
       <Helmet>
-        <title>RDF - All Projects</title>
+        <title>RDF - All Projects </title>
         <meta
           name="description"
           content="Browse all current and completed projects by RDF"
@@ -88,8 +88,8 @@ const AllProjects = () => {
       </Helmet>
 
       <PageCoverPhoto
-        title="All Projects"
-        subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
+        title="Major Projects"
+        subtitle={"Creating Sustainable Impact through Transformation"}
       />
 
       {/* Scrollable Tab Navigation */}
@@ -215,7 +215,7 @@ const AllProjects = () => {
                         <span className="font-medium">Donor:</span>{" "}
                         {project.donor}
                       </p>
-                      <p>
+                      {/* <p>
                         <span className="font-medium">
                           Direct Beneficiaries:
                         </span>{" "}
@@ -228,7 +228,7 @@ const AllProjects = () => {
                         </span>{" "}
                         {parseInt(project.indirectBeneficiaries?.male || 0) +
                           parseInt(project.indirectBeneficiaries?.female || 0)}
-                      </p>
+                      </p> */}
                     </div>
                     <div className="mt-auto">
                       <div

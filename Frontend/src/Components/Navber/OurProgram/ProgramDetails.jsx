@@ -49,10 +49,10 @@ const ProgramDetails = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
+          <h1 className="text-4xl md:text-5xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-green-700">
             {program.title}
           </h1>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-emerald-400 to-teal-300 mx-auto mt-4 rounded-full"></div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-red-700 to-red-500 mx-auto mt-4 rounded-full"></div>
           <p className="mt-6 text-gray-700 text-[20px] max-w-5xl mx-auto text-left leading-relaxed">
             {program.description}
           </p>
@@ -70,8 +70,8 @@ const ProgramDetails = () => {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-400"
               >
-                <h2 className="text-2xl font-semibold text-gray-800 font-serif mb-4 flex items-center">
-                  <span className="w-3 h-3 bg-emerald-400 rounded-full mr-2"></span>
+                <h2 className="text-2xl font-semibold text-red-600 font-serif mb-4 flex items-center">
+                  {/* <span className="w-3 h-3 bg-green-700 rounded-full mr-2"></span> */}
                   Key Focus Areas
                 </h2>
                 <ul className="space-y-3">

@@ -5,33 +5,6 @@ import { HiDownload } from "react-icons/hi";
 import { Helmet } from "react-helmet-async";
 import useRDFStore from "../../storage/useRDFstorage";
 
-// const reports = [
-//   {
-//     id: 1,
-//     title: "Annual Report 2023",
-
-//     year: "2023",
-//     fileUrl: "/assets/RDF-Annual-Report-2022-23.pdf",
-//     coverImageUrl: "/assets/annual-report-cover.png",
-//   },
-//   {
-//     id: 2,
-//     title: "Annual Report 2022",
-
-//     year: "2022",
-//     fileUrl: "/reports/annual_report_2022.pdf",
-//     coverImageUrl: "/assets/Screenshot_6.jpg",
-//   },
-//   {
-//     id: 3,
-//     title: "Annual Report 2021",
-
-//     year: "2021",
-//     fileUrl: "/reports/annual_report_2021.pdf",
-//     coverImageUrl: "/assets/annual-report-cover2.png",
-//   },
-// ];
-
 const AnnualReport = () => {
   const [searchYear, setSearchYear] = useState("");
   const { reports, fetchReport } = useRDFStore();
@@ -41,7 +14,7 @@ const AnnualReport = () => {
     }
   }, []);
 
-  console.log(reports);
+  //console.log(reports);
   const handleDownload = (fileUrl, title) => {
     const link = document.createElement("a");
     link.href = fileUrl;
@@ -50,11 +23,14 @@ const AnnualReport = () => {
     link.click();
     document.body.removeChild(link);
   };
+  const sortedReports = [...reports].sort(
+    (a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt)
+  );
 
   // Filter reports based on search year
   const filteredReports = searchYear
-    ? reports.filter((report) => report.title.includes(searchYear))
-    : reports;
+    ? sortedReports.filter((report) => report.title.includes(searchYear))
+    : sortedReports;
 
   return (
     <motion.div
@@ -64,12 +40,19 @@ const AnnualReport = () => {
       className="bg-green-50"
     >
       <Helmet>
-        <title> RDF-Annual Report </title>
+        <title>
+          RDF Annual Reports | Resource Development Foundation (RDF)
+        </title>
+        <meta
+          name="description"
+          content="Explore the latest and past annual reports of Resource Development Foundation (RDF), highlighting our achievements, projects, and impact in sustainable community development."
+        />
       </Helmet>
+
       {/* Cover Section */}
       <PageCoverPhoto
-        title="Our Annual Report"
-        subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
+        title="ANNUAL REPORT"
+        subtitle="Creating Sustainable Impact Through Transformation"
       />
 
       {/* Filter Section */}
@@ -84,7 +67,7 @@ const AnnualReport = () => {
           <input
             type="text"
             placeholder="Enter title (e.g. 2023)"
-            className="p-2 border rounded-lg w-40 text-center shadow-sm"
+            className="p-2 border rounded-lg w-40 text-center "
             onChange={(e) => setSearchYear(e.target.value)}
           />
         </div>

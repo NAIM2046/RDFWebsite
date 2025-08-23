@@ -384,25 +384,190 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
       const result =  await programsCol.deleteOne(quary) ;
       res.send(result) ;
     } )
+
+    app.put("/programs/:id", verifyToken, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedProgram = req.body;
+    
+    // Validate the ID
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send({ error: "Invalid program ID" });
+    }
+    
+    const query = { _id: new ObjectId(id) };
+    
+    // Create update object with $set operator
+    const updateDoc = {
+      $set: {
+        title: updatedProgram.title,
+        description: updatedProgram.description,
+        focus: updatedProgram.focus,
+        images: updatedProgram.images,
+        videoId: updatedProgram.videoId,
+        updatedAt: new Date() // Add timestamp for last update
+      }
+    };
+    
+    // Options to return the updated document
+    const options = { returnOriginal: false };
+    
+    const result = await programsCol.updateOne(query, updateDoc, options);
+    
+    if (result.matchedCount === 0) {
+      return res.status(404).send({ error: "Program not found" });
+    }
+    
+    res.send(result);
+  } catch (error) {
+    console.error("Error updating program:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
       // programs api end --------- ; 
      // projects apii start ; 
-     app.post("/projects" , verifyToken,async(req , res) =>{
-          const project = req.body ; 
-          const result = await projectCol.insertOne(project) ; 
-          res.send(result) ;
-     })
-     app.get("/projects" , async(req , res) =>{
-      const result = await projectCol.find().toArray() ;
-      res.send(result) ;
-     })
-   
-     app.delete("/projects/:id" , verifyToken, async(req , res) =>{
-      const id =  req.params.id ; 
-      console.log(id) ;
-      const quary =  {_id: new ObjectId(id)} ; 
-      const result = await projectCol.deleteOne(quary) ;
-      res.send(result) ;
-     })
+     
+
+// Create project
+app.post("/projects", verifyToken, async (req, res) => {
+    try {
+        const project = {
+            ...req.body,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
+        
+        const result = await projectCol.insertOne(project);
+        res.json({
+            message: "Project created successfully",
+            insertedId: result.insertedId
+        });
+    } catch (error) {
+        console.error("Error creating project:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Get all projects
+app.get("/projects", async (req, res) => {
+    try {
+        const result = await projectCol.find().toArray();
+        res.json(result);
+    } catch (error) {
+        console.error("Error fetching projects:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Get single project by ID
+app.get("/projects/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid project ID" });
+        }
+        
+        const query = { _id: new ObjectId(id) };
+        const result = await projectCol.findOne(query);
+        
+        if (!result) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+        
+        res.json(result);
+        
+    } catch (error) {
+        console.error("Error fetching project:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Update project
+app.put("/projects/:id", verifyToken, async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log(id)
+        const updatedProject = req.body;
+        
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid project ID" });
+        }
+        
+        const query = { _id: new ObjectId(id) };
+        
+        const updateDoc = {
+            $set: {
+                name: updatedProject.name,
+                programName: updatedProject.programName,
+                donor: updatedProject.donor,
+                budget: updatedProject.budget,
+                startDate: updatedProject.startDate,
+                endDate: updatedProject.endDate,
+                projectState: updatedProject.projectState,
+                implementingAreas: updatedProject.implementingAreas,
+                directBeneficiaries: updatedProject.directBeneficiaries,
+                indirectBeneficiaries: updatedProject.indirectBeneficiaries,
+                projectGoal: updatedProject.projectGoal,
+                majorInterventions: updatedProject.majorInterventions,
+                projectResults: updatedProject.projectResults,
+                projectCompletionReport: updatedProject.projectCompletionReport,
+                remarks: updatedProject.remarks,
+                images: updatedProject.images,
+                video: updatedProject.video,
+                activitiesID: updatedProject.activitiesID,
+                projectSummary: updatedProject.projectSummary,
+                updatedAt: new Date()
+            }
+        };
+        
+        const options = { returnOriginal: false };
+        
+        const result = await projectCol.findOneAndUpdate(query, updateDoc, options);
+        console.log(result)
+        
+        // if (!result.value) {
+        //     return res.status(404).json({ error: "Project not found" });
+        // }
+        
+        res.json({
+            message: "Project updated successfully",
+            modifiedCount: 1,
+            project: result.value
+        });
+        
+    } catch (error) {
+        console.error("Error updating project:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// Delete project
+app.delete("/projects/:id", verifyToken, async (req, res) => {
+    try {
+        const id = req.params.id;
+        
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "Invalid project ID" });
+        }
+        
+        const query = { _id: new ObjectId(id) };
+        const result = await projectCol.deleteOne(query);
+        
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+        
+        res.json({
+            message: "Project deleted successfully",
+            deletedCount: result.deletedCount
+        });
+        
+    } catch (error) {
+        console.error("Error deleting project:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
       // project api end---------------- ; 
 
       // active api start 

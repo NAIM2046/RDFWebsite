@@ -62,6 +62,7 @@ const Navbar = () => {
           icon: <FiUsers />,
         },
         { name: "Our Team", link: "/our-team", icon: <FaUsers /> },
+        { name: "Organogram", link: "/organogram", icon: <FaClipboardList /> },
         {
           name: "Annual Reports",
           link: "/annual-reports",
@@ -74,8 +75,8 @@ const Navbar = () => {
           link: "/our-partners",
           icon: <FaHandHoldingHeart />,
         },
-        { name: "Organogram", link: "/organogram", icon: <FaClipboardList /> },
-        { name: "Governance", link: "/", icon: <FaClipboardList /> },
+
+        // { name: "Governance", link: "/", icon: <FaClipboardList /> },
         // { name: "Certification", link: "/certification", icon: <FiBook /> },
       ],
     },
@@ -88,14 +89,14 @@ const Navbar = () => {
           link: "/our-work#ourapproach",
           icon: <FaNewspaper />,
         },
-        // {
-        //   name: "We Work For",
-        //   link: "/our-work#weworkfor",
-        //   icon: <FiUsers />,
-        // },
         {
-          name: "Key Focus Area",
-          link: "/key-focus-area",
+          name: "We Work For",
+          link: "/weworkfor",
+          icon: <FiUsers />,
+        },
+        {
+          name: "Our Program",
+          link: "/our-program",
           icon: <FaClipboardList />,
         },
         {
@@ -104,11 +105,11 @@ const Navbar = () => {
           icon: <FaNewspaper />,
         },
 
-        // {
-        //   name: "Where We Work",
-        //   link: "/our-work#wherewework",
-        //   icon: <MdPlace />,
-        // },
+        {
+          name: "Where We Work",
+          link: "/wherewework",
+          icon: <MdPlace />,
+        },
         // {
         //   name: "Our Programs",
         //   link: "/our-programs",
@@ -158,11 +159,11 @@ const Navbar = () => {
       title: "MORE INFO",
       icon: <MdMore />,
       links: [
-        {
-          name: "Notices",
-          link: "/notice",
-          icon: <TbAlertSquare />,
-        },
+        // {
+        //   name: "Notices",
+        //   link: "/notice",
+        //   icon: <TbAlertSquare />,
+        // },
         { name: "Contact Us", link: "/contact", icon: <RiContactsLine /> },
         { name: "Events", link: "/events", icon: <MdEvent /> },
       ],

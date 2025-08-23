@@ -27,7 +27,7 @@ const OurPartners = () => {
       <Helmet>
         <title> RDF-Partners </title>
       </Helmet>
-      <PageCoverPhoto title={"OUR PARTNERS"} />
+      <PageCoverPhoto title={" PARTNERS & DONORS"} />
       <motion.div
         className="mt-10 px-4"
         initial={{ opacity: 0, y: 50 }}
@@ -38,10 +38,10 @@ const OurPartners = () => {
         <h2 className="text-3xl font-bold text-center text-gray-800">
           OUR PARTNERS & DONORS
         </h2>
-        <p className="text-center text-green-400 max-w-3xl mx-auto mt-2">
+        {/* <p className="text-center text-green-400 max-w-3xl mx-auto mt-2">
           Our partnerships are one of our key approaches and an essential part
           of how we achieve success.
-        </p>
+        </p> */}
 
         {/* Tabs */}
         <motion.div
@@ -95,7 +95,7 @@ const OurPartners = () => {
                     alt={partner.name}
                     className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 transition-transform duration-300 group-hover:scale-110 object-contain"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center bg-green-400 bg-opacity-80 text-white text-xs sm:text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-2 text-center">
+                  <div className="absolute inset-0 flex items-center justify-center bg-green-600 bg-opacity-80 text-white text-xs sm:text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-2 text-center">
                     {partner.fullName || partner.name}
                   </div>
                 </motion.a>

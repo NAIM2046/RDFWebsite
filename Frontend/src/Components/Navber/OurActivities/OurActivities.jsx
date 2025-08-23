@@ -15,7 +15,7 @@ const OurActivities = () => {
 
   return (
     <div className="text-center py-10 px-4 bg-amber-50 font-serif">
-      <motion.h3
+      {/* <motion.h3
         className="text-sm text-green-500 tracking-widest uppercase"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ const OurActivities = () => {
         viewport={{ once: true }}
       >
         This is What We Do
-      </motion.h3>
+      </motion.h3> */}
 
       <motion.h2
         className="text-3xl font-bold text-indigo-900 mt-2 font-serif"
@@ -32,7 +32,7 @@ const OurActivities = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        Introduce Our Activities
+        Our Programs align with SDGs
       </motion.h2>
 
       {activities.length === 0 ? (

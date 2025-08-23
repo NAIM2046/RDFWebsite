@@ -3,11 +3,23 @@ import useRDFStore from "../../storage/useRDFstorage";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import ProjectList from "./ProjectList";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
-import { FaSpinner, FaTrash, FaCheckCircle, FaTimes } from "react-icons/fa";
+import {
+  FaSpinner,
+  FaTrash,
+  FaCheckCircle,
+  FaTimes,
+  FaEdit,
+} from "react-icons/fa";
 
 const ProjectPage = () => {
-  const { programs, fetchPrograms, fetchProjects, fetchActivites, activities } =
-    useRDFStore();
+  const {
+    programs,
+    fetchPrograms,
+    fetchProjects,
+    fetchActivites,
+    activities,
+    projects,
+  } = useRDFStore();
   const Axios = useAxiosSecure();
 
   const [imgLoading, setImgLoading] = useState(false);
@@ -18,6 +30,8 @@ const ProjectPage = () => {
     type: "",
     message: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   const [project, setProject] = useState({
     name: "",
@@ -44,7 +58,15 @@ const ProjectPage = () => {
   useEffect(() => {
     if (programs.length === 0) fetchPrograms();
     if (activities.length === 0) fetchActivites();
-  }, [fetchPrograms, fetchActivites, programs.length, activities.length]);
+    if (projects.length === 0) fetchProjects();
+  }, [
+    fetchPrograms,
+    fetchActivites,
+    fetchProjects,
+    programs.length,
+    activities.length,
+    projects.length,
+  ]);
 
   const showNotification = (type, message) => {
     setNotification({ show: true, type, message });
@@ -115,7 +137,7 @@ const ProjectPage = () => {
     if (!project.programName)
       newErrors.programName = "Program selection is required";
     if (!project.startDate) newErrors.startDate = "Start date is required";
-    if (!project.endDate) newErrors.endDate = "End date is required";
+
     if (!project.projectState)
       newErrors.projectState = "Project state is required";
     if (project.images.length === 0)
@@ -142,17 +164,34 @@ const ProjectPage = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await Axios.post("/projects", project);
-      if (response.data.insertedId) {
-        showNotification("success", "Project added successfully!");
-        fetchProjects();
-        resetForm();
+      let response;
+      if (isEditing) {
+        // Update existing project
+        response = await Axios.put(`/projects/${editingId}`, project);
+        if (response.data.modifiedCount > 0) {
+          showNotification("success", "Project updated successfully!");
+          fetchProjects();
+          resetForm();
+        } else {
+          throw new Error("Failed to update project");
+        }
       } else {
-        throw new Error("Failed to add project");
+        // Create new project
+        response = await Axios.post("/projects", project);
+        if (response.data.insertedId) {
+          showNotification("success", "Project added successfully!");
+          fetchProjects();
+          resetForm();
+        } else {
+          throw new Error("Failed to add project");
+        }
       }
     } catch (error) {
       console.error("Submission error:", error);
-      showNotification("error", "Failed to add project");
+      showNotification(
+        "error",
+        isEditing ? "Failed to update project" : "Failed to add project"
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -181,6 +220,47 @@ const ProjectPage = () => {
       projectSummary: "",
     });
     setErrors({});
+    setIsEditing(false);
+    setEditingId(null);
+  };
+
+  const handleEdit = (projectToEdit) => {
+    setProject({
+      name: projectToEdit.name || "",
+      programName: projectToEdit.programName || "",
+      donor: projectToEdit.donor || "",
+      budget: projectToEdit.budget || "",
+      startDate: projectToEdit.startDate
+        ? projectToEdit.startDate.split("T")[0]
+        : "",
+      endDate: projectToEdit.endDate ? projectToEdit.endDate.split("T")[0] : "",
+      projectState: projectToEdit.projectState || "",
+      implementingAreas: projectToEdit.implementingAreas || "",
+      directBeneficiaries: projectToEdit.directBeneficiaries || {
+        male: "",
+        female: "",
+      },
+      indirectBeneficiaries: projectToEdit.indirectBeneficiaries || {
+        male: "",
+        female: "",
+      },
+      projectGoal: projectToEdit.projectGoal || "",
+      majorInterventions: projectToEdit.majorInterventions || [],
+      projectResults: projectToEdit.projectResults || "",
+      projectCompletionReport: projectToEdit.projectCompletionReport || "",
+      remarks: projectToEdit.remarks || "",
+      images: projectToEdit.images || [],
+      video: projectToEdit.video || "",
+      activitiesID: projectToEdit.activitiesID || "",
+      projectSummary: projectToEdit.projectSummary || "",
+    });
+    setIsEditing(true);
+    setEditingId(projectToEdit._id);
+
+    // Scroll to form
+    document
+      .getElementById("project-form")
+      .scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -203,10 +283,26 @@ const ProjectPage = () => {
         </div>
       )}
 
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+      <div id="project-form" className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
-          Add New Project
+          {isEditing ? "Edit Project" : "Add New Project"}
         </h2>
+
+        {isEditing && (
+          <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-blue-700 flex items-center">
+              <FaEdit className="mr-2" />
+              You are editing an existing project. Click "Cancel Edit" to stop
+              editing.
+            </p>
+            <button
+              onClick={resetForm}
+              className="mt-2 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 text-sm"
+            >
+              Cancel Edit
+            </button>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -611,27 +707,41 @@ const ProjectPage = () => {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed font-medium flex items-center justify-center"
-          >
-            {isSubmitting ? (
-              <>
-                <FaSpinner className="animate-spin mr-2" />
-                Submitting...
-              </>
-            ) : (
-              "Add Project"
+          <div className="flex gap-4">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex-1 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed font-medium flex items-center justify-center"
+            >
+              {isSubmitting ? (
+                <>
+                  <FaSpinner className="animate-spin mr-2" />
+                  {isEditing ? "Updating..." : "Submitting..."}
+                </>
+              ) : isEditing ? (
+                "Update Project"
+              ) : (
+                "Add Project"
+              )}
+            </button>
+
+            {isEditing && (
+              <button
+                type="button"
+                onClick={resetForm}
+                className="bg-gray-500 text-white py-3 px-6 rounded-lg hover:bg-gray-600 font-medium"
+              >
+                Cancel
+              </button>
             )}
-          </button>
+          </div>
         </form>
       </div>
 
       {/* Project List */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-bold text-gray-800 mb-4">Project List</h2>
-        <ProjectList />
+        <ProjectList onEdit={handleEdit} />
       </div>
     </div>
   );

@@ -104,8 +104,8 @@ const KeyFocusArea = () => {
       </Helmet>
 
       <PageCoverPhoto
-        title="Key Focus Areas by 2030"
-        subtitle="We Are A Global Non-Profit Organization That Supports Good Causes and Positive Changes All Over The World."
+        title="Key Focus Area"
+        subtitle="Creating Sustainable Impact Through Transformation"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
