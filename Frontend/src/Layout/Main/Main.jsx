@@ -12,12 +12,22 @@ const Main = () => {
       window.scrollTo(0, 0);
     }
   }, [location.pathname]);
+
   return (
-    <div>
-      <Navber></Navber>
-      <Outlet></Outlet>
-      <Footer></Footer>
-      <ButtomtoTop></ButtomtoTop>
+    <div className="min-h-screen flex flex-col">
+      {/* Top Navbar */}
+      <Navber />
+
+      {/* Main content (always keeps space) */}
+      <main className="flex-1 min-h-[80vh]">
+        <Outlet />
+      </main>
+
+      {/* Footer always bottom */}
+      <Footer />
+
+      {/* Back to Top Button */}
+      <ButtomtoTop />
     </div>
   );
 };

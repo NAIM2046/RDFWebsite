@@ -6,8 +6,10 @@ import uploadImageToImgbb from "../../Hook/ImgUpload";
 import {
   FaSpinner,
   FaTrash,
+  FaEdit,
   FaCheckCircle,
   FaExclamationTriangle,
+  FaTimes,
 } from "react-icons/fa";
 
 const Sliderinfo = () => {
@@ -15,9 +17,12 @@ const Sliderinfo = () => {
     src: "",
     header: "",
     text: "",
+    slideNumber: "",
   });
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editingSlider, setEditingSlider] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [notification, setNotification] = useState({
     show: false,
     type: "", // 'success' or 'error'
@@ -32,6 +37,24 @@ const Sliderinfo = () => {
       fetchsliderinfo();
     }
   }, [sliderinfo.length, fetchsliderinfo]);
+
+  // Reset form when switching modes
+  useEffect(() => {
+    if (!isEditMode) {
+      resetForm();
+    }
+  }, [isEditMode]);
+
+  const resetForm = () => {
+    setSlider({
+      src: "",
+      header: "",
+      text: "",
+      slideNumber: "",
+    });
+    setEditingSlider(null);
+    setIsEditMode(false);
+  };
 
   const showNotification = (type, message) => {
     setNotification({ show: true, type, message });
@@ -67,14 +90,27 @@ const Sliderinfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log(slider);
 
     try {
-      const result = await AxiosSecure.post("/slider", slider);
-      if (result.data) {
-        showNotification("success", "Slider Info Saved Successfully!");
-        fetchsliderinfo();
-        setSlider({ src: "", header: "", text: "" });
+      if (isEditMode && editingSlider) {
+        // Update existing slider
+        const result = await AxiosSecure.put(
+          `/slider/${editingSlider._id}`,
+          slider
+        );
+        if (result.data) {
+          showNotification("success", "Slider Updated Successfully!");
+          fetchsliderinfo();
+          resetForm();
+        }
+      } else {
+        // Create new slider
+        const result = await AxiosSecure.post("/slider", slider);
+        if (result.data) {
+          showNotification("success", "Slider Info Saved Successfully!");
+          fetchsliderinfo();
+          resetForm();
+        }
       }
     } catch (error) {
       console.error("Error saving slider:", error);
@@ -82,6 +118,17 @@ const Sliderinfo = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleEdit = (sliderItem) => {
+    setEditingSlider(sliderItem);
+    setIsEditMode(true);
+    setSlider({
+      src: sliderItem.src,
+      header: sliderItem.header,
+      text: sliderItem.text,
+      slideNumber: sliderItem.slideNumber || "",
+    });
   };
 
   const handleDelete = async (id) => {
@@ -106,8 +153,8 @@ const Sliderinfo = () => {
         <div
           className={`fixed top-4 right-4 z-50 p-4 rounded-md shadow-lg flex items-center ${
             notification.type === "success"
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
+              ? "bg-green-100 text-green-800 border border-green-200"
+              : "bg-red-100 text-red-800 border border-red-200"
           }`}
         >
           {notification.type === "success" ? (
@@ -120,21 +167,50 @@ const Sliderinfo = () => {
       )}
 
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">
-          Slider Management
-        </h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+            Slider Management
+          </h1>
+          {isEditMode && (
+            <button
+              onClick={resetForm}
+              className="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+            >
+              <FaTimes className="mr-2" /> Cancel Edit
+            </button>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Form Section */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h2 className="text-xl font-semibold mb-4 text-gray-700">
-              Add New Slider
+              {isEditMode ? "Edit Slider" : "Add New Slider"}
             </h2>
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Slider Image
+                  Slide Number *
+                </label>
+                <input
+                  type="number"
+                  name="slideNumber"
+                  value={slider.slideNumber}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter slide number (1, 2, 3...)"
+                  min="1"
+                  required
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Determines the order of slides (lower numbers appear first)
+                </p>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Slider Image *
                 </label>
                 <div className="relative">
                   <input
@@ -144,7 +220,7 @@ const Sliderinfo = () => {
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     disabled={isUploading}
-                    required
+                    required={!isEditMode} // Not required when editing (can keep existing image)
                   />
                   {isUploading && (
                     <div className="absolute inset-0 bg-gray-100 bg-opacity-70 flex items-center justify-center rounded-md">
@@ -152,11 +228,16 @@ const Sliderinfo = () => {
                     </div>
                   )}
                 </div>
+                {isEditMode && slider.src && (
+                  <p className="text-xs text-blue-500 mt-1">
+                    Leave empty to keep current image
+                  </p>
+                )}
               </div>
 
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Header Text
+                  Header Text *
                 </label>
                 <input
                   type="text"
@@ -171,7 +252,7 @@ const Sliderinfo = () => {
 
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description
+                  Description *
                 </label>
                 <textarea
                   name="text"
@@ -196,8 +277,10 @@ const Sliderinfo = () => {
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
                     <FaSpinner className="animate-spin mr-2" />
-                    Saving...
+                    {isEditMode ? "Updating..." : "Saving..."}
                   </span>
+                ) : isEditMode ? (
+                  "Update Slider"
                 ) : (
                   "Save Slider"
                 )}
@@ -218,9 +301,14 @@ const Sliderinfo = () => {
                   />
                 </div>
                 <div className="mt-3">
-                  <h4 className="text-lg font-semibold text-gray-800">
-                    {slider.header}
-                  </h4>
+                  <div className="flex justify-between items-center">
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      {slider.header}
+                    </h4>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
+                      Slide #{slider.slideNumber}
+                    </span>
+                  </div>
                   <p className="text-gray-600 mt-1">{slider.text}</p>
                 </div>
               </div>
@@ -229,9 +317,14 @@ const Sliderinfo = () => {
 
           {/* Existing Sliders Section */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">
-              Existing Sliders
-            </h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-700">
+                Existing Sliders
+              </h2>
+              <span className="text-sm text-gray-500">
+                {sliderinfo.length} slider(s)
+              </span>
+            </div>
 
             {isLoading ? (
               <div className="flex justify-center items-center h-40">
@@ -244,39 +337,55 @@ const Sliderinfo = () => {
               </div>
             ) : (
               <div className="space-y-4">
-                {sliderinfo.map((item) => (
-                  <div
-                    key={item._id}
-                    className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
-                  >
-                    <div className="flex flex-col md:flex-row gap-4">
-                      <div className="flex-shrink-0">
-                        <img
-                          src={item.src}
-                          alt={item.header}
-                          className="w-32 h-20 object-cover rounded"
-                        />
-                      </div>
-                      <div className="flex-grow">
-                        <h3 className="font-medium text-gray-800">
-                          {item.header}
-                        </h3>
-                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                          {item.text}
-                        </p>
-                      </div>
-                      <div className="flex-shrink-0 self-center">
-                        <button
-                          onClick={() => handleDelete(item._id)}
-                          className="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-50 transition-colors"
-                          title="Delete slider"
-                        >
-                          <FaTrash />
-                        </button>
+                {sliderinfo
+                  .sort((a, b) => (a.slideNumber || 0) - (b.slideNumber || 0))
+                  .map((item) => (
+                    <div
+                      key={item._id}
+                      className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
+                    >
+                      <div className="flex flex-col md:flex-row gap-4">
+                        <div className="flex-shrink-0">
+                          <img
+                            src={item.src}
+                            alt={item.header}
+                            className="w-32 h-20 object-cover rounded"
+                          />
+                        </div>
+                        <div className="flex-grow">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <h3 className="font-medium text-gray-800">
+                                {item.header}
+                              </h3>
+                              <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                                {item.text}
+                              </p>
+                            </div>
+                            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded whitespace-nowrap">
+                              #{item.slideNumber || "N/A"}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex-shrink-0 self-center flex space-x-2">
+                          <button
+                            onClick={() => handleEdit(item)}
+                            className="text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-50 transition-colors"
+                            title="Edit slider"
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item._id)}
+                            className="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-50 transition-colors"
+                            title="Delete slider"
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             )}
           </div>

@@ -366,6 +366,48 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
         res.status(500).send({ error: "Failed to delete slider" });
       }
     });
+
+    // Add these endpoints to your backend
+
+// Update slider
+app.put("/slider/:id", verifyToken, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedSlider = req.body;
+    
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send({ error: "Invalid slider ID" });
+    }
+    
+    const query = { _id: new ObjectId(id) };
+    
+    const updateFields = {};
+    if (updatedSlider.src !== undefined) updateFields.src = updatedSlider.src;
+    if (updatedSlider.header !== undefined) updateFields.header = updatedSlider.header;
+    if (updatedSlider.text !== undefined) updateFields.text = updatedSlider.text;
+    if (updatedSlider.slideNumber !== undefined) updateFields.slideNumber = updatedSlider.slideNumber;
+    
+    updateFields.updatedAt = new Date();
+    
+    const updateDoc = {
+      $set: updateFields
+    };
+    
+    const options = { returnOriginal: false };
+    const result = await sliderinfo.findOneAndUpdate(query, updateDoc, options);
+    
+    // if (!result.value) {
+    //   return res.status(404).send({ error: "Slider not found" });
+    // }
+    
+    res.send(result);
+  } catch (error) {
+    console.error("Error updating slider:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
+// Make sure your slider schema includes the slideNumber field
        // slider api end----------------- ; 
 
        // programs api start ; 
@@ -698,22 +740,123 @@ app.delete("/projects/:id", verifyToken, async (req, res) => {
 
       // video api end-----
       // event api start 
-      app.post("/event" , verifyToken , async(req , res) =>{
-        const event = req.body ; 
-        const result =  await eventCol.insertOne(event) ; 
-        res.send(result) ;
+     const { ObjectId } = require('mongodb');
 
-      })
-      app.get("/event" ,  async(req, res)=>{
-        const result = await eventCol.find().toArray() ; 
-        res.send(result) ; 
-      } )
-      app.delete("/event/:id" , verifyToken , async(req , res) =>{
-           const id =  req.params.id ; 
-           const quary = {_id : new ObjectId(id)} ; 
-           const result = await eventCol.deleteOne(quary) ; 
-           res.send(result) ;
-      })
+// Create event
+app.post("/event", verifyToken, async (req, res) => {
+  try {
+    const event = {
+      ...req.body,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    
+    const result = await eventCol.insertOne(event);
+    res.send(result);
+  } catch (error) {
+    console.error("Error creating event:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
+// Get all events
+app.get("/event", async (req, res) => {
+  try {
+    const result = await eventCol.find().sort({ date: -1 }).toArray();
+    res.send(result);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
+// Get single event by ID
+app.get("/event/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send({ error: "Invalid event ID" });
+    }
+    
+    const query = { _id: new ObjectId(id) };
+    const result = await eventCol.findOne(query);
+    
+    if (!result) {
+      return res.status(404).send({ error: "Event not found" });
+    }
+    
+    res.send(result);
+  } catch (error) {
+    console.error("Error fetching event:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
+// Update event
+app.put("/event/:id", verifyToken, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedEvent = req.body;
+    console.log(id)
+    
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send({ error: "Invalid event ID" });
+    }
+    
+    const query = { _id: new ObjectId(id) };
+    
+    const updateFields = {};
+    if (updatedEvent.title !== undefined) updateFields.title = updatedEvent.title;
+    if (updatedEvent.date !== undefined) updateFields.date = updatedEvent.date;
+    if (updatedEvent.time !== undefined) updateFields.time = updatedEvent.time;
+    if (updatedEvent.location !== undefined) updateFields.location = updatedEvent.location;
+    if (updatedEvent.description !== undefined) updateFields.description = updatedEvent.description;
+    if (updatedEvent.type !== undefined) updateFields.type = updatedEvent.type;
+    if (updatedEvent.images !== undefined) updateFields.images = updatedEvent.images;
+    
+    updateFields.updatedAt = new Date();
+    
+    const updateDoc = {
+      $set: updateFields
+    };
+    
+    const options = { returnOriginal: false };
+    const result = await eventCol.findOneAndUpdate(query, updateDoc, options);
+    
+    // if (!result.value) {
+    //   return res.status(404).send({ error: "Event not found" });
+    // }
+    
+    res.send(result.value);
+  } catch (error) {
+    console.error("Error updating event:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
+// Delete event
+app.delete("/event/:id", verifyToken, async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send({ error: "Invalid event ID" });
+    }
+    
+    const query = { _id: new ObjectId(id) };
+    const result = await eventCol.deleteOne(query);
+    
+    if (result.deletedCount === 0) {
+      return res.status(404).send({ error: "Event not found" });
+    }
+    
+    res.send({ message: "Event deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
 
       // event api end----
 

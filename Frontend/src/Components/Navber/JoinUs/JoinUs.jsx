@@ -90,7 +90,7 @@ const JoinUs = ({ header }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       <ToastContainer />
 
       {/* Hero Section */}
@@ -219,20 +219,22 @@ const JoinUs = ({ header }) => {
       </div>
 
       {/* Map Embed */}
-      <div className="py-12 px-4 md:px-8 lg:px-16 bg-gray-100">
+      <div className="py-1 px-4 md:px-8 lg:px-1 ">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8 text-green-800">
             Find Us on Map
           </h2>
           <div className="aspect-w-16 aspect-h-9 w-full h-96 rounded-xl overflow-hidden shadow-lg">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.848742142172!2d90.35582151538424!3d23.77001414458664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c098a14f7011%3A0x5e4ead7428592246!2sResource%20Development%20Foundation!5e0!3m2!1sen!2sbd!4v1617312889246!5m2!1sen!2sbd"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1090.921997683201!2d90.35514302717196!3d23.770083451770166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c1000dcc73e7%3A0xd82969f3638b6a5c!2sResource%20Development%20Foundation%20(RDF)!5e1!3m2!1sen!2sbd!4v1756052742517!5m2!1sen!2sbd"
               width="100%"
-              height="100%"
+              height="450"
               style={{ border: 0 }}
-              allowFullScreen=""
+              allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
               title="RDF Location Map"
+              className="block"
             ></iframe>
           </div>
         </div>

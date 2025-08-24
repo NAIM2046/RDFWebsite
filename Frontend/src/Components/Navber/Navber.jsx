@@ -251,7 +251,7 @@ const Navbar = () => {
           {/* Donate Button */}
           <motion.button
             onClick={() => navigate("/payment")}
-            className="hidden lg:flex items-center bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2.5 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all cursor-pointer"
+            className="hidden lg:flex items-center bg-gradient-to-r from-green-600 px-6 py-2.5 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -261,7 +261,7 @@ const Navbar = () => {
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
-              <FaHeart className="text-xl" />
+              <FaHeart className="text-xl text-green-700" />
             </motion.span>
           </motion.button>
 
@@ -293,7 +293,7 @@ const Navbar = () => {
             <img src={img} alt="RDF Logo" className="h-12" />
             <motion.button
               onClick={() => navigate("/payment")}
-              className="flex items-center bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md"
+              className="flex items-center bg-gradient-to-r from-green-500 to-red-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

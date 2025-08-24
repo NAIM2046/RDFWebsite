@@ -36,8 +36,8 @@ const OurPartners = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our <span className="text-green-600">Valued</span> Partners
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif">
+            Our Partners
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             We collaborate with leading organizations worldwide to create

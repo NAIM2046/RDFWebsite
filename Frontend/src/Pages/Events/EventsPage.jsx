@@ -88,7 +88,7 @@ const EventsPage = () => {
 
       <PageCoverPhoto
         title="Events"
-        description="Join our community through these meaningful events"
+        subtitle={"Creating Sustainable Impact through Transformation"}
       />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

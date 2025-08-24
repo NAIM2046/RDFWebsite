@@ -36,15 +36,18 @@ const Slider = () => {
   //   },
   // ];
 
-  const navigate = useNavigate();
+  const sortSliderInfo = () => {
+    // Sort slider info by slideNumber
+    return sliderinfo.sort((a, b) => a.slideNumber - b.slideNumber);
+  };
 
   return (
     <div className="w-full">
       {/* Loading State */}
       <h1
         className="absolute z-10 text-center font-serif font-bold text-white px-2
-  text-md sm:text-lg md:text-lg lg:text-xl xl:text-4xl
-  top-1/6 sm:top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+  text-md sm:text-lg md:text-lg lg:text-xl xl:text-3xl
+  top-1/6 sm:top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/1 rounded-lg py-2"
       >
         Resource Development Foundation (RDF)
       </h1>
@@ -59,10 +62,10 @@ const Slider = () => {
         <Carousel
           className="w-full h-[400px] md:h-[450px] lg:h-[500px] xl:h-[550px]"
           autoplay={true}
-          autoplayDelay={9000}
+          autoplayDelay={10000}
           loop={true}
         >
-          {sliderinfo.map((image, index) => (
+          {sortSliderInfo()?.map((image, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.95 }}

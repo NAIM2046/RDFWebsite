@@ -8,6 +8,8 @@ import {
   FiTrash2,
   FiUpload,
   FiImage,
+  FiEdit,
+  FiX,
 } from "react-icons/fi";
 import useRDFStore from "../../storage/useRDFstorage";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
@@ -26,6 +28,8 @@ const EventPageadmin = () => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("create");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const Axios = useAxiosSecure();
   const { events, fetchEvent } = useRDFStore();
@@ -35,6 +39,27 @@ const EventPageadmin = () => {
       fetchEvent();
     }
   }, [events, fetchEvent]);
+
+  // Reset form when switching tabs or modes
+  useEffect(() => {
+    if (activeTab === "create" && !isEditMode) {
+      resetForm();
+    }
+  }, [activeTab, isEditMode]);
+
+  const resetForm = () => {
+    setFormData({
+      title: "",
+      date: "",
+      time: "",
+      location: "",
+      description: "",
+      type: "Upcoming",
+    });
+    setImages([]);
+    setEditingEvent(null);
+    setIsEditMode(false);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -80,25 +105,42 @@ const EventPageadmin = () => {
     };
 
     try {
-      const res = await Axios.post("/event", eventData);
-      toast.success("Event created successfully!");
-      setFormData({
-        title: "",
-        date: "",
-        time: "",
-        location: "",
-        description: "",
-        type: "Upcoming",
-      });
-      setImages([]);
+      if (isEditMode && editingEvent) {
+        // Update existing event
+        await Axios.put(`/event/${editingEvent._id}`, eventData);
+        toast.success("Event updated successfully!");
+      } else {
+        // Create new event
+        await Axios.post("/event", eventData);
+        toast.success("Event created successfully!");
+      }
+
+      resetForm();
       fetchEvent();
       setActiveTab("manage");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to create event");
+      toast.error(
+        isEditMode ? "Failed to update event" : "Failed to create event"
+      );
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleEdit = (event) => {
+    setEditingEvent(event);
+    setIsEditMode(true);
+    setFormData({
+      title: event.title,
+      date: event.date.split("T")[0], // Format date for input
+      time: event.time,
+      location: event.location,
+      description: event.description,
+      type: event.type,
+    });
+    setImages(event.images || []);
+    setActiveTab("create");
   };
 
   const handleDelete = async (id) => {
@@ -114,11 +156,23 @@ const EventPageadmin = () => {
     }
   };
 
+  const cancelEdit = () => {
+    resetForm();
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        Event Management
-      </h1>
+    <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Event Management</h1>
+        {isEditMode && (
+          <button
+            onClick={cancelEdit}
+            className="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            <FiX className="mr-2" /> Cancel Edit
+          </button>
+        )}
+      </div>
 
       {/* Tabs */}
       <div className="flex border-b border-gray-200 mb-6">
@@ -126,17 +180,17 @@ const EventPageadmin = () => {
           className={`py-2 px-4 font-medium ${
             activeTab === "create"
               ? "text-blue-600 border-b-2 border-blue-600"
-              : "text-gray-500"
+              : "text-gray-500 hover:text-gray-700"
           }`}
           onClick={() => setActiveTab("create")}
         >
-          Create Event
+          {isEditMode ? "Edit Event" : "Create Event"}
         </button>
         <button
           className={`py-2 px-4 font-medium ${
             activeTab === "manage"
               ? "text-blue-600 border-b-2 border-blue-600"
-              : "text-gray-500"
+              : "text-gray-500 hover:text-gray-700"
           }`}
           onClick={() => setActiveTab("manage")}
         >
@@ -287,7 +341,7 @@ const EventPageadmin = () => {
             {images.length > 0 && (
               <div className="mt-4">
                 <h3 className="text-sm font-medium text-gray-700 mb-2">
-                  Uploaded Images
+                  {isEditMode ? "Current Images" : "Uploaded Images"}
                 </h3>
                 <div className="flex flex-wrap gap-3">
                   {images.map((img, index) => (
@@ -311,13 +365,28 @@ const EventPageadmin = () => {
             )}
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end space-x-3">
+            {isEditMode && (
+              <button
+                type="button"
+                onClick={cancelEdit}
+                className="px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              >
+                Cancel
+              </button>
+            )}
             <button
               type="submit"
               disabled={isSubmitting}
               className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Creating..." : "Create Event"}
+              {isSubmitting
+                ? isEditMode
+                  ? "Updating..."
+                  : "Creating..."
+                : isEditMode
+                ? "Update Event"
+                : "Create Event"}
             </button>
           </div>
         </form>
@@ -429,12 +498,22 @@ const EventPageadmin = () => {
                         </span>
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <button
-                          onClick={() => handleDelete(event._id)}
-                          className="text-red-600 hover:text-red-900"
-                        >
-                          Delete
-                        </button>
+                        <div className="flex justify-end space-x-2">
+                          <button
+                            onClick={() => handleEdit(event)}
+                            className="text-blue-600 hover:text-blue-900"
+                            title="Edit event"
+                          >
+                            <FiEdit size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(event._id)}
+                            className="text-red-600 hover:text-red-900"
+                            title="Delete event"
+                          >
+                            <FiTrash2 size={16} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
