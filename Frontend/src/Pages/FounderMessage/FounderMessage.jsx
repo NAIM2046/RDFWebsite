@@ -45,42 +45,45 @@ const FounderMessage = () => {
               {/* <h2 className="text-xl md:text-2xl font-bold text-green-400 text-center font-serif ">
                 Message from Our Founder and Chief Executive Officer(CEO)
               </h2> */}
-              <p className="text-gray-600 mt-4 leading-relaxed">
-                It is just two & half decades since its inception in March 1993
-                as a small organization in a remote area of the southern corner
-                of Bangladesh, RDF has grown gradually and became one of the
-                most successful development organizations in Bangladesh. This
-                watershed moment therefore provides an opportunity to reflect on
-                these last 28 years and look ahead for the challenges that will
-                confront us in the years ahead. The year 2022-23, RDF has
-                restored its full energy and enthusiasm after the Covid-19
+              <p className="text-gray-600 mt-4 leading-relaxed font-serif">
+                It is just two &amp; half decades since its inception in March
+                1993 as a small organization in a remote area of the southern
+                corner of Bangladesh, RDF has grown gradually and became one of
+                the most successful development organizations in Bangladesh.
+                This watershed moment therefore provides an opportunity to
+                reflect on these last 28 years and look ahead for the challenges
+                that will confront us in the years ahead. The year 2022-23, RDF
+                has restored its full energy and enthusiasm after the Covid-19
                 Global Pandemic situation. However, during the crisis, our team
-                members were proactively present in the field. RDF has revised
-                and revisited its Strategic and Core Areas of Businesses and
-                activities in the six program areas which are, (a)Food Security,
-                Livelihood, Skills, and Economic Empowerment (b) Resilience to
-                Climate Change & Disaster Risk Reduction (c) Emergency Response
-                (d) Child Rights, Ending Child Marriage, Education, Health,
-                Nutrition, and Sexual and Reproductive Health Rights (SRHR) (e)
-                Water, Sanitation, and Hygiene (WASH) (f) Cross-cutting
-                programme: Gender Transformation, Disability Inclusion and
-                Locally-led Initiatives . It is our strong belief that with
-                newly redevised thematic areas, RDF will be concentrating more
-                to contribute to 10 (ten) different SDGs and other national and
-                international commitments of the country. Moreover, RDF will
-                also focus on Social Development Research activities including
-                renewable energy in the upcoming years. We are pledge-bound to
-                continue our focus on exploring new horizons, embanking new
-                commitments, emphasizing the new challenges, demands and
-                opportunities. Let us move forward to contribute to achieving
-                the national targets by 2030 and thus achieve the status of
-                “developing country”. I am thankful to our Executive Committee
-                (EC) and management committee for their valued guidance and
-                cooperation. Finally, I would like to thank all RDF employees
-                for their restless efforts to sustain the trend of program
-                activities. I do believe that the Annual Report 2021-’22 upholds
-                the yearly facts & figures of the organization intervention to
-                its valued stakeholders.
+                members were proactively present in the field. <br></br>
+                RDF has revised and revisited its Strategic and Core Areas of
+                Businesses and activities in the six program areas which are,
+                (a)Food Security, Livelihood, Skills, and Economic Empowerment
+                (b) Resilience to Climate Change &amp; Disaster Risk Reduction
+                (c) Emergency Response (d) Child Rights, Ending Child Marriage,
+                Education, Health, Nutrition, and Sexual and Reproductive Health
+                Rights (SRHR) (e) Water, Sanitation, and Hygiene (WASH) (f)
+                Cross-cutting programme: Gender Transformation, Disability
+                Inclusion and Locally-led Initiatives .<br></br>
+                It’s our strong belief that with newly redevised thematic areas,
+                RDF will be concentrating more to contribute to 10 (ten)
+                different SDGs and other national and international commitments
+                of the country. Moreover, RDF focus on Research activities,
+                Social Development including renewable energy in the upcoming
+                years. We are pledge-bound to continue our focus on exploring
+                new horizons, embanking new commitments, emphasizing the new
+                challenges, demands and opportunities.
+                <br></br>
+                Let us move forward to contribute for achieving the national
+                targets by 2030 and thus achieve the status of “developing
+                country”. <br></br>I am thankful to our Executive Committee (EC)
+                and management committee for their valued guidance and
+                cooperation. Finally, I would like to thank all RDF, key
+                personnel and employees of the organization for their restless
+                efforts to sustain the trend of program activities.<br></br>I do
+                believe that, the Annual Report 2021-’22 upholds the yearly
+                facts & figures of the organization’s intervention to its valued
+                stakeholders.
               </p>
             </div>
           </div>

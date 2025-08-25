@@ -101,9 +101,9 @@ const Slider = () => {
                 >
                   {image.text}
                 </Typography>
-                <button className="cursor-pointer hover:scale-110 transition-transform duration-300 btn btn-sm md:btn-md bg-green-600 text-white">
+                {/* <button className="cursor-pointer hover:scale-110 transition-transform duration-300 btn btn-sm md:btn-md bg-green-600 text-white">
                   Read more..
-                </button>
+                </button> */}
               </motion.div>
             </motion.div>
           ))}
