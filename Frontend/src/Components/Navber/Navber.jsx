@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import img from "../../assets/rdfnew-5.png";
+
+import rdflogo from "/assets/navber/rdflogo.png";
 import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
 
@@ -183,7 +184,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center px-4 lg:px-8 py-3">
         {/* Logo */}
         <Link to="/">
-          <img src={img} alt="RDF Logo" className="h-16 cursor-pointer" />
+          <img src={rdflogo} alt="RDF Logo" className="h-16 cursor-pointer" />
         </Link>
 
         {/* Desktop Menu */}
@@ -290,7 +291,7 @@ const Navbar = () => {
           initial={false}
         >
           <div className="p-4 flex justify-between items-center border-b border-gray-200">
-            <img src={img} alt="RDF Logo" className="h-12" />
+            <img src={rdflogo} alt="RDF Logo" className="h-12" />
             <motion.button
               onClick={() => navigate("/payment")}
               className="flex items-center bg-gradient-to-r from-green-500 to-red-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md"

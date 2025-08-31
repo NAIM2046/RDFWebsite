@@ -104,7 +104,7 @@ const JoinUs = ({ header }) => {
             {/* Illustration */}
             <div className="w-full lg:w-1/2 flex justify-center">
               <img
-                src="https://i.ibb.co.com/pHNLnR4/download-removebg-preview.png"
+                src="/assets/joinus/joinus.png"
                 alt="Contact Us Illustration"
                 className="w-full max-w-md h-auto"
                 loading="lazy"

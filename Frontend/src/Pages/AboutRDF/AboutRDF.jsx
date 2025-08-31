@@ -513,7 +513,7 @@ const AboutRDF = () => {
             {/* Bottom Section - Group Image */}
             <div className="mt-1 flex justify-center">
               <img
-                src="/assets/RDF Photo/DSC03483.JPG"
+                src="/assets/aboutRdf/bottomChildrenGroup.JPG"
                 alt="Group of children "
                 className="w-full h-[450px] max-w-5xl"
               />

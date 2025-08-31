@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 const organogramData = {
   title: " Organogram ",
-  image: "https://i.ibb.co/FkXT0hKj/RDF-Organogram-1.jpg",
+  image: "assets/organogram/RDF-Organogram-1.jpg",
   governance: {
     heading: "Governance",
 

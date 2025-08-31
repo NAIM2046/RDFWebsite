@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 
-import visionIcon from "/assets/RDF Photo/vission.png";
-import missionIcon from "/assets/RDF Photo/mission.png";
-import valueIcon from "/assets/RDF Photo/value.png";
+import visionIcon from "/assets/vissionandmission/vission.png";
+import missionIcon from "/assets/vissionandmission/mission.png";
+import valueIcon from "/assets/vissionandmission/value.png";
 
 const VisionMission = () => {
   const cardVariants = {

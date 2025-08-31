@@ -18,7 +18,7 @@ const ContactUs = () => {
           <div className="w-full lg:w-2/5">
             <div className="rounded-xl overflow-hidden shadow-xl h-full">
               <img
-                src="https://i.ibb.co.com/5XRkVs9d/Screenshot-2025-04-12-151210.png"
+                src="/assets/ContactUs/rdftower.png"
                 alt="RDF Office Building"
                 className="w-full h-full object-cover"
               />

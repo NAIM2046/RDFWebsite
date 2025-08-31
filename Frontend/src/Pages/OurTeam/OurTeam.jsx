@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
-import coverimg from "/assets/team.jpg";
+import coverimg from "/assets/ourteam/team.jpg";
 import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
 

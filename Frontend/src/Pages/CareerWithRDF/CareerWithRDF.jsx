@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 const CareerWithRDF = () => {
   const jobs = [
     {
-      img: "/assets/RDF Photo/job.jpg",
+      img: "/assets/careerwithrdf/job.jpg",
       applyLink: "mailto:hr@rdfbd.org", // Email link for applying
     },
   ];

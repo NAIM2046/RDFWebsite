@@ -102,7 +102,7 @@ const WhereWeWork = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <img
-                  src="https://i.ibb.co.com/sJggYDSZ/image.png"
+                  src="/assets/wherewework/image.png"
                   alt="Fullscreen Map"
                   className="w-full max-h-[90vh] object-contain rounded-lg shadow-xl"
                 />
