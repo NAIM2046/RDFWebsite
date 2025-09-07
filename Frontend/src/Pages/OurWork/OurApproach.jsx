@@ -7,7 +7,7 @@ const workApproach = [
       "RDF's approach to work is systematic and community-centric, encompassing a full project cycle. It begins with Identifying Issues through a deep understanding of the vulnerabilities faced by its target populations, particularly in coastal regions. ",
     expandedText:
       "This includes specific challenges like climate change impacts, high dropout rates, economic exclusion, child marriage risks, and limited access to essential services like WASH, identified through their presence across 48 districts.",
-    image: "/assets/photo-41.1-400x284.jpg",
+    image: "assets/ourapproach/identit.jpg",
     color: "bg-gradient-to-r from-blue-500 to-teal-400",
     icon: (
       <svg
@@ -58,7 +58,7 @@ const workApproach = [
       "Community Engagement is fundamental prioritizing locally-led initiatives and participatory decision-making. RDF actively works with communities, engaging youth in governance, empowering women's groups, and ",
     expandedText:
       "collaborating with local bodies (e.g. for WASH infrastructure), ensuring solutions are grounded in the local context and ownership.",
-    image: "https://i.ibb.co.com/My2bJG0t/Grameen-Shakti-png.png",
+    image: "assets/ourapproach/comm.jpg",
     color: "bg-gradient-to-r from-orange-500 to-pink-500",
     icon: (
       <svg
@@ -83,7 +83,7 @@ const workApproach = [
       "During Implementation, RDF executes its strategic programs through its strong field presence and approved planning, utilising the practical needs of the target people, like establishing Skills Training Centres, deploying solar technologies (irrigation, rooftops, lighting), providing microloans and asset transfers,running awareness campaigns, ",
     expandedText:
       " and partnering with organisations for emergency response. Implementation focuses on building capacity (technical skills, STEM/AI, entrepreneurship) and providing direct support and linkages with the government, non-government and private sector service providers.",
-    image: "https://i.ibb.co.com/Vcynj5yM/IMG-5277-webp.webp",
+    image: "assets/ourapproach/impl.png",
     color: "bg-gradient-to-r from-green-500 to-emerald-500",
     icon: (
       <svg
@@ -108,7 +108,7 @@ const workApproach = [
       "Finally, Monitoring and Evaluation is underpinned by robust governance (General Council, Executive Committee oversight of the CEO) and strong internal controls.RDF's commitment to ethical behaviour, accountability, zero-tolerance for violations, and adherence to its mission, vision, and values ensures programs are tracked for effectiveness and impact, maintaining  ",
     expandedText:
       "credibility and enabling continuous improvement in serving vulnerable communities. This structured approach ensures interventions are relevant, participatory, effectively delivered, and accountable, aiming for sustainable and transformative change.",
-    image: "https://i.ibb.co.com/0jH0sNMZ/IMG-20190917-160446.jpg",
+    image: "/assets/ourapproach/mon.JPG",
 
     color: "bg-gradient-to-r from-red-500 to-yellow-500",
     icon: (
@@ -144,7 +144,7 @@ const OurApproach = () => {
       <div className="">
         <h1 className="text-4xl md:text-5xl font-bold text-white font-serif mb-4 text-center m-4 pb-4">
           <span className="text-green-500"> Our</span>{" "}
-          <span className="text-red-500">Approach</span>
+          <span className="text-green-500">Approach</span>
         </h1>
       </div>
 

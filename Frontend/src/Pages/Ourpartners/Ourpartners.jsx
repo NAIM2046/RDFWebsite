@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
+import cover from "/assets/partner/coverphoto.jpg";
 
 const OurPartners = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -27,7 +28,11 @@ const OurPartners = () => {
       <Helmet>
         <title> RDF-Partners </title>
       </Helmet>
-      <PageCoverPhoto title={" PARTNERS & DONORS"} />
+      <PageCoverPhoto
+        title={" PARTNERS & DONORS"}
+        imageUrl={cover}
+        subtitle={"Creating Sustainable Impact through Transformation"}
+      />
       <motion.div
         className="mt-10 px-4"
         initial={{ opacity: 0, y: 50 }}

@@ -7,7 +7,7 @@ const MemberDetails = () => {
   const member = location.state?.member || {};
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8 px-4 sm:px-6 lg:px-8">
       <Helmet>
         <title>RDF Team Members | RDF Bangladesh Foundation</title>
         <meta
@@ -36,31 +36,38 @@ const MemberDetails = () => {
       </Helmet>
 
       {/* Profile Section */}
-      <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row gap-6 mt-20 lg:mt-1">
-        {/* Profile Image + Name + Post */}
-        <div className="flex-shrink-0 flex flex-col items-center text-center mx-auto md:mx-0 border-2 border-neutral-300 rounded-lg p-4 h-[60%]">
-          <img
-            src={member.image || "/assets/default-image.jpg"}
-            alt={member.name}
-            className="w-40 sm:w-48 md:w-72 h-40 sm:h-48 md:h-72 object-cover rounded-lg shadow-md"
-          />
-          <h3 className="text-lg sm:text-xl font-bold text-blue-600 mt-3">
-            {member.name}
-          </h3>
-          <p className="text-green-400 font-semibold text-sm sm:text-base">
-            {member.post}
-          </p>
-        </div>
+      <div className="max-w-5xl mx-auto bg-white shadow-xl rounded-xl overflow-hidden mt-20 lg:mt-8">
+        <div className="flex flex-col md:flex-row">
+          {/* Profile Image + Name + Post */}
+          <div className="md:w-2/5 bg-gradient-to-b from-blue-800 to-blue-600 p-8 flex flex-col items-center text-center">
+            <div className="mb-6">
+              <img
+                src={member.image || "/assets/default-image.jpg"}
+                alt={member.name}
+                className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 object-cover rounded-lg shadow-lg border-4 border-white"
+              />
+            </div>
+            <h3 className="text-xl font-bold text-white mt-4">{member.name}</h3>
+            <p className="text-blue-200 font-medium mt-2">{member.post}</p>
+          </div>
 
-        {/* Profile Details */}
-        <div className="flex-1">
-          <h1 className="text-xl sm:text-2xl font-bold text-blue-800 border-2 rounded-lg border-r-white border-l-white pb-2 pt-2 text-center">
-            BIOGRAPHY
-          </h1>
-          <div className="mt-4 pl-3">
-            <p className="text-gray-600 mt-2 text-sm sm:text-base">
-              {member.bio || "N/A"}
-            </p>
+          {/* Profile Details */}
+          <div className="md:w-3/5 p-8">
+            <div className="mb-2">
+              <div className="flex justify-center items-center mb-6">
+                <div className="h-px w-10 bg-blue-200 mr-4"></div>
+                <h1 className="text-xl sm:text-2xl font-bold text-blue-800 text-center border-b-2 border-blue-100 pb-3">
+                  BIOGRAPHY
+                </h1>
+                <div className="h-px w-10 bg-blue-200 ml-4"></div>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+                  {member.bio || "N/A"}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

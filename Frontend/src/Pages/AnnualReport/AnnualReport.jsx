@@ -50,10 +50,10 @@ const AnnualReport = () => {
       </Helmet>
 
       {/* Cover Section */}
-      <PageCoverPhoto
+      {/* <PageCoverPhoto
         title="ANNUAL REPORT"
         subtitle="Creating Sustainable Impact Through Transformation"
-      />
+      /> */}
 
       {/* Filter Section */}
       <motion.div

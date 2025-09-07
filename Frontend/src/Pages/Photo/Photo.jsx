@@ -85,6 +85,7 @@ const Photo = () => {
       <PageCoverPhoto
         title="Gallery"
         subtitle="Capturing moments that inspire change and document our journey towards making a difference."
+        imageUrl={"assets/news/IMG_20201231_111036.jpg"}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

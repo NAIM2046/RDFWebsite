@@ -1,6 +1,6 @@
 import React from "react";
-import demonfounder from "/assets/CEOphoto/CEO Pic PP.jpg";
-import tower from "/assets/RDF Photo/tower.jpg";
+import demonfounder from "/assets/FounderMessage/CEO PIC-88 (1).jpg";
+
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import { Helmet } from "react-helmet-async";
 const FounderMessage = () => {

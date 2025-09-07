@@ -3,7 +3,7 @@ import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhot
 import OurApproach from "./OurApproach";
 
 import { Helmet } from "react-helmet-async";
-
+import coverphoto from "/assets/ourapproach/coverphoto.jpg";
 const OurWork = () => {
   return (
     <div>
@@ -18,6 +18,7 @@ const OurWork = () => {
       <PageCoverPhoto
         title={"Our Approach"}
         subtitle={"Creating Sustainable Impact through Transformation"}
+        imageUrl={coverphoto}
       ></PageCoverPhoto>
       <div>
         <section>

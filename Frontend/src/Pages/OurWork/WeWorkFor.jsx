@@ -4,50 +4,52 @@ import { motion, AnimatePresence } from "framer-motion";
 const weWorkForData = [
   {
     title: "Coastal Communities in Bangladesh",
-    image: "/assets/rdfphoto2/PRA, Joyalbhanga.jpg",
+    image: "/assets/weWorkFor/12.jpg",
     detail:
       "RDF specifically works in areas highly susceptible to climate change, prioritising interventions that support these vulnerable populations",
   },
   {
     title: "Women, Girls, and Children",
-    image: "https://i.ibb.co.com/0jH0sNMZ/IMG-20190917-160446.jpg",
+    image: "assets/weWorkFor/Learner Work Place Engegement (1).JPG",
     detail:
       "RDF places a strong emphasis on supporting these groups, recognising their increased vulnerability in the face of environmental and societal challenges.",
   },
   {
     title: "Economically Deprived Groups",
-    image: "/assets/rdfphoto2/IMG_20210320_164610.jpg",
+    image: "assets/weWorkFor/WhatsApp Image 2025-07-24 at 1.10.52 PM (1).jpeg",
     detail:
       "RDF targets economically marginalised communities that experience exclusion from market systems, with a particular focus on those who heavily rely on agricultural labor.",
   },
   {
     title: "Education and Skills Development",
-    image: "/assets/rdfphoto2/IMG_20201231_111258.jpg",
+    image:
+      "assets/weWorkFor/Comments-Picture-1-Mohema-working-in-her-tailoring-shop-jpg.jpg",
     detail:
       "Addressing the high dropout rate in Bangladesh, RDF supports skills development to enhance access to the labour market, aiming to reduce the 70% dropout rate before the completion of higher secondary education.",
   },
   {
     title: "Minority and Adivasi Communities",
-    image: "/assets/rdfphoto1/DSC03021.JPG",
+    image: "assets/weWorkFor/2.jpg",
     detail:
       "These communities are consistently prioritized in RDF's program execution to ensure their inclusion and support.",
   },
   {
     title: "Girls at Risk of Child Marriage and Trafficking",
-    image: "https://i.ibb.co.com/WNqT28VG/IMG20210404110010-jpg.jpg",
+    image: "/assets/weWorkFor/RPL (6).JPG",
     detail:
       "RDF runs programs designed to support and protect girls who are at risk, aiming to reduce incidents of child marriage and human trafficking.",
   },
   {
     title: "Youth Leadership and Governance",
     image:
-      "https://i.ibb.co.com/wZxxDk3z/Comments-Picture-1-Mohema-working-in-her-tailoring-shop-jpg.jpg",
+      "assets/weWorkFor/1124-3-Practical-Session-of-Karate-Training-2-JPG.jpg",
     detail:
       "RDF engages with youth groups to increase leadership skills and encourage their active participation in good governance practices.",
   },
   {
     title: "Digital Technology and AI Enthusiasts",
-    image: "https://i.ibb.co.com/7J9yLck9/gettyimages-758288309-612x612.jpg",
+    image:
+      "https://i.ibb.co.com/WvYdczMJ/518287059-3192294777593122-2116601886790060414-n.jpg",
     detail:
       "Support is offered for children and youth interested in STEM, digital technology and AI programs, nurturing their skills in these cutting-edge fields.",
   },

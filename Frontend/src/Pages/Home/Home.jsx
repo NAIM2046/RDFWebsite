@@ -131,7 +131,7 @@ const Home = () => {
       >
         <Slider />
         <WhoWeAre />
-        <OurProgram />
+
         <ImpactMetrics />
         <FocusAreas />
         <OurActivities />

@@ -86,10 +86,10 @@ const EventsPage = () => {
         </script>
       </Helmet>
 
-      <PageCoverPhoto
+      {/* <PageCoverPhoto
         title="Events"
         subtitle={"Creating Sustainable Impact through Transformation"}
-      />
+      /> */}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="sr-only">RDF Events</h1>

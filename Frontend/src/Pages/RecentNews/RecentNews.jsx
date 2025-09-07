@@ -62,6 +62,9 @@ const RecentNews = () => {
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ")}
         subtitle="Stay updated with our latest news and announcements"
+        imageUrl={
+          "assets/news/newspaper-dhaka-Tribune-09d219b91c49bc59cb83de5f8f30788b.jpg"
+        }
       />
 
       <div className="container mx-auto px-4 py-12 max-w-7xl">

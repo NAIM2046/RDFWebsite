@@ -49,12 +49,9 @@ const PolicyDoc = () => {
       </Helmet>
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-400 to-green-400 text-white py-16 text-center shadow-lg">
+      <div className="bg-gradient-to-r from-green-700 to-green-700 text-white py-16 text-center shadow-lg">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4"> Policies</h1>
-          <p className="text-lg md:text-xl max-w-2xl mx-auto">
-            Read our policies carefully before using our services.
-          </p>
         </div>
       </div>
 

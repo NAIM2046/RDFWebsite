@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 const AllProjects = () => {
   const { programs, fetchPrograms, fetchProjects, projects } = useRDFStore();
   const [selected, setSelected] = useState("");
-  const [selectedTitle, setSelectedTitle] = useState("ALL");
+  const [selectedTitle, setSelectedTitle] = useState("All Project");
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
   const [statusFilter, setStatusFilter] = useState("all");
@@ -53,7 +53,7 @@ const AllProjects = () => {
 
   const handleTabClick = (program) => {
     setSelected(program ? program._id : "");
-    setSelectedTitle(program ? program.title : "ALL");
+    setSelectedTitle(program ? program.title : "All Project");
     setCurrentPage(0); // Reset to first page when changing filters
   };
 
@@ -80,17 +80,12 @@ const AllProjects = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-emerald-50">
       <Helmet>
-        <title>RDF - All Projects </title>
+        <title>RDF - All Project </title>
         <meta
           name="description"
           content="Browse all current and completed projects by RDF"
         />
       </Helmet>
-
-      <PageCoverPhoto
-        title="Major Projects"
-        subtitle={"Creating Sustainable Impact through Transformation"}
-      />
 
       {/* Scrollable Tab Navigation */}
       <div className="relative max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
@@ -121,9 +116,9 @@ const AllProjects = () => {
                   : "bg-white border border-emerald-300 hover:border-emerald-500 text-gray-700"
               }`}
               onClick={() => handleTabClick(null)}
-              title="All Projects"
+              title="All Project"
             >
-              ALL
+              All
             </motion.div>
 
             {programs.map((program) => (
@@ -183,7 +178,7 @@ const AllProjects = () => {
           animate={{ opacity: 1 }}
           className="text-2xl font-serif font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500"
         >
-          {selectedTitle} Projects
+          {selectedTitle}
         </motion.h2>
 
         {currentProjects.length > 0 ? (

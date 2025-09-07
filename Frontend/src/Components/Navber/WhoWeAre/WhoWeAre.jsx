@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import ceophoto from "/assets/HomePage/CEOPhoto.jpg";
 const WhoWeAre = () => {
   const [open, setopen] = useState(false);
   return (
@@ -34,7 +34,7 @@ const WhoWeAre = () => {
         >
           <div className="rounded-full border-3 border-green-500 overflow-hidden w-96 h-96 ">
             <img
-              src="https://i.ibb.co.com/YBWPqYxc/CEO-PIC-88-1.jpg"
+              src={ceophoto}
               alt="CEO"
               className="w-full h-full rounded-full p-4 object-cover"
             />
@@ -67,27 +67,28 @@ const WhoWeAre = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl font-bold text-green-500 mt-20 md:mt-0 ">
-            Resource Development Foundation (RDF)
+            A Message From CEO
           </h2>
           <p className="mt-4 text-[18px]">
-            Resource Development Foundation (RDF) has started its formal
-            philanthropic and social development activities in 1995. RDF with
-            its 850 devoted staff members has been supplementing GoB efforts in
-            reducing food deficiency in the country and has been trying to
-            integrate non-conventional and innovative approaches through solar
-            irrigation pumping systems to resolve food security issues.
-            Agricultural development through micro- credit support and
-            development through Solar Energy is one of the most modern and
-            innovative ideas that has already been incorporated to mitigate the
-            energy & food security crisis of the country. Now, RDF is the
-            national non-government development organization rooted in Southern
-            Bangladesh.
-          </p>
-          <p className="mt-2">
-            RDF creates a congenial working environment for women employees.
-            Finally, bottom-up management policy is established and practiced
-            here and equity of rights- culture has been practiced to strengthen
-            the organizational control system internally.
+            It is just two &amp; half decades since its inception in March 1993
+            as a small organization in a remote area of the southern corner of
+            Bangladesh, RDF has grown gradually and became one of the most
+            successful development organizations in Bangladesh. This watershed
+            moment therefore provides an opportunity to reflect on these last 28
+            years and look ahead for the challenges that will confront us in the
+            years ahead. The year 2022-23, RDF has restored its full energy and
+            enthusiasm after the Covid-19 Global Pandemic situation. However,
+            during the crisis, our team members were proactively present in the
+            field. <br></br>
+            RDF has revised and revisited its Strategic and Core Areas of
+            Businesses and activities in the six program areas which are,
+            (a)Food Security, Livelihood, Skills, and Economic Empowerment (b)
+            Resilience to Climate Change &amp; Disaster Risk Reduction (c)
+            Emergency Response (d) Child Rights, Ending Child Marriage,
+            Education, Health, Nutrition, and Sexual and Reproductive Health
+            Rights (SRHR) (e) Water, Sanitation, and Hygiene (WASH) (f)
+            Cross-cutting programme: Gender Transformation, Disability Inclusion
+            and Locally-led Initiatives .
           </p>
 
           {/* Read More Animation */}
@@ -97,14 +98,23 @@ const WhoWeAre = () => {
           >
             {open && (
               <p className="text-[18px] mt-2">
-                RDF is a non-profit, non-political, and non-religious
-                organization. It is registered with the Social Welfare
-                Department of the Government of Bangladesh. RDF is also a member
-                of the Bangladesh NGO Network for Radio and Communication
-                (BNNRC) and the Bangladesh NGO Federation for Radio and
-                Communication (BNFRC). It has been actively working since 1995
-                in the fields of education, health, nutrition, and women’s
-                empowerment.
+                It’s our strong belief that with newly redevised thematic areas,
+                RDF will be concentrating more to contribute to 10 (ten)
+                different SDGs and other national and international commitments
+                of the country. Moreover, RDF focus on Research activities,
+                Social Development including renewable energy in the upcoming
+                years. We are pledge-bound to continue our focus on exploring
+                new horizons, embanking new commitments, emphasizing the new
+                challenges, demands and opportunities. Let us move forward to
+                contribute for achieving the national targets by 2030 and thus
+                achieve the status of “developing country”. I am thankful to our
+                Executive Committee (EC) and management committee for their
+                valued guidance and cooperation. Finally, I would like to thank
+                all RDF, key personnel and employees of the organization for
+                their restless efforts to sustain the trend of program
+                activities. I do believe that, the Annual Report 2021-’22
+                upholds the yearly facts &amp; figures of the organization’s
+                intervention to its valued stakeholders.
               </p>
             )}
             <button

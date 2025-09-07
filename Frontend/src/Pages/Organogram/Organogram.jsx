@@ -47,10 +47,10 @@ const Organogram = () => {
         <meta property="og:url" content={window.location.href} />
       </Helmet>
 
-      <PageCoverPhoto
+      {/* <PageCoverPhoto
         title={"ORGANOGRAM & GOVERNANCE"}
         subtitle={"Creating Sustainable Impact through Transformation"}
-      />
+      /> */}
 
       <div className="min-h-screen mx-auto max-w-7xl bg-white shadow-lg p-8 mt-24 mb-10 rounded-lg">
         {/* Page Header with Animation */}

@@ -55,6 +55,7 @@ const OurPrograms = () => {
       <PageCoverPhoto
         title={"OUR PROGRAM"}
         subtitle={"Creating Sustainable Impact through Transformation"}
+        imageUrl={"assets/wherewework/DSC03473.JPG"}
       />
       <OurProgram />
     </div>

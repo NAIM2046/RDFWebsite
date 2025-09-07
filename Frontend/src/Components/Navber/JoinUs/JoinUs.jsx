@@ -30,7 +30,7 @@ const ContactItem = ({ Icon, title, content, link }) => (
   </div>
 );
 
-const JoinUs = ({ header }) => {
+const JoinUs = ({ header, photo }) => {
   const formRef = useRef();
   const [formData, setFormData] = useState({
     name: "",
@@ -104,7 +104,7 @@ const JoinUs = ({ header }) => {
             {/* Illustration */}
             <div className="w-full lg:w-1/2 flex justify-center">
               <img
-                src="/assets/joinus/joinus.png"
+                src={photo}
                 alt="Contact Us Illustration"
                 className="w-full max-w-md h-auto"
                 loading="lazy"

@@ -6,6 +6,7 @@ import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhot
 import visionIcon from "/assets/vissionandmission/vission.png";
 import missionIcon from "/assets/vissionandmission/mission.png";
 import valueIcon from "/assets/vissionandmission/value.png";
+import cover from "/assets/vissionandmission/coverphoto3.jpg";
 
 const VisionMission = () => {
   const cardVariants = {
@@ -43,6 +44,7 @@ const VisionMission = () => {
       <PageCoverPhoto
         title="Vision & Mission"
         subtitle="Creating Sustainable Impact through Transformation"
+        imageUrl={cover}
       />
 
       {/* Vision, Mission, Values */}

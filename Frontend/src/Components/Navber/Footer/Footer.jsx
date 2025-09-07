@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "/assets/rdfnew-5 (1).png";
+import logo from "/assets/navber/rdflogo.png";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { RxTriangleRight } from "react-icons/rx";
@@ -16,13 +16,16 @@ const Footer = () => {
     <footer className="bg-[#262626] text-base-content py-12 px-6 font-serif">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
         {/* Logo & Info */}
-        <div className="flex flex-col items-center md:items-start space-y-4">
+        <div className="flex flex-col items-center space-y-4">
           <img
-            className="w-auto max-w-48 mb-2"
+            className="w-auto max-w-48 mb-0"
             src={logo}
             alt="RDF Logo"
             loading="lazy"
           />
+          <p className="text-sm text-gray-400 text-center">
+            Creating Sustainable Impact through Transformation
+          </p>
           <p className="text-md font-light text-white leading-relaxed">
             Resource Development Foundation(RDF)
           </p>

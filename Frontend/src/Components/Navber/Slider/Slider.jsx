@@ -2,9 +2,7 @@ import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
-import visionIcon from "/assets/vission.jpg";
-import missionIcon from "/assets/mission.jpg";
-import valueIcon from "/assets/value-1.jpg";
+
 import useRDFStore from "../../../storage/useRDFstorage";
 import { useEffect } from "react";
 
