@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useRDFStore from "../../storage/useRDFstorage";
 
-// Lazy load components for better performance
+// Lazy load components for performance
 const Slider = React.lazy(() =>
   import("../../Components/Navber/Slider/Slider")
 );
@@ -34,37 +34,28 @@ const Home = () => {
   const isFirstRender = useRef(true);
   const { isLoading } = useRDFStore();
 
+  // Scroll restoration
   useEffect(() => {
-    // Scroll restoration with intersection observer for better reliability
-    const savedScrollPosition = sessionStorage.getItem("homeScrollPosition");
-
-    if (savedScrollPosition !== null && isFirstRender.current) {
-      const position = parseInt(savedScrollPosition, 10);
-      if (position > 0) {
-        const checkContentLoaded = () => {
-          if (document.readyState === "complete") {
-            window.scrollTo({
-              top: position,
-              behavior: "smooth",
-            });
-            clearInterval(loadCheckInterval);
-          }
-        };
-        const loadCheckInterval = setInterval(checkContentLoaded, 100);
-      }
+    const savedScroll = sessionStorage.getItem("homeScrollPosition");
+    if (savedScroll && isFirstRender.current) {
+      const pos = parseInt(savedScroll, 10);
+      const checkLoaded = () => {
+        if (document.readyState === "complete") {
+          window.scrollTo({ top: pos, behavior: "smooth" });
+          clearInterval(interval);
+        }
+      };
+      const interval = setInterval(checkLoaded, 100);
     }
-
     isFirstRender.current = false;
 
-    // Throttled scroll position save
+    let scrollTimeout;
     const handleScroll = () => {
       if (scrollTimeout) clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         sessionStorage.setItem("homeScrollPosition", window.scrollY);
       }, 200);
     };
-
-    let scrollTimeout;
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -73,65 +64,74 @@ const Home = () => {
     };
   }, [location]);
 
-  // Structured data for better SEO
+  // Structured Data with sameAs for social profiles
   const organizationStructuredData = {
     "@context": "https://schema.org",
     "@type": "NGO",
-    name: "Resource Development Foundation",
-    url: window.location.href,
-    logo: "https://yourwebsite.com/logo.png",
-    description: "Description of your foundation's mission and work",
+    name: "Resource Development Foundation (RDF)",
+    url: "https://rdfbd.org",
+    logo: "https://rdfbd.org/assets/navber/rdflogo.png",
+    description:
+      "RDF is dedicated to creating sustainable change through education, healthcare, and community development programs in Bangladesh.",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123 Foundation St",
-      addressLocality: "City",
-      addressRegion: "State",
-      postalCode: "12345",
-      addressCountry: "Country",
+      streetAddress:
+        "Road #12, Pisciculture Housing Society, Block-Kha, Adabor",
+      addressLocality: "Dhaka",
+      postalCode: "1207",
+      addressCountry: "Bangladesh",
     },
+    sameAs: [
+      "https://www.facebook.com/profile.php?id=61556311631080",
+      "https://www.linkedin.com/in/resource-development-foundation-rdf-2ba4832b5/",
+      "https://www.youtube.com/channel/UCf9PTB7a6ejQn7I1u53IzMA",
+      "https://www.instagram.com/rdfbangladesh/",
+      "https://twitter.com/rdf_bd",
+    ],
   };
 
   return (
-    <div className="home-page">
+    <div className="home-page ">
       <Helmet>
         <title>
-          Resource Development Foundation | Empowering Communities Through
-          Sustainable Development
+          Resource Development Foundation(RDF) | Empowering Communities in
+          Bangladesh
         </title>
         <meta
           name="description"
-          content="Resource Development Foundation is dedicated to creating sustainable change through education, healthcare, and community development programs. Join us in making a difference."
+          content="RDF is dedicated to sustainable development through education, healthcare, and community programs in Bangladesh."
         />
         <meta
           name="keywords"
-          content="NGO, sustainable development, community programs, education, healthcare, poverty alleviation"
+          content="NGO, sustainable development, community programs, education, healthcare, poverty alleviation, Bangladesh"
         />
+        {/* Open Graph */}
         <meta
           property="og:title"
-          content="Resource Development Foundation | Home"
+          content="Resource Development Foundation(RDF) |  Bangladesh"
         />
         <meta
           property="og:description"
           content="Empowering communities through sustainable development initiatives"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={window.location.href} />
+        <meta property="og:url" content="https://rdfbd.org" />
         <meta
           property="og:image"
-          content="https://yourwebsite.com/social-share-image.jpg"
+          content="https://rdfbd.org/social-share-image.jpg"
         />
+        <link rel="canonical" href="https://rdfbd.org" />
+        {/* JSON-LD Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify(organizationStructuredData)}
         </script>
-        <link rel="canonical" href={window.location.href} />
       </Helmet>
 
       <React.Suspense
-        fallback={<div className="loading-spinner">Loading...</div>}
+        fallback={<div className="loading-spinner">Loading content...</div>}
       >
         <Slider />
         <WhoWeAre />
-
         <ImpactMetrics />
         <FocusAreas />
         <OurActivities />

@@ -5,9 +5,10 @@ import {
   FaEnvelope,
   FaPaperPlane,
 } from "react-icons/fa";
-import emailjs from "@emailjs/browser";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useAxiosPublic from "../../../Hook/useAxiosPublice";
 
 const ContactItem = ({ Icon, title, content, link }) => (
   <div className="flex flex-col items-center text-center p-4 hover:bg-green-700 transition rounded-lg">
@@ -31,22 +32,21 @@ const ContactItem = ({ Icon, title, content, link }) => (
 );
 
 const JoinUs = ({ header, photo }) => {
+  const AxoisPublice = useAxiosPublic();
   const formRef = useRef();
   const [formData, setFormData] = useState({
-    name: "",
+    first_name: "",
+    last_name: "",
+    reason: "Join Us",
     email: "",
     message: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.first_name.trim()) newErrors.first_name = "Name is required";
     if (!formData.email.includes("@"))
       newErrors.email = "Valid email is required";
     if (formData.message.length < 10)
@@ -72,12 +72,14 @@ const JoinUs = ({ header, photo }) => {
     setIsLoading(true);
 
     try {
-      await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
+      const result = await AxoisPublice.post("api/email/sentEmail", formData);
+      // console.log(result.data);
+
       toast.success("Message sent successfully!", {
         position: "top-center",
         autoClose: 3000,
       });
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ first_name: "", email: "", message: "" });
     } catch (error) {
       console.error("EmailJS Error:", error);
       toast.error("Failed to send message. Please try again later.", {
@@ -118,16 +120,18 @@ const JoinUs = ({ header, photo }) => {
                 <div>
                   <input
                     type="text"
-                    name="name"
-                    placeholder="Your Name"
-                    value={formData.name}
+                    name="first_name"
+                    placeholder="Full Name"
+                    value={formData.first_name}
                     onChange={handleChange}
                     className={`w-full p-3 rounded bg-green-800 text-white placeholder-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 border ${
-                      errors.name ? "border-red-500" : "border-green-700"
+                      errors.first_name ? "border-red-500" : "border-green-700"
                     }`}
                   />
-                  {errors.name && (
-                    <p className="text-red-300 text-sm mt-1">{errors.name}</p>
+                  {errors.first_name && (
+                    <p className="text-red-300 text-sm mt-1">
+                      {errors.first_name}
+                    </p>
                   )}
                 </div>
 

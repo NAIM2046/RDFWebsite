@@ -7,12 +7,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PhotoPage = () => {
+  // Initial state: imageUrl as an array
   const [formData, setFormData] = useState({
     title: "",
-    imageUrl: "",
+    imageUrl: [], // now array
     text: "",
     photoType: "Event",
   });
+
   const [uploadStatus, setUploadStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTitle, setSearchTitle] = useState("");
@@ -39,34 +41,43 @@ const PhotoPage = () => {
   }, []);
 
   const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+    const files = Array.from(event.target.files);
+    if (!files.length) return;
 
-    // Validate image
     const validTypes = ["image/jpeg", "image/png", "image/webp"];
-    const maxSize = 5 * 1024 * 1024; // 5MB
-
-    if (!validTypes.includes(file.type)) {
-      toast.error("Please upload a JPEG, PNG, or WebP image");
-      return;
-    }
-
-    if (file.size > maxSize) {
-      toast.error("Image size should be less than 5MB");
-      return;
-    }
+    const maxSize = 10 * 1024 * 1024; // 5MB
 
     setIsUploading(true);
     setUploadStatus("Uploading...");
 
     try {
-      const url = await uploadImageToImgbb(file);
-      if (url) {
-        setFormData({ ...formData, imageUrl: url });
+      const uploadedUrls = [];
+
+      for (const file of files) {
+        if (!validTypes.includes(file.type)) {
+          toast.error(`${file.name} is not a valid image type`);
+          continue;
+        }
+        if (file.size > maxSize) {
+          toast.error(`${file.name} is larger than 5MB`);
+          continue;
+        }
+
+        const url = await uploadImageToImgbb(file);
+        if (url) {
+          uploadedUrls.push(url);
+        }
+      }
+
+      if (uploadedUrls.length > 0) {
+        setFormData((prev) => ({
+          ...prev,
+          imageUrl: [...prev.imageUrl, ...uploadedUrls],
+        }));
         setUploadStatus("Upload successful!");
-        toast.success("Image uploaded successfully");
+        toast.success("Images uploaded successfully");
       } else {
-        throw new Error("Upload failed");
+        setUploadStatus("No valid images uploaded");
       }
     } catch (error) {
       setUploadStatus("Upload failed. Try again.");
@@ -79,27 +90,27 @@ const PhotoPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.imageUrl) {
-      toast.error("Please upload an image first");
+    if (formData.imageUrl.length === 0) {
+      toast.error("Please upload at least one image");
       return;
     }
 
     try {
       setIsLoading(true);
-      await AxiosSecure.post("/photos", formData);
-      toast.success("Photo added successfully");
+      await AxiosSecure.post("/photos", formData); // backend should accept array of imageUrl
+      toast.success("Photos added successfully");
+
       // Reset form
       setFormData({
         title: "",
-        imageUrl: "",
+        imageUrl: [],
         text: "",
         photoType: "Event",
       });
       setUploadStatus("");
-      // Refresh photo list
       await fetchPhoto();
     } catch (error) {
-      toast.error("Failed to add photo");
+      toast.error("Failed to add photos");
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -193,16 +204,17 @@ const PhotoPage = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Image Upload * (JPEG, PNG, WebP, max 5MB)
+              Image Upload * (JPEG, PNG, WebP, max 10MB)
             </label>
             <input
               type="file"
               accept="image/jpeg, image/png, image/webp"
+              multiple // 👈 allow multiple uploads
               onChange={handleImageUpload}
               className="w-full p-2 border border-gray-300 rounded-md file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              required
               disabled={isUploading}
             />
+
             {uploadStatus && (
               <p
                 className={`text-sm mt-1 ${
@@ -216,13 +228,16 @@ const PhotoPage = () => {
             )}
           </div>
 
-          {formData.imageUrl && (
-            <div className="mt-2">
-              <img
-                src={formData.imageUrl}
-                alt="Uploaded preview"
-                className="w-full max-h-60 object-contain rounded-md border"
-              />
+          {formData.imageUrl.length > 0 && (
+            <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
+              {formData.imageUrl.map((url, i) => (
+                <img
+                  key={i}
+                  src={url}
+                  alt={`Uploaded preview ${i + 1}`}
+                  className="w-full h-32 object-cover rounded-md border"
+                />
+              ))}
             </div>
           )}
 

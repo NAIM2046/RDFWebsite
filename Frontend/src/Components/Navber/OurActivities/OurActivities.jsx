@@ -12,19 +12,12 @@ const OurActivities = () => {
       fetchActivites();
     }
   }, []);
+  const sortedActivities = [...activities].sort(
+    (a, b) => Number(a.id) - Number(b.id)
+  );
 
   return (
     <div className="text-center py-10 px-4 bg-amber-50 font-serif">
-      {/* <motion.h3
-        className="text-sm text-green-500 tracking-widest uppercase"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        This is What We Do
-      </motion.h3> */}
-
       <motion.h2
         className="text-3xl font-bold text-indigo-900 mt-2 font-serif"
         initial={{ opacity: 0, y: 30 }}
@@ -35,14 +28,14 @@ const OurActivities = () => {
         Our Programs align with SDGs
       </motion.h2>
 
-      {activities.length === 0 ? (
+      {sortedActivities.length === 0 ? (
         <div className="flex justify-center items-center">
           <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
           <p className="text-lg ml-3">Loading...</p>
         </div>
       ) : (
         <div className="flex flex-wrap justify-center gap-5 mt-8 max-w-6xl mx-auto px-4">
-          {activities.map((activity, index) => (
+          {sortedActivities.map((activity, index) => (
             <motion.div
               key={activity._id}
               onClick={() =>

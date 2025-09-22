@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import emailjs from "emailjs-com";
 import { Helmet } from "react-helmet-async";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useAxiosPublic from "../../Hook/useAxiosPublice";
 
 const ProjectPartner = () => {
+  const AxiosPublice = useAxiosPublic();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -12,16 +14,50 @@ const ProjectPartner = () => {
     reason: "",
     message: "",
   });
+  const [errors, setErrors] = useState({});
 
   // Handle form input changes
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: "" });
+    }
+  };
+
+  // Validate form
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+    if (!formData.reason) newErrors.reason = "Please select a reason";
+    if (!formData.message.trim()) newErrors.message = "Message is required";
+    if (formData.message.length > 200)
+      newErrors.message = "Message must be less than 200 characters";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("Sending...");
+
+    if (!validateForm()) {
+      toast.error("Please fix the errors in the form");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     const templateParams = {
       first_name: formData.firstName,
@@ -31,27 +67,32 @@ const ProjectPartner = () => {
       message: formData.message,
     };
 
-    console.log("📩 Sending data:", templateParams); // Debugging
-
     try {
-      const result = await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      const result = await AxiosPublice.post(
+        "/api/email/sentEmail",
+        templateParams
       );
 
-      setStatus("Message sent successfully!");
       toast.success("Message sent successfully! We'll contact you soon.");
-      console.log("✅ Success:", result);
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        reason: "",
+        message: "",
+      });
     } catch (error) {
-      setStatus("Failed to send message. Please try again.");
-      console.error("❌ Error sending message:", error);
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-gray-100 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <Helmet>
         <title>RDF - Project Partner</title>
         <meta
@@ -59,158 +100,196 @@ const ProjectPartner = () => {
           content="Partner with RDF to create sustainable change and transform lives"
         />
       </Helmet>
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
 
-      {/* Header */}
-      {/* <div className="max-w-5xl mx-auto text-center px-6">
-        <h1 className="text-4xl font-bold text-gray-800 mt-20 lg:mt-0 font-serif">
-          Why Partner with Us?
-        </h1>
-        <p className="text-lg text-gray-600 mt-4 ">
-          We are a globally recognized organization creating sustainable change.
-          By partnering with us, you can help transform lives and make an
-          impact.
-        </p>
-      </div> */}
-
-      {/* Impact Stats */}
-      {/* <div className="mt-12 flex flex-wrap justify-center gap-6 px-6">
-        {[
-          { value: "105M+", label: "Children helped in 2023", color: "blue" },
-          {
-            value: "33.7M+",
-            label: "Children reached with health & nutrition",
-            color: "green",
-          },
-          { value: "120+", label: "Emergency responses in 2024", color: "red" },
-        ].map((stat, i) => (
-          <div
-            key={i}
-            className="bg-white shadow-lg rounded-lg p-6 text-center w-64"
-          >
-            <h3 className={`text-3xl font-bold text-${stat.color}-600`}>
-              {stat.value}
-            </h3>
-            <p className="text-gray-700">{stat.label}</p>
-          </div>
-        ))}
-      </div> */}
-
-      {/* Partnering Benefits */}
-      {/* <div className="mt-16 max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800 font-serif">
-          What Partnering Means for You
-        </h2>
-        <p className="text-lg text-gray-600 mt-4 text-center">
-          From creating life-saving products to inspiring staff for fundraising,
-          our partnerships make a difference.
-        </p>
-
-        <div className="mt-8 space-y-6">
-          {[
-            "Work with us to develop sustainable, long-term solutions.",
-            "Collaborate with communities to create lasting impact.",
-            "Engage your employees and customers in social impact projects.",
-          ].map((text, i) => (
-            <div
-              key={i}
-              className="flex items-center bg-white p-6 rounded-lg shadow-md"
-            >
-              <div
-                className={`bg-${
-                  ["blue", "green", "red"][i]
-                }-500 text-white w-12 h-12 flex items-center justify-center text-2xl font-bold rounded-full mr-6`}
-              >
-                {i + 1}
-              </div>
-              <p className="text-gray-700">{text}</p>
-            </div>
-          ))}
-        </div>
-      </div> */}
-
-      {/* Call to Action + Contact Form */}
-      <div className="mt-16 text-center flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-gray-800 font-serif">
-          Partner With Us
-        </h2>
-        {/* <p className="text-lg text-gray-600 mt-4">
-          Let's create meaningful change together.
-        </p> */}
-
-        {/* Form */}
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 mt-6">
-          <h3 className="text-2xl font-bold text-gray-800 text-center mb-4">
-            Submit an Inquiry
-          </h3>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex gap-4">
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First name*"
-                className="w-1/2 border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
-                required
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last name*"
-                className="w-1/2 border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
-                required
-                onChange={handleChange}
-              />
-            </div>
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email*"
-              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
-              required
-              onChange={handleChange}
-            />
-
-            <select
-              name="reason"
-              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
-              required
-              onChange={handleChange}
-            >
-              <option value="">Reason*</option>
-              <option value="partnership">Partnership Inquiry</option>
-              <option value="donation">Donation Inquiry</option>
-              <option value="general">General Inquiry</option>
-            </select>
-
-            <textarea
-              name="message"
-              placeholder="Message*"
-              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-blue-500"
-              maxLength={200}
-              required
-              onChange={handleChange}
-            ></textarea>
-
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition"
-            >
-              Contact Us
-            </button>
-          </form>
-
-          {/* Privacy Notice */}
-          <p className="text-sm text-gray-600 mt-4 text-center">
-            By clicking submit, you confirm you are over 18 and agree to receive
-            emails about our work. You can opt out anytime. See our{" "}
-            <a href="#" className="text-red-500 hover:underline">
-              privacy policy
-            </a>
-            .
+      <div className="max-w-4xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-800 font-serif mb-4">
+            Partner With Us
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Join hands with RDF to create sustainable change and transform
+            lives. Together we can make a greater impact in communities around
+            the world.
           </p>
+        </div>
+
+        {/* Form Section */}
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="md:flex justify-center items-center">
+            <div className="md:w-3/5 p-8">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center ">
+                Submit an Inquiry
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="w-full sm:w-1/2">
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="First name*"
+                      value={formData.firstName}
+                      className={`w-full border ${
+                        errors.firstName ? "border-red-500" : "border-gray-300"
+                      } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                      onChange={handleChange}
+                    />
+                    {errors.firstName && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.firstName}
+                      </p>
+                    )}
+                  </div>
+                  <div className="w-full sm:w-1/2">
+                    <input
+                      type="text"
+                      name="lastName"
+                      placeholder="Last name*"
+                      value={formData.lastName}
+                      className={`w-full border ${
+                        errors.lastName ? "border-red-500" : "border-gray-300"
+                      } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                      onChange={handleChange}
+                    />
+                    {errors.lastName && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.lastName}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email*"
+                    value={formData.email}
+                    className={`w-full border ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                    onChange={handleChange}
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                  <select
+                    name="reason"
+                    value={formData.reason}
+                    className={`w-full border ${
+                      errors.reason ? "border-red-500" : "border-gray-300"
+                    } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition appearance-none bg-white`}
+                    onChange={handleChange}
+                  >
+                    <option value="">Reason for inquiry*</option>
+                    <option value="partnership">Partnership Inquiry</option>
+                    <option value="donation">Donation Inquiry</option>
+                    <option value="volunteer">Volunteer Opportunity</option>
+                    <option value="general">General Inquiry</option>
+                  </select>
+                  {errors.reason && (
+                    <p className="mt-1 text-sm text-red-500">{errors.reason}</p>
+                  )}
+                </div>
+
+                <div>
+                  <textarea
+                    name="message"
+                    placeholder="Your message* (max 200 characters)"
+                    value={formData.message}
+                    rows="4"
+                    className={`w-full border ${
+                      errors.message ? "border-red-500" : "border-gray-300"
+                    } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                    onChange={handleChange}
+                  ></textarea>
+                  <div className="flex justify-between mt-1">
+                    {errors.message ? (
+                      <p className="text-sm text-red-500">{errors.message}</p>
+                    ) : (
+                      <p className="text-sm text-gray-500">
+                        Briefly describe how you'd like to collaborate
+                      </p>
+                    )}
+                    <p
+                      className={`text-sm ${
+                        formData.message.length > 180
+                          ? "text-amber-500"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {formData.message.length}/200
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-3 rounded-lg text-lg font-semibold transition ${
+                    isSubmitting
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-md hover:shadow-lg"
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    "Contact Us"
+                  )}
+                </button>
+              </form>
+
+              {/* Privacy Notice */}
+              <p className="text-xs text-gray-500 mt-6 text-center">
+                By submitting this form, you confirm you are over 18 and agree
+                to receive emails about our work. You can opt out anytime. See
+                our{" "}
+                <a href="/privacy" className="text-green-600 hover:underline">
+                  privacy policy
+                </a>
+                .
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

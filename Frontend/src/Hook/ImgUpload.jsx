@@ -1,5 +1,5 @@
 const uploadImageToImgbb = async (imageFile) => {
-  const API_KEY = "c6a562004bff421926419e6b22cec40e"; // Replace with your IMGBB API key
+  const API_KEY = "7c51597d4570f95ba73873af0d327edc"; // Replace with your IMGBB API key
   const formData = new FormData();
   formData.append("image", imageFile); // Append image file
   formData.append("name", imageFile.name); // Optional: Image name

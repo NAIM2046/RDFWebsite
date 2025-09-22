@@ -32,6 +32,7 @@ const NewsDetails = () => {
       fetchNews();
     }
   }, []);
+  console.log(newss);
 
   // Filter related news
   const filterNews = (newss || []).filter(
@@ -175,17 +176,41 @@ const NewsDetails = () => {
             </div>
           </div>
 
-          {/* Featured Image */}
-          <div className="relative h-[600px] w-full overflow-hidden">
-            <img
-              src={news?.imageURL}
-              alt={news?.title}
-              className=" object-cover"
-              loading="eager"
-            />
+          {/* Featured Image - Enhanced Section */}
+          <div className="relative w-full overflow-hidden">
+            <div className="flex justify-center items-center bg-gray-100 min-h-[400px] md:min-h-[500px] lg:min-h-[600px]">
+              <motion.div
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="relative w-full max-w-4xl h-full"
+              >
+                <img
+                  src={news?.imageURL}
+                  alt={news?.title}
+                  className="w-full h-full object-contain max-h-[500px] md:max-h-[600px] mx-auto"
+                  loading="eager"
+                  onError={(e) => {
+                    e.target.src =
+                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600' fill='%23f3f4f6'%3E%3Crect width='800' height='600' fill='%23f3f4f6'/%3E%3Cpath d='M400 300L300 200 400 100 500 200 400 300Z' fill='%23d1d5db'/%3E%3Cpath d='M250 400L150 300 250 200 350 300 250 400Z' fill='%23d1d5db'/%3E%3Cpath d='M550 400L450 300 550 200 650 300 550 400Z' fill='%23d1d5db'/%3E%3C/svg%3E";
+                  }}
+                />
+
+                {/* Loading shimmer effect */}
+                {!news?.imageURL && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"></div>
+                )}
+
+                {/* Subtle frame effect on hover */}
+                <div className="absolute inset-0 border-8 border-white opacity-0 hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+              </motion.div>
+            </div>
+
             {news?.imageCaption && (
-              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 text-sm">
-                {news.imageCaption}
+              <div className="text-center bg-gray-50 py-3 px-4 border-t border-gray-200">
+                <p className="text-sm text-gray-600 italic max-w-3xl mx-auto">
+                  {news.imageCaption}
+                </p>
               </div>
             )}
           </div>
@@ -226,12 +251,14 @@ const NewsDetails = () => {
                     </p>
                     {paragraph.imageUrl && (
                       <figure className="my-6">
-                        <img
-                          src={paragraph.imageUrl}
-                          alt={paragraph.title || "Content image"}
-                          className="rounded-lg shadow-md w-full max-w-2xl mx-auto"
-                          loading="lazy"
-                        />
+                        <div className="flex justify-center">
+                          <img
+                            src={paragraph.imageUrl}
+                            alt={paragraph.title || "Content image"}
+                            className="rounded-lg shadow-md w-full max-w-2xl"
+                            loading="lazy"
+                          />
+                        </div>
                         {paragraph.imageCaption && (
                           <figcaption className="text-center text-sm text-gray-500 mt-2">
                             {paragraph.imageCaption}

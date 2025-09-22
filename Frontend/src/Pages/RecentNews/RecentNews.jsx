@@ -56,17 +56,6 @@ const RecentNews = () => {
         <title>{`RDF - ${path.charAt(0).toUpperCase() + path.slice(1)}`}</title>
       </Helmet>
 
-      <PageCoverPhoto
-        title={path
-          .split("-")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ")}
-        subtitle="Stay updated with our latest news and announcements"
-        imageUrl={
-          "assets/news/newspaper-dhaka-Tribune-09d219b91c49bc59cb83de5f8f30788b.jpg"
-        }
-      />
-
       <div className="container mx-auto px-4 py-12 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -74,7 +63,7 @@ const RecentNews = () => {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <h2 className="text-4xl font-bold text-gray-800 mb-4 font-serif">
+          <h2 className="text-4xl font-bold text-gray-800 mb-4 font-serif mt-12 md:mt-0">
             Latest{" "}
             {path
               .split("-")

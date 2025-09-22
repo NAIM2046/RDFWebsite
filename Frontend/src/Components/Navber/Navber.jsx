@@ -111,11 +111,6 @@ const Navbar = () => {
           link: "/wherewework",
           icon: <MdPlace />,
         },
-        // {
-        //   name: "Our Programs",
-        //   link: "/our-programs",
-        //   icon: <FaProjectDiagram />,
-        // },
       ],
     },
     {

@@ -55,7 +55,7 @@ const NewsPage = () => {
       program: "",
       imageURL: "",
       imageCaption: "",
-      highlights: [""],
+      highlights: [],
       content: [{ title: "", description: "", imageUrl: "" }],
       socialMediaLinks: [{ header: "", link: "" }],
     });
@@ -206,7 +206,7 @@ const NewsPage = () => {
       program: newsItem.program || "",
       imageURL: newsItem.imageURL || "",
       imageCaption: newsItem.imageCaption || "",
-      highlights: newsItem.highlights?.length ? newsItem.highlights : [""],
+      highlights: newsItem.highlights?.length ? newsItem.highlights : [],
       content: newsItem.content?.length
         ? newsItem.content
         : [{ title: "", description: "", imageUrl: "" }],

@@ -8,7 +8,47 @@ const ContactUs = () => {
   return (
     <div className="mx-auto bg-gray-50 min-h-screen">
       <Helmet>
-        <title>RDF - Contact Us</title>
+        <title>Contact Us | Resource Development Foundation (RDF)</title>
+        <meta
+          name="description"
+          content="Get in touch with Resource Development Foundation (RDF). Visit our head office in Dhaka or our Barguna office. Contact via phone, email, or view our locations on Google Maps."
+        />
+        <meta
+          name="keywords"
+          content="RDF contact, RDF Dhaka office, RDF Barguna office, NGO Bangladesh, RDF phone, RDF email"
+        />
+        <link rel="canonical" href="https://rdfbd.org/contact" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Contact RDF | Resource Development Foundation"
+        />
+        <meta
+          property="og:description"
+          content="Contact RDF via phone, email or visit our offices in Dhaka & Barguna. Learn more about our work in Bangladesh."
+        />
+        <meta property="og:url" content="https://rdfbd.org/contact" />
+        <meta
+          property="og:image"
+          content="https://rdfbd.org/assets/ContactUs/rdftower.png"
+        />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Contact RDF | Resource Development Foundation"
+        />
+        <meta
+          name="twitter:description"
+          content="Contact RDF via phone, email or visit our offices in Dhaka & Barguna."
+        />
+        <meta
+          name="twitter:image"
+          content="https://rdfbd.org/assets/ContactUs/rdftower.png"
+        />
       </Helmet>
 
       {/* Main Contact Section */}

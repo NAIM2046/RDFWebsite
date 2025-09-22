@@ -10,21 +10,19 @@ const OurTeam = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [designation, setDesignation] = useState("");
   const navigate = useNavigate();
-  const { teams, fetchTeams } = useRDFStore();
+  const { teams, fetchTeams, isLoading } = useRDFStore();
 
   useEffect(() => {
     if (teams.length === 0) {
       fetchTeams();
     }
   }, []);
-  console.log(teams);
 
   const filteredMembers = teams.filter((member) => {
     const matchesSearchTerm = member.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
-    // ✅ Fix: check inside committee_name field
     const matchesDesignation = designation
       ? member.committees.some(
           (c) => c.committee_name.toLowerCase() === designation.toLowerCase()
@@ -34,7 +32,6 @@ const OurTeam = () => {
     return matchesSearchTerm && matchesDesignation;
   });
 
-  // Define custom priority order
   const priority = {
     "Executive Committee": 1,
     "General Committee": 2,
@@ -43,7 +40,6 @@ const OurTeam = () => {
 
   const sortedMembers = [...filteredMembers].sort((a, b) => {
     if (designation) {
-      // Look up the rank for the current designation in each member
       const aCommittee = a.committees.find(
         (c) => c.committee_name.toLowerCase() === designation.toLowerCase()
       );
@@ -56,13 +52,6 @@ const OurTeam = () => {
 
       return aRank - bRank;
     } else {
-      // Fallback → custom priority when no designation is selected
-      const priority = {
-        "Executive Committee": 1,
-        "General Committee": 2,
-        "Senior Management": 3,
-      };
-
       const aPriority = Math.min(
         ...a.committees.map((c) => priority[c.committee_name] || 999)
       );
@@ -73,6 +62,28 @@ const OurTeam = () => {
       return aPriority - bPriority;
     }
   });
+
+  // Loading Skeleton Component
+  const TeamCardSkeleton = () => (
+    <div className="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col border border-gray-100 animate-pulse">
+      {/* Image Skeleton */}
+      <div className="relative overflow-hidden">
+        <div className="h-1 bg-gray-200"></div>
+        <div className="p-4 pb-0">
+          <div className="relative overflow-hidden rounded-t-xl">
+            <div className="w-full h-72 bg-gray-300 rounded-lg"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Skeleton */}
+      <div className="flex-grow flex flex-col items-center justify-center text-center px-4 py-4 space-y-2">
+        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div className="h-1 bg-gray-200"></div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -103,12 +114,12 @@ const OurTeam = () => {
             content="Discover the passionate team members of Resource Development Foundation (RDF) who are committed to empowering communities."
           />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://yourdomain.com/team" />
+          <meta property="og:url" content="https://rdfbd.org/our-team" />
           <meta
             property="og:image"
-            content="https://yourdomain.com/images/team-banner.jpg"
+            content="https://rdfbd.org/images/team-banner.jpg"
           />
-          <link rel="canonical" href="https://yourdomain.com/team" />
+          <link rel="canonical" href="https://rdfbd.org/our-team" />
         </Helmet>
         <PageCoverPhoto
           title="Our Team"
@@ -165,9 +176,8 @@ const OurTeam = () => {
                 <select
                   value={designation}
                   onChange={(e) => setDesignation(e.target.value)}
-                  className="w-full p-3 border border-gray-200 rounded-xl text-gray-700  focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                  className="w-full p-3 border border-gray-200 rounded-xl text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 >
-                  {/* <option value="">All Members</option> */}
                   <option value="Executive Committee">
                     Executive Committee
                   </option>
@@ -179,7 +189,6 @@ const OurTeam = () => {
               {/* Desktop: Radio Buttons as Tags */}
               <div className="hidden sm:flex flex-wrap gap-2">
                 {[
-                  // { label: "All Members", value: "" },
                   {
                     label: "Executive Committee",
                     value: "Executive Committee",
@@ -212,81 +221,96 @@ const OurTeam = () => {
           </div>
         </motion.div>
 
-        {/* Team Members Grid */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto max-w-7xl"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-          }}
-        >
-          {sortedMembers.map((member, index) => (
-            <motion.div
-              key={index}
-              variants={{
-                hidden: { opacity: 0, y: 30, scale: 0.95 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: { duration: 0.5 },
-                },
-              }}
-              whileHover={{
-                scale: 1.03,
-                transition: { duration: 0.3 },
-              }}
-              className="group cursor-pointer"
-            >
-              {/* Professional Photo Card */}
-              <div
-                onClick={() =>
-                  navigate(`/our-team/${member.name}`, { state: { member } })
-                }
-                className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100"
+        {/* Loading State */}
+        {isLoading ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto max-w-7xl"
+          >
+            {[...Array(8)].map((_, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
               >
-                {/* Image Container with Elegant Frame */}
-                <div className="relative overflow-hidden">
-                  {/* Decorative Top Element */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-green-500 z-10"></div>
+                <TeamCardSkeleton />
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          /* Team Members Grid */
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto max-w-7xl"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+            }}
+          >
+            {sortedMembers.map((member, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 30, scale: 0.95 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: { duration: 0.5 },
+                  },
+                }}
+                whileHover={{
+                  scale: 1.03,
+                  transition: { duration: 0.3 },
+                }}
+                className="group cursor-pointer"
+              >
+                {/* Professional Photo Card */}
+                <div
+                  onClick={() =>
+                    navigate(`/our-team/${member.name}`, { state: { member } })
+                  }
+                  className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100"
+                >
+                  {/* Image Container with Elegant Frame */}
+                  <div className="relative overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-green-500 z-10"></div>
 
-                  {/* Main Image with Hover Effect */}
-                  <div className="p-4 pb-0">
-                    <div className="relative overflow-hidden rounded-t-xl">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-72 h-75 object-cover transform group-hover:scale-110 transition-transform duration-700"
-                      />
+                    <div className="p-4 pb-0">
+                      <div className="relative overflow-hidden rounded-t-xl">
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className="w-72 h-75 object-cover transform group-hover:scale-110 transition-transform duration-700"
+                        />
 
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Member Information */}
-                {/* Member Information */}
-                <div className="flex-grow flex flex-col items-center justify-center text-center px-4 py-4">
-                  <h3 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm text-blue-600 font-medium">
-                    {member.post}
-                  </p>
-                </div>
+                  {/* Member Information */}
+                  <div className="flex-grow flex flex-col items-center justify-center text-center px-4 py-4">
+                    <h3 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
+                      {member.name}
+                    </h3>
+                    <p className="text-sm text-blue-600 font-medium">
+                      {member.post}
+                    </p>
+                  </div>
 
-                {/* Bottom Accent */}
-                <div className="h-1 bg-gradient-to-r from-blue-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                  <div className="h-1 bg-gradient-to-r from-blue-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
 
         {/* Empty State */}
-        {sortedMembers.length === 0 && teams.length > 0 && (
+        {!isLoading && sortedMembers.length === 0 && teams.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -312,6 +336,62 @@ const OurTeam = () => {
               <p className="text-gray-500">
                 Try adjusting your search criteria
               </p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Initial Loading State */}
+        {isLoading && teams.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <div className="max-w-md mx-auto">
+              {/* Animated Spinner */}
+              <div className="relative mb-6">
+                <div className="w-20 h-20 border-4 border-blue-200 rounded-full animate-spin mx-auto"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-t-4 border-blue-600 rounded-full animate-spin"></div>
+              </div>
+
+              {/* Loading Text with Animation */}
+              <motion.h3
+                className="text-xl font-semibold text-gray-700 mb-2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                Loading Our Team
+              </motion.h3>
+              <motion.p
+                className="text-gray-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                Gathering our amazing team members...
+              </motion.p>
+
+              {/* Progress Dots */}
+              <motion.div
+                className="flex justify-center space-x-2 mt-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                {[0, 1, 2].map((index) => (
+                  <motion.div
+                    key={index}
+                    className="w-2 h-2 bg-blue-600 rounded-full"
+                    animate={{ scale: [1, 1.5, 1] }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      delay: index * 0.2,
+                    }}
+                  />
+                ))}
+              </motion.div>
             </div>
           </motion.div>
         )}

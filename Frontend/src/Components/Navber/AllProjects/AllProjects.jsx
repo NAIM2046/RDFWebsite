@@ -210,20 +210,6 @@ const AllProjects = () => {
                         <span className="font-medium">Donor:</span>{" "}
                         {project.donor}
                       </p>
-                      {/* <p>
-                        <span className="font-medium">
-                          Direct Beneficiaries:
-                        </span>{" "}
-                        {parseInt(project.directBeneficiaries?.male || 0) +
-                          parseInt(project.directBeneficiaries?.female || 0)}
-                      </p>
-                      <p>
-                        <span className="font-medium">
-                          Indirect Beneficiaries:
-                        </span>{" "}
-                        {parseInt(project.indirectBeneficiaries?.male || 0) +
-                          parseInt(project.indirectBeneficiaries?.female || 0)}
-                      </p> */}
                     </div>
                     <div className="mt-auto">
                       <div
@@ -234,7 +220,7 @@ const AllProjects = () => {
                         }`}
                       >
                         {project.projectState === "Current"
-                          ? "🟢 Current"
+                          ? "🟢 Ongoing"
                           : "✅ Completed"}
                       </div>
                       <motion.button

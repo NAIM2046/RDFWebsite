@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import useRDFStore from "../../../storage/useRDFstorage";
+import { Helmet } from "react-helmet-async";
 
 const OurProgram = () => {
   const [showLeft, setShowLeft] = useState(false);
@@ -67,6 +68,31 @@ const OurProgram = () => {
 
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Helmet>
+        <title>Our Programs | Resource Development Foundation (RDF)</title>
+        <meta
+          name="description"
+          content="Discover RDF’s diverse programs in Bangladesh, including social development, youth empowerment, climate resilience, and community projects. Learn more about each initiative."
+        />
+        <meta
+          name="keywords"
+          content="RDF programs, social development Bangladesh, youth empowerment, climate resilience, RDF projects"
+        />
+        <link rel="canonical" href="https://rdfbd.org/our-program" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Our Programs | RDF" />
+        <meta
+          property="og:description"
+          content="Explore RDF’s transformative programs and projects across Bangladesh."
+        />
+        <meta property="og:url" content="https://rdfbd.org/our-program" />
+        <meta
+          property="og:image"
+          content="https://rdfbd.org/assets/programs/cover.jpg"
+        />
+      </Helmet>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

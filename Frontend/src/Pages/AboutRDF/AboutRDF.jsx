@@ -1,7 +1,6 @@
 import React from "react";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import { Helmet } from "react-helmet-async";
-import FounderMessage from "../FounderMessage/FounderMessage";
 
 const AboutRDF = () => {
   const data = [
@@ -25,7 +24,7 @@ const AboutRDF = () => {
     {
       authority: "National Skills Development Authority (NSDA)",
       regNumber: "STP-BAR-001359",
-      regSince: "22.05.2029",
+      regSince: "22.05.2024",
     },
     {
       authority: "UEI/System for Award Management (SAM)",
@@ -73,7 +72,29 @@ const AboutRDF = () => {
           name="description"
           content="Learn about Resource Development Foundation (RDF), driving positive change across Bangladesh since 1995 with programs in social development, economic empowerment, and climate resilience."
         />
+        <meta
+          name="keywords"
+          content="RDF, Resource Development Foundation, NGO Bangladesh, social development, climate resilience, women's empowerment, child rights"
+        />
+        <link rel="canonical" href="https://rdfbd.org/about" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="About RDF | Resource Development Foundation"
+        />
+        <meta
+          property="og:description"
+          content="Learn about Resource Development Foundation (RDF) and its transformative programs in Bangladesh for over three decades."
+        />
+        <meta property="og:url" content="https://rdfbd.org/about-rdf" />
+        <meta
+          property="og:image"
+          content="https://rdfbd.org/assets/aboutRdf/Coverphoto.JPG" // ensure public access & 1200x630 px
+        />
       </Helmet>
+
       <PageCoverPhoto
         title={"ABOUT RDF"}
         subtitle={"Creating Sustainable Impact through Transformation"}

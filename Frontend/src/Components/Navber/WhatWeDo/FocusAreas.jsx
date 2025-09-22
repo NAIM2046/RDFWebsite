@@ -1,17 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  FaBalanceScale,
-  FaLeaf,
-  FaFirstAid,
-  FaChild,
-  FaSolarPanel,
-  FaHandHoldingHeart,
-  FaShieldAlt,
-} from "react-icons/fa";
-import { IoIosArrowRoundForward } from "react-icons/io";
-import { MdWork, MdTrendingUp, MdEmergency, MdWaterDrop } from "react-icons/md";
-import { GiPlantRoots } from "react-icons/gi";
+
 import { useNavigate } from "react-router-dom";
 
 const focusAreas = [
@@ -68,6 +57,7 @@ const focusAreas = [
 ];
 
 const FocusAreas = () => {
+  const navigate = useNavigate();
   return (
     <section className="py-16 px-4 sm:px-6 bg-white text-gray-900 font-serif">
       <div className="max-w-7xl mx-auto text-center">
@@ -109,6 +99,7 @@ const FocusAreas = () => {
               }}
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ scale: 1.02 }}
+              onClick={() => navigate("/our-program")}
             >
               {/* Background Image */}
               <div

@@ -15,15 +15,24 @@ const fs = require('fs');
 
 
 app.use(express.json()) ;
-app.use(cors()) ;
+app.use(cors({
+  origin:[ "https://rdfbd.org" , "http://localhost:5173"],   // allow only your frontend
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS" ,"PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true              // allow cookies / auth headers
+}));
+
 app.use(compression());
+
+const EamilSentRoute = require("./Router/EmailSentRoute.js")
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
  
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pjh5v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ijhlwac.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -51,8 +60,7 @@ async function run() {
      const adminCol=  client.db("RDF").collection("admins") ; 
      const reportsCollection=  client.db("RDF").collection("reports") ; 
      const PolicyCollection=  client.db("RDF").collection("policys") ; 
-     const CertificationCollection=  client.db("RDF").collection("certifications") ; 
-
+    
 // middleware function 
 
 const verifyToken = (req, res, next) => {
@@ -81,67 +89,14 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage })
-// upload a Certifications document (pdf)
 
-// ...existing code...
 
-// Upload a Certifications document (PDF)
-app.post("/api/admin/certification-upload",   async (req, res) => {
-  console.log("Call")
- console.log(req.body)
 
-  const { name , filePath } = req.body;
-  console.log(name , filePath) ;
- 
+//email send 
 
-  try {
-    const result = await CertificationCollection.insertOne({
-      name,
-      filePath,
-      uploadedAt: new Date(),
-    });
+app.use("/api/email", EamilSentRoute)
 
-    res.status(200).json({
-      message: "Certification uploaded successfully",
-      certification: { _id: result.insertedId, name, filePath },
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Failed to upload certification", error });
-  }
-});
 
-// Get all certifications
-app.get("/api/admin/certifications", async (req, res) => {
-  try {
-    const certifications = await CertificationCollection.find().sort({ uploadedAt: -1 }).toArray();
-    res.status(200).json(certifications);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to fetch certifications", error });
-  }
-});
-
-// Delete a certification
-app.delete("/api/admin/certifications/:id", verifyToken, async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const certification = await CertificationCollection.findOne({ _id: new ObjectId(id) });
-
-    if (!certification) {
-      return res.status(404).json({ message: "Certification not found" });
-    }
-
-    
-
-    await CertificationCollection.deleteOne({ _id: new ObjectId(id) });
-
-    res.status(200).json({ message: "Certification deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Failed to delete certification", error });
-  }
-});
-
-// ...existing code...
 
 
 
@@ -627,6 +582,7 @@ app.delete("/projects/:id", verifyToken, async (req, res) => {
         const id = req.params.id ; 
         const  quary  = {_id : new ObjectId(id)} ; 
         const result = await activiesCol.deleteOne(quary) ; 
+        res.send(result) ;
       
       })
 
@@ -689,8 +645,10 @@ app.delete("/projects/:id", verifyToken, async (req, res) => {
       })
 
       app.patch('/news/:id', verifyToken, async (req, res) => {
+
         const { id } = req.params;
         const updateData = req.body;
+        console.log(req.body)
         const query = { _id: new ObjectId(id) };
         const result = await newsCol.updateOne(query, { $set: updateData });
         if (result.matchedCount === 0) {
@@ -701,16 +659,41 @@ app.delete("/projects/:id", verifyToken, async (req, res) => {
 
       // news api end----------
       // photo api start 
-      app.post("/photos" , verifyToken, async(req , res) =>{
-        const photo = req.body ; 
-        const result =  await photoCol.insertOne(photo) ; 
-        res.send(result) ;
+     app.post("/photos", verifyToken, async (req, res) => {
+  try {
+    const { title, text, photoType, imageUrl } = req.body;
 
-      })
-      app.get("/photos" , async(req, res)=>{
-        const result = await photoCol.find().toArray() ; 
-        res.send(result) ; 
-      } )
+   console.log(req.body)
+    // Create one document per image
+    const photosToInsert = imageUrl.map((url) => ({
+      title,
+      text,
+      photoType,
+      imageUrl: url,
+      createdAt: new Date()
+    }));
+
+    const result = await photoCol.insertMany(photosToInsert);
+    res.send(result);
+  } catch (err) {
+    res.status(500).send({ error: "Failed to save photos" });
+  }
+});
+
+   app.get("/photos", async (req, res) => {
+  try {
+    const result = await photoCol
+      .find()
+     
+      .toArray();
+
+    res.send(result);
+  } catch (err) {
+    res.status(500).send({ error: "Failed to fetch photos" });
+  }
+});
+
+
       app.delete("/photos/:id" ,verifyToken, async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 

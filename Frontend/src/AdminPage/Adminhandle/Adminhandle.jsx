@@ -16,7 +16,7 @@ const AdminHandle = () => {
   useEffect(() => {
     fetchAdmins();
   }, []);
-
+  console.log(admins);
   // Add new admin
   const addAdmin = async (e) => {
     e.preventDefault();
