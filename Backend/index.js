@@ -15,12 +15,29 @@ const fs = require('fs');
 
 
 app.use(express.json()) ;
+const allowedOrigins = [
+  "https://rdfbd.org",
+  "https://www.rdfbd.org",
+  "http://localhost:5173"
+];
+
 app.use(cors({
-  origin:[ "https://rdfbd.org" , "http://localhost:5173"],   // allow only your frontend
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS" ,"PATCH"],
+  origin: function(origin, callback){
+    // allow requests with no origin like mobile apps or curl
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true              // allow cookies / auth headers
+  credentials: true
 }));
+
+// handle OPTIONS preflight for all routes
+//app.options("*", cors());
 
 app.use(compression());
 
@@ -66,7 +83,7 @@ async function run() {
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; 
   // Extract token from Bearer header
-  console.log(token) ;
+  //console.log(token) ;
 
   if (!token) {
     return res.status(403).json({ message: "Access denied. No token provided." });
@@ -107,7 +124,7 @@ app.post("/api/admin/policy-upload", verifyToken, upload.single("pdf"), async (r
   }
 
   const { name } = req.body;
-  console.log(name)
+  //console.log(name)
   const filePath = `/uploads/${req.file.filename}`;
 
   try {
@@ -448,7 +465,7 @@ app.post("/projects", verifyToken, async (req, res) => {
 // Get all projects
 app.get("/projects", async (req, res) => {
     try {
-        const result = await projectCol.find().toArray();
+        const result = await projectCol.find().sort({ createdAt: -1 }).toArray();
         res.json(result);
     } catch (error) {
         console.error("Error fetching projects:", error);
