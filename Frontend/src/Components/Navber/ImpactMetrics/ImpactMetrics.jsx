@@ -19,7 +19,7 @@ const ImpactMetrics = () => {
     { title: "Field Office", value: 82, icon: <Home size={50} /> }, // Changed to Home icon
     {
       title: "Project Completed",
-      value: 49,
+      value: 100,
       icon: <CheckCircle size={50} />,
     },
     {

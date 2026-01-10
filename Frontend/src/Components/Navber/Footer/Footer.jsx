@@ -23,11 +23,11 @@ const Footer = () => {
             alt="RDF Logo"
             loading="lazy"
           />
-          <p className="text-sm text-gray-400 text-center">
-            Creating Sustainable Impact through Transformation
-          </p>
           <p className="text-md font-light text-white leading-relaxed">
             Resource Development Foundation(RDF)
+          </p>
+          <p className="text-sm text-gray-400 text-center">
+            Creating Sustainable Impact through Transformation
           </p>
         </div>
 

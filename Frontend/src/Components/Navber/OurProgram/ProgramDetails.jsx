@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useRDFStore from "../../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
@@ -136,6 +136,7 @@ const ProgramDetails = () => {
                 </p>
               )}
             </motion.div>
+            <Link to={"/our-program"} className="border-1 p-2 rounded-md bg-green-200"> Back </Link>
           </div>
 
           {/* Right Side - Images & Video */}

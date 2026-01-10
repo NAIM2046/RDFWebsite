@@ -48,8 +48,7 @@ const weWorkForData = [
   },
   {
     title: "Digital Technology and AI Enthusiasts",
-    image:
-      "https://i.ibb.co.com/WvYdczMJ/518287059-3192294777593122-2116601886790060414-n.jpg",
+    image: "https://i.ibb.co.com/hRXW4T13/clipboard-image-1760261564.png",
     detail:
       "Support is offered for children and youth interested in STEM, digital technology and AI programs, nurturing their skills in these cutting-edge fields.",
   },

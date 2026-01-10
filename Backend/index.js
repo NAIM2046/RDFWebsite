@@ -15,12 +15,29 @@ const fs = require('fs');
 
 
 app.use(express.json()) ;
+const allowedOrigins = [
+  "https://rdfbd.org",
+  "https://www.rdfbd.org",
+  "http://localhost:5173"
+];
+
 app.use(cors({
-  origin:[ "https://rdfbd.org" , "http://localhost:5173"],   // allow only your frontend
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS" ,"PATCH"],
+  origin: function(origin, callback){
+    // allow requests with no origin like mobile apps or curl
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true              // allow cookies / auth headers
+  credentials: true
 }));
+
+// handle OPTIONS preflight for all routes
+app.options("*", cors());
 
 app.use(compression());
 
@@ -448,7 +465,7 @@ app.post("/projects", verifyToken, async (req, res) => {
 // Get all projects
 app.get("/projects", async (req, res) => {
     try {
-        const result = await projectCol.find().toArray();
+        const result = await projectCol.find().sort({ createdAt: -1 }).toArray();
         res.json(result);
     } catch (error) {
         console.error("Error fetching projects:", error);
@@ -633,10 +650,20 @@ app.delete("/projects/:id", verifyToken, async (req, res) => {
         res.send(result) ;
 
       })
-      app.get("/news" , async(req, res)=>{
-        const result = await newsCol.find().toArray() ; 
-        res.send(result) ; 
-      } )
+     app.get("/news", async (req, res) => {
+  try {
+    const result = await newsCol
+      .find()
+      .sort({ date: -1 }) // newest first
+      .toArray();
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    res.status(500).send({ message: "Failed to fetch news" });
+  }
+});
+
       app.delete("/news/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 
@@ -710,10 +737,23 @@ app.delete("/projects/:id", verifyToken, async (req, res) => {
         res.send(result) ;
 
       })
-      app.get("/video" , async(req, res)=>{
-        const result = await videoCol.find().toArray() ; 
-        res.send(result) ; 
-      } )
+      app.get("/video", async (req, res) => {
+  try {
+    const result = await videoCol
+      .find()
+      .sort({ publishedDate: -1 }) // newest first
+      .toArray();
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+    res.status(500).send({
+      success: false,
+      message: "Failed to fetch videos",
+    });
+  }
+});
+
       app.delete("/video/:id" , verifyToken , async(req , res) =>{
            const id =  req.params.id ; 
            const quary = {_id : new ObjectId(id)} ; 

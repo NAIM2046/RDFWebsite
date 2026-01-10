@@ -52,115 +52,109 @@ const ContactUs = () => {
       </Helmet>
 
       {/* Main Contact Section */}
-      <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-          {/* Left Side - Image */}
-          <div className="w-full lg:w-2/5">
-            <div className="rounded-xl overflow-hidden shadow-xl h-full">
-              <img
-                src="/assets/ContactUs/rdftower.png"
-                alt="RDF Office Building"
-                className="w-full h-full object-cover"
-              />
-            </div>
+     <div className="max-w-6xl mx-auto py-14 px-4 sm:px-6 lg:px-8">
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+    
+    {/* Left – Image */}
+    <div className="rounded-2xl overflow-hidden shadow-lg">
+      <img
+        src="/assets/ContactUs/rdftower.png"
+        alt="RDF Office Building"
+        className="w-full h-full object-cover"
+      />
+    </div>
+
+    {/* Right – Contact Info */}
+    <div className="bg-white rounded-2xl shadow-lg p-8 md:p-10">
+      <h2 className="text-3xl font-serif font-bold text-green-700 text-center mb-10 border-b border-green-200 pb-4">
+        Contact Information
+      </h2>
+
+      <div className="space-y-9">
+
+        {/* Head Office */}
+        <div className="flex gap-5">
+          <div className="w-11 h-11 flex items-center justify-center rounded-full bg-orange-100">
+            <FaLocationDot className="text-orange-500 text-xl" />
           </div>
-
-          {/* Right Side - Contact Info */}
-          <div className="w-full lg:w-3/5 bg-white rounded-xl shadow-xl p-8 md:p-10">
-            <h2 className="text-3xl font-bold mb-8 text-green-600 text-center font-serif border-b-2 border-green-200 pb-4">
-              Contact Us
-            </h2>
-
-            <div className="space-y-8">
-              {/* Head Office */}
-              <div className="flex gap-4">
-                <div className="mt-1">
-                  <FaLocationDot className="text-2xl text-orange-500" />
-                </div>
-                <div className="flex-1">
-                  <a
-                    href="https://www.google.com/maps/place/Resource+Development+Foundation/@23.7656605,90.3470314,15z/data=!4m10!1m2!2m1!1sPisciculture+Housing+Society+RDF!3m6!1s0x3755c098a14f7011:0x5e4ead7428592246!8m2!3d23.7700141!4d90.3558215!15sCiBQaXNjaWN1bHR1cmUgSG91c2luZyBTb2NpZXR5IFJERloiIiBwaXNjaWN1bHR1cmUgaG91c2luZyBzb2NpZXR5IHJkZpIBF25vbl9wcm9maXRfb3JnYW5pemF0aW9umgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU50YWpWeE9VWlJFQUXgAQD6AQUIgwEQPA!16s%2Fg%2F11clsh20x9?entry=ttu&g_ep=EgoyMDI1MDIxMS4wIKXMDSoASAFQAw%3D%3D"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xl font-semibold text-gray-800 hover:text-green-600 transition-colors"
-                  >
-                    Head Office
-                  </a>
-                  <p className="text-gray-600 mt-2 leading-relaxed">
-                    House # 21, Road # 12, Pisciculture Housing Society,
-                    Block-Kha, Adabor, Dhaka 1207
-                  </p>
-                </div>
-              </div>
-
-              {/* Barguna Office */}
-              <div className="flex gap-4">
-                <div className="mt-1">
-                  <FaLocationDot className="text-2xl text-orange-500" />
-                </div>
-                <div className="flex-1">
-                  <a
-                    href="https://www.google.com/maps/place/RDF+Tower/@22.1519777,90.1285341,16z/data=!4m14!1m7!3m6!1s0x30aa998d296c6c1f:0x567c97ad6ae76f66!2sRDF+Tower!8m2!3d22.151842!4d90.1308193!16s%2Fg%2F11c1wx0l52!3m5!1s0x30aa998d296c6c1f:0x567c97ad6ae76f66!8m2!3d22.151842!4d90.1308193!16s%2Fg%2F11c1wx0l52?entry=ttu&g_ep=EgoyMDI1MDIxMS.0IKXMDSoASAFQAw%3D%3D"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xl font-semibold text-gray-800 hover:text-green-600 transition-colors"
-                  >
-                    Barguna Office
-                  </a>
-                  <p className="text-gray-600 mt-2 leading-relaxed">
-                    RDF Training & Research Center, Police line Sarak,
-                    Barguna-8700
-                  </p>
-                </div>
-              </div>
-
-              {/* Email */}
-              <div className="flex gap-4">
-                <div className="mt-1">
-                  <MdOutlineMail className="text-2xl text-orange-500" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    Mail Us
-                  </h3>
-                  <div className="text-gray-600 space-y-1">
-                    <p>
-                      <span className="font-medium">Head Office:</span>{" "}
-                      info@rdfdb.org
-                    </p>
-                    <p>
-                      <span className="font-medium">Barguna Office:</span>{" "}
-                      rdfbangladesh@hotmail.com
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Phone Numbers */}
-              <div className="flex gap-4">
-                <div className="mt-1">
-                  <FiPhoneCall className="text-2xl text-orange-500" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    Call Us
-                  </h3>
-                  <div className="text-gray-600 space-y-1">
-                    <p>
-                      <span className="font-medium">Head Office:</span>{" "}
-                      +88-0561-52149, +88-0561-61614, +88 01714-063360
-                    </p>
-                    <p>
-                      <span className="font-medium">Barguna Office:</span>{" "}
-                      +88-02-479930042
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div>
+            <a
+              href="https://www.google.com/maps/place/Resource+Development+Foundation/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-gray-800 hover:text-green-700 transition"
+            >
+              Head Office – Dhaka
+            </a>
+            <p className="mt-2 text-gray-600 leading-relaxed">
+              House # 21, Road # 12, Pisciculture Housing Society, Block-Kha,
+              Adabor, Dhaka 1207
+            </p>
           </div>
         </div>
+
+        {/* Barguna Office */}
+        <div className="flex gap-5">
+          <div className="w-11 h-11 flex items-center justify-center rounded-full bg-orange-100">
+            <FaLocationDot className="text-orange-500 text-xl" />
+          </div>
+          <div>
+            <a
+              href="https://www.google.com/maps/place/RDF+Tower/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-gray-800 hover:text-green-700 transition"
+            >
+              Barguna Office
+            </a>
+            <p className="mt-2 text-gray-600 leading-relaxed">
+              RDF Training & Research Center, Police Line Sarak, Barguna-8700
+            </p>
+          </div>
+        </div>
+
+        {/* Email */}
+        <div className="flex gap-5">
+          <div className="w-11 h-11 flex items-center justify-center rounded-full bg-orange-100">
+            <MdOutlineMail className="text-orange-500 text-xl" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">Email</h3>
+            <p className="mt-2 text-gray-600">
+              <span className="font-medium">Head Office:</span> info@rdfbd.org
+            </p>
+            <p className="text-gray-600">
+              <span className="font-medium">Barguna Office:</span> rtrc@rdfbd.org
+            </p>
+          </div>
+        </div>
+
+        {/* Phone */}
+        <div className="flex gap-5">
+          <div className="w-11 h-11 flex items-center justify-center rounded-full bg-orange-100">
+            <FiPhoneCall className="text-orange-500 text-xl" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">Phone</h3>
+            <p className="mt-2 text-gray-600">
+              <span className="font-medium">Head Office (T&T):</span>{" "}
+              +88-02-222243850
+            </p>
+            <p className="text-gray-600">
+              <span className="font-medium">Mobile:</span> 01733-065522
+            </p>
+            <p className="text-gray-600">
+              <span className="font-medium">Barguna Office (T&T):</span>{" "}
+              +88-02-479930041
+            </p>
+          </div>
+        </div>
+
       </div>
+    </div>
+  </div>
+</div>
+
 
       {/* Map Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">

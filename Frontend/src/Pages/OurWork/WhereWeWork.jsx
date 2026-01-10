@@ -1,40 +1,44 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import map from "/assets/wherewework/image.png";
+import map from "/assets/wherewework/image.png"; // Ensure this path is correct for your project
+import { Helmet } from "react-helmet-async";
+import { offices as officeData } from "./officelist";
 
 const WhereWeWork = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeOffice, setActiveOffice] = useState(0);
 
-  // 🏢 Office Addresses (Dynamic)
-  const offices = [
-    {
-      id: 1,
-      title: "Head Office",
-      address: [
-        "RDF Bhaban",
-        "House # 21, Road # 12",
-        "Pisciculture Housing Society",
-        "Block-Kha, Adabar, Dhaka-1207",
-      ],
-      phone: "+88-02-91046443",
-      email: "info@rdfbd.org",
-    },
-    {
-      id: 2,
-      title: "RTRC Barguna Office",
-      address: [
-        "RDF Training & Research Center ",
-        "Police Line Sarak",
-        "Barguna -8700",
-      ],
-      phone: "+88-0247990042",
-      email: "",
-    },
-  ];
+  const offices = officeData;
+  
+  // Get current active office data
+  const currentOfficeData = offices[activeOffice];
+  const currentOfficeList = currentOfficeData.officeList;
+
+  // 1. Check if this is the "Development Project Offices" tab (ID 4)
+  const isProjectTab = currentOfficeData.id === 4;
+
+  // 2. Check for standard Branch/Area info (for ID 3 and similar)
+  const hasBranchInfo = currentOfficeList.some(item => item.branchName || item.areaName);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-25 to-blue-50">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-green-50 to-emerald-50/50">
+      <style>
+        {`
+          .no-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+          .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}
+      </style>
+
+      <Helmet>
+        <title>RDF - We Work Area</title>
+        <meta name="description" content="RDF work area all Bangladesh" />
+      </Helmet>
+
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -44,35 +48,134 @@ const WhereWeWork = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 font-serif mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-green-900 font-serif mb-4 mt-10 lg:mt-0 ">
             Where We Work
           </h2>
-          <p className="text-lg text-blue-700 max-w-2xl mx-auto mb-6">
+          <p className="text-lg text-emerald-700 max-w-2xl mx-auto mb-6">
             Discover our office locations and reach out to us
           </p>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto rounded-full"></div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-green-600 to-emerald-400 mx-auto rounded-full"></div>
         </motion.div>
 
-        {/* Content Container */}
+        {/* Main Content */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="flex flex-col lg:flex-row bg-white rounded-2xl shadow-xl overflow-hidden border border-blue-100"
+          className="flex flex-col lg:flex-col bg-white rounded-2xl shadow-xl overflow-hidden border border-green-100"
         >
-          {/* Image Section */}
-          <div className="lg:w-2/5 p-8 flex items-center justify-center bg-gradient-to-br from-blue-900 to-blue-800 relative">
-            <div className="absolute top-6 left-6 text-white opacity-20">
-              <svg
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-              </svg>
+          {/* Branch Table Section */}
+          <div className="p-8 md:p-10">
+            {/* Tabs */}
+            <div className="flex mb-6 border-b border-green-100 overflow-x-auto no-scrollbar">
+              {offices.map((office, idx) => (
+                <button
+                  key={office.id}
+                  className={`px-4 py-2 font-medium cursor-pointer text-sm md:text-base flex-shrink-0 transition-all duration-300 relative ${
+                    activeOffice === idx
+                      ? "text-green-800 font-bold"
+                      : "text-emerald-600 hover:text-green-800 hover:bg-green-50"
+                  }`}
+                  onClick={() => setActiveOffice(idx)}
+                >
+                  {office.title}
+                  {activeOffice === idx && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"
+                    />
+                  )}
+                </button>
+              ))}
             </div>
+
+            {/* Table */}
+            <div className="overflow-x-auto no-scrollbar rounded-lg border border-green-100">
+              <table className="min-w-full bg-white">
+                <thead className="bg-green-50">
+                  <tr>
+                    {/* --- HEADER LOGIC --- */}
+                    {isProjectTab ? (
+                      // Headers for ID 4 (Projects)
+                      <>
+                        <th className="py-3 px-4 text-left text-sm font-bold text-green-900 uppercase tracking-wider w-1/3">
+                          Name of the Project
+                        </th>
+                        <th className="py-3 px-4 text-left text-sm font-bold text-green-900 uppercase tracking-wider">
+                          Addresses of Project Office
+                        </th>
+                      </>
+                    ) : (
+                      // Headers for Standard Tabs
+                      <>
+                        {hasBranchInfo && (
+                          <>
+                            <th className="py-3 px-4 text-left text-sm font-bold text-green-900 uppercase tracking-wider">
+                              Branch
+                            </th>
+                            <th className="py-3 px-4 text-left text-sm font-bold text-green-900 uppercase tracking-wider">
+                              Area
+                            </th>
+                          </>
+                        )}
+                        <th className="py-3 px-4 text-left text-sm font-bold text-green-900 uppercase tracking-wider">
+                          Address
+                        </th>
+                      </>
+                    )}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-green-200">
+                  {currentOfficeList.map((branch) => (
+                    <tr key={branch.id} className="hover:bg-green-50/50 transition-colors">
+                      
+                      {/* --- BODY ROW LOGIC --- */}
+                      {isProjectTab ? (
+                        // 1. RENDER PROJECT ROW (ID 4)
+                        <>
+                          <td className="py-4 px-4 text-green-800 font-semibold align-top">
+                            {branch.nameOfProject}
+                          </td>
+                          <td className="py-4 px-4 text-stone-600 text-sm whitespace-pre-line align-top leading-relaxed min-w-[200px]">
+                            {branch.projectOfficeAddress}
+                            {/* Contact Info Block (Reused) */}
+                            <div className="flex flex-col gap-3 mt-2">
+                              <ContactInfoItem info={branch.contactInfo} />
+                            </div>
+                          </td>
+                        </>
+                      ) : (
+                        // 2. RENDER STANDARD ROW
+                        <>
+                          {hasBranchInfo && (
+                            <>
+                              <td className="py-4 px-4 text-green-800 font-semibold align-top">
+                                {branch.branchName}
+                              </td>
+                              <td className="py-4 px-4 text-emerald-600 font-medium align-top">
+                                {branch.areaName}
+                              </td>
+                            </>
+                          )}
+                          <td className="py-4 px-4 font-semibold text-stone-600 text-sm whitespace-pre-line align-top leading-relaxed min-w-[200px]">
+                            {branch.address}
+                            {/* Contact Info Block (Reused) */}
+                            <div className="flex flex-col gap-3 mt-2">
+                              <ContactInfoItem info={branch.contactInfo} />
+                            </div>
+                          </td>
+                        </>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Map Section */}
+          <div className="p-8 flex items-center justify-center bg-gray-100">
             <motion.div
               whileHover={{ scale: 1.03 }}
               className="relative overflow-hidden rounded-xl shadow-2xl cursor-pointer group"
@@ -83,147 +186,16 @@ const WhereWeWork = () => {
                 alt="Working Area Map"
                 className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-500 flex items-center justify-center">
-                <div className="bg-white bg-opacity-90 rounded-full p-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 shadow-md">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-blue-800"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                    />
-                  </svg>
-                </div>
-                <span className="absolute bottom-4 left-4 text-white font-medium bg-blue-800 bg-opacity-70 px-3 py-1 rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="absolute bottom-4 left-4 text-white font-medium bg-green-900/80 px-3 py-1 rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm">
                   Click to enlarge
                 </span>
               </div>
             </motion.div>
           </div>
-
-          {/* Text Section */}
-          <div className="lg:w-3/5 p-8 md:p-10 flex flex-col justify-center">
-            <h3 className="text-2xl font-semibold text-blue-900 mb-6 font-serif border-l-4 border-teal-500 pl-3">
-              Our Offices
-            </h3>
-
-            {/* Office Selector Tabs */}
-            <div className="flex mb-6 border-b border-blue-100">
-              {offices.map((office, index) => (
-                <button
-                  key={office.id}
-                  className={`px-4 py-2 font-medium text-sm md:text-base transition-colors duration-300 ${
-                    activeOffice === index
-                      ? "text-blue-800 border-b-2 border-blue-700"
-                      : "text-blue-600 hover:text-blue-800"
-                  }`}
-                  onClick={() => setActiveOffice(index)}
-                >
-                  {office.title}
-                </button>
-              ))}
-            </div>
-
-            <div className="space-y-6 text-gray-700">
-              {offices.map((office, index) => (
-                <motion.div
-                  key={office.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{
-                    opacity: activeOffice === index ? 1 : 0,
-                    x: activeOffice === index ? 0 : 20,
-                    display: activeOffice === index ? "block" : "none",
-                  }}
-                  className={`${activeOffice === index ? "block" : "hidden"}`}
-                >
-                  <h4 className="text-xl font-bold text-blue-800 mb-4 font-serif flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 mr-2 text-teal-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                    {office.title}
-                  </h4>
-                  <div className="bg-blue-50 rounded-lg p-4 mb-4 border border-blue-100">
-                    {office.address.map((line, idx) => (
-                      <p key={idx} className="mb-1 text-blue-900">
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-4">
-                    {office.phone && (
-                      <div className="flex items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2 text-teal-500"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                          />
-                        </svg>
-                        <span className="text-blue-800">{office.phone}</span>
-                      </div>
-                    )}
-                    {office.email && (
-                      <div className="flex items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2 text-teal-500"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                          />
-                        </svg>
-                        <a
-                          href={`mailto:${office.email}`}
-                          className="text-blue-700 hover:text-blue-900 transition-colors"
-                        >
-                          {office.email}
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
         </motion.div>
 
-        {/* Fullscreen Modal */}
+        {/* Map Modal */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -241,7 +213,7 @@ const WhereWeWork = () => {
                 className="relative max-w-6xl w-full mx-4"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
+                <div className="bg-white rounded-lg overflow-hidden shadow-2xl border-4 border-green-800">
                   <img
                     src={map}
                     alt="Fullscreen Map"
@@ -249,23 +221,12 @@ const WhereWeWork = () => {
                   />
                 </div>
                 <button
-                  className="absolute -top-12 right-0 text-white hover:text-teal-400 transition-colors p-2 rounded-full bg-blue-900/30 hover:bg-blue-900/50 backdrop-blur-sm"
+                  className="absolute -top-12 right-0 text-white hover:text-green-400 transition-colors p-2 rounded-full bg-green-900/30 hover:bg-green-900/50 backdrop-blur-sm"
                   onClick={() => setIsOpen(false)}
                   aria-label="Close modal"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </motion.div>
@@ -274,6 +235,39 @@ const WhereWeWork = () => {
         </AnimatePresence>
       </div>
     </section>
+  );
+};
+
+// Helper component to render contact info neatly to avoid code duplication
+const ContactInfoItem = ({ info }) => {
+  if (!info) return null;
+  return (
+    <>
+      {info.email && (
+        <a href={`mailto:${info.email}`} className="flex items-center text-emerald-600 hover:text-green-800 hover:underline">
+          <span className="w-5 text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+          </span>
+          {info.email}
+        </a>
+      )}
+      {info.phone && (
+        <a href={`tel:${info.phone}`} className="flex items-center text-emerald-600 hover:text-green-800 hover:underline">
+          <span className="w-5 text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+          </span>
+          {info.phone}
+        </a>
+      )}
+      {info.mobile && (
+        <a href={`tel:${info.mobile}`} className="flex items-center text-emerald-600 hover:text-green-800 hover:underline">
+          <span className="w-5 text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+          </span>
+          {info.mobile}
+        </a>
+      )}
+    </>
   );
 };
 

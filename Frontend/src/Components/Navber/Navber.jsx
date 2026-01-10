@@ -64,12 +64,7 @@ const Navbar = () => {
         },
         { name: "Our Team", link: "/our-team", icon: <FaUsers /> },
         { name: "Organogram", link: "/organogram", icon: <FaClipboardList /> },
-        {
-          name: "Annual Reports",
-          link: "/annual-reports",
-          icon: <FaClipboardList />,
-        },
-        { name: "Policy Document", link: "/policy-document", icon: <FiBook /> },
+       
 
         {
           name: "Our Partners",
@@ -118,13 +113,19 @@ const Navbar = () => {
       icon: <FaNewspaper />,
       links: [
         { name: "News", link: "/news", icon: <FaNewspaper /> },
-        { name: "Blog", link: "/blogs", icon: <FiBook /> },
+        
 
         {
           name: "Publication",
           link: "/publication",
           icon: <FaNewspaper />,
         },
+         {
+          name: "Annual Reports",
+          link: "/annual-reports",
+          icon: <FaClipboardList />,
+        },
+        { name: "Policy Document", link: "/policy-document", icon: <FiBook /> },
         {
           name: "Photos",
           link: "/photos",

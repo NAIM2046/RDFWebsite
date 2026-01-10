@@ -16,7 +16,7 @@ const PageCoverPhoto = ({ title, subtitle, imageUrl }) => {
       <div className="absolute inset-0 bg-opacity-40"></div>
 
       {/* Content */}
-      <div className="relative text-center text-white px-6 md:px-12 lg:px-16 max-w-3xl">
+      <div className="relative text-center text-white px-6 md:px-12 lg:px-16 max-w-3xl mt-25">
         <h1 className="text-3xl md:text-5xl lg:text-5xl font-extrabold rounded-3xl bg-black/10 p-2">
           {title}
         </h1>

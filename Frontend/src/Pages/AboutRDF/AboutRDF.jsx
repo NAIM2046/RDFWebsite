@@ -76,7 +76,7 @@ const AboutRDF = () => {
           name="keywords"
           content="RDF, Resource Development Foundation, NGO Bangladesh, social development, climate resilience, women's empowerment, child rights"
         />
-        <link rel="canonical" href="https://rdfbd.org/about" />
+        <link rel="canonical" href="https://rdfbd.org/about-rdf" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
@@ -98,7 +98,7 @@ const AboutRDF = () => {
       <PageCoverPhoto
         title={"ABOUT RDF"}
         subtitle={"Creating Sustainable Impact through Transformation"}
-        imgUrl={"/assets/aboutRdf/Coverphoto.JPG"}
+        imageUrl={"/assets/aboutRdf/Coverphoto-min.png"}
       ></PageCoverPhoto>
       <div className="bg-gradient-to-r from-green-100 to-blue-100 min-h-screen pt-5 pb-5">
         <div className="max-w-5xl mx-auto bg-white  rounded-lg p-6 space-y-4 ">

@@ -436,6 +436,7 @@ const ProjectPage = () => {
                 >
                   <option value="">Select Project State</option>
                   <option value="Current">Current</option>
+                  <option value="Hold">On Hold</option>
                   <option value="Completed">Completed</option>
                 </select>
                 {errors.projectState && (

@@ -61,15 +61,43 @@ import PolicyDocPage from "../AdminPage/PolicyDocPage/PolicyDocPage";
 import CertificationsPage from "../AdminPage/CertificationsPage/CertificationsPage";
 import WeWorkFor from "../Pages/OurWork/WeWorkFor";
 import WhereWeWork from "../Pages/OurWork/WhereWeWork";
+import NotFound from "../Components/Error/NotFound";
+import ErrorPage from "../Components/Error/ErrorPage";
+import AdminErrorPage from "../Components/Error/AdminErrorPage";
+
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("Error caught by boundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || <ErrorPage error={this.state.error} />;
+    }
+    return this.props.children;
+  }
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
         element: <Home></Home>,
+        errorElement: <ErrorPage></ErrorPage>,
       },
       {
         path: "/vision-mission",
@@ -82,6 +110,11 @@ const router = createBrowserRouter([
       {
         path: "/our-team/:name",
         element: <MemberDetail></MemberDetail>,
+        errorElement: (
+          <ErrorPage
+            message={"Team member not found or failed to load."}
+          ></ErrorPage>
+        ),
       },
       {
         path: "/annual-reports",
@@ -90,6 +123,9 @@ const router = createBrowserRouter([
       {
         path: "/program-details/:id",
         element: <ProgramDetails></ProgramDetails>,
+        errorElement: (
+          <ErrorPage message="Project not found or failed to load." />
+        ),
       },
       {
         path: "/all-projects",
@@ -98,6 +134,9 @@ const router = createBrowserRouter([
       {
         path: "/project-details/:id",
         element: <ProjectDetails></ProjectDetails>,
+        errorElement: (
+          <ErrorPage message="News article not found or failed to load." />
+        ),
       },
       {
         path: "/news",
@@ -106,6 +145,9 @@ const router = createBrowserRouter([
       {
         path: "/news/:id",
         element: <NewsDetails></NewsDetails>,
+        errorElement: (
+          <ErrorPage message="News article not found or failed to load." />
+        ),
       },
 
       {
@@ -168,6 +210,9 @@ const router = createBrowserRouter([
       {
         path: "/event-details/:id",
         element: <EventDetail></EventDetail>,
+        errorElement: (
+          <ErrorPage message="Event not found or failed to load."></ErrorPage>
+        ),
       },
       {
         path: "/about-rdf",
@@ -213,10 +258,14 @@ const router = createBrowserRouter([
   {
     path: "admin-login",
     element: <LoginPage></LoginPage>,
+    errorElement: <ErrorPage message="Login page failed to load." />,
   },
   {
     path: "/payment",
     element: <CheakOutPage></CheakOutPage>,
+    errorElement: (
+      <ErrorPage message="Payment page is currently unavailable." />
+    ),
   },
   {
     path: "/payment-success",
@@ -226,9 +275,12 @@ const router = createBrowserRouter([
     path: "/admin-rdf",
     element: (
       <PrivateRoute>
-        <Admin></Admin>
+        <ErrorBoundary fallback={<AdminErrorPage />}>
+          <Admin />
+        </ErrorBoundary>
       </PrivateRoute>
     ),
+    errorElement: <AdminErrorPage></AdminErrorPage>,
     children: [
       {
         path: "/admin-rdf",
@@ -291,6 +343,10 @@ const router = createBrowserRouter([
         element: <CertificationsPage></CertificationsPage>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound></NotFound>,
   },
 ]);
 export default router;
