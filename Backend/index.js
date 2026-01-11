@@ -37,7 +37,7 @@ app.use(cors({
 }));
 
 // handle OPTIONS preflight for all routes
-app.options("*", cors());
+//app.options("*", cors());
 
 app.use(compression());
 
@@ -83,7 +83,7 @@ async function run() {
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; 
   // Extract token from Bearer header
-  console.log(token) ;
+  //console.log(token) ;
 
   if (!token) {
     return res.status(403).json({ message: "Access denied. No token provided." });
@@ -124,7 +124,7 @@ app.post("/api/admin/policy-upload", verifyToken, upload.single("pdf"), async (r
   }
 
   const { name } = req.body;
-  console.log(name)
+  //console.log(name)
   const filePath = `/uploads/${req.file.filename}`;
 
   try {
