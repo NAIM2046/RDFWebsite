@@ -2,37 +2,68 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 
 const CareerWithRDF = () => {
+  const applyLink =
+    "https://mail.google.com/mail/?view=cm&fs=1&to=hr@rdfbd.org&su=Job%20Application%20-%20RDF&body=Dear%20HR%20Team,%0A%0APlease%20find%20my%20application%20attached.%0A%0ARegards,";
+
   const jobs = [
     {
+      img: "/assets/careerwithrdf/Screenshot 2026-01-13 200742.png",
+    },
+    {
       img: "/assets/careerwithrdf/job.jpg",
-      applyLink: "mailto:hr@rdfbd.org", // Email link for applying
     },
   ];
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div className="mx-auto max-w-7xl px-4">
       <Helmet>
-        <title> RDF-Career </title>
+        <title>RDF | Career</title>
       </Helmet>
-      <div className="container mx-auto p-6 ">
-        <h2 className="text-3xl font-bold text-gray-800 text-center mb-6 mt-20 md:mt-1 font-serif">
-          Job Vacancy
+
+      {/* Page Title */}
+      <div className="text-center mt-20 mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 font-serif">
+          Career With RDF
         </h2>
-        <div className="flex flex-col items-center">
-          {jobs.map((job, index) => (
-            <div key={index} className="text-center">
-              {/* Job Image */}
-              <img src={job.img} alt="Job Vacancy" className="w-full" />
-              {/* Apply Now Button */}
+        <p className="text-gray-600 mt-2">
+          Join our team and build a meaningful career with RDF
+        </p>
+      </div>
+
+      {/* Job Cards */}
+      <div className="grid grid-cols-1 gap-10">
+        {jobs.map((job, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden"
+          >
+            {/* Job Image */}
+            <img
+              src={job.img}
+              alt="Job Vacancy"
+              className="mx-auto w-full max-w-[800px] object-contain"
+            />
+
+            {/* Card Footer */}
+            <div className="p-6 text-center">
+              <a
+                href={applyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-blue-600 text-white font-semibold py-2 px-8 rounded-lg hover:bg-blue-700 hover:scale-105 transition duration-300"
+              >
+                📧 Apply via Gmail
+              </a>
+
+              <p className="text-sm text-gray-500 mt-4">
+                Send your CV to{" "}
+                <span className="font-medium text-gray-700">
+                  hr@rdfbd.org
+                </span>
+              </p>
             </div>
-          ))}
-        </div>
-        <a
-          href={jobs[0].applyLink}
-          className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:shadow-xl shadow-lg  shadow-blue-600 transition duration-300 md:absolute top-30 right-10"
-        >
-          Apply Now
-        </a>
+          </div>
+        ))}
       </div>
     </div>
   );
