@@ -19,7 +19,7 @@ const ImpactMetrics = () => {
     { title: "Field Office", value: 82, icon: <Home size={50} /> }, // Changed to Home icon
     {
       title: "Project Completed",
-      value: 100,
+      value: 0,
       icon: <CheckCircle size={50} />,
     },
     {
@@ -34,7 +34,7 @@ const ImpactMetrics = () => {
   return (
     <section
       ref={ref}
-      className="py-16 px-6 bg-gradient-to-r bg-green-50 text-gray-900"
+      className="py-16 px-6 bg-gradient-to-r bg-green-50 text-gray-900 mt-20 sm:mt-2"
     >
       <div className="max-w-7xl mx-auto text-center font-serif">
         {" "}

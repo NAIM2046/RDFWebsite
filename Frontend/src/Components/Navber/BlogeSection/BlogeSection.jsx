@@ -19,8 +19,8 @@ const BlogSection = () => {
     () =>
       [...newss]
         .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 6),
-    [newss]
+        .slice(0, 3),
+    [newss],
   );
 
   return (

@@ -4,29 +4,29 @@ import { Helmet } from "react-helmet-async";
 import useRDFStore from "../../storage/useRDFstorage";
 
 // Lazy load components for performance
-const Slider = React.lazy(() =>
-  import("../../Components/Navber/Slider/Slider")
+const Slider = React.lazy(
+  () => import("../../Components/Navber/Slider/Slider"),
 );
-const ImpactMetrics = React.lazy(() =>
-  import("../../Components/Navber/ImpactMetrics/ImpactMetrics")
+const ImpactMetrics = React.lazy(
+  () => import("../../Components/Navber/ImpactMetrics/ImpactMetrics"),
 );
-const OurProgram = React.lazy(() =>
-  import("../../Components/Navber/OurProgram/OurProgram")
+const OurProgram = React.lazy(
+  () => import("../../Components/Navber/OurProgram/OurProgram"),
 );
-const RecentNews = React.lazy(() =>
-  import("../../Components/Navber/BlogeSection/BlogeSection")
+const RecentNews = React.lazy(
+  () => import("../../Components/Navber/BlogeSection/BlogeSection"),
 );
-const OurPartners = React.lazy(() =>
-  import("../../Components/Navber/OurPartners/OurPartners")
+const OurPartners = React.lazy(
+  () => import("../../Components/Navber/OurPartners/OurPartners"),
 );
-const WhoWeAre = React.lazy(() =>
-  import("../../Components/Navber/WhoWeAre/WhoWeAre")
+const WhoWeAre = React.lazy(
+  () => import("../../Components/Navber/WhoWeAre/WhoWeAre"),
 );
-const OurActivities = React.lazy(() =>
-  import("../../Components/Navber/OurActivities/OurActivities")
+const OurActivities = React.lazy(
+  () => import("../../Components/Navber/OurActivities/OurActivities"),
 );
-const FocusAreas = React.lazy(() =>
-  import("../../Components/Navber/WhatWeDo/FocusAreas")
+const FocusAreas = React.lazy(
+  () => import("../../Components/Navber/WhatWeDo/FocusAreas"),
 );
 
 const Home = () => {
@@ -131,7 +131,7 @@ const Home = () => {
         fallback={<div className="loading-spinner">Loading content...</div>}
       >
         <Slider />
-        <WhoWeAre />
+
         <ImpactMetrics />
         <FocusAreas />
         <OurActivities />

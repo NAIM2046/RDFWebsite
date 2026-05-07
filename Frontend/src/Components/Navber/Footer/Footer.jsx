@@ -203,10 +203,10 @@ const Footer = () => {
         <p className="text-gray-400 text-sm">
           &copy; {new Date().getFullYear()} RDF BD. All rights reserved |{" "}
           <a
-            href="https://my-portfolio-zslo.onrender.com/"
+            href="https://www.nexovatelabs.com/"
             className="text-gray-500 font-light font-serif hover:text-green-400 transition-colors"
           >
-            Developed by Naim Hossain (JU-IIT)
+            Developed by NexovateLabs
           </a>
         </p>
       </div>

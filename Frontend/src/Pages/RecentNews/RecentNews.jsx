@@ -23,7 +23,7 @@ const RecentNews = () => {
 
   // Sort news by date (latest first)
   const sortedNews = [...newss].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    (a, b) => new Date(b.date) - new Date(a.date),
   );
   const filterNews = newss.filter((news) => news.type === path);
 
@@ -128,7 +128,7 @@ const RecentNews = () => {
                       <span className="flex items-center text-sm text-gray-500">
                         <FaClock className="mr-1" />
                         {calculateReadingTime(
-                          news.content?.[0]?.description || ""
+                          news.content?.[0]?.description || "",
                         )}{" "}
                         min read
                       </span>

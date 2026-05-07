@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
-import coverimg from "/assets/ourteam/team1.jpeg";
+import coverimg from "/assets/ourteam/teamCover.jpeg";
 import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
 
 const OurTeam = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [designation, setDesignation] = useState("");
+  // CHANGED: Set "Executive Committee" as the default designation
+  const [designation, setDesignation] = useState("Executive Committee");
   const navigate = useNavigate();
   const { teams, fetchTeams, isLoading } = useRDFStore();
 
@@ -25,7 +26,7 @@ const OurTeam = () => {
 
     const matchesDesignation = designation
       ? member.committees.some(
-          (c) => c.committee_name.toLowerCase() === designation.toLowerCase()
+          (c) => c.committee_name.toLowerCase() === designation.toLowerCase(),
         )
       : true;
 
@@ -41,10 +42,10 @@ const OurTeam = () => {
   const sortedMembers = [...filteredMembers].sort((a, b) => {
     if (designation) {
       const aCommittee = a.committees.find(
-        (c) => c.committee_name.toLowerCase() === designation.toLowerCase()
+        (c) => c.committee_name.toLowerCase() === designation.toLowerCase(),
       );
       const bCommittee = b.committees.find(
-        (c) => c.committee_name.toLowerCase() === designation.toLowerCase()
+        (c) => c.committee_name.toLowerCase() === designation.toLowerCase(),
       );
 
       const aRank = aCommittee ? parseInt(aCommittee.rank) : 999;
@@ -53,10 +54,10 @@ const OurTeam = () => {
       return aRank - bRank;
     } else {
       const aPriority = Math.min(
-        ...a.committees.map((c) => priority[c.committee_name] || 999)
+        ...a.committees.map((c) => priority[c.committee_name] || 999),
       );
       const bPriority = Math.min(
-        ...b.committees.map((c) => priority[c.committee_name] || 999)
+        ...b.committees.map((c) => priority[c.committee_name] || 999),
       );
 
       return aPriority - bPriority;
