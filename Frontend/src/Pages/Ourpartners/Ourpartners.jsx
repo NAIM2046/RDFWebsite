@@ -56,20 +56,7 @@ const OurPartners = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          {/* {categories.map((category) => (
-            <button
-              key={category}
-              className={`px-5 py-3 rounded-lg cursor-pointer shadow-md text-md font-semibold transition-all duration-300 
-                ${
-                  activeTab === category
-                    ? "bg-red-500 text-white scale-105"
-                    : "bg-green-400 text-gray-950 hover:bg-gray-300"
-                }`}
-              onClick={() => setActiveTab(category)}
-            >
-              {category}
-            </button>
-          ))} */}
+
         </motion.div>
 
         {/* Partner Logos */}
