@@ -92,7 +92,7 @@ const ProjectPartner = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8 ">
       <Helmet>
         <title>RDF - Project Partner</title>
         <meta
@@ -142,9 +142,8 @@ const ProjectPartner = () => {
                       name="firstName"
                       placeholder="First name*"
                       value={formData.firstName}
-                      className={`w-full border ${
-                        errors.firstName ? "border-red-500" : "border-gray-300"
-                      } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                      className={`w-full border ${errors.firstName ? "border-red-500" : "border-gray-300"
+                        } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
                       onChange={handleChange}
                     />
                     {errors.firstName && (
@@ -159,9 +158,8 @@ const ProjectPartner = () => {
                       name="lastName"
                       placeholder="Last name*"
                       value={formData.lastName}
-                      className={`w-full border ${
-                        errors.lastName ? "border-red-500" : "border-gray-300"
-                      } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                      className={`w-full border ${errors.lastName ? "border-red-500" : "border-gray-300"
+                        } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
                       onChange={handleChange}
                     />
                     {errors.lastName && (
@@ -178,9 +176,8 @@ const ProjectPartner = () => {
                     name="email"
                     placeholder="Email*"
                     value={formData.email}
-                    className={`w-full border ${
-                      errors.email ? "border-red-500" : "border-gray-300"
-                    } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                    className={`w-full border ${errors.email ? "border-red-500" : "border-gray-300"
+                      } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
                     onChange={handleChange}
                   />
                   {errors.email && (
@@ -192,9 +189,8 @@ const ProjectPartner = () => {
                   <select
                     name="reason"
                     value={formData.reason}
-                    className={`w-full border ${
-                      errors.reason ? "border-red-500" : "border-gray-300"
-                    } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition appearance-none bg-white`}
+                    className={`w-full border ${errors.reason ? "border-red-500" : "border-gray-300"
+                      } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition appearance-none bg-white`}
                     onChange={handleChange}
                   >
                     <option value="">Reason for inquiry*</option>
@@ -214,9 +210,8 @@ const ProjectPartner = () => {
                     placeholder="Your message* (max 200 characters)"
                     value={formData.message}
                     rows="4"
-                    className={`w-full border ${
-                      errors.message ? "border-red-500" : "border-gray-300"
-                    } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
+                    className={`w-full border ${errors.message ? "border-red-500" : "border-gray-300"
+                      } p-3 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition`}
                     onChange={handleChange}
                   ></textarea>
                   <div className="flex justify-between mt-1">
@@ -228,11 +223,10 @@ const ProjectPartner = () => {
                       </p>
                     )}
                     <p
-                      className={`text-sm ${
-                        formData.message.length > 180
+                      className={`text-sm ${formData.message.length > 180
                           ? "text-amber-500"
                           : "text-gray-500"
-                      }`}
+                        }`}
                     >
                       {formData.message.length}/200
                     </p>
@@ -242,11 +236,10 @@ const ProjectPartner = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full py-3 rounded-lg text-lg font-semibold transition ${
-                    isSubmitting
+                  className={`w-full py-3 rounded-lg text-lg font-semibold transition ${isSubmitting
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-md hover:shadow-lg"
-                  }`}
+                    }`}
                 >
                   {isSubmitting ? (
                     <span className="flex items-center justify-center">

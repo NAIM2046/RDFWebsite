@@ -42,8 +42,7 @@ const Footer = () => {
               <div>
                 <p className="text-lg font-semibold mb-1">Address:</p>
                 <p className="text-sm leading-relaxed">
-                  Head Office: RDF BHABAN, House #21, Road #12, Pisciculture
-                  Housing Society, Block-Kha, Adabor, Dhaka-1207
+                 Head Office: RDF BHABAN, House #21, Road #12, Pisciculture Housing Society, Block-Kha, Adabor, Dhaka-1207
                 </p>
               </div>
             </div>
@@ -203,10 +202,10 @@ const Footer = () => {
         <p className="text-gray-400 text-sm">
           &copy; {new Date().getFullYear()} RDF BD. All rights reserved |{" "}
           <a
-            href="https://my-portfolio-zslo.onrender.com/"
-            className="text-gray-500 font-light font-serif hover:text-green-400 transition-colors"
+            href="https://nexovatelabs.com"
+            className="text-green-400 font-light font-serif  transition-colors"
           >
-            Developed by Naim Hossain (JU-IIT)
+            Developed by NexovateLabs
           </a>
         </p>
       </div>
