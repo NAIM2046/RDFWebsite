@@ -108,7 +108,8 @@ const workApproach = [
       "Finally, Monitoring and Evaluation is underpinned by robust governance (General Council, Executive Committee oversight of the CEO) and strong internal controls.RDF's commitment to ethical behaviour, accountability, zero-tolerance for violations, and adherence to its mission, vision, and values ensures programs are tracked for effectiveness and impact, maintaining  ",
     expandedText:
       "credibility and enabling continuous improvement in serving vulnerable communities. This structured approach ensures interventions are relevant, participatory, effectively delivered, and accountable, aiming for sustainable and transformative change.",
-    image: "/assets/ourapproach/mon.JPG",
+    image:
+      "https://i.ibb.co.com/dwt19Cmx/Whats-App-Image-2026-06-13-at-11-27-20-AM.jpg",
 
     color: "bg-gradient-to-r from-red-500 to-yellow-500",
     icon: (

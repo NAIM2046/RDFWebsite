@@ -16,14 +16,15 @@ const weWorkForData = [
   },
   {
     title: "Economically Deprived Groups",
-    image: "assets/weWorkFor/WhatsApp Image 2025-07-24 at 1.10.52 PM (1).jpeg",
+    image:
+      "https://i.ibb.co.com/vxnrQSxm/Whats-App-Image-2026-06-10-at-10-53-02-AM.jpg",
     detail:
       "RDF targets economically marginalised communities that experience exclusion from market systems, with a particular focus on those who heavily rely on agricultural labor.",
   },
   {
     title: "Education and Skills Development",
     image:
-      "assets/weWorkFor/Comments-Picture-1-Mohema-working-in-her-tailoring-shop-jpg.jpg",
+      "https://i.ibb.co.com/GfYw7yy7/Whats-App-Image-2026-06-10-at-10-40-28-AM.jpg",
     detail:
       "Addressing the high dropout rate in Bangladesh, RDF supports skills development to enhance access to the labour market, aiming to reduce the 70% dropout rate before the completion of higher secondary education.",
   },

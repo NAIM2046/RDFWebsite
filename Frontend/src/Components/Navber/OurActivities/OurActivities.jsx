@@ -13,7 +13,7 @@ const OurActivities = () => {
     }
   }, []);
   const sortedActivities = [...activities].sort(
-    (a, b) => Number(a.id) - Number(b.id)
+    (a, b) => Number(a.id) - Number(b.id),
   );
 
   return (
@@ -25,22 +25,20 @@ const OurActivities = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        Our Programs align with SDGs
+        Our Programs aligned with SDGs
       </motion.h2>
 
       {sortedActivities.length === 0 ? (
         <div className="flex justify-center items-center">
           <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-700"></div>
-          <p className="text-lg ml-3">Loading...</p>
+          <p className="text-lg ml-3"> Activities not available</p>
         </div>
       ) : (
         <div className="flex flex-wrap justify-center gap-5 mt-8 max-w-6xl mx-auto px-4">
           {sortedActivities.map((activity, index) => (
             <motion.div
               key={activity._id}
-              onClick={() =>
-                navigate("/activities-details", { state: { activity } })
-              }
+              onClick={() => navigate("/", { state: { activity } })}
               className="rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:shadow-xl border-4 cursor-pointer border-white w-full sm:w-[calc(33.333%-1.25rem)] lg:w-[calc(20%-1.25rem)]"
               whileInView={{ opacity: 1, scale: 1 }}
               initial={{ opacity: 0, scale: 0.9 }}

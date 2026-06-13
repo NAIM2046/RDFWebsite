@@ -35,7 +35,8 @@ const Slider = () => {
   useEffect(() => {
     let interval;
     if (isAutoPlaying && length > 1) {
-      interval = setInterval(nextSlide, 100000);
+      // Changed from 100000 (100s) to 5000 (5s) for a natural slide duration
+      interval = setInterval(nextSlide, 5000);
     }
     return () => clearInterval(interval);
   }, [isAutoPlaying, length, nextSlide]);
@@ -48,13 +49,34 @@ const Slider = () => {
   // Loading skeleton - height adjusted responsively
   if (isLoading || length === 0) {
     return (
-      <div className="w-full aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-pulse"></div>
-        <div className="text-center relative z-10 flex flex-col items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600 mb-4"></div>
-          <p className="text-gray-700 text-lg font-semibold">
-            Loading content...
-          </p>
+      <div className="relative w-full aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] lg:h-[70vh] bg-neutral-100 top-20 sm:top-2 overflow-hidden flex items-center justify-center">
+        {/* Immersive Shimmering Background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 animate-[shimmer_2s_infinite] bg-[length:200%_100%]" />
+
+        {/* Top Title Badge Placeholder */}
+        <div className="absolute top-4 md:top-6 left-1/2 transform -translate-x-1/2 z-30 w-11/12 max-w-[320px] sm:max-w-[400px] h-9 md:h-12 bg-neutral-300/60 backdrop-blur-sm rounded-full animate-pulse" />
+
+        {/* Center Subtle Brand Accent (instead of a harsh spinner) */}
+        <div className="relative z-10 flex flex-col items-center gap-3 opacity-40">
+          <div className="h-10 w-10 border-2 border-emerald-800/30 border-t-emerald-800 rounded-full animate-spin" />
+          <span className="text-xs font-serif tracking-widest text-emerald-900 uppercase font-medium animate-pulse">
+            Loading
+          </span>
+        </div>
+
+        {/* Bottom Right Content Card Placeholder */}
+        <div className="absolute bottom-10 right-2 md:bottom-16 md:right-16 bg-neutral-200/50 backdrop-blur-md p-4 md:p-8 rounded-2xl w-[220px] sm:w-[350px] md:w-[400px] h-32 md:h-44 flex flex-col items-end justify-between border border-white/20 shadow-xl">
+          <div className="w-4/5 h-5 bg-neutral-300/80 rounded-md animate-pulse" />
+          <div className="w-full h-4 bg-neutral-300/60 rounded-md animate-pulse mt-2 hidden md:block" />
+          <div className="w-2/3 h-4 bg-neutral-300/60 rounded-md animate-pulse hidden md:block" />
+          <div className="w-24 h-8 bg-neutral-300/90 rounded-full animate-pulse mt-4" />
+        </div>
+
+        {/* Bottom Pagination Dots Placeholder */}
+        <div className="absolute bottom-3 md:bottom-6 left-1/2 transform -translate-x-1/2 z-30 flex gap-2">
+          <div className="h-2 w-6 bg-neutral-300/80 rounded-full animate-pulse" />
+          <div className="h-2 w-2 bg-neutral-300/40 rounded-full" />
+          <div className="h-2 w-2 bg-neutral-300/40 rounded-full" />
         </div>
       </div>
     );
@@ -62,8 +84,6 @@ const Slider = () => {
 
   return (
     <div
-      // Changed height to aspect-ratio for mobile to prevent black gaps and image cropping
-      // Removed bg-black to prevent the black flash during transitions
       className="relative w-full aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] lg:h-[70vh] group overflow-hidden bg-gray-50 top-20 sm:top-2"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
@@ -85,7 +105,7 @@ const Slider = () => {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="absolute inset-0 w-full h-full flex items-center justify-center"
         >
-          {/* Background Image - Object cover works perfectly now due to responsive container aspect ratio */}
+          {/* Background Image */}
           <img
             src={sortedSliderInfo[currentSlide].src}
             alt={
@@ -96,27 +116,19 @@ const Slider = () => {
             className="w-full h-full object-cover object-center"
           />
 
-          {/* Text Content with blur effect only in the text area */}
+          {/* Text Content Container */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="absolute bottom-10 right-2 md:bottom-16 md:right-16 bg-black/40 backdrop-blur-md p-3 md:p-8 rounded-2xl max-w-[220px] sm:max-w-sm md:max-w-md lg:max-w-lg text-right z-20 border border-white/10 shadow-2xl"
+            className="absolute bottom-10 right-2 md:bottom-16 md:right-16 bg-white/80 backdrop-blur-md p-4 md:p-8 rounded-2xl max-w-[220px] sm:max-w-sm md:max-w-md lg:max-w-md text-right z-20 border border-white/40 shadow-xl"
           >
+            {/* Header: Styled with a rich deep green color */}
             <Typography
               variant="h2"
-              color="green"
-              className="mb-1 md:mb-2  text-sm sm:text-base md:text-2xl lg:text-3xl font-bold font-serif leading-tight"
+              className="mb-2 text-sm sm:text-base md:text-2xl lg:text-xl font-bold font-serif leading-tight text-emerald-900"
             >
               {sortedSliderInfo[currentSlide].header}
-            </Typography>
-
-            {/* Description - Hidden on mobile, visible on medium screens and up */}
-            <Typography
-              color="green"
-              className="hidden md:block mb-4 opacity-90 text-sm md:text-base font-serif leading-relaxed"
-            >
-              {sortedSliderInfo[currentSlide].text}
             </Typography>
 
             {/* CTA Button */}
@@ -124,9 +136,9 @@ const Slider = () => {
               sortedSliderInfo[currentSlide].ctaLink && (
                 <Button
                   size="sm"
-                  color="white"
-                  variant="outlined"
-                  className="mt-1 md:mt-0 border-white text-white hover:bg-white hover:text-black transition-all duration-300 rounded-full px-3 md:px-6 py-1.5 md:py-2 text-xs md:text-sm"
+                  color="green"
+                  variant="filled"
+                  className="mt-2 md:mt-3 bg-emerald-800 text-white hover:bg-emerald-900 transition-all duration-300 rounded-full px-3 md:px-6 py-1.5 md:py-2 text-xs md:text-sm shadow-md"
                   onClick={() =>
                     window.open(
                       sortedSliderInfo[currentSlide].ctaLink,

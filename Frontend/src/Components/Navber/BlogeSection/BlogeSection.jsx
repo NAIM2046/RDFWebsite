@@ -34,30 +34,14 @@ const BlogSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <motion.span
-            className="inline-block px-3 py-1 text-sm font-medium text-green-700 bg-green-100 rounded-full mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Latest Updates
-          </motion.span>
           <motion.h2
             className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            News & Blog
+            Present Activities
           </motion.h2>
-          <motion.p
-            className="max-w-2xl mx-auto text-lg text-gray-600"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Stay updated with our latest stories, insights, and company news
-          </motion.p>
         </div>
 
         {/* Blog Grid */}

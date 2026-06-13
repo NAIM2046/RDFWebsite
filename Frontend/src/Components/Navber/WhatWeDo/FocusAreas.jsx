@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const focusAreas = [
   {
-    bgImage: "/assets/FocusAreas/foodsuce.JPG",
+    bgImage:
+      "https://i.ibb.co.com/W4bvLsPV/Food-Security-Livelihoods-and-Economic-Empowerment.jpg",
 
     title: "Food Security, Livelihood, Skills, and Economic Empowerment",
 
@@ -21,7 +22,7 @@ const focusAreas = [
     borderColor: "border-purple-500",
   },
   {
-    bgImage: "/assets/FocusAreas/em1.jpeg",
+    bgImage: "https://i.ibb.co.com/jk7JKqrb/Emergency-Responce-JPG.jpg",
 
     title: "Emergency Response",
 
@@ -29,7 +30,8 @@ const focusAreas = [
     borderColor: "border-red-500",
   },
   {
-    bgImage: "/assets/FocusAreas/childRignt.jpg",
+    bgImage:
+      "https://i.ibb.co.com/vC2VbLcf/Child-Rights-and-Social-Protection-JPG.jpg",
 
     title:
       "Child Rights, Ending Child Marriage, Education, Health, Nutrition, and SRHR",
@@ -38,7 +40,7 @@ const focusAreas = [
     borderColor: "border-green-500",
   },
   {
-    bgImage: "/assets/FocusAreas/water.jpg",
+    bgImage: "/assets/FocusAreas/em1.jpeg",
 
     title: "Water, Sanitation, and Hygiene (WASH)",
 
@@ -63,17 +65,17 @@ const FocusAreas = () => {
       <div className="max-w-7xl mx-auto text-center">
         {/* Section Title */}
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold mb-4 text-gray-800"
+          className="text-xl sm:text-2xl font-bold mb-4 pb-4 text-gray-800"
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          Strategic Program
+          Highlighting the programs for sustainable development
         </motion.h2>
 
         {/* Section Description */}
-        <motion.p
+        {/* <motion.p
           className="text-lg text-green-700 mb-12 max-w-3xl mx-auto"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -82,7 +84,7 @@ const FocusAreas = () => {
         >
           Our programs focus on economic empowerment, climate resilience,
           education, and sustainable development to create lasting impact.
-        </motion.p>
+        </motion.p> */}
 
         {/* Grid Layout for Focus Areas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -181,57 +181,6 @@ const AboutRDF = () => {
             </div>
           </div>
 
-          {/* Section 2: Massive Impact Summary */}
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 font-serif mb-6 text-center">
-              Our Impact at a Glance
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white p-8 rounded-2xl text-center shadow-sm border-b-4 border-green-500 hover:-translate-y-1 transition duration-300">
-                <div className="text-4xl font-extrabold text-green-600 mb-2">
-                  9.43L+
-                </div>
-                <h4 className="text-lg font-bold text-gray-800">
-                  Beneficiaries
-                </h4>
-                <p className="text-sm text-gray-500 mt-2">
-                  More than 95% are empowered women.
-                </p>
-              </div>
-              <div className="bg-white p-8 rounded-2xl text-center shadow-sm border-b-4 border-blue-500 hover:-translate-y-1 transition duration-300">
-                <div className="text-4xl font-extrabold text-blue-600 mb-2">
-                  5.69<span className="text-2xl">MW</span>
-                </div>
-                <h4 className="text-lg font-bold text-gray-800">
-                  Green Electricity
-                </h4>
-                <p className="text-sm text-gray-500 mt-2">
-                  Saving equivalent power from the national grid.
-                </p>
-              </div>
-              <div className="bg-white p-8 rounded-2xl text-center shadow-sm border-b-4 border-yellow-500 hover:-translate-y-1 transition duration-300">
-                <div className="text-4xl font-extrabold text-yellow-600 mb-2">
-                  1,49,515
-                </div>
-                <h4 className="text-lg font-bold text-gray-800">Solar Homes</h4>
-                <p className="text-sm text-gray-500 mt-2">
-                  Bringing light to off-grid rural communities.
-                </p>
-              </div>
-              <div className="bg-white p-8 rounded-2xl text-center shadow-sm border-b-4 border-purple-500 hover:-translate-y-1 transition duration-300">
-                <div className="text-4xl font-extrabold text-purple-600 mb-2">
-                  30+
-                </div>
-                <h4 className="text-lg font-bold text-gray-800">
-                  Years of Service
-                </h4>
-                <p className="text-sm text-gray-500 mt-2">
-                  Continuous dedication to sustainable development.
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* Section 3: Detailed Interventions (What we do) */}
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
             <h2 className="text-3xl font-bold text-green-800 font-serif mb-8 text-center">
@@ -332,10 +281,9 @@ const AboutRDF = () => {
           {/* Section 4: Message from the Founder */}
           <div className="bg-white rounded-2xl p-8 md:p-12 lg:p-16 border border-gray-100 shadow-[0_4px_40px_-10px_rgba(0,0,0,0.06)]">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-              {/* Left Side: Professional Offset Image Profile */}
+              {/* Left Side: Professional Profile Image */}
               <div className="w-full md:w-1/3 flex justify-center">
                 <div className="relative">
-                  {/* Decorative subtle ring behind image */}
                   <div className="absolute inset-0 bg-green-200 rounded-full blur-lg opacity-40 scale-110"></div>
                   <img
                     src={ceophoto}
@@ -347,7 +295,6 @@ const AboutRDF = () => {
 
               {/* Right Side: Editorial Text Section */}
               <div className="w-full lg:w-7/12 relative">
-                {/* Custom SVG Quote Icon */}
                 <svg
                   className="w-12 h-12 text-green-200 mb-6"
                   fill="currentColor"
@@ -357,7 +304,6 @@ const AboutRDF = () => {
                   <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                 </svg>
 
-                {/* Quote Text */}
                 <p className="text-xl md:text-2xl text-slate-700 font-serif italic leading-relaxed">
                   RDF, established in March 1993, has grown from a small
                   organization in a remote area to one of the most significant
@@ -367,7 +313,6 @@ const AboutRDF = () => {
                   contribute to national and international goals.
                 </p>
 
-                {/* Structured Divider & Author Info */}
                 <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between">
                   <div>
                     <h4 className="text-2xl font-bold text-slate-900 font-serif">
@@ -381,6 +326,7 @@ const AboutRDF = () => {
               </div>
             </div>
           </div>
+
           {/* Section 5: Networks & Partners */}
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
             <h2 className="text-2xl font-bold text-gray-800 font-serif mb-8 text-center">
