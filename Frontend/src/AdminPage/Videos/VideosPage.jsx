@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useAxiosPublic from "../../Hook/useAxiosPublice";
-import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const VideosPage = () => {
@@ -8,13 +6,20 @@ const VideosPage = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [publishedDate, setPublishedDate] = useState("");
   const Axios = useAxiosSecure();
-  const { video, fetchVideo } = useRDFStore();
-  useEffect(() => {
-    if (video.length === 0) {
-      fetchVideo();
+  const [video, setVideo] = useState([]);
+
+  const fetchLocalVideos = async () => {
+    try {
+      const response = await Axios.get("/video");
+      setVideo(response.data);
+    } catch (error) {
+      console.error("Error fetching videos:", error);
     }
+  };
+
+  useEffect(() => {
+    fetchLocalVideos();
   }, []);
-  console.log(video);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,13 +32,13 @@ const VideosPage = () => {
       .then((res) => {
         console.log(res.data);
         alert("add video successfully");
-        fetchVideo();
+        fetchLocalVideos();
       })
       .catch((err) => console.log(err));
   };
   const handleDelete = (id) => {
     Axios.delete(`/video/${id}`)
-      .then(() => fetchVideo()) // Refresh list after deletion
+      .then(() => fetchLocalVideos()) // Refresh list after deletion
       .catch((err) => console.log(err));
   };
 
@@ -82,7 +87,12 @@ const VideosPage = () => {
       </div>
       <h2 className="text-xl font-bold my-4">Video List</h2>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {video.map((vid) => (
+        {[...video].sort((a, b) => {
+          const dateA = a.publishedDate ? new Date(a.publishedDate) : new Date(0);
+          const dateB = b.publishedDate ? new Date(b.publishedDate) : new Date(0);
+          if (dateB - dateA !== 0) return dateB - dateA;
+          return b._id ? b._id.localeCompare(a._id) : 0;
+        }).map((vid) => (
           <li
             key={vid._id}
             className="p-4 border rounded-lg shadow-md flex flex-col justify-between"

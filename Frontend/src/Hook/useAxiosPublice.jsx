@@ -1,8 +1,7 @@
 import React from "react";
 import axios from "axios";
 const AxiosPublic = axios.create({
-  //baseURL: "http://localhost:3001",
-  baseURL: "https://api.rdfbd.org",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3001",
 });
 const useAxiosPublic = () => {
   return AxiosPublic;

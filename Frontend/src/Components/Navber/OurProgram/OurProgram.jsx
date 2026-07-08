@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import useRDFStore from "../../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const OurProgram = () => {
   const [showLeft, setShowLeft] = useState(false);
@@ -14,12 +16,27 @@ const OurProgram = () => {
   const navigate = useNavigate();
   const autoChangeRef = useRef(null);
 
-  const { programs, fetchPrograms, projects, fetchProjects, isLoading } =
-    useRDFStore();
+  const [programs, setPrograms] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchPrograms();
-    fetchProjects();
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [programsRes, projectsRes] = await Promise.all([
+          axios.get(`${BASE_URL}/programs`),
+          axios.get(`${BASE_URL}/projects`),
+        ]);
+        setPrograms(programsRes.data);
+        setProjects(projectsRes.data);
+      } catch (error) {
+        console.error("Error fetching programs and projects:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {

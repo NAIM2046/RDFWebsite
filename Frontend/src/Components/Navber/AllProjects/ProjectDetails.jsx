@@ -1,41 +1,108 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import RelateNews from "./RelateNews";
 import ShareAndComment from "./ShareAndComment";
-import useRDFStore from "../../../storage/useRDFstorage";
-
-import { IoIosArrowForward } from "react-icons/io";
-import {
-  FaUserAlt,
-  FaCalendarAlt,
-  FaMapMarkerAlt,
-  FaMoneyBillWave,
-  FaUsers,
-  FaClock,
-} from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { FiExternalLink } from "react-icons/fi";
+import { FaMoneyBillWave, FaClock, FaMapMarkerAlt, FaUsers, FaUserAlt } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
+// Helper to ensure a field is an array of strings
+const getAsArray = (field) => {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  if (typeof field === "string") {
+    return field
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [String(field)];
+};
 
 const ProjectDetails = () => {
   const location = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { newss, fetchNews } = useRDFStore();
 
-  // Retrieve from location or fallback to stored project
-  const storedProject = localStorage.getItem("selectedProject");
-  const project =
-    location.state?.project ||
-    (storedProject ? JSON.parse(storedProject) : null);
+  const [projectItem, setProjectItem] = useState(location.state?.project || null);
+  const [isProjectLoading, setIsProjectLoading] = useState(!projectItem);
+  const [relatedNews, setRelatedNews] = useState([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchProjectDetail = async () => {
+      if (location.state?.project) return;
+      setIsProjectLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/projects/${id}`);
+        setProjectItem(response.data);
+      } catch (error) {
+        console.error("Error fetching project details:", error);
+      } finally {
+        setIsProjectLoading(false);
+      }
+    };
+    fetchProjectDetail();
+  }, [id]);
+
+  useEffect(() => {
+    if (!projectItem?.programName) return;
+    const fetchRelatedNews = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/news?program=${projectItem.programName}`);
+        setRelatedNews(response.data);
+      } catch (error) {
+        console.error("Error fetching related news:", error);
+      }
+    };
+    fetchRelatedNews();
+  }, [projectItem]);
+
+  const project = projectItem;
+  const filterNews = relatedNews;
+  const sortedImages = project ? [...getAsArray(project.images)].reverse() : [];
+
+  const [isOpenSlider, setIsOpenSlider] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Keyboard navigation and escape to close
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isOpenSlider) return;
+      if (e.key === "Escape") {
+        setIsOpenSlider(false);
+      } else if (e.key === "ArrowLeft") {
+        setActiveImageIndex(
+          (prev) => (prev - 1 + sortedImages.length) % sortedImages.length
+        );
+      } else if (e.key === "ArrowRight") {
+        setActiveImageIndex((prev) => (prev + 1) % sortedImages.length);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpenSlider, sortedImages.length]);
 
   // Save project to localStorage if it exists
   useEffect(() => {
     if (project) {
       localStorage.setItem("selectedProject", JSON.stringify(project));
     }
-    if (!newss.length) {
-      fetchNews();
-    }
-  }, [project, newss]);
+  }, [project]);
+
+  if (isProjectLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   if (!project)
     return (
@@ -50,12 +117,9 @@ const ProjectDetails = () => {
   const videoUrl = project.video?.includes("http")
     ? project.video
     : project.video
-    ? `https://www.youtube.com/embed/${project.video}`
-    : null;
+      ? `https://www.youtube.com/embed/${project.video}`
+      : null;
 
-  const filterNews = newss.filter(
-    (news) => String(news.program) === String(project.programName)
-  );
 
   const truncateDescription = (text, wordLimit = 30) => {
     if (!text) return "";
@@ -70,6 +134,8 @@ const ProjectDetails = () => {
     if (typeof field === "object") return Object.keys(field).length > 0;
     return true;
   };
+
+
 
   return (
     <div className="max-w-7xl mx-auto p-4">
@@ -93,12 +159,19 @@ const ProjectDetails = () => {
 
         {/* Project Media Section */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {hasContent(project.images) && project.images[0] && (
-            <div className="col-span-1 md:col-span-3 flex justify-center">
+          {getAsArray(project.images).length > 0 && getAsArray(project.images)[0] && (
+            <div
+              className="col-span-1 md:col-span-3 flex justify-center cursor-pointer overflow-hidden rounded-xl"
+              onClick={() => {
+                const coverIdx = sortedImages.indexOf(getAsArray(project.images)[0]);
+                setActiveImageIndex(coverIdx !== -1 ? coverIdx : 0);
+                setIsOpenSlider(true);
+              }}
+            >
               <img
-                src={project.images[0]}
+                src={getAsArray(project.images)[0]}
                 alt="Project Cover"
-                className="rounded-xl w-full h-[300px] md:h-[500px] object-cover shadow-lg"
+                className="rounded-xl w-full h-[300px] md:h-[500px] object-cover shadow-lg hover:scale-[1.02] transition-transform duration-500"
               />
             </div>
           )}
@@ -140,7 +213,7 @@ const ProjectDetails = () => {
           )}
 
           {/* Major Interventions */}
-          {hasContent(project.majorInterventions) && (
+          {getAsArray(project.majorInterventions).length > 0 && (
             <div className="mt-8 p-6 bg-green-50 rounded-xl">
               <div className="flex items-center mb-4">
                 <div className="w-2 h-8 bg-green-600 rounded-full mr-3"></div>
@@ -149,7 +222,7 @@ const ProjectDetails = () => {
                 </h2>
               </div>
               <ul className="space-y-3 pl-5">
-                {project.majorInterventions.map((item, index) => (
+                {getAsArray(project.majorInterventions).map((item, index) => (
                   <li key={index} className="flex items-start">
                     <span className="inline-block w-2 h-2 bg-green-600 rounded-full mt-2 mr-3"></span>
                     <span className="text-gray-700">{item}</span>
@@ -253,7 +326,7 @@ const ProjectDetails = () => {
               )}
 
               {/* Implementing Areas */}
-              {hasContent(project.implementingAreas) && (
+              {getAsArray(project.implementingAreas).length > 0 && (
                 <div className="flex items-start">
                   <FaMapMarkerAlt className="text-green-600 mt-1 mr-3 flex-shrink-0" />
                   <div>
@@ -261,7 +334,7 @@ const ProjectDetails = () => {
                       Implementing Areas
                     </p>
                     <div className="flex flex-wrap gap-2 mt-1">
-                      {project.implementingAreas.map((area, index) => (
+                      {getAsArray(project.implementingAreas).map((area, index) => (
                         <span
                           key={index}
                           className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
@@ -347,23 +420,30 @@ const ProjectDetails = () => {
             </div>
 
             {/* Project Image Gallery */}
-            {hasContent(project.images) && (
+            {sortedImages.length > 0 && (
               <div className="p-4 border-t border-gray-200">
                 <h2 className="text-center text-lg font-semibold text-green-700 mb-4">
                   Project Gallery
                 </h2>
                 <div className="grid grid-cols-2 gap-3">
-                  {project.images.slice(0, 4).map((img, index) => (
-                    <div key={index} className="relative group">
+                  {sortedImages.slice(0, 4).map((img, index) => (
+                    <div
+                      key={index}
+                      className="relative group cursor-pointer overflow-hidden rounded-lg"
+                      onClick={() => {
+                        setActiveImageIndex(index);
+                        setIsOpenSlider(true);
+                      }}
+                    >
                       <img
                         src={img}
                         alt={`Project Image ${index + 1}`}
-                        className="w-full h-28 object-cover rounded-lg border border-gray-200 shadow-sm group-hover:shadow-md transition-shadow"
+                        className="w-full h-28 object-cover rounded-lg border border-gray-200 shadow-sm group-hover:scale-105 transition-transform duration-300"
                       />
-                      {index === 3 && project.images.length > 4 && (
+                      {index === 3 && sortedImages.length > 4 && (
                         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
                           <span className="text-white font-medium">
-                            +{project.images.length - 4}
+                            +{sortedImages.length - 4}
                           </span>
                         </div>
                       )}
@@ -395,13 +475,13 @@ const ProjectDetails = () => {
         )}
       </div>
 
-      {/* Related News Section - Only show if there are related news */}
+      {/* Relevant News Section - Only show if there are Relevant News */}
       {hasContent(filterNews) && (
         <section className="py-12 bg-gray-50 mt-12 rounded-xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                Related News
+                Relevant News
               </h2>
               <div className="w-16 h-1 bg-green-500 mx-auto rounded-full"></div>
             </div>
@@ -462,6 +542,116 @@ const ProjectDetails = () => {
       )}
 
       <ShareAndComment />
+
+      {/* Full-Page Image Slider Modal */}
+      <AnimatePresence>
+        {isOpenSlider && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+            onClick={() => setIsOpenSlider(false)}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsOpenSlider(false)}
+              className="absolute top-6 right-6 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-50 cursor-pointer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Prev Button */}
+            {sortedImages.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveImageIndex(
+                    (prev) => (prev - 1 + sortedImages.length) % sortedImages.length
+                  );
+                }}
+                className="absolute left-4 md:left-8 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-50 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+            )}
+
+            {/* Active Image */}
+            <motion.div
+              key={activeImageIndex}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative max-w-4xl max-h-[80vh] px-4 flex flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={sortedImages[activeImageIndex]}
+                alt={`Slide ${activeImageIndex + 1}`}
+                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl"
+              />
+              
+              {/* Pagination Info */}
+              <div className="text-white/60 mt-4 text-sm font-medium">
+                Image {activeImageIndex + 1} of {sortedImages.length}
+              </div>
+            </motion.div>
+
+            {/* Next Button */}
+            {sortedImages.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveImageIndex((prev) => (prev + 1) % sortedImages.length);
+                }}
+                className="absolute right-4 md:right-8 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-50 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

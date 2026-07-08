@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import useRDFStore from "../../storage/useRDFstorage";
 
 // Lazy load components for performance
 const Slider = React.lazy(
@@ -32,7 +31,6 @@ const FocusAreas = React.lazy(
 const Home = () => {
   const location = useLocation();
   const isFirstRender = useRef(true);
-  const { isLoading } = useRDFStore();
 
   // Scroll restoration
   useEffect(() => {

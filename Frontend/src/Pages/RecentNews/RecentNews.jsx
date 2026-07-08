@@ -1,36 +1,47 @@
 import React, { useEffect, useState } from "react";
-import useRDFStore from "../../storage/useRDFstorage";
-import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet-async";
 import { FaArrowRight, FaCalendarAlt, FaUser, FaClock } from "react-icons/fa";
 import { motion } from "framer-motion";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const RecentNews = () => {
-  const { newss, fetchNews } = useRDFStore();
   const location = useLocation();
   const path = location.pathname.split("/").filter(Boolean).pop();
+  const [newsList, setNewsList] = useState([]);
+  const [isNewsLoading, setIsNewsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const newsPerPage = 9; // Show 9 news items per page for better grid layout
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!newss.length) {
-      fetchNews();
-    }
-  }, [newss, fetchNews]);
+    const fetchTypeNews = async () => {
+      setIsNewsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/news?type=${path}`);
+        setNewsList(response.data);
+      } catch (error) {
+        console.error("Error fetching news by type:", error);
+      } finally {
+        setIsNewsLoading(false);
+      }
+    };
+    fetchTypeNews();
+    setCurrentPage(0);
+  }, [path]);
 
   // Sort news by date (latest first)
-  const sortedNews = [...newss].sort(
+  const sortedNews = [...newsList].sort(
     (a, b) => new Date(b.date) - new Date(a.date),
   );
-  const filterNews = newss.filter((news) => news.type === path);
 
   // Pagination Logic
   const offset = currentPage * newsPerPage;
-  const currentNews = filterNews.slice(offset, offset + newsPerPage);
-  const pageCount = Math.ceil(filterNews.length / newsPerPage);
+  const currentNews = sortedNews.slice(offset, offset + newsPerPage);
+  const pageCount = Math.ceil(sortedNews.length / newsPerPage);
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
@@ -73,7 +84,11 @@ const RecentNews = () => {
           <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
         </motion.div>
 
-        {currentNews.length > 0 ? (
+        {isNewsLoading ? (
+          <div className="text-center py-20">
+            <p className="text-gray-500 text-lg">Loading articles...</p>
+          </div>
+        ) : currentNews.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentNews.map((news) => (

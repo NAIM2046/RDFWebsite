@@ -1,19 +1,27 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaUser } from "react-icons/fa";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import useRDFStore from "../../../storage/useRDFstorage";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const BlogSection = () => {
-  const { newss, fetchNews } = useRDFStore();
+  const [newss, setNewss] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!newss.length) {
-      fetchNews();
-    }
-  }, [newss, fetchNews]);
+    const fetchLatestNews = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/news`);
+        setNewss(response.data);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+    fetchLatestNews();
+  }, []);
 
   const sortedNews = useMemo(
     () =>

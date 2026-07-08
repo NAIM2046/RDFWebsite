@@ -8,10 +8,12 @@ import {
   FaCalendarAlt,
   FaImages,
 } from "react-icons/fa";
-import useRDFStore from "../../storage/useRDFstorage";
-import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import ReactPaginate from "react-paginate";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const Photo = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -21,23 +23,29 @@ const Photo = () => {
   const photosPerPage = 12;
   const [isLoading, setIsLoading] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const { photo, fetchPhoto } = useRDFStore();
+  const [photo, setPhoto] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      if (photo.length === 0) {
-        await fetchPhoto();
+      try {
+        const response = await axios.get(`${BASE_URL}/photos`);
+        setPhoto(response.data);
+      } catch (error) {
+        console.error("Error fetching photos:", error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     loadData();
   }, []);
 
-  const sortedPhotos = photo.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+  const sortedPhotos = [...photo].sort((a, b) => {
+    const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+    const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+    if (dateB - dateA !== 0) return dateB - dateA;
+    return b._id ? b._id.localeCompare(a._id) : 0;
+  });
 
   const filteredPhotos = sortedPhotos.filter(
     (item) =>
