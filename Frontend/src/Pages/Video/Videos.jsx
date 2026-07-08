@@ -1,25 +1,47 @@
 import React, { useEffect, useState, useCallback } from "react";
-import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 const Videos = () => {
-  const { video, fetchVideo, isLoading, error } = useRDFStore();
+  const [video, setVideo] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [visibleVideos, setVisibleVideos] = useState(6); // Show 6 videos initially
   const [isFetching, setIsFetching] = useState(false);
 
   // Fetch videos on initial render
   useEffect(() => {
-    if (video.length === 0 && !isLoading) {
-      fetchVideo();
-    }
-  }, [video, fetchVideo, isLoading]);
+    const fetchAllVideos = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/video`);
+        setVideo(response.data);
+      } catch (err) {
+        console.error("Error fetching videos:", err);
+        setError("Failed to load videos.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAllVideos();
+  }, []);
 
   // Debounced search filtering
   const filteredVideos = useCallback(() => {
-    return video.filter(({ title }) =>
-      title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return video
+      .filter(({ title }) =>
+        title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .sort((a, b) => {
+        const dateA = a.publishedDate ? new Date(a.publishedDate) : new Date(0);
+        const dateB = b.publishedDate ? new Date(b.publishedDate) : new Date(0);
+        if (dateB - dateA !== 0) return dateB - dateA;
+        return b._id ? b._id.localeCompare(a._id) : 0;
+      });
   }, [video, searchTerm]);
 
   // Load more videos with loading state

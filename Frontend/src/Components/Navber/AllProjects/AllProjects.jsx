@@ -1,30 +1,54 @@
 import React, { useEffect, useRef, useState } from "react";
 import PageCoverPhoto from "../PageCoverPhoto/PageCoverPhoto";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaArrowRight } from "react-icons/fa";
-import useRDFStore from "../../../storage/useRDFstorage";
 import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const AllProjects = () => {
-  const { programs, fetchPrograms, fetchProjects, projects, isLoading } =
-    useRDFStore();
+  const [programs, setPrograms] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selected, setSelected] = useState("");
   const [selectedTitle, setSelectedTitle] = useState("All Project");
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
-  const [statusFilter, setStatusFilter] = useState("all");
+  const location = useLocation();
+  const [statusFilter, setStatusFilter] = useState(
+    location.pathname === "/current-projects" ? "Current" : "all"
+  );
   const tabRef = useRef(null);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const projectPerPage = 12;
 
   useEffect(() => {
-    if (programs.length === 0) fetchPrograms();
-    if (projects.length === 0) fetchProjects();
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [programsRes, projectsRes] = await Promise.all([
+          axios.get(`${BASE_URL}/programs`),
+          axios.get(`${BASE_URL}/projects`),
+        ]);
+        setPrograms(programsRes.data);
+        setProjects(projectsRes.data);
+      } catch (error) {
+        console.error("Error fetching projects and programs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    setStatusFilter(location.pathname === "/current-projects" ? "Current" : "all");
+  }, [location.pathname]);
 
   const checkScrollButtons = () => {
     if (tabRef.current) {

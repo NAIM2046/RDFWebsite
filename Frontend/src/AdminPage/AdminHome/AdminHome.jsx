@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   FiUsers,
@@ -11,29 +11,41 @@ import {
   FiDollarSign,
   FiArrowUpRight,
 } from "react-icons/fi";
-import useRDFStore from "../../storage/useRDFstorage";
+import useAxiosSecure from "../../Hook/useAxoisSecure";
 
 const AdminHome = () => {
-  const {
-    programs,
-    events,
-    newss,
-    partners,
-    projects,
-    fetchPrograms,
-    fetchEvent,
-    fetchNews,
-    fetchPartner,
-    fetchProjects,
-  } = useRDFStore();
+  const Axios = useAxiosSecure();
+  const [programs, setPrograms] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [newss, setNewss] = useState([]);
+  const [partners, setPartners] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchPrograms();
-    fetchEvent();
-    fetchNews();
-    fetchPartner();
-    fetchProjects();
-  }, [fetchPrograms, fetchEvent, fetchNews, fetchPartner, fetchProjects]);
+    const fetchDashboardData = async () => {
+      setIsLoading(true);
+      try {
+        const [programsRes, eventsRes, newsRes, partnersRes, projectsRes] = await Promise.all([
+          Axios.get("/programs"),
+          Axios.get("/event"),
+          Axios.get("/news"),
+          Axios.get("/partner"),
+          Axios.get("/projects"),
+        ]);
+        setPrograms(programsRes.data);
+        setEvents(eventsRes.data);
+        setNewss(newsRes.data);
+        setPartners(partnersRes.data);
+        setProjects(projectsRes.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchDashboardData();
+  }, []);
 
   // Recent activities sample data
   const recentActivities = [

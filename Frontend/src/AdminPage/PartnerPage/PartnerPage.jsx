@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { FiTrash2, FiExternalLink, FiUpload, FiImage } from "react-icons/fi";
+import { FiTrash2, FiExternalLink, FiUpload, FiImage, FiEdit, FiX } from "react-icons/fi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
-import useRDFStore from "../../storage/useRDFstorage";
 
 const PartnerPage = () => {
   const Axios = useAxiosSecure();
@@ -17,11 +16,41 @@ const PartnerPage = () => {
   });
   const [isUploading, setIsUploading] = useState(false);
   const [activeTab, setActiveTab] = useState("create");
-  const { partners, fetchPartner } = useRDFStore();
+  const [editingPartner, setEditingPartner] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [partners, setPartners] = useState([]);
+
+  const fetchLocalPartners = async () => {
+    try {
+      const response = await Axios.get("/partner");
+      setPartners(response.data);
+    } catch (error) {
+      console.error("Error fetching partners:", error);
+    }
+  };
 
   useEffect(() => {
-    fetchPartner();
-  }, [fetchPartner]);
+    fetchLocalPartners();
+  }, []);
+
+  // Reset form when switching tabs or modes
+  useEffect(() => {
+    if (activeTab === "create" && !isEditMode) {
+      resetForm();
+    }
+  }, [activeTab, isEditMode]);
+
+  const resetForm = () => {
+    setPartner({
+      name: "",
+      logo: "",
+      fullName: "",
+      category: "Current Partners",
+      link: "",
+    });
+    setEditingPartner(null);
+    setIsEditMode(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,21 +78,33 @@ const PartnerPage = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("/partner", partner);
-      toast.success("Partner added successfully!");
-      setPartner({
-        name: "",
-        logo: "",
-        fullName: "",
-        category: "Current Partners",
-        link: "",
-      });
-      fetchPartner();
+      if (isEditMode && editingPartner) {
+        await Axios.put(`/partner/${editingPartner._id}`, partner);
+        toast.success("Partner updated successfully!");
+      } else {
+        await Axios.post("/partner", partner);
+        toast.success("Partner added successfully!");
+      }
+      resetForm();
+      fetchLocalPartners();
       setActiveTab("manage");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to add partner");
+      toast.error(isEditMode ? "Failed to update partner" : "Failed to add partner");
     }
+  };
+
+  const handleEdit = (p) => {
+    setEditingPartner(p);
+    setIsEditMode(true);
+    setPartner({
+      name: p.name,
+      logo: p.logo,
+      fullName: p.fullName || "",
+      category: p.category || "Current Partners",
+      link: p.link || "",
+    });
+    setActiveTab("create");
   };
 
   const handleDelete = async (id) => {
@@ -71,7 +112,7 @@ const PartnerPage = () => {
       try {
         await Axios.delete(`/partner/${id}`);
         toast.success("Partner deleted successfully!");
-        fetchPartner();
+        fetchLocalPartners();
       } catch (err) {
         console.error(err);
         toast.error("Failed to delete partner");
@@ -79,11 +120,25 @@ const PartnerPage = () => {
     }
   };
 
+  const cancelEdit = () => {
+    resetForm();
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        Partner Management
-      </h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">
+          Partner Management
+        </h1>
+        {isEditMode && (
+          <button
+            onClick={cancelEdit}
+            className="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            <FiX className="mr-2" /> Cancel Edit
+          </button>
+        )}
+      </div>
 
       {/* Tabs */}
       <div className="flex border-b border-gray-200 mb-6">
@@ -95,7 +150,7 @@ const PartnerPage = () => {
           }`}
           onClick={() => setActiveTab("create")}
         >
-          Add Partner
+          {isEditMode ? "Edit Partner" : "Add Partner"}
         </button>
         <button
           className={`py-2 px-4 font-medium ${
@@ -156,6 +211,24 @@ const PartnerPage = () => {
                 required
               />
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Category*
+              </label>
+              <select
+                name="category"
+                value={partner.category}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="Current Partners">Current Partners</option>
+                <option value="Donors">Donors</option>
+                <option value="Strategic Partners">Strategic Partners</option>
+                <option value="Other Partners">Other Partners</option>
+              </select>
+            </div>
           </div>
 
           <div>
@@ -205,13 +278,22 @@ const PartnerPage = () => {
             </div>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end space-x-3">
+            {isEditMode && (
+              <button
+                type="button"
+                onClick={cancelEdit}
+                className="px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 focus:outline-none"
+              >
+                Cancel
+              </button>
+            )}
             <button
               type="submit"
               disabled={!partner.logo || isUploading}
               className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Add Partner
+              {isEditMode ? "Update Partner" : "Add Partner"}
             </button>
           </div>
         </form>
@@ -238,7 +320,7 @@ const PartnerPage = () => {
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+            <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
@@ -256,16 +338,16 @@ const PartnerPage = () => {
                     </th>
                     <th
                       scope="col"
-                      className="relative py-3.5 pl-3 pr-4 sm:pr-6"
+                      className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 pr-6"
                     >
-                      <span className="sr-only">Actions</span>
+                      Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {partners.map((p) => (
+                  {[...partners].sort((a, b) => b._id.localeCompare(a._id)).map((p) => (
                     <tr key={p._id}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                      <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
                         <div className="flex items-center">
                           <div className="h-10 w-10 flex-shrink-0">
                             {p.logo ? (
@@ -313,6 +395,13 @@ const PartnerPage = () => {
                           >
                             <FiExternalLink className="mr-1" /> Visit
                           </a>
+                          <button
+                            onClick={() => handleEdit(p)}
+                            className="text-amber-600 hover:text-amber-900 flex items-center"
+                            title="Edit partner"
+                          >
+                            <FiEdit className="mr-1" /> Edit
+                          </button>
                           <button
                             onClick={() => handleDelete(p._id)}
                             className="text-red-600 hover:text-red-900 flex items-center"

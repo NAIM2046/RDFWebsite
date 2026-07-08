@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
-import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 import {
   FiTrash2,
@@ -15,11 +14,24 @@ import "react-toastify/dist/ReactToastify.css";
 
 const NewsPage = () => {
   const Axios = useAxiosSecure();
-  const { newss, fetchNews, programs, fetchPrograms } = useRDFStore();
+  const [newss, setNewss] = useState([]);
+  const [programs, setPrograms] = useState([]);
+
+  const fetchLocalNewsData = async () => {
+    try {
+      const [newsRes, programsRes] = await Promise.all([
+        Axios.get("/news"),
+        Axios.get("/programs"),
+      ]);
+      setNewss(newsRes.data);
+      setPrograms(programsRes.data);
+    } catch (error) {
+      console.error("Error fetching news/programs:", error);
+    }
+  };
 
   useEffect(() => {
-    if (newss.length === 0) fetchNews();
-    if (programs.length === 0) fetchPrograms();
+    fetchLocalNewsData();
   }, []);
 
   const [filteredNews, setFilteredNews] = useState([]);
@@ -171,7 +183,7 @@ const NewsPage = () => {
 
       const response = await request;
       toast.success(`News ${editingId ? "updated" : "added"} successfully!`);
-      fetchNews();
+      fetchLocalNewsData();
       resetForm();
     } catch (error) {
       console.error("Error submitting news:", error);
@@ -188,7 +200,7 @@ const NewsPage = () => {
       try {
         await Axios.delete(`/news/${id}`);
         toast.success("News deleted successfully!");
-        fetchNews();
+        fetchLocalNewsData();
       } catch (error) {
         console.error("Error deleting news:", error);
         toast.error("Failed to delete news.");

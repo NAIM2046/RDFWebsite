@@ -1,22 +1,11 @@
-import React, { useEffect, useState } from "react";
-import useRDFStore from "../../storage/useRDFstorage";
-import useAxiosPublic from "../../Hook/useAxiosPublice";
+import React, { useState } from "react";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 import { FaEdit, FaTrash, FaEye, FaSpinner } from "react-icons/fa";
 
-const ProjectList = ({ onEdit }) => {
-  const { fetchProjects, projects } = useRDFStore();
+const ProjectList = ({ onEdit, projects = [], refreshProjects, loading }) => {
   const Axios = useAxiosSecure();
   const [filter, setFilter] = useState("");
-  const [loading, setLoading] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
-
-  useEffect(() => {
-    if (projects.length === 0) {
-      setLoading(true);
-      fetchProjects().finally(() => setLoading(false));
-    }
-  }, []);
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
@@ -24,7 +13,7 @@ const ProjectList = ({ onEdit }) => {
       Axios.delete(`/projects/${id}`)
         .then((res) => {
           console.log(res.data);
-          fetchProjects(); // Refresh the list after deletion
+          if (refreshProjects) refreshProjects(); // Refresh the list after deletion
         })
         .catch((err) => console.error(err))
         .finally(() => setDeletingId(null));

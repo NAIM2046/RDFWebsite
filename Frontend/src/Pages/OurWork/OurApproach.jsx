@@ -7,7 +7,7 @@ const workApproach = [
       "RDF's approach to work is systematic and community-centric, encompassing a full project cycle. It begins with Identifying Issues through a deep understanding of the vulnerabilities faced by its target populations, particularly in coastal regions. ",
     expandedText:
       "This includes specific challenges like climate change impacts, high dropout rates, economic exclusion, child marriage risks, and limited access to essential services like WASH, identified through their presence across 48 districts.",
-    image: "assets/ourapproach/identit.jpg",
+    image: "https://i.ibb.co/JFgXwMX7/identitfi-issue.jpg",
     color: "bg-gradient-to-r from-blue-500 to-teal-400",
     icon: (
       <svg
@@ -58,7 +58,7 @@ const workApproach = [
       "Community Engagement is fundamental prioritizing locally-led initiatives and participatory decision-making. RDF actively works with communities, engaging youth in governance, empowering women's groups, and ",
     expandedText:
       "collaborating with local bodies (e.g. for WASH infrastructure), ensuring solutions are grounded in the local context and ownership.",
-    image: "assets/ourapproach/comm.jpg",
+    image: "https://i.ibb.co/fVKvyf0Y/Community-Engagement.jpg",
     color: "bg-gradient-to-r from-orange-500 to-pink-500",
     icon: (
       <svg

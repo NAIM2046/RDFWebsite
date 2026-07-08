@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
-import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
 import cover from "/assets/partner/coverphoto.jpg";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const OurPartners = () => {
   const [activeTab, setActiveTab] = useState("All");
-  const { partners, fetchPartner } = useRDFStore();
+  const [partners, setPartners] = useState([]);
 
   useEffect(() => {
-    fetchPartner();
+    const fetchParts = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/partner`);
+        setPartners(response.data);
+      } catch (error) {
+        console.error("Error fetching partners:", error);
+      }
+    };
+    fetchParts();
   }, []);
 
   const categories = [
@@ -81,11 +91,12 @@ const OurPartners = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            {partners
+            {[...partners]
               .filter(
                 (partner) =>
                   activeTab === "All" || partner.category === activeTab
               )
+              .sort((a, b) => b._id.localeCompare(a._id))
               .map((partner) => (
                 <motion.a
                   key={partner.name}

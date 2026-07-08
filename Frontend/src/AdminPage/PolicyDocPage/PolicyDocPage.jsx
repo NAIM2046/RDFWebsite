@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 const PolicyDocPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -272,7 +274,7 @@ const PolicyDocPage = () => {
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <div className="flex items-center justify-end space-x-4">
                           <a
-                            href={`${`http://localhost:3001`}${
+                            href={`${BASE_URL}${
                               policy.filePath
                             }`}
                             target="_blank"

@@ -21,37 +21,20 @@ const weWorkForData = [
     detail:
       "RDF targets economically marginalised communities that experience exclusion from market systems, with a particular focus on those who heavily rely on agricultural labor.",
   },
-  {
-    title: "Education and Skills Development",
-    image:
-      "https://i.ibb.co.com/GfYw7yy7/Whats-App-Image-2026-06-10-at-10-40-28-AM.jpg",
-    detail:
-      "Addressing the high dropout rate in Bangladesh, RDF supports skills development to enhance access to the labour market, aiming to reduce the 70% dropout rate before the completion of higher secondary education.",
-  },
+
   {
     title: "Minority and Adivasi Communities",
     image: "assets/weWorkFor/2.jpg",
     detail:
       "These communities are consistently prioritized in RDF's program execution to ensure their inclusion and support.",
   },
-  {
-    title: "Girls at Risk of Child Marriage and Trafficking",
-    image: "/assets/weWorkFor/RPL (6).JPG",
-    detail:
-      "RDF runs programs designed to support and protect girls who are at risk, aiming to reduce incidents of child marriage and human trafficking.",
-  },
+
   {
     title: "Youth Leadership and Governance",
     image:
       "assets/weWorkFor/1124-3-Practical-Session-of-Karate-Training-2-JPG.jpg",
     detail:
       "RDF engages with youth groups to increase leadership skills and encourage their active participation in good governance practices.",
-  },
-  {
-    title: "Digital Technology and AI Enthusiasts",
-    image: "https://i.ibb.co.com/hRXW4T13/clipboard-image-1760261564.png",
-    detail:
-      "Support is offered for children and youth interested in STEM, digital technology and AI programs, nurturing their skills in these cutting-edge fields.",
   },
 ];
 

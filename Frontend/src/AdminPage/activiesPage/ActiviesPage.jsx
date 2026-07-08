@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import { FiTrash2, FiUpload, FiPlus, FiCheckCircle } from "react-icons/fi";
@@ -9,11 +8,20 @@ import "react-toastify/dist/ReactToastify.css";
 const ActiviesPage = () => {
   const [goal, setGoal] = useState({ id: "", title: "", img: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { fetchActivites, activities } = useRDFStore();
+  const [activities, setActivities] = useState([]);
   const Axios = useAxiosSecure();
 
+  const fetchLocalActivities = async () => {
+    try {
+      const response = await Axios.get("/activities");
+      setActivities(response.data);
+    } catch (error) {
+      console.error("Error fetching activities:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchActivites();
+    fetchLocalActivities();
   }, []);
 
   const handleChange = (e) => {
@@ -44,7 +52,7 @@ const ActiviesPage = () => {
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Activity added successfully!");
-          fetchActivites();
+          fetchLocalActivities();
           setGoal({ id: "", title: "", img: "" });
         }
       })
@@ -61,7 +69,7 @@ const ActiviesPage = () => {
         .then((res) => {
           if (res.data.deletedCount > 0) {
             toast.success("Activity deleted successfully!");
-            fetchActivites();
+            fetchLocalActivities();
           }
         })
         .catch((err) => {

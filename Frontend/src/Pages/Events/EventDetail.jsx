@@ -1,13 +1,55 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ShareAndComment from "../../Components/Navber/AllProjects/ShareAndComment";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const EventDetail = () => {
   const location = useLocation();
-  const { event } = location.state;
+  const { id } = useParams();
+  const [eventItem, setEventItem] = useState(location.state?.event || null);
+  const [isEventLoading, setIsEventLoading] = useState(!eventItem);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchEventDetail = async () => {
+      if (location.state?.event) return;
+      setIsEventLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/event/${id}`);
+        setEventItem(response.data);
+      } catch (error) {
+        console.error("Error fetching event details:", error);
+      } finally {
+        setIsEventLoading(false);
+      }
+    };
+    fetchEventDetail();
+  }, [id]);
+
+  if (isEventLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!eventItem) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <p className="text-center text-red-500 text-xl font-medium bg-white p-6 rounded-lg shadow-md">
+          Event not found or failed to load.
+        </p>
+      </div>
+    );
+  }
+
+  const event = eventItem;
 
   // Format date for better display
   const formatDate = (dateString) => {

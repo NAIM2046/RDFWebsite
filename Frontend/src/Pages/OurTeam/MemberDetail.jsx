@@ -1,10 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const MemberDetails = () => {
   const location = useLocation();
-  const member = location.state?.member || {};
+  const { name } = useParams();
+  const [memberItem, setMemberItem] = useState(location.state?.member || null);
+  const [isMemberLoading, setIsMemberLoading] = useState(!memberItem);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchMemberDetail = async () => {
+      if (location.state?.member) return;
+      setIsMemberLoading(true);
+      try {
+        const decodedName = decodeURIComponent(name);
+        const response = await axios.get(`${BASE_URL}/teams?name=${encodeURIComponent(decodedName)}`);
+        if (response.data && response.data.length > 0) {
+          setMemberItem(response.data[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching team member details:", error);
+      } finally {
+        setIsMemberLoading(false);
+      }
+    };
+    fetchMemberDetail();
+  }, [name]);
+
+  if (isMemberLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!memberItem) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <p className="text-center text-red-500 text-xl font-medium bg-white p-6 rounded-lg shadow-md">
+          Team member not found or failed to load.
+        </p>
+      </div>
+    );
+  }
+
+  const member = memberItem || {};
 
   // Helper function to detect URLs and make them clickable
   const renderBioWithLinks = (text) => {

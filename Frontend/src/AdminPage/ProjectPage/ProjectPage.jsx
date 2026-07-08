@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useRDFStore from "../../storage/useRDFstorage";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import ProjectList from "./ProjectList";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
@@ -12,15 +11,29 @@ import {
 } from "react-icons/fa";
 
 const ProjectPage = () => {
-  const {
-    programs,
-    fetchPrograms,
-    fetchProjects,
-    fetchActivites,
-    activities,
-    projects,
-  } = useRDFStore();
   const Axios = useAxiosSecure();
+  const [programs, setPrograms] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [projects, setProjects] = useState([]);
+
+  const fetchLocalData = async () => {
+    try {
+      const [programsRes, activitiesRes, projectsRes] = await Promise.all([
+        Axios.get("/programs"),
+        Axios.get("/activities"),
+        Axios.get("/projects"),
+      ]);
+      setPrograms(programsRes.data);
+      setActivities(activitiesRes.data);
+      setProjects(projectsRes.data);
+    } catch (error) {
+      console.error("Error fetching project data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLocalData();
+  }, []);
 
   const [imgLoading, setImgLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,22 +64,11 @@ const ProjectPage = () => {
     remarks: "",
     images: [],
     video: "",
-    activitiesID: "",
+    activitiesID: [],
     projectSummary: "",
   });
 
-  useEffect(() => {
-    if (programs.length === 0) fetchPrograms();
-    if (activities.length === 0) fetchActivites();
-    if (projects.length === 0) fetchProjects();
-  }, [
-    fetchPrograms,
-    fetchActivites,
-    fetchProjects,
-    programs.length,
-    activities.length,
-    projects.length,
-  ]);
+
 
   const showNotification = (type, message) => {
     setNotification({ show: true, type, message });
@@ -142,7 +144,7 @@ const ProjectPage = () => {
       newErrors.projectState = "Project state is required";
     if (project.images.length === 0)
       newErrors.images = "At least one image is required";
-    if (!project.activitiesID)
+    if (!project.activitiesID || project.activitiesID.length === 0)
       newErrors.activitiesID = "Activity selection is required";
 
     // Date validation
@@ -170,7 +172,7 @@ const ProjectPage = () => {
         response = await Axios.put(`/projects/${editingId}`, project);
         if (response.data.modifiedCount > 0) {
           showNotification("success", "Project updated successfully!");
-          fetchProjects();
+          fetchLocalData();
           resetForm();
         } else {
           throw new Error("Failed to update project");
@@ -180,7 +182,7 @@ const ProjectPage = () => {
         response = await Axios.post("/projects", project);
         if (response.data.insertedId) {
           showNotification("success", "Project added successfully!");
-          fetchProjects();
+          fetchLocalData();
           resetForm();
         } else {
           throw new Error("Failed to add project");
@@ -216,7 +218,7 @@ const ProjectPage = () => {
       remarks: "",
       images: [],
       video: "",
-      activitiesID: "",
+      activitiesID: [],
       projectSummary: "",
     });
     setErrors({});
@@ -251,7 +253,11 @@ const ProjectPage = () => {
       remarks: projectToEdit.remarks || "",
       images: projectToEdit.images || [],
       video: projectToEdit.video || "",
-      activitiesID: projectToEdit.activitiesID || "",
+      activitiesID: Array.isArray(projectToEdit.activitiesID)
+        ? projectToEdit.activitiesID
+        : projectToEdit.activitiesID
+        ? [projectToEdit.activitiesID]
+        : [],
       projectSummary: projectToEdit.projectSummary || "",
     });
     setIsEditing(true);
@@ -447,24 +453,48 @@ const ProjectPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Activity *
+                <label className="block text-sm font-medium text-gray-700 mb-2 font-serif">
+                  Activities * (Select all that apply)
                 </label>
-                <select
-                  name="activitiesID"
-                  value={project.activitiesID}
-                  onChange={handleChange}
-                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                <div
+                  className={`p-4 border rounded-lg max-h-60 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-50 ${
                     errors.activitiesID ? "border-red-500" : "border-gray-300"
                   }`}
                 >
-                  <option value="">Select an Activity</option>
-                  {activities.map((activity) => (
-                    <option key={activity._id} value={activity._id}>
-                      {activity.title}
-                    </option>
-                  ))}
-                </select>
+                  {activities.map((activity) => {
+                    const isChecked = project.activitiesID?.includes(activity._id);
+                    return (
+                      <label
+                        key={activity._id}
+                        className={`flex items-center space-x-3 p-2.5 rounded-lg border cursor-pointer transition-all ${
+                          isChecked
+                            ? "bg-blue-50 border-blue-400 text-blue-800"
+                            : "bg-white border-gray-200 text-gray-700 hover:bg-gray-100"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={(e) => {
+                            const updatedActivities = e.target.checked
+                              ? [...(project.activitiesID || []), activity._id]
+                              : (project.activitiesID || []).filter(
+                                  (id) => id !== activity._id
+                                );
+                            setProject({ ...project, activitiesID: updatedActivities });
+                            if (errors.activitiesID) {
+                              setErrors((prev) => ({ ...prev, activitiesID: "" }));
+                            }
+                          }}
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                        />
+                        <span className="text-sm font-medium line-clamp-2">
+                          {activity.title}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
                 {errors.activitiesID && (
                   <p className="mt-1 text-sm text-red-600">
                     {errors.activitiesID}
@@ -742,7 +772,7 @@ const ProjectPage = () => {
       {/* Project List */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-bold text-gray-800 mb-4">Project List</h2>
-        <ProjectList onEdit={handleEdit} />
+        <ProjectList projects={projects} onEdit={handleEdit} refreshProjects={fetchLocalData} />
       </div>
     </div>
   );

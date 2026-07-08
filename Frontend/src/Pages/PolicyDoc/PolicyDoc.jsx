@@ -25,10 +25,10 @@ const PolicyDoc = () => {
   }, []);
 
   const filteredPolicies = policies.filter((policy) =>
-    policy.name.toLowerCase().includes(searchTerm.toLowerCase())
+    policy.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const baseURL = "https://api.rdfbd.org";
+  const baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -72,6 +72,7 @@ const PolicyDoc = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPolicies.map((policy) => {
               const pdfViewerUrl = `${baseURL}${policy.filePath}#toolbar=0&navpanes=0&scrollbar=0`;
+              console.log("PDF Viewer URL:", pdfViewerUrl); // Debugging line
 
               return (
                 <div
@@ -88,7 +89,7 @@ const PolicyDoc = () => {
                     <button
                       onClick={() => {
                         const iframe = document.querySelector(
-                          `iframe[title="${policy.name}"]`
+                          `iframe[title="${policy.name}"]`,
                         );
                         if (iframe.requestFullscreen) {
                           iframe.requestFullscreen();

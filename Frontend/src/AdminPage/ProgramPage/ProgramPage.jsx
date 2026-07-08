@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
-import useRDFStore from "../../storage/useRDFstorage";
 import {
   FaTrash,
   FaPlus,
@@ -33,13 +32,20 @@ const ProgramPage = () => {
   });
 
   const Axios = useAxiosSecure();
-  const { programs, fetchPrograms } = useRDFStore();
+  const [programs, setPrograms] = useState([]);
+
+  const fetchLocalPrograms = async () => {
+    try {
+      const response = await Axios.get("/programs");
+      setPrograms(response.data);
+    } catch (error) {
+      console.error("Error fetching programs:", error);
+    }
+  };
 
   useEffect(() => {
-    if (programs.length === 0) {
-      fetchPrograms();
-    }
-  }, [fetchPrograms, programs.length]);
+    fetchLocalPrograms();
+  }, []);
 
   const showNotification = (type, message) => {
     setNotification({ show: true, type, message });
@@ -127,7 +133,7 @@ const ProgramPage = () => {
         const response = await Axios.put(`/programs/${editingId}`, formData);
         if (response.data) {
           showNotification("success", "Program updated successfully!");
-          fetchPrograms();
+          fetchLocalPrograms();
           resetForm();
         }
       } else {
@@ -135,7 +141,7 @@ const ProgramPage = () => {
         const response = await Axios.post("/programs", formData);
         if (response.data) {
           showNotification("success", "Program added successfully!");
-          fetchPrograms();
+          fetchLocalPrograms();
           resetForm();
         }
       }
@@ -184,7 +190,7 @@ const ProgramPage = () => {
     try {
       await Axios.delete(`/programs/${id}`);
       showNotification("success", "Program deleted successfully!");
-      fetchPrograms();
+      fetchLocalPrograms();
 
       // If we're deleting the program we're currently editing, reset the form
       if (editingId === id) {

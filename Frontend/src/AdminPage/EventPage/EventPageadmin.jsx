@@ -11,7 +11,6 @@ import {
   FiEdit,
   FiX,
 } from "react-icons/fi";
-import useRDFStore from "../../storage/useRDFstorage";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 
@@ -32,13 +31,20 @@ const EventPageadmin = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   const Axios = useAxiosSecure();
-  const { events, fetchEvent } = useRDFStore();
+  const [events, setEvents] = useState([]);
+
+  const fetchLocalEvents = async () => {
+    try {
+      const response = await Axios.get("/event");
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
 
   useEffect(() => {
-    if (events.length === 0) {
-      fetchEvent();
-    }
-  }, [events, fetchEvent]);
+    fetchLocalEvents();
+  }, []);
 
   // Reset form when switching tabs or modes
   useEffect(() => {
@@ -116,7 +122,7 @@ const EventPageadmin = () => {
       }
 
       resetForm();
-      fetchEvent();
+      fetchLocalEvents();
       setActiveTab("manage");
     } catch (err) {
       console.error(err);
@@ -131,9 +137,20 @@ const EventPageadmin = () => {
   const handleEdit = (event) => {
     setEditingEvent(event);
     setIsEditMode(true);
+    
+    // Safely parse event date
+    let formattedDate = "";
+    if (event.date) {
+      if (typeof event.date === "string") {
+        formattedDate = event.date.includes("T") ? event.date.split("T")[0] : event.date;
+      } else {
+        formattedDate = event.date;
+      }
+    }
+
     setFormData({
       title: event.title,
-      date: event.date.split("T")[0], // Format date for input
+      date: formattedDate,
       time: event.time,
       location: event.location,
       description: event.description,
@@ -148,7 +165,7 @@ const EventPageadmin = () => {
       try {
         await Axios.delete(`/event/${id}`);
         toast.success("Event deleted successfully!");
-        fetchEvent();
+        fetchLocalEvents();
       } catch (err) {
         console.error(err);
         toast.error("Failed to delete event");
@@ -424,7 +441,7 @@ const EventPageadmin = () => {
               </div>
             </div>
           ) : (
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+            <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
@@ -446,18 +463,22 @@ const EventPageadmin = () => {
                     >
                       Type
                     </th>
-                    <th
+                     <th
                       scope="col"
-                      className="relative py-3.5 pl-3 pr-4 sm:pr-6"
+                      className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 pr-6"
                     >
-                      <span className="sr-only">Actions</span>
+                      Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {events.map((event) => (
+                  {[...events].sort((a, b) => {
+                    const dateDiff = new Date(b.date) - new Date(a.date);
+                    if (dateDiff !== 0) return dateDiff;
+                    return b._id.localeCompare(a._id);
+                  }).map((event) => (
                     <tr key={event._id}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                      <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
                         <div className="flex items-center">
                           {event.images?.length > 0 ? (
                             <div className="h-10 w-10 flex-shrink-0">
@@ -498,20 +519,20 @@ const EventPageadmin = () => {
                         </span>
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <div className="flex justify-end space-x-2">
+                        <div className="flex justify-end space-x-4">
                           <button
                             onClick={() => handleEdit(event)}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-blue-600 hover:text-blue-900 flex items-center"
                             title="Edit event"
                           >
-                            <FiEdit size={16} />
+                            <FiEdit className="mr-1" /> Edit
                           </button>
                           <button
                             onClick={() => handleDelete(event._id)}
-                            className="text-red-600 hover:text-red-900"
+                            className="text-red-600 hover:text-red-900 flex items-center"
                             title="Delete event"
                           >
-                            <FiTrash2 size={16} />
+                            <FiTrash2 className="mr-1" /> Delete
                           </button>
                         </div>
                       </td>

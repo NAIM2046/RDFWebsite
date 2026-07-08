@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import useRDFStore from "../../../storage/useRDFstorage";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const OurPartners = () => {
   const responsive = {
@@ -13,13 +15,19 @@ const OurPartners = () => {
     mobile: { breakpoint: { max: 480, min: 0 }, items: 2 },
   };
 
-  const { partners, fetchPartner } = useRDFStore();
+  const [partners, setPartners] = useState([]);
 
   useEffect(() => {
-    if (partners.length === 0) {
-      fetchPartner();
-    }
-  }, [partners, fetchPartner]);
+    const fetchParts = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/partner`);
+        setPartners(response.data);
+      } catch (error) {
+        console.error("Error fetching partners:", error);
+      }
+    };
+    fetchParts();
+  }, []);
 
   return (
     <motion.section

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hook/useAxiosPublice";
-import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import {
@@ -30,13 +29,24 @@ const Sliderinfo = () => {
   });
 
   const AxiosSecure = useAxiosSecure();
-  const { isLoading, sliderinfo, fetchsliderinfo } = useRDFStore();
+  const [sliderinfo, setSliderinfo] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchLocalSliders = async () => {
+    setIsLoading(true);
+    try {
+      const response = await AxiosSecure.get("/slider");
+      setSliderinfo(response.data);
+    } catch (error) {
+      console.error("Error fetching sliderinfo:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (sliderinfo.length === 0) {
-      fetchsliderinfo();
-    }
-  }, [sliderinfo.length, fetchsliderinfo]);
+    fetchLocalSliders();
+  }, []);
 
   // Reset form when switching modes
   useEffect(() => {
@@ -100,7 +110,7 @@ const Sliderinfo = () => {
         );
         if (result.data) {
           showNotification("success", "Slider Updated Successfully!");
-          fetchsliderinfo();
+          fetchLocalSliders();
           resetForm();
         }
       } else {
@@ -108,7 +118,7 @@ const Sliderinfo = () => {
         const result = await AxiosSecure.post("/slider", slider);
         if (result.data) {
           showNotification("success", "Slider Info Saved Successfully!");
-          fetchsliderinfo();
+          fetchLocalSliders();
           resetForm();
         }
       }
@@ -138,7 +148,7 @@ const Sliderinfo = () => {
       const result = await AxiosSecure.delete(`/slider/${id}`);
       if (result.data) {
         showNotification("success", "Slider Deleted Successfully!");
-        fetchsliderinfo();
+        fetchLocalSliders();
       }
     } catch (error) {
       console.error("Error deleting slider:", error);

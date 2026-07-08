@@ -2,24 +2,36 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { HiDownload } from "react-icons/hi";
 import { Helmet } from "react-helmet-async";
-import useRDFStore from "../../storage/useRDFstorage";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const AnnualReport = () => {
   const [searchYear, setSearchYear] = useState("");
   const [downloadingId, setDownloadingId] = useState(null);
-  const { reports, fetchReport, isLoading } = useRDFStore();
+  const [reports, setReports] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (reports.length === 0) {
-      fetchReport();
-    }
+    const fetchRep = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/reports`);
+        setReports(response.data);
+      } catch (error) {
+        console.error("Error fetching reports:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchRep();
   }, []);
 
   const handleDownload = async (fileUrl, title, reportId) => {
     try {
       setDownloadingId(reportId);
 
-      const response = await fetch(`https://api.rdfbd.org${fileUrl}`);
+      const response = await fetch(`${BASE_URL}${fileUrl}`);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
@@ -40,7 +52,7 @@ const AnnualReport = () => {
       setDownloadingId(null);
 
       const link = document.createElement("a");
-      link.href = `https://api.rdfbd.org${fileUrl}`;
+      link.href = `${BASE_URL}${fileUrl}`;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
       document.body.appendChild(link);
@@ -204,7 +216,7 @@ const AnnualReport = () => {
                   <div className="flex gap-2 sm:gap-3 mt-3 sm:mt-4 w-full justify-center">
                     {/* View Report */}
                     <motion.a
-                      href={`https://api.rdfbd.org${report.filePath}`}
+                      href={`${BASE_URL}${report.filePath}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 shadow-md text-xs sm:text-sm font-medium whitespace-nowrap"
