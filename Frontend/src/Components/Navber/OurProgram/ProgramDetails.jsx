@@ -1,15 +1,63 @@
-import React, { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import useRDFStore from "../../../storage/useRDFstorage";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const ProgramDetails = () => {
   const location = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const program = location.state?.program;
 
-  if (!program) {
+  const [programItem, setProgramItem] = useState(location.state?.program || null);
+  const [isProgramLoading, setIsProgramLoading] = useState(!programItem);
+  const [projectsList, setProjectsList] = useState([]);
+  const [isProjectsLoading, setIsProjectsLoading] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchProgramDetail = async () => {
+      if (location.state?.program) return;
+      setIsProgramLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/programs/${id}`);
+        setProgramItem(response.data);
+      } catch (error) {
+        console.error("Error fetching program details:", error);
+      } finally {
+        setIsProgramLoading(false);
+      }
+    };
+    fetchProgramDetail();
+  }, [id]);
+
+  useEffect(() => {
+    if (!programItem?._id) return;
+    const fetchProgramProjects = async () => {
+      setIsProjectsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/projects?programName=${programItem._id}`);
+        setProjectsList(response.data);
+      } catch (error) {
+        console.error("Error fetching projects for program:", error);
+      } finally {
+        setIsProjectsLoading(false);
+      }
+    };
+    fetchProgramProjects();
+  }, [programItem]);
+
+  if (isProgramLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!programItem) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-center text-red-500 text-xl font-medium">
@@ -19,17 +67,9 @@ const ProgramDetails = () => {
     );
   }
 
-  const { projects, fetchProjects, isLoading } = useRDFStore();
-
-  useEffect(() => {
-    if (projects.length === 0) {
-      fetchProjects();
-    }
-  }, [fetchProjects, projects.length]);
-
-  const filteredProjects = projects.filter(
-    (project) => project.programName === program._id
-  );
+  const program = programItem;
+  const filteredProjects = projectsList;
+  const isLoading = isProjectsLoading;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-emerald-50">

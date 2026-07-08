@@ -1,16 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import useRDFStore from "../../../storage/useRDFstorage";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const OurActivities = () => {
   const navigate = useNavigate();
-  const { fetchActivites, activities } = useRDFStore();
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    if (activities.length === 0) {
-      fetchActivites();
-    }
+    const fetchActs = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/activities`);
+        setActivities(response.data);
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+      }
+    };
+    fetchActs();
   }, []);
   const sortedActivities = [...activities].sort(
     (a, b) => Number(a.id) - Number(b.id),
@@ -38,7 +46,7 @@ const OurActivities = () => {
           {sortedActivities.map((activity, index) => (
             <motion.div
               key={activity._id}
-              onClick={() => navigate("/", { state: { activity } })}
+              onClick={() => navigate("/activities-details", { state: { activity } })}
               className="rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out hover:shadow-xl border-4 cursor-pointer border-white w-full sm:w-[calc(33.333%-1.25rem)] lg:w-[calc(20%-1.25rem)]"
               whileInView={{ opacity: 1, scale: 1 }}
               initial={{ opacity: 0, scale: 0.9 }}

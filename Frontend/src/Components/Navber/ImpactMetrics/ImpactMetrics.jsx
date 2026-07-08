@@ -97,7 +97,8 @@ const StatCard = () => {
       suffix: "MW",
       title: "Green Electricity",
       description: "Saving equivalent power from the national grid.",
-      image: soler,
+      image:
+        "https://i.ibb.co/LdMvvk1b/Whats-App-Image-2026-06-25-at-9-42-03-AM.jpg",
     },
     {
       statNumber: 25000,

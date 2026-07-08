@@ -59,6 +59,7 @@ import ReportPage from "../AdminPage/ReportPage/ReportPage";
 import AboutRDF from "../Pages/AboutRDF/AboutRDF";
 import PolicyDocPage from "../AdminPage/PolicyDocPage/PolicyDocPage";
 import CertificationsPage from "../AdminPage/CertificationsPage/CertificationsPage";
+import CareerPageadmin from "../AdminPage/CareerPage/CareerPageadmin";
 import WeWorkFor from "../Pages/OurWork/WeWorkFor";
 import WhereWeWork from "../Pages/OurWork/WhereWeWork";
 import NotFound from "../Components/Error/NotFound";
@@ -135,7 +136,7 @@ const router = createBrowserRouter([
         path: "/project-details/:id",
         element: <ProjectDetails></ProjectDetails>,
         errorElement: (
-          <ErrorPage message="News article not found or failed to load." />
+          <ErrorPage message="Project details not found or failed to load." />
         ),
       },
       {
@@ -341,6 +342,10 @@ const router = createBrowserRouter([
       {
         path: "/admin-rdf/certification",
         element: <CertificationsPage></CertificationsPage>,
+      },
+      {
+        path: "/admin-rdf/career",
+        element: <CareerPageadmin></CareerPageadmin>,
       },
     ],
   },

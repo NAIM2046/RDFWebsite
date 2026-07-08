@@ -1,19 +1,31 @@
 import { Typography, Button } from "@material-tailwind/react";
 import { motion, AnimatePresence } from "framer-motion";
-import useRDFStore from "../../../storage/useRDFstorage";
 import { useEffect, useState, useCallback } from "react";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const Slider = () => {
-  const { isLoading, sliderinfo, fetchsliderinfo } = useRDFStore();
+  const [sliderinfo, setSliderinfo] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Fetch slider info
   useEffect(() => {
-    if (sliderinfo.length === 0 && !isLoading) {
-      fetchsliderinfo();
-    }
-  }, [sliderinfo.length, fetchsliderinfo, isLoading]);
+    const fetchSlider = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/slider`);
+        setSliderinfo(response.data);
+      } catch (error) {
+        console.error("Error fetching slider info:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchSlider();
+  }, []);
 
   // Sort slider info by slideNumber
   const sortedSliderInfo = [...sliderinfo].sort(
@@ -49,7 +61,7 @@ const Slider = () => {
   // Loading skeleton - height adjusted responsively
   if (isLoading || length === 0) {
     return (
-      <div className="relative w-full aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] lg:h-[70vh] bg-neutral-100 top-20 sm:top-2 overflow-hidden flex items-center justify-center">
+      <div className="relative w-full aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] lg:h-[70vh] bg-neutral-100 top-20 lg:top-2 overflow-hidden flex items-center justify-center">
         {/* Immersive Shimmering Background */}
         <div className="absolute inset-0 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 animate-[shimmer_2s_infinite] bg-[length:200%_100%]" />
 
@@ -65,7 +77,7 @@ const Slider = () => {
         </div>
 
         {/* Bottom Right Content Card Placeholder */}
-        <div className="absolute bottom-10 right-2 md:bottom-16 md:right-16 bg-neutral-200/50 backdrop-blur-md p-4 md:p-8 rounded-2xl w-[220px] sm:w-[350px] md:w-[400px] h-32 md:h-44 flex flex-col items-end justify-between border border-white/20 shadow-xl">
+        <div className="absolute bottom-6 right-4 left-4 sm:left-auto sm:right-16 sm:bottom-16 bg-neutral-200/50 backdrop-blur-md p-4 md:p-8 rounded-2xl w-auto sm:w-[350px] md:w-[400px] h-32 md:h-44 flex flex-col items-end justify-between border border-white/20 shadow-xl">
           <div className="w-4/5 h-5 bg-neutral-300/80 rounded-md animate-pulse" />
           <div className="w-full h-4 bg-neutral-300/60 rounded-md animate-pulse mt-2 hidden md:block" />
           <div className="w-2/3 h-4 bg-neutral-300/60 rounded-md animate-pulse hidden md:block" />
@@ -84,17 +96,10 @@ const Slider = () => {
 
   return (
     <div
-      className="relative w-full aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] lg:h-[70vh] group overflow-hidden bg-gray-50 top-20 sm:top-2"
+      className="relative w-full aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] lg:h-[70vh] group overflow-hidden bg-gray-50 top-20 lg:top-2"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      {/* Main Title */}
-      <div className="absolute top-4 md:top-6 left-1/2 transform -translate-x-1/2 z-30 w-11/12 max-w-max">
-        <h1 className="text-center font-serif font-bold text-green-500 px-4 md:px-6 py-2 md:py-3 bg-black/30 backdrop-blur-md rounded-full text-xs sm:text-sm md:text-lg lg:text-xl border border-white/20 shadow-lg">
-          Resource Development Foundation (RDF)
-        </h1>
-      </div>
-
       {/* Slides using AnimatePresence for Crossfade effect */}
       <AnimatePresence mode="popLayout">
         <motion.div
@@ -121,7 +126,7 @@ const Slider = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="absolute bottom-10 right-2 md:bottom-16 md:right-16 bg-white/80 backdrop-blur-md p-4 md:p-8 rounded-2xl max-w-[220px] sm:max-w-sm md:max-w-md lg:max-w-md text-right z-20 border border-white/40 shadow-xl"
+            className="absolute bottom-6 right-4 left-4 sm:left-auto sm:right-16 sm:bottom-16 bg-white/80 backdrop-blur-md p-4 md:p-8 rounded-2xl w-auto sm:w-[350px] md:w-[400px] max-w-full text-right z-20 border border-white/40 shadow-xl"
           >
             {/* Header: Styled with a rich deep green color */}
             <Typography

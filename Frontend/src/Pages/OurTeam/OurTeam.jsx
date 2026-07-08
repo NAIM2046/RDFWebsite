@@ -3,34 +3,38 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import PageCoverPhoto from "../../Components/Navber/PageCoverPhoto/PageCoverPhoto";
 import coverimg from "/assets/ourteam/teamCover.jpeg";
-import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const OurTeam = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  // CHANGED: Set "Executive Committee" as the default designation
   const [designation, setDesignation] = useState("Executive Committee");
+  const [membersList, setMembersList] = useState([]);
+  const [isTeamLoading, setIsTeamLoading] = useState(true);
   const navigate = useNavigate();
-  const { teams, fetchTeams, isLoading } = useRDFStore();
 
   useEffect(() => {
-    if (teams.length === 0) {
-      fetchTeams();
-    }
-  }, []);
+    const fetchFilteredTeam = async () => {
+      setIsTeamLoading(true);
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/teams?committee=${designation}`,
+        );
+        console.log("Fetched team members:", response.data);
+        setMembersList(response.data);
+      } catch (error) {
+        console.error("Error fetching team by committee:", error);
+      } finally {
+        setIsTeamLoading(false);
+      }
+    };
+    fetchFilteredTeam();
+  }, [designation]);
 
-  const filteredMembers = teams.filter((member) => {
-    const matchesSearchTerm = member.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-
-    const matchesDesignation = designation
-      ? member.committees.some(
-          (c) => c.committee_name.toLowerCase() === designation.toLowerCase(),
-        )
-      : true;
-
-    return matchesSearchTerm && matchesDesignation;
+  const filteredMembers = membersList.filter((member) => {
+    return member.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   const priority = {
@@ -66,7 +70,7 @@ const OurTeam = () => {
 
   // Loading Skeleton Component
   const TeamCardSkeleton = () => (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col border border-gray-100 animate-pulse">
+    <div className=" rounded-2xl overflow-hidden shadow-lg h-full flex flex-col border border-gray-100 animate-pulse">
       {/* Image Skeleton */}
       <div className="relative overflow-hidden">
         <div className="h-1 bg-gray-200"></div>
@@ -87,7 +91,7 @@ const OurTeam = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <div className="min-h-screen">
       {/* Page Cover */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -223,7 +227,7 @@ const OurTeam = () => {
         </motion.div>
 
         {/* Loading State */}
-        {isLoading ? (
+        {isTeamLoading ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -242,30 +246,16 @@ const OurTeam = () => {
           </motion.div>
         ) : (
           /* Team Members Grid */
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto max-w-7xl"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-            }}
-          >
-            {sortedMembers.map((member, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto max-w-7xl">
+            {sortedMembers.map((member) => (
               <motion.div
-                key={index}
-                variants={{
-                  hidden: { opacity: 0, y: 30, scale: 0.95 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    transition: { duration: 0.5 },
-                  },
-                }}
+                key={member._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
                 whileHover={{
                   scale: 1.03,
-                  transition: { duration: 0.3 },
+                  transition: { duration: 0.2 },
                 }}
                 className="group cursor-pointer"
               >
@@ -307,42 +297,44 @@ const OurTeam = () => {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         )}
 
         {/* Empty State */}
-        {!isLoading && sortedMembers.length === 0 && teams.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
-          >
-            <div className="bg-white rounded-2xl p-8 shadow-md max-w-md mx-auto">
-              <svg
-                className="w-16 h-16 text-gray-400 mx-auto mb-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                No matching team members
-              </h3>
-              <p className="text-gray-500">
-                Try adjusting your search criteria
-              </p>
-            </div>
-          </motion.div>
-        )}
+        {!isTeamLoading &&
+          sortedMembers.length === 0 &&
+          membersList.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-12"
+            >
+              <div className="bg-white rounded-2xl p-8 shadow-md max-w-md mx-auto">
+                <svg
+                  className="w-16 h-16 text-gray-400 mx-auto mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                  No matching team members
+                </h3>
+                <p className="text-gray-500">
+                  Try adjusting your search criteria
+                </p>
+              </div>
+            </motion.div>
+          )}
 
         {/* Initial Loading State */}
-        {isLoading && teams.length === 0 && (
+        {isTeamLoading && membersList.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

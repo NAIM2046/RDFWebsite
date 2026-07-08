@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
-import useRDFStore from "../../storage/useRDFstorage";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
 import {
   FiEdit2,
@@ -19,13 +18,19 @@ const TeamsPage = () => {
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [teams, setTeams] = useState([]);
 
-  const { teams, fetchTeams } = useRDFStore();
+  const fetchLocalTeams = async () => {
+    try {
+      const response = await Axios.get("/teams");
+      setTeams(response.data);
+    } catch (error) {
+      console.error("Error fetching teams:", error);
+    }
+  };
 
   useEffect(() => {
-    if (teams.length === 0) {
-      fetchTeams();
-    }
+    fetchLocalTeams();
   }, []);
 
   const [member, setMember] = useState({
@@ -124,7 +129,7 @@ const TeamsPage = () => {
         toast.success(
           `Member ${editingId ? "updated" : "added"} successfully!`
         );
-        fetchTeams();
+        fetchLocalTeams();
         resetForm();
       })
       .catch((err) => {
@@ -143,7 +148,7 @@ const TeamsPage = () => {
       Axios.delete(`/teams/${id}`)
         .then((res) => {
           toast.success("Member deleted successfully!");
-          fetchTeams();
+          fetchLocalTeams();
         })
         .catch((err) => {
           console.log(err);

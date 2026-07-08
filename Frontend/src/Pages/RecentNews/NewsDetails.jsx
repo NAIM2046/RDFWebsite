@@ -12,34 +12,56 @@ import {
   FaTwitter,
   FaRegComment,
 } from "react-icons/fa6";
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import useRDFStore from "../../storage/useRDFstorage";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const NewsDetails = () => {
   const location = useLocation();
-  const news = location.state?.news;
-  const currentUrl = encodeURIComponent(window.location.href);
-  const { newss, fetchNews } = useRDFStore();
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [newsItem, setNewsItem] = useState(location.state?.news || null);
+  const [isNewsLoading, setIsNewsLoading] = useState(!newsItem);
+  const [relatedNews, setRelatedNews] = useState([]);
+  const currentUrl = encodeURIComponent(window.location.href);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!newss.length) {
-      fetchNews();
-    }
-  }, []);
-  console.log(newss);
+    const fetchNewsDetail = async () => {
+      if (location.state?.news) return;
+      setIsNewsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/news/${id}`);
+        setNewsItem(response.data);
+      } catch (error) {
+        console.error("Error fetching news details:", error);
+      } finally {
+        setIsNewsLoading(false);
+      }
+    };
+    fetchNewsDetail();
+  }, [id]);
 
-  // Filter related news
-  const filterNews = (newss || []).filter(
-    (newsss) =>
-      String(newsss.program) === String(news?.program) &&
-      String(newsss._id) !== String(news?._id)
-  );
+  useEffect(() => {
+    if (!newsItem?.program) return;
+    const fetchRelatedNews = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/news?program=${newsItem.program}`);
+        setRelatedNews(response.data.filter(item => item._id !== newsItem._id));
+      } catch (error) {
+        console.error("Error fetching related news:", error);
+      }
+    };
+    fetchRelatedNews();
+  }, [newsItem]);
+
+  const news = newsItem;
+  const filterNews = relatedNews;
 
   // Calculate reading time
   const calculateReadingTime = (text) => {
@@ -76,6 +98,24 @@ const NewsDetails = () => {
       color: "text-blue-700 hover:bg-blue-100",
     },
   ];
+
+  if (isNewsLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!news) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <p className="text-center text-red-500 text-xl font-medium bg-white p-6 rounded-lg shadow-md">
+          News article not found or failed to load.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -164,7 +204,7 @@ const NewsDetails = () => {
                 <span>
                   {calculateReadingTime(
                     news?.content?.map((item) => item?.description).join(" ") ||
-                      ""
+                      "",
                   )}{" "}
                   min read
                 </span>
@@ -294,7 +334,7 @@ const NewsDetails = () => {
                             <span>{item.header || "Related Link"}</span>
                           </a>
                         </li>
-                      )
+                      ),
                   )}
                 </ul>
               </div>
@@ -329,10 +369,10 @@ const NewsDetails = () => {
           </div>
         </motion.article>
 
-        {/* Related News Section */}
+        {/* Relevant News Section */}
         <section className="mt-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Related News
+            Relevant News
           </h2>
 
           {filterNews.length > 0 ? (
@@ -399,10 +439,10 @@ const NewsDetails = () => {
                   />
                 </svg>
                 <h3 className="mt-4 text-lg font-medium text-gray-900">
-                  No related news found
+                  No Relevant News found
                 </h3>
                 <p className="mt-2 text-gray-500">
-                  We couldn't find any related news articles. Check back later
+                  We couldn't find any Relevant News articles. Check back later
                   or explore our other news stories.
                 </p>
                 <div className="mt-6">

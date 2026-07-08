@@ -18,6 +18,7 @@ import {
   FaChartBar,
   FaFileContract,
   FaAward,
+  FaBriefcase,
 } from "react-icons/fa";
 
 const Admin = () => {
@@ -271,6 +272,20 @@ const Admin = () => {
                 >
                   <FaAward className="mr-3" />
                   Certifications Management
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin-rdf/career"
+                  className={({ isActive }) =>
+                    `flex items-center p-3 rounded-lg transition-colors ${
+                      isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"
+                    }`
+                  }
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <FaBriefcase className="mr-3" />
+                  Career Management
                 </NavLink>
               </li>
               <li>

@@ -66,7 +66,7 @@ const Footer = () => {
           </h6>
           <div className="space-y-3">
             <Link
-              to="/our-history"
+              to="/about-rdf"
               className="flex items-center gap-2 hover:text-green-300 transition-colors"
             >
               <RxTriangleRight className="text-2xl text-green-400" />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
-import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,21 +22,23 @@ const PhotoPage = () => {
   const [isUploading, setIsUploading] = useState(false);
   const photosPerPage = 6;
   const AxiosSecure = useAxiosSecure();
+  const [photo, setPhoto] = useState([]);
 
-  const { photo, fetchPhoto } = useRDFStore();
+  const fetchLocalPhotos = async () => {
+    setIsLoading(true);
+    try {
+      const response = await AxiosSecure.get("/photos");
+      setPhoto(response.data);
+    } catch (error) {
+      console.error("Error fetching photos:", error);
+      toast.error("Failed to load photos");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const loadPhotos = async () => {
-      setIsLoading(true);
-      try {
-        await fetchPhoto();
-      } catch (error) {
-        toast.error("Failed to load photos");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadPhotos();
+    fetchLocalPhotos();
   }, []);
 
   const handleImageUpload = async (event) => {
@@ -108,7 +109,7 @@ const PhotoPage = () => {
         photoType: "Event",
       });
       setUploadStatus("");
-      await fetchPhoto();
+      await fetchLocalPhotos();
     } catch (error) {
       toast.error("Failed to add photos");
       console.error(error);
@@ -123,19 +124,26 @@ const PhotoPage = () => {
     try {
       await AxiosSecure.delete(`/photos/${id}`);
       toast.success("Photo deleted successfully");
-      await fetchPhoto();
+      await fetchLocalPhotos();
     } catch (error) {
       toast.error("Failed to delete photo");
       console.error(error);
     }
   };
 
-  const filteredPhotos = photo.filter(
-    (item) =>
-      (searchTitle === "" ||
-        item.title.toLowerCase().includes(searchTitle.toLowerCase())) &&
-      (filterType === "" || item.photoType === filterType)
-  );
+  const filteredPhotos = [...photo]
+    .sort((a, b) => {
+      const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+      const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+      if (dateB - dateA !== 0) return dateB - dateA;
+      return b._id ? b._id.localeCompare(a._id) : 0;
+    })
+    .filter(
+      (item) =>
+        (searchTitle === "" ||
+          item.title.toLowerCase().includes(searchTitle.toLowerCase())) &&
+        (filterType === "" || item.photoType === filterType)
+    );
 
   // Pagination logic
   const indexOfLastPhoto = currentPage * photosPerPage;

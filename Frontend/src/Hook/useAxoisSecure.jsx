@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
- // baseURL: "http://localhost:3001",
-  baseURL: "https://api.rdfbd.org",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3001",
 });
 const useAxiosSecure = () => {
   axiosSecure.interceptors.request.use(
@@ -15,7 +14,7 @@ const useAxiosSecure = () => {
     },
     function (error) {
       return Promise.reject(error);
-    }
+    },
   );
 
   return axiosSecure;

@@ -117,65 +117,66 @@ const AboutRDF = () => {
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
             <div className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-bold text-green-800 font-serif mb-4">
-                Our Genesis & Journey
+                Rising from the Ruins: The Founding Story of RDF
               </h2>
-              <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-                What started as the heartfelt promise of a young boy has now
-                become one of Bangladesh's most impactful development
-                organizations.
+              <p className="text-gray-600 max-w-3xl mx-auto text-lg font-serif">
+                What started as the determination of a young boy has now become one of Bangladesh's most impactful national development organizations.
               </p>
             </div>
 
-            <div className="relative border-l-4 border-green-200 ml-4 md:ml-10 space-y-8 pb-4">
+            <div className="relative border-l-4 border-green-200 ml-4 md:ml-10 space-y-8 pb-4 text-left">
+              {/* 1970 */}
               <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-[14px] top-1 w-6 h-6 bg-green-500 rounded-full border-4 border-white shadow"></div>
+                <div className="absolute -left-[14px] top-1 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white shadow"></div>
                 <h3 className="text-xl font-bold text-green-800">
-                  1970 - The Seed of Empathy
+                  1970: From Devastation to Determination: The Seeds of Change
                 </h3>
                 <p className="text-gray-700 mt-2 leading-relaxed">
-                  A catastrophic cyclone hits the Patuakhali coastal district.
-                  Witnessing the immense suffering of the affected people deeply
-                  touched the heart of a 10-year-old boy,{" "}
-                  <strong>Golam Mostofa</strong>. He made a silent promise to
-                  stand by the distressed.
+                  On November 12, 1970, a devastating cyclone struck the southern coastal region of Bangladesh, obliterating lives, livelihoods, and mangrove forests. At just 10 years old, the founder, M. Golam Mostofa, witnessed this widespread destruction. The experience of helping neighbors recover bodies left a profound mark on the young boy, instilling in him a lifelong commitment to fighting against the frequent disasters that plagued the cyclone-prone coastal area.
                 </p>
               </div>
 
+              {/* 1971 */}
               <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-[14px] top-1 w-6 h-6 bg-green-500 rounded-full border-4 border-white shadow"></div>
+                <div className="absolute -left-[14px] top-1 w-6 h-6 bg-teal-500 rounded-full border-4 border-white shadow"></div>
                 <h3 className="text-xl font-bold text-green-800">
-                  1971 - The Liberation War
+                  1971: A Young Witness to the Fight for Freedom (Independence War)
                 </h3>
                 <p className="text-gray-700 mt-2 leading-relaxed">
-                  The devastation of the 1971 Liberation War further
-                  strengthened his resolve. Growing up, he worked tirelessly
-                  through business and social activities to prepare himself to
-                  fulfill his childhood promise.
+                  During the 1971 War of Independence, at the age of 11, Mostofa observed further destruction across the region. By sheltering freedom fighters in his home, he deepened his commitment to serving the people of his birthplace who were frequently affected by crisis.
                 </p>
               </div>
 
+              {/* 1972-1977 */}
+              <div className="relative pl-8 md:pl-12">
+                <div className="absolute -left-[14px] top-1 w-6 h-6 bg-cyan-500 rounded-full border-4 border-white shadow"></div>
+                <h3 className="text-xl font-bold text-blue-800">
+                  1972-1977: Building Foundations through Community Action
+                </h3>
+                <p className="text-gray-700 mt-2 leading-relaxed">
+                  Throughout his high school years, Mostofa balanced his academic studies with dedicated community work. Alongside young friends and neighbors, he worked to improve local rural communication and infrastructure in his remote home area.
+                </p>
+              </div>
+
+              {/* 1978-1985 */}
               <div className="relative pl-8 md:pl-12">
                 <div className="absolute -left-[14px] top-1 w-6 h-6 bg-blue-500 rounded-full border-4 border-white shadow"></div>
                 <h3 className="text-xl font-bold text-blue-800">
-                  1993 - The Birth of RDF
+                  1978-1985: Academic Success Fueling a Future Vision
                 </h3>
                 <p className="text-gray-700 mt-2 leading-relaxed">
-                  <strong>Resource Development Foundation (RDF)</strong>{" "}
-                  officially began its philanthropic activities. Since then, RDF
-                  has prioritized primary & basic needs, especially focusing on
-                  agricultural growth as the core of Bangladesh's development.
+                  As he progressed through his secondary education, higher secondary schooling, and earned his Honors and Master’s degrees in Economics from Jahangirnagar University, Mostofa maintained his vision. During this time, he operated a business, accumulating the capital necessary to fulfill the commitments he made in 1970 and 1971.
                 </p>
               </div>
 
+              {/* 1985-1996 */}
               <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-[14px] top-1 w-6 h-6 bg-pink-500 rounded-full border-4 border-white shadow"></div>
-                <h3 className="text-xl font-bold text-pink-700">
-                  Present Day - A Giant Tree
+                <div className="absolute -left-[14px] top-1 w-6 h-6 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+                <h3 className="text-xl font-bold text-indigo-800">
+                  1985-1992 and 1993-1996: Scaling Impact: The Birth of a National Powerhouse
                 </h3>
                 <p className="text-gray-700 mt-2 leading-relaxed">
-                  Today, RDF operates with a massive family of over{" "}
-                  <strong>1,708 dedicated professionals</strong>, changing the
-                  lives of hundreds of thousands of people across the country.
+                  Mostofa utilized the wealth earned during his student years to fund social development activities in his home district of Barguna. After securing registration from the Department of Social Services (DSS) and the NGO Affairs Bureau, he received his first financial support from the Royal Danish Embassy (DANIDA), allowing him to expand his social development work through foreign funding. Today, this initiative has grown into RDF, a national wide devleopment organization in Bangladesh.
                 </p>
               </div>
             </div>
@@ -184,7 +185,7 @@ const AboutRDF = () => {
           {/* Section 3: Detailed Interventions (What we do) */}
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
             <h2 className="text-3xl font-bold text-green-800 font-serif mb-8 text-center">
-              Our Core Focus Areas
+              Our Core Areas of Expertise
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

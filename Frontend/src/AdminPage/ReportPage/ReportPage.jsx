@@ -9,8 +9,9 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAxiosSecure from "../../Hook/useAxoisSecure";
-import useRDFStore from "../../storage/useRDFstorage";
 import uploadImageToImgbb from "../../Hook/ImgUpload";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const ReportPage = () => {
   const [formData, setFormData] = useState({
@@ -22,14 +23,21 @@ const ReportPage = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [activeTab, setActiveTab] = useState("upload");
-  const { reports, fetchReport } = useRDFStore();
+  const [reports, setReports] = useState([]);
   const AxiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    if (reports.length === 0) {
-      fetchReport();
+  const fetchLocalReports = async () => {
+    try {
+      const response = await AxiosSecure.get("/reports");
+      setReports(response.data);
+    } catch (error) {
+      console.error("Error fetching reports:", error);
     }
-  }, [reports.length, fetchReport]);
+  };
+
+  useEffect(() => {
+    fetchLocalReports();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -72,7 +80,7 @@ const ReportPage = () => {
 
       toast.success("Report uploaded successfully!");
       resetForm();
-      fetchReport();
+      fetchLocalReports();
       setActiveTab("manage");
     } catch (error) {
       console.error("Error uploading report:", error);
@@ -87,7 +95,7 @@ const ReportPage = () => {
       try {
         await AxiosSecure.delete(`/report/${id}`);
         toast.success("Report deleted successfully!");
-        fetchReport();
+        fetchLocalReports();
       } catch (error) {
         console.error("Error deleting report:", error);
         toast.error("Failed to delete report");
@@ -340,7 +348,7 @@ const ReportPage = () => {
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <div className="flex items-center justify-end space-x-4">
                           <a
-                            href={`http://localhost:3001${report.filePath}`}
+                            href={`${BASE_URL}${report.filePath}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:text-blue-900 flex items-center"

@@ -22,7 +22,7 @@ const focusAreas = [
     borderColor: "border-purple-500",
   },
   {
-    bgImage: "https://i.ibb.co.com/jk7JKqrb/Emergency-Responce-JPG.jpg",
+    bgImage: "https://i.ibb.co/3YcC9Cnd/Emergency-Respose-JPG-1.jpg",
 
     title: "Emergency Response",
 
@@ -48,7 +48,7 @@ const focusAreas = [
     borderColor: "border-cyan-500",
   },
   {
-    bgImage: "/assets/FocusAreas/gender.jpg",
+    bgImage: "https://i.ibb.co/q3QvpcyB/Cross-Cutting-Issue-jpg.jpg",
 
     title:
       "Cross-cutting programme: Gender Transformation, Disability Inclusion and Locally-led Initiatives",

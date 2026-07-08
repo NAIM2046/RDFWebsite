@@ -1,20 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
-import useRDFStore from "../../storage/useRDFstorage";
 import { Helmet } from "react-helmet-async";
-
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const EventsPage = () => {
-  const { events, fetchEvent, isLoading, error } = useRDFStore();
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const location = useLocation();
   const canonicalUrl = `https://rdfbd.org${location.pathname}`;
 
   useEffect(() => {
-    if (events.length === 0) {
-      fetchEvent();
-    }
-  }, [events.length, fetchEvent]);
+    const fetchAllEvents = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/event`);
+        setEvents(response.data);
+      } catch (err) {
+        console.error("Error fetching events:", err);
+        setError("Failed to load events.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAllEvents();
+  }, []);
 
   // Create structured data for events
   const getStructuredData = () => {
@@ -204,8 +217,13 @@ const EventsPage = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {events
+                  {[...events]
                     .filter((event) => event.type === "Upcoming")
+                    .sort((a, b) => {
+                      const dateDiff = new Date(b.date) - new Date(a.date);
+                      if (dateDiff !== 0) return dateDiff;
+                      return b._id.localeCompare(a._id);
+                    })
                     .map((event) => (
                       <EventCard key={event._id} event={event} />
                     ))}
@@ -230,8 +248,13 @@ const EventsPage = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {events
+                  {[...events]
                     .filter((event) => event.type === "Past")
+                    .sort((a, b) => {
+                      const dateDiff = new Date(b.date) - new Date(a.date);
+                      if (dateDiff !== 0) return dateDiff;
+                      return b._id.localeCompare(a._id);
+                    })
                     .map((event) => (
                       <EventCard key={event._id} event={event} />
                     ))}

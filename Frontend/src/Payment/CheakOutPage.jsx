@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 const CheckOutPage = () => {
   const [amount, setAmount] = useState(100);
   const [name, setName] = useState("");
@@ -21,7 +23,7 @@ const CheckOutPage = () => {
     setMessage("");
 
     try {
-      const response = await axios.post("http://localhost:3001/api/payment", {
+      const response = await axios.post(`${BASE_URL}/api/payment`, {
         amount: amount, // converting to paisa if needed
         name,
         email,
